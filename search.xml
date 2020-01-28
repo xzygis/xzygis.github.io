@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>云原生概述</title>
+    <url>/2020/01/28/Introduction-of-Cloud-Native/</url>
+    <content><![CDATA[<h1 id="云原生的定义"><a href="#云原生的定义" class="headerlink" title="云原生的定义"></a>云原生的定义</h1><p>云原生技术有利于各组织在公有云、私有云和混合云等新型动态环境中，构建和运行可弹性扩展的应用。云原生的代表技术包括容器、服务网格、微服务、不可变基础设施和声明式API。</p>
+<p>这些技术能够构建容错性好、易于管理和便于观察的松耦合系统。结合可靠的自动化手段，云原生技术使工程师能够轻松地对系统作出频繁和可预测的重大变更。</p>
+<h1 id="云原生的设计哲学"><a href="#云原生的设计哲学" class="headerlink" title="云原生的设计哲学"></a>云原生的设计哲学</h1><p>云原生本身甚至不能称为是一种架构，它首先是一种基础设施，运行在其上的应用称作云原生应用，只有符合云原生设计哲学的应用架构才叫云原生应用架构。</p>
+<h2 id="云原生的设计理念"><a href="#云原生的设计理念" class="headerlink" title="云原生的设计理念"></a>云原生的设计理念</h2><p>云原生系统的设计理念如下:</p>
+<ul>
+<li>面向分布式设计（Distribution）：容器、微服务、API 驱动的开发；</li>
+<li>面向配置设计（Configuration）：一个镜像，多个环境配置；</li>
+<li>面向韧性设计（Resistancy）：故障容忍和自愈；</li>
+<li>面向弹性设计（Elasticity）：弹性扩展和对环境变化（负载）做出响应；</li>
+<li>面向交付设计（Delivery）：自动拉起，缩短交付时间；</li>
+<li>面向性能设计（Performance）：响应式，并发和资源高效利用；</li>
+<li>面向自动化设计（Automation）：自动化的 DevOps；</li>
+<li>面向诊断性设计（Diagnosability）：集群级别的日志、metric 和追踪；</li>
+<li>面向安全性设计（Security）：安全端点、API Gateway、端到端加密；</li>
+</ul>
+<h2 id="云原生应用程序"><a href="#云原生应用程序" class="headerlink" title="云原生应用程序"></a>云原生应用程序</h2><p>云原生应用程序被设计为在平台上运行，并设计用于弹性，敏捷性，可操作性和可观察性。弹性包含失败而不是试图阻止它们；它利用了在平台上运行的动态特性。敏捷性允许快速部署和快速迭代。可操作性从应用程序内部控制应用程序生命周期，而不是依赖外部进程和监视器。可观察性提供信息来回答有关应用程序状态的问题。</p>
+<p>实现云原生应用程序所需特性的常用方法：</p>
+<ul>
+<li>微服务</li>
+<li>健康报告</li>
+<li>遥测数据</li>
+<li>弹性</li>
+<li>声明式的，而不是命令式的</li>
+</ul>
+<h3 id="微服务"><a href="#微服务" class="headerlink" title="微服务"></a>微服务</h3><p>微服务 (Microservices) 是一种软件架构风格，它是以专注于单一责任与功能的小型功能区块 (Small Building Blocks) 为基础，利用模块化的方式组合出复杂的大型应用程序，各功能区块使用与语言无关 (Language-Independent/Language agnostic) 的 API 集相互通信。</p>
+<p>微服务是一种以业务功能为主的服务设计概念，每一个服务都具有自主运行的业务功能，对外开放不受语言限制的 API (最常用的是 HTTP)，应用程序则是由一个或多个微服务组成。</p>
+<h3 id="健康报告"><a href="#健康报告" class="headerlink" title="健康报告"></a>健康报告</h3><p>为了提高云原生应用程序的可操作性，应用程序应该暴露健康检查。开发人员可以将其实施为命令或过程信号，以便应用程序在执行自我检查之后响应，或者更常见的是：通过应用程序提供Web服务，返回HTTP状态码来检查健康状态。</p>
+<p>一个很好的例子就是当平台需要知道应用程序何时可以接收流量。在应用程序启动时，如果它不能正确处理流量，它就应该表现为未准备好。</p>
+<h3 id="遥测数据"><a href="#遥测数据" class="headerlink" title="遥测数据"></a>遥测数据</h3><p>遥测数据是进行决策所需的信息。确实，遥测数据可能与健康报告重叠，但它们有不同的用途。健康报告通知我们应用程序生命周期状态，而遥测数据通知我们应用程序业务目标。</p>
+<p>测量的指标有时称为服务级指标（SLI）或关键性能指标（KPI）。这些是特定于应用程序的数据，可以确保应用程序的性能处于服务级别目标（SLO）内。</p>
+<h3 id="弹性"><a href="#弹性" class="headerlink" title="弹性"></a>弹性</h3><p>一旦你有遥测和监测数据，你需要确保你的应用程序对故障有适应能力。弹性是基础设施的责任，但云原生应用程序也需要承担部分工作。在云原生应用程序中考虑弹性的两个主要方面：为失败设计和优雅降级。</p>
+<h4 id="为失败设计"><a href="#为失败设计" class="headerlink" title="为失败设计"></a>为失败设计</h4><p>设计一个以失败期望为目标的应用程序将比假定可用性的应用程序更具防御性。当故障不可避免时，将会有额外的检查，故障模式和日志内置到应用程序中。</p>
+<h4 id="优雅降级"><a href="#优雅降级" class="headerlink" title="优雅降级"></a>优雅降级</h4><p>云原生应用程序处理过载的一种方式。</p>
+<h3 id="声明式，非命令式"><a href="#声明式，非命令式" class="headerlink" title="声明式，非命令式"></a>声明式，非命令式</h3><p>声明式编程是一种编程范式，与命令式编程相对立。它描述目标的性质，让电脑明白目标，而非流程。声明式编程不用告诉电脑问题领域，从而避免随之而来的副作用。而命令式编程则需要用算法来明确的指出每一步该怎么做。</p>
+<p>声明式通信模型规范了通信模型，并且它将功能实现从应用程序转移到远程API或服务端点，从而实现某种状态到达期望状态。这有助于简化应用程序，并使它们彼此的行为更具可预测性。</p>
+<p>例子：SQL数据库<br>其实你很早就接触过声明式编程语言， SQL语言就是很典型的例子：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">WHERE</span> user_name = Ben</span><br></pre></td></tr></table></figure>
+<p>上面是一个很普通的SQL查询语句，我只只声明我想要找一个叫Ben的用户（What) , 就是不说SQL该怎么（How）去寻找怎么做。接下来我们看看如果用命令式语言写会是什么样的：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//user=[&#123;user_name:'ou',user_id=1&#125;,.....]</span></span><br><span class="line"><span class="keyword">var</span> user</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; user.length; i++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(user.user_name == <span class="string">"Ben"</span>)</span><br><span class="line">    &#123;</span><br><span class="line">         print(<span class="string">"find"</span>);</span><br><span class="line">         <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过上面的对比你可以看出声明式语言的优势-短小精悍，你并不会知道程序的控制流（control flow）我们不需要告诉程序如何去寻找（How），而是只告诉程序我们想要的结果（What），让程序自己来解决过程（How）。当然SQL具体的细节还是用命令式的编程风格来实现的。</p>
+<h1 id="Play-with-Kubernetes"><a href="#Play-with-Kubernetes" class="headerlink" title="Play with Kubernetes"></a>Play with Kubernetes</h1><h2 id="创建Kubernetes集群"><a href="#创建Kubernetes集群" class="headerlink" title="创建Kubernetes集群"></a>创建Kubernetes集群</h2><p>登陆Play with Kubernetes，启动第一个实例作为Master节点，在web终端上执行：</p>
+<ol>
+<li><p>初始化master节点：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">kubeadm init --apiserver-advertise-address $(hostname -i)</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[node1 ~]$ kubeadm init --apiserver-advertise-address $(hostname -i)</span><br><span class="line">Initializing machine ID from random generator.</span><br><span class="line">[init] using Kubernetes version: v1.11.10</span><br><span class="line">[preflight] running pre-flight checks</span><br><span class="line">        [WARNING Service-Docker]: docker service is not active, please run &#39;systemctl start docker.service&#39;</span><br><span class="line">        [WARNING FileContent--proc-sys-net-bridge-bridge-nf-call-iptables]: &#x2F;proc&#x2F;sys&#x2F;net&#x2F;bridge&#x2F;bridge-nf-call-iptables does not exist</span><br><span class="line">I1117 13:53:18.409493     885 kernel_validator.go:81] Validating kernel version</span><br><span class="line">I1117 13:53:18.409685     885 kernel_validator.go:96] Validating kernel config</span><br><span class="line">[preflight] The system verification failed. Printing the output from the verification:</span><br><span class="line">KERNEL_VERSION: 4.4.0-148-generic</span><br><span class="line">DOCKER_VERSION: 18.06.1-ce</span><br><span class="line">OS: Linux</span><br><span class="line">CGROUPS_CPU: enabled</span><br><span class="line">CGROUPS_CPUACCT: enabled</span><br><span class="line">CGROUPS_CPUSET: enabled</span><br><span class="line">CGROUPS_DEVICES: enabled</span><br><span class="line">CGROUPS_FREEZER: enabled</span><br><span class="line">CGROUPS_MEMORY: enabled</span><br><span class="line">        [WARNING SystemVerification]: docker version is greater than the most recently validated version. Docker version: 18.06.1-ce. Max validated version: 17.03</span><br><span class="line">        [WARNING SystemVerification]: failed to parse kernel config: unable to load kernel module &quot;configs&quot;: output - &quot;&quot;, err - exit status 1</span><br><span class="line"></span><br><span class="line">[preflight&#x2F;images] Pulling images required for setting up a Kubernetes cluster</span><br><span class="line">[preflight&#x2F;images] This might take a minute or two, depending on the speed of your internet connection</span><br><span class="line">[preflight&#x2F;images] You can also perform this action in beforehand using &#39;kubeadm config images pull&#39;</span><br><span class="line">[kubelet] Writing kubelet environment file with flags to file &quot;&#x2F;var&#x2F;lib&#x2F;kubelet&#x2F;kubeadm-flags.env&quot;</span><br><span class="line">[kubelet] Writing kubelet configuration to file &quot;&#x2F;var&#x2F;lib&#x2F;kubelet&#x2F;config.yaml&quot;</span><br><span class="line">[preflight] Activating the kubelet service</span><br><span class="line">[certificates] Generated ca certificate and key.</span><br><span class="line">[certificates] Generated apiserver certificate and key.</span><br><span class="line">[certificates] apiserver serving cert is signed for DNS names [node1 kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local] and IPs [10.96.0.1 192.168.0.18]</span><br><span class="line">[certificates] Generated apiserver-kubelet-client certificate and key.</span><br><span class="line">[certificates] Generated sa key and public key.</span><br><span class="line">[certificates] Generated front-proxy-ca certificate and key.</span><br><span class="line">[certificates] Generated front-proxy-client certificate and key.</span><br><span class="line">[certificates] Generated etcd&#x2F;ca certificate and key.</span><br><span class="line">[certificates] Generated etcd&#x2F;server certificate and key.</span><br><span class="line">[certificates] etcd&#x2F;server serving cert is signed for DNS names [node1 localhost] and IPs [127.0.0.1 ::1]</span><br><span class="line">[certificates] Generated etcd&#x2F;peer certificate and key.</span><br><span class="line">[certificates] etcd&#x2F;peer serving cert is signed for DNS names [node1 localhost] and IPs [192.168.0.18 127.0.0.1 ::1]</span><br><span class="line">[certificates] Generated etcd&#x2F;healthcheck-client certificate and key.</span><br><span class="line">[certificates] Generated apiserver-etcd-client certificate and key.</span><br><span class="line">[certificates] valid certificates and keys now exist in &quot;&#x2F;etc&#x2F;kubernetes&#x2F;pki&quot;</span><br><span class="line">[kubeconfig] Wrote KubeConfig file to disk: &quot;&#x2F;etc&#x2F;kubernetes&#x2F;admin.conf&quot;</span><br><span class="line">[kubeconfig] Wrote KubeConfig file to disk: &quot;&#x2F;etc&#x2F;kubernetes&#x2F;kubelet.conf&quot;</span><br><span class="line">[kubeconfig] Wrote KubeConfig file to disk: &quot;&#x2F;etc&#x2F;kubernetes&#x2F;controller-manager.conf&quot;</span><br><span class="line">[kubeconfig] Wrote KubeConfig file to disk: &quot;&#x2F;etc&#x2F;kubernetes&#x2F;scheduler.conf&quot;</span><br><span class="line">[controlplane] wrote Static Pod manifest for component kube-apiserver to &quot;&#x2F;etc&#x2F;kubernetes&#x2F;manifests&#x2F;kube-apiserver.yaml&quot;</span><br><span class="line">[controlplane] wrote Static Pod manifest for component kube-controller-manager to &quot;&#x2F;etc&#x2F;kubernetes&#x2F;manifests&#x2F;kube-controller-manager.yaml&quot;</span><br><span class="line">[controlplane] wrote Static Pod manifest for component kube-scheduler to &quot;&#x2F;etc&#x2F;kubernetes&#x2F;manifests&#x2F;kube-scheduler.yaml&quot;</span><br><span class="line">[etcd] Wrote Static Pod manifest for a local etcd instance to &quot;&#x2F;etc&#x2F;kubernetes&#x2F;manifests&#x2F;etcd.yaml&quot;</span><br><span class="line">[init] waiting for the kubelet to boot up the control plane as Static Pods from directory &quot;&#x2F;etc&#x2F;kubernetes&#x2F;manifests&quot;</span><br><span class="line">[init] this might take a minute or longer if the control plane images have to be pulled</span><br><span class="line">[apiclient] All control plane components are healthy after 51.503514 seconds</span><br><span class="line">[uploadconfig] storing the configuration used in ConfigMap &quot;kubeadm-config&quot; in the &quot;kube-system&quot; Namespace</span><br><span class="line">[kubelet] Creating a ConfigMap &quot;kubelet-config-1.11&quot; in namespace kube-system with the configuration for the kubelets in the cluster</span><br><span class="line">[markmaster] Marking the node node1 as master by adding the label &quot;node-role.kubernetes.io&#x2F;master&#x3D;&#39;&#39;&quot;</span><br><span class="line">[markmaster] Marking the node node1 as master by adding the taints [node-role.kubernetes.io&#x2F;master:NoSchedule]</span><br><span class="line">[patchnode] Uploading the CRI Socket information &quot;&#x2F;var&#x2F;run&#x2F;dockershim.sock&quot; to the Node API object &quot;node1&quot; as an annotation</span><br><span class="line">[bootstraptoken] using token: 5f1nyz.351cet8vt4g2ix78</span><br><span class="line">[bootstraptoken] configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order for nodes to get long term certificate credentials</span><br><span class="line">[bootstraptoken] configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token</span><br><span class="line">[bootstraptoken] configured RBAC rules to allow certificate rotation for all node client certificates in the cluster</span><br><span class="line">[bootstraptoken] creating the &quot;cluster-info&quot; ConfigMap in the &quot;kube-public&quot; namespace</span><br><span class="line">[addons] Applied essential addon: CoreDNS</span><br><span class="line">[addons] Applied essential addon: kube-proxy</span><br><span class="line"></span><br><span class="line">Your Kubernetes master has initialized successfully!</span><br><span class="line"></span><br><span class="line">To start using your cluster, you need to run the following as a regular user:</span><br><span class="line"></span><br><span class="line">  mkdir -p $HOME&#x2F;.kube</span><br><span class="line">  sudo cp -i &#x2F;etc&#x2F;kubernetes&#x2F;admin.conf $HOME&#x2F;.kube&#x2F;config</span><br><span class="line">  sudo chown $(id -u):$(id -g) $HOME&#x2F;.kube&#x2F;config</span><br><span class="line"></span><br><span class="line">You should now deploy a pod network to the cluster.</span><br><span class="line">Run &quot;kubectl apply -f [podnetwork].yaml&quot; with one of the options listed at:</span><br><span class="line">  https:&#x2F;&#x2F;kubernetes.io&#x2F;docs&#x2F;concepts&#x2F;cluster-administration&#x2F;addons&#x2F;</span><br><span class="line"></span><br><span class="line">You can now join any number of machines by running the following on each node</span><br><span class="line">as root:</span><br><span class="line"></span><br><span class="line">  kubeadm join 192.168.0.18:6443 --token 5f1nyz.351cet8vt4g2ix78 --discovery-token-ca-cert-hash sha256:d105d049cf090f7814473e5554b79e09cd13e4acfd8a56b09754ba9181d08fd8</span><br><span class="line"></span><br><span class="line">Waiting for api server to startup</span><br><span class="line">Warning: kubectl apply should be used on resource created by either kubectl create --save-config or kubectl apply</span><br><span class="line">daemonset.extensions&#x2F;kube-proxy configured</span><br><span class="line">No resources found</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>初始化集群网络：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">kubectl apply -n kube-system -f  "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">serviceaccount&#x2F;weave-net created</span><br><span class="line">clusterrole.rbac.authorization.k8s.io&#x2F;weave-net created</span><br><span class="line">clusterrolebinding.rbac.authorization.k8s.io&#x2F;weave-net created</span><br><span class="line">role.rbac.authorization.k8s.io&#x2F;weave-net created</span><br><span class="line">rolebinding.rbac.authorization.k8s.io&#x2F;weave-net created</span><br><span class="line">daemonset.apps&#x2F;weave-net created</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行下列初始化命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir -p $HOME/.kube</span><br><span class="line">cp -i /etc/kubernetes/admin.conf $HOME/.kube/config</span><br><span class="line">chown $(id -u):$(id -g) $HOME/.kube/config</span><br></pre></td></tr></table></figure></li>
+<li><p>根据master节点上的提示，在新的web终端上执行：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">kubeadm join 192.168.0.18:6443 --token 5f1nyz.351cet8vt4g2ix78 --discovery-token-ca-cert-hash sha256:d105d049cf090f7814473e5554b79e09cd13e4acfd8a56b09754ba9181d08fd8</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[preflight] running pre-flight checks</span><br><span class="line">        [WARNING DirAvailable--etc-kubernetes-manifests]: &#x2F;etc&#x2F;kubernetes&#x2F;manifests is not empty</span><br><span class="line">        [WARNING FileAvailable--etc-kubernetes-pki-ca.crt]: &#x2F;etc&#x2F;kubernetes&#x2F;pki&#x2F;ca.crt already exists</span><br><span class="line">        [WARNING FileAvailable--etc-kubernetes-kubelet.conf]: &#x2F;etc&#x2F;kubernetes&#x2F;kubelet.conf already exists</span><br><span class="line">        [WARNING RequiredIPVSKernelModulesAvailable]: error getting required builtin kernel modules: exit status 1(cut: &#x2F;lib&#x2F;modules&#x2F;4.4.0-166-generic&#x2F;modules.builtin: No such file or directory</span><br><span class="line">)</span><br><span class="line">        [WARNING Service-Docker]: docker service is not active, please run &#39;systemctl start docker.service&#39;</span><br><span class="line">        [WARNING FileContent--proc-sys-net-bridge-bridge-nf-call-iptables]: &#x2F;proc&#x2F;sys&#x2F;net&#x2F;bridge&#x2F;bridge-nf-call-iptables does not exist</span><br><span class="line">I1117 14:09:02.416363    7243 kernel_validator.go:81] Validating kernel version</span><br><span class="line">I1117 14:09:02.419283    7243 kernel_validator.go:96] Validating kernel config</span><br><span class="line">[preflight] The system verification failed. Printing the output from the verification:</span><br><span class="line">KERNEL_VERSION: 4.4.0-166-generic</span><br><span class="line">DOCKER_VERSION: 18.06.1-ce</span><br><span class="line">OS: Linux</span><br><span class="line">CGROUPS_CPU: enabled</span><br><span class="line">CGROUPS_CPUACCT: enabled</span><br><span class="line">CGROUPS_CPUSET: enabled</span><br><span class="line">CGROUPS_DEVICES: enabled</span><br><span class="line">CGROUPS_FREEZER: enabled</span><br><span class="line">CGROUPS_MEMORY: enabled</span><br><span class="line">        [WARNING SystemVerification]: docker version is greater than the most recently validated version. Docker version: 18.06.1-ce. Max validated version: 17.03</span><br><span class="line">        [WARNING SystemVerification]: failed to parse kernel config: unable to load kernel module &quot;configs&quot;: output - &quot;&quot;, err - exit status 1</span><br><span class="line">        [WARNING Port-10250]: Port 10250 is in use</span><br><span class="line">[discovery] Trying to connect to API Server &quot;192.168.0.28:6443&quot;</span><br><span class="line">[discovery] Created cluster-info discovery client, requesting info from &quot;https:&#x2F;&#x2F;192.168.0.28:6443&quot;</span><br><span class="line">[discovery] Requesting info from &quot;https:&#x2F;&#x2F;192.168.0.28:6443&quot; again to validate TLS against the pinned public key</span><br><span class="line">[discovery] Cluster info signature and contents are valid and TLS certificate validates against pinned roots, will use API Server &quot;192.168.0.28:6443&quot;</span><br><span class="line">[discovery] Successfully established connection with API Server &quot;192.168.0.28:6443&quot;</span><br><span class="line">[kubelet] Downloading configuration for the kubelet from the &quot;kubelet-config-1.11&quot; ConfigMap in the kube-system namespace</span><br><span class="line">[kubelet] Writing kubelet configuration to file &quot;&#x2F;var&#x2F;lib&#x2F;kubelet&#x2F;config.yaml&quot;</span><br><span class="line">[kubelet] Writing kubelet environment file with flags to file &quot;&#x2F;var&#x2F;lib&#x2F;kubelet&#x2F;kubeadm-flags.env&quot;</span><br><span class="line">[preflight] Activating the kubelet service</span><br><span class="line">[tlsbootstrap] Waiting for the kubelet to perform the TLS Bootstrap...</span><br><span class="line">[patchnode] Uploading the CRI Socket information &quot;&#x2F;var&#x2F;run&#x2F;dockershim.sock&quot; to the Node API object &quot;node1&quot; as an annotation</span><br><span class="line"></span><br><span class="line">This node has joined the cluster:</span><br><span class="line">* Certificate signing request was sent to master and a response</span><br><span class="line">  was received.</span><br><span class="line">* The Kubelet was informed of the new secure connection details.</span><br><span class="line"></span><br><span class="line">Run &#39;kubectl get nodes&#39; on the master to see this node join the cluster.</span><br></pre></td></tr></table></figure>
+<p>多开几个实例，重复执行第四步，即可向Kubernetes集群中增加节点。</p>
+</li>
+</ol>
+<p>此时在master节点上执行<code>kubectl get nodes</code>查看节点所有节点状态：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[node1 ~]$ kubectl get nodes</span><br><span class="line">NAME      STATUS    ROLES     AGE       VERSION</span><br><span class="line">node1     Ready     master    19m       v1.11.3</span><br><span class="line">node2     Ready     &lt;none&gt;    2m        v1.11.3</span><br><span class="line">node3     Ready     &lt;none&gt;    1m        v1.11.3</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建nginx-deployment"><a href="#创建nginx-deployment" class="headerlink" title="创建nginx deployment"></a>创建nginx deployment</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[node1 ~]$ curl https://raw.githubusercontent.com/kubernetes/website/master/content/en/examples/application/nginx-app.yaml &gt; nginx-app.yaml</span><br><span class="line"><span class="meta">  %</span><span class="bash"> Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span></span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">100   497  100   497    0     0   1252      0 --:--:-- --:--:-- --:--:--  1255</span><br><span class="line">[node1 ~]$</span><br><span class="line">[node1 ~]$ kubectl apply -f nginx-app.yaml</span><br><span class="line">service/my-nginx-svc created</span><br><span class="line">deployment.apps/my-nginx created</span><br></pre></td></tr></table></figure>
+<p>此时查看nodes和pods：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[node1 ~]$ kubectl get nodes</span><br><span class="line">NAME      STATUS    ROLES     AGE       VERSION</span><br><span class="line">node1     Ready     master    29m       v1.11.3</span><br><span class="line">node2     Ready     &lt;none&gt;    11m       v1.11.3</span><br><span class="line">node3     Ready     &lt;none&gt;    11m       v1.11.3</span><br><span class="line">[node1 ~]$</span><br><span class="line">[node1 ~]$ kubectl get pods</span><br><span class="line">NAME                        READY     STATUS    RESTARTS   AGE</span><br><span class="line">my-nginx-67594d6bf6-2cbbz   1/1       Running   0          1m</span><br><span class="line">my-nginx-67594d6bf6-r2p6w   1/1       Running   0          1m</span><br><span class="line">my-nginx-67594d6bf6-vjqn4   1/1       Running   0          1m</span><br></pre></td></tr></table></figure>
+
+
+<p>参考来源：</p>
+<ol>
+<li><a href="https://github.com/cncf/toc/blob/master/DEFINITION.md" target="_blank" rel="noopener">https://github.com/cncf/toc/blob/master/DEFINITION.md</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%BE%AE%E6%9C%8D%E5%8B%99" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/%E5%BE%AE%E6%9C%8D%E5%8B%99</a></li>
+<li><a href="https://zh.wikipedia.org/zh-cn/%E5%AE%A3%E5%91%8A%E5%BC%8F%E7%B7%A8%E7%A8%8B" target="_blank" rel="noopener">https://zh.wikipedia.org/zh-cn/%E5%AE%A3%E5%91%8A%E5%BC%8F%E7%B7%A8%E7%A8%8B</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/34445114" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/34445114</a></li>
+<li><a href="https://labs.play-with-k8s.com/" target="_blank" rel="noopener">https://labs.play-with-k8s.com/</a></li>
+</ol>
+]]></content>
+  </entry>
+  <entry>
+    <title>Service Mesh概述</title>
+    <url>/2020/01/28/Introduction-of-Service-Mesh/</url>
+    <content><![CDATA[<h1 id="什么是服务网格？"><a href="#什么是服务网格？" class="headerlink" title="什么是服务网格？"></a>什么是服务网格？</h1><p>服务网格是用于处理服务间通信的专用基础设施层。它负责通过包含现代云原生应用程序的复杂服务拓扑来可靠地传递请求。实际上，服务网格通常通过一组轻量级网络代理来实现，这些代理与应用程序代码一起部署，而不需要感知应用程序本身。</p>
+<h2 id="服务网格的特点"><a href="#服务网格的特点" class="headerlink" title="服务网格的特点"></a>服务网格的特点</h2><p>服务网格有如下几个特点：</p>
+<ul>
+<li>应用程序间通讯的中间层</li>
+<li>轻量级网络代理</li>
+<li>应用程序无感知</li>
+<li>解耦应用程序的重试/超时、监控、追踪和服务发现</li>
+</ul>
+<h2 id="理解服务网格"><a href="#理解服务网格" class="headerlink" title="理解服务网格"></a>理解服务网格</h2><p>如果用一句话来解释什么是服务网格，可以将它比作是应用程序或者说微服务间的 TCP/IP，负责服务之间的网络调用、限流、熔断和监控。</p>
+<p>服务网格的架构如下图所示：<br><img src="https://img-blog.csdnimg.cn/20191116230107526.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70" alt="Service Mesh架构图"></p>
+<h2 id="为何使用服务网格？"><a href="#为何使用服务网格？" class="headerlink" title="为何使用服务网格？"></a>为何使用服务网格？</h2><p>服务网格并没有给我们带来新功能，它是用于解决其他工具已经解决过的问题，只不过这次是在云原生的 Kubernetes 环境下的实现。</p>
+<p>在传统的 MVC 三层 Web 应用程序架构下，服务之间的通讯并不复杂，在应用程序内部自己管理即可，但是在现今的复杂的大型网站情况下，单体应用被分解为众多的微服务，服务之间的依赖和通讯十分复杂，出现了 twitter 开发的 Finagle、Netflix 开发的 Hystrix 和 Google 的 Stubby 这样的 “胖客户端” 库，这些就是早期的服务网格，但是它们都仅适用于特定的环境和特定的开发语言，并不能作为平台级的服务网格支持。</p>
+<p>在云原生架构下，容器的使用给予了异构应用程序的更多可行性，Kubernetes 增强的应用的横向扩容能力，用户可以快速的编排出复杂环境、复杂依赖关系的应用程序，同时开发者又无须过多关心应用程序的监控、扩展性、服务发现和分布式追踪这些繁琐的事情而专注于程序开发，赋予开发者更多的创造性。</p>
+<h1 id="服务网格架构"><a href="#服务网格架构" class="headerlink" title="服务网格架构"></a>服务网格架构</h1><p>服务网格中分为控制平面和数据平面，当前流行的两款开源的服务网格 Istio 和 Linkerd 实际上都是这种架构，只不过 Istio 的划分更清晰，而且部署更零散，很多组件都被拆分，控制平面中包括 Mixer、Pilot、Citadel，数据平面默认是用 Envoy；而 Linkerd 中只分为 Linkerd 做数据平面，namerd 作为控制平面。</p>
+<p><strong>控制平面的特点</strong></p>
+<ul>
+<li>不直接解析数据包</li>
+<li>与数据平面中的代理通信，下发策略和配置</li>
+<li>负责网络行为的可视化</li>
+<li>通常提供 API 或者命令行工具可用于配置版本化管理，便于持续集成和部署</li>
+</ul>
+<p><strong>数据平面的特点</strong></p>
+<ul>
+<li>通常是按照无状态目标设计的，但实际上为了提高流量转发性能，需要缓存一些数据，因此无状态也是有争议的</li>
+<li>直接处理入站和出站数据包，转发、路由、健康检查、负载均衡、认证、鉴权、产生监控数据等</li>
+<li>对应用来说透明，即可以做到无感知部署</li>
+</ul>
+<h2 id="服务网格的实现模式"><a href="#服务网格的实现模式" class="headerlink" title="服务网格的实现模式"></a>服务网格的实现模式</h2><p>Service Mesh 架构示意图：<br><img src="https://img-blog.csdnimg.cn/20191116231047738.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70" alt="Service Mesh架构示意图"></p>
+<h2 id="Istio-架构解析"><a href="#Istio-架构解析" class="headerlink" title="Istio 架构解析"></a>Istio 架构解析</h2><p><img src="https://img-blog.csdnimg.cn/20191116231618741.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<ul>
+<li>Istio 是独立于平台的，可以在 Kubernetes 、 Consul 、虚拟机上部署的服务</li>
+<li>Istio 的组成<ul>
+<li>Envoy：智能代理、流量控制</li>
+<li>Pilot：服务发现、流量管理</li>
+<li>Mixer：访问控制、遥测</li>
+<li>Citadel：终端用户认证、流量加密</li>
+<li>Galley（1.1新增）：验证、处理和分配配置</li>
+</ul>
+</li>
+<li>Service mesh 关注的方面<ul>
+<li>可观察性</li>
+<li>安全性</li>
+<li>可运维性</li>
+<li>可拓展性</li>
+</ul>
+</li>
+<li>Istio 的策略执行组件可以扩展和定制，同时也是可拔插的</li>
+<li>Istio 在数据平面为每个服务中注入一个 Envoy 代理以 Sidecar 形式运行来劫持所有进出服务的流量，同时对流量加以控制，通俗的讲就是应用程序你只管处理你的业务逻辑，其他的事情 Sidecar 会汇报给 Istio 控制平面处理</li>
+<li>应用程序只需关注于业务逻辑（这才能生钱）即可，非功能性需求交给 Istio</li>
+</ul>
+<p><strong>设计目标</strong></p>
+<ul>
+<li>最大化透明度</li>
+<li>可扩展性</li>
+<li>可移植性</li>
+<li>策略一致性</li>
+</ul>
+<h2 id="从边车模式到-Service-Mesh"><a href="#从边车模式到-Service-Mesh" class="headerlink" title="从边车模式到 Service Mesh"></a>从边车模式到 Service Mesh</h2><h3 id="什么是边车模式"><a href="#什么是边车模式" class="headerlink" title="什么是边车模式"></a>什么是边车模式</h3><blockquote>
+<p>Deploy components of an application into a separate process or container to provide isolation and encapsulation.<br>— Sidecar pattern</p>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/2019111623235962.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70" alt="SideCar"></p>
+<h3 id="边车模式设计"><a href="#边车模式设计" class="headerlink" title="边车模式设计"></a>边车模式设计</h3><p>有两种方法来实现边车模式：</p>
+<ul>
+<li>通过 SDK、Lib 等软件包的形式，在开发时引入该软件包依赖，使其与业务服务集成起来。</li>
+<li>以 Sidecar 的形式，在运维的时候与应用服务集成在一起。</li>
+</ul>
+<h3 id="边车模式解决了什么问题"><a href="#边车模式解决了什么问题" class="headerlink" title="边车模式解决了什么问题"></a>边车模式解决了什么问题</h3><ul>
+<li>控制与逻辑分离的问题<ul>
+<li>业务代码只需要关心其复杂的业务逻辑</li>
+<li>日志记录、监控、流量控制、服务注册、服务发现、服务限流、服务熔断、鉴权、访问控制等交给边车</li>
+</ul>
+</li>
+<li>解决服务之间调用越来越复杂的问题<ul>
+<li>随着分布式架构越来越复杂和微服务越拆越细，我们越来越迫切的希望有一个统一的控制面来管理我们的微服务，来帮助我们维护和管理所有微服务</li>
+</ul>
+</li>
+</ul>
+<h3 id="从边车模式到-Service-Mesh-1"><a href="#从边车模式到-Service-Mesh-1" class="headerlink" title="从边车模式到 Service Mesh"></a>从边车模式到 Service Mesh</h3><p>遵循边车模式进行实践从很早以前就开始了，开发人员一直试图将服务治理等通用功能提取成一个标准化的 Sidecar ，通过 Sidecar 代理来与其他系统进行交互，这样可以大大简化业务开发和运维。而随着分布式架构和微服务被越来越多的公司和开发者接受并使用，这一需求日益凸显。这就是 Service Mesh 服务网格诞生的契机，它是 CNCF（Cloud Native Computing Foundation，云原生基金会）目前主推的新一代微服务架构。</p>
+<p>Service Mesh 将底层那些难以控制的网络通讯统一管理，诸如：流量管控，丢包重试，访问控制等。而上层的应用层协议只需关心业务逻辑即可。Service Mesh 是一个用于处理服务间通信的基础设施层，它负责为构建复杂的云原生应用传递可靠的网络请求。</p>
+<h1 id="Kubernetes-vs-Service-Mesh"><a href="#Kubernetes-vs-Service-Mesh" class="headerlink" title="Kubernetes vs Service Mesh"></a>Kubernetes vs Service Mesh</h1><blockquote>
+<p>Kubernetes 管理的对象是 Pod，Service Mesh 中管理的对象是 Service。</p>
+</blockquote>
+<ul>
+<li>Kubernetes 的本质是应用的生命周期管理，具体来说就是部署和管理（扩缩容、自动恢复、发布）。</li>
+<li>Kubernetes 为微服务提供了可扩展、高弹性的部署和管理平台。</li>
+<li>Service Mesh 的基础是透明代理，通过 sidecar proxy 拦截到微服务间流量后再通过控制平面配置管理微服务的行为。</li>
+<li>Service Mesh 将流量管理从 Kubernetes 中解耦，Service Mesh 内部的流量无需 kube-proxy 组件的支持，通过为更接近微服务应用层的抽象，管理服务间的流量、安全性和可观察性。</li>
+<li>Service Mesh 是对 Kubernetes 中的 service 更上层的抽象，它的下一步是 serverless。</li>
+</ul>
+<hr>
+<p>本文是针对ServiceMesher社区系列文章而整理的学习笔记，文章地址：<a href="https://www.servicemesher.com/istio-handbook/intro/service-mesh-the-microservices-in-post-kubernetes-era.html" target="_blank" rel="noopener">https://www.servicemesher.com/istio-handbook/intro/service-mesh-the-microservices-in-post-kubernetes-era.html</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>API网关概述</title>
+    <url>/2020/01/27/Introduction-of-API-GateWay/</url>
+    <content><![CDATA[<h1 id="1-背景"><a href="#1-背景" class="headerlink" title="1 背景"></a>1 背景</h1><ul>
+<li>由于后端的微服务拆分，客户端通常需要请求多个服务获取所需数据。</li>
+<li>不同客户端所需要的数据不一样。例如，PC需要的数据通常比移动端更加详细。</li>
+<li>不同客户端网络环境差异大。例如，WAN vs LAN，移动网络 vs 非移动网络。</li>
+<li>服务端实例的地址信息（IP + port）会动态更新。</li>
+<li>微服务的拆分逻辑会变化，这种变化应该应该对客户端透明。</li>
+<li>不同的服务可能采用不同的协议，有些协议是非web的。</li>
+</ul>
+<h1 id="2-什么是API网关？"><a href="#2-什么是API网关？" class="headerlink" title="2 什么是API网关？"></a>2 什么是API网关？</h1><p>API网关接收客户端的所有请求，并将请求路由到相应的后端服务，并提供接口聚合和协议转换。通常来说，API网关通过调用多个后端服务，并聚合结果的方式处理请求。它可将web协议转化为非web的内部后台协议。</p>
+<p>核心功能：</p>
+<ul>
+<li>服务发现：</li>
+<li>负载均衡：以某种算法分摊系统压力。</li>
+<li>服务熔断：直接返回失败或者执行降价逻辑，防止雪崩。</li>
+<li>流量控制：防止短时间内大量请求转发到后台压垮服务器。</li>
+<li>认证鉴权：验证客户端的请求是否被授权。</li>
+<li>灰度发布：</li>
+</ul>
+<p>其他功能：</p>
+<ul>
+<li>协议转换：web协议转非Web协议。</li>
+<li>参数校验：对入参设置校验规则，由网关根据规则对无效请求进行过滤。</li>
+<li>API管理：包括 API 的创建、测试、发布、下线、版本切换等。</li>
+<li>监控告警：监控API请求次数、API调用延迟和API错误信息。</li>
+<li>SDK生成：</li>
+</ul>
+<h1 id="3-实现方式"><a href="#3-实现方式" class="headerlink" title="3 实现方式"></a>3 实现方式</h1><p>将API网关作为客户端的唯一接入点。API网关主要有两种类型：</p>
+<ul>
+<li>one-size-fits-all网关</li>
+<li>Backends for frontends网关</li>
+</ul>
+<h2 id="3-1-One-size-fits-all网关"><a href="#3-1-One-size-fits-all网关" class="headerlink" title="3.1 One-size-fits-all网关"></a>3.1 One-size-fits-all网关</h2><p>简单地将请求路由到相应服务。将请求扇出到多个后端服务。<br><img src="https://img-blog.csdnimg.cn/20191013124932708.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70" alt="OSFA API Gateway"></p>
+<h2 id="3-2-Backends-for-fronts网关"><a href="#3-2-Backends-for-fronts网关" class="headerlink" title="3.2 Backends for fronts网关"></a>3.2 Backends for fronts网关</h2><p>为每种客户端暴露不同的API。为每种客户端设计一个API网关，每个API网关为其客户端提供一种API。<br><img src="https://img-blog.csdnimg.cn/20191013125314703.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70" alt="Backends fro frontends API Gateway"></p>
+<h1 id="4-优点"><a href="#4-优点" class="headerlink" title="4 优点"></a>4 优点</h1><ul>
+<li>使后端的微服务拆分对客户端透明。</li>
+<li>客户端无需关心后端服务的实例地址（IP + port）。</li>
+<li>可为每个客户端提供最优API。</li>
+<li>减少请求次数。</li>
+<li>简化客户端的逻辑（由调用多个后台服务变为只调用API网关）。</li>
+<li>可将标准的Web API协议转化为任意的后端协议。</li>
+</ul>
+<h1 id="5-缺点"><a href="#5-缺点" class="headerlink" title="5 缺点"></a>5 缺点</h1><ul>
+<li>增加复杂性。增加了API网关模块，带来了额外的开发、部署、管理成本。</li>
+<li>增加响应时间。调用链路多了一跳（API网关）。</li>
+</ul>
+<p><strong>Issues:</strong></p>
+<blockquote>
+<p>How implement the API gateway?<br>event-driven/reactive approach is the best if it must scale to handle high loads.</p>
+</blockquote>
+<p>参考来源：<br>[1] <a href="https://microservices.io/patterns/apigateway.html" target="_blank" rel="noopener">https://microservices.io/patterns/apigateway.html</a><br>[2] <a href="https://www.nginx.com/learn/api-gateway/" target="_blank" rel="noopener">https://www.nginx.com/learn/api-gateway/</a><br>[3] <a href="https://aws.amazon.com/cn/api-gateway/features/" target="_blank" rel="noopener">https://aws.amazon.com/cn/api-gateway/features/</a><br>[4] <a href="https://cloud.tencent.com/document/product/628/11755" target="_blank" rel="noopener">https://cloud.tencent.com/document/product/628/11755</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>如何通过GitHub+Hexo搭建博客</title>
+    <url>/2020/01/27/How-to-create-a-hexo-blog/</url>
+    <content><![CDATA[<h2 id="安装Node"><a href="#安装Node" class="headerlink" title="安装Node"></a>安装Node</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ brew install node</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ npm install -g hexo</span><br></pre></td></tr></table></figure>
+
+<h2 id="初始化Hexo"><a href="#初始化Hexo" class="headerlink" title="初始化Hexo"></a>初始化Hexo</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo init</span><br></pre></td></tr></table></figure>
+
+<h2 id="生成网页文件和开启服务器"><a href="#生成网页文件和开启服务器" class="headerlink" title="生成网页文件和开启服务器"></a>生成网页文件和开启服务器</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo g</span><br><span class="line">$ hexo s</span><br></pre></td></tr></table></figure>
+
+<h2 id="关联Github"><a href="#关联Github" class="headerlink" title="关联Github"></a>关联Github</h2><ol>
+<li><p>修改<code>_config.yml</code>，修改deploy为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: &#39;git&#39;</span><br><span class="line">  repository: https:&#x2F;&#x2F;github.com&#x2F;xzygis&#x2F;xzygis.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>生成静态文件并上传Github</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo g</span><br><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>若执行<code>hexo d</code>出错则执行<code>npm install hexo-deployer-git --save</code>。</p>
+<p>执行<code>hexo d</code>会提示输入用户名密码。</p>
+<h2 id="配置next主题"><a href="#配置next主题" class="headerlink" title="配置next主题"></a>配置next主题</h2><p>在blog目录下执行</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git clone --branch v5.1.4 https:&#x2F;&#x2F;github.com&#x2F;iissnan&#x2F;hexo-theme-next themes&#x2F;next</span><br></pre></td></tr></table></figure>
+
+<p>修改<code>_config.yml</code>，设置theme为next。</p>
+]]></content>
+  </entry>
+</search>

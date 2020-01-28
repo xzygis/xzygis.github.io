@@ -557,7 +557,7 @@
 
   
 
-
+  
 
         </div>
         
@@ -895,6 +895,24 @@
 
 
 
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: 'b2c2749b4ed086131ab7',
+      clientSecret: '09966e6554398b37329537ccde07740f170f4b72',
+      repo: 'BlogComment',
+      owner: 'xzygis',
+      admin: ['xzygis'],
+      id: location.pathname,
+      distractionFreeMode: 'false'
+    })
+    gitalk.render('gitalk-container')
+  </script>
 
 
 

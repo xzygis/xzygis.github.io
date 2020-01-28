@@ -79,14 +79,21 @@
 
 
 
-<meta name="description" content="聊技术，谈人生">
-<meta property="og:type" content="website">
-<meta property="og:title" content="聊斋志技">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="什么是服务网格？服务网格是用于处理服务间通信的专用基础设施层。它负责通过包含现代云原生应用程序的复杂服务拓扑来可靠地传递请求。实际上，服务网格通常通过一组轻量级网络代理来实现，这些代理与应用程序代码一起部署，而不需要感知应用程序本身。 服务网格的特点服务网格有如下几个特点：  应用程序间通讯的中间层 轻量级网络代理 应用程序无感知 解耦应用程序的重试&#x2F;超时、监控、追踪和服务发现  理解服务网格如果">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Service Mesh概述">
+<meta property="og:url" content="http://yoursite.com/2020/01/28/Introduction-of-Service-Mesh/index.html">
 <meta property="og:site_name" content="聊斋志技">
-<meta property="og:description" content="聊技术，谈人生">
+<meta property="og:description" content="什么是服务网格？服务网格是用于处理服务间通信的专用基础设施层。它负责通过包含现代云原生应用程序的复杂服务拓扑来可靠地传递请求。实际上，服务网格通常通过一组轻量级网络代理来实现，这些代理与应用程序代码一起部署，而不需要感知应用程序本身。 服务网格的特点服务网格有如下几个特点：  应用程序间通讯的中间层 轻量级网络代理 应用程序无感知 解耦应用程序的重试&#x2F;超时、监控、追踪和服务发现  理解服务网格如果">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191116230107526.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191116231047738.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191116231618741.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2019111623235962.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2020-01-28T06:48:01.000Z">
+<meta property="article:modified_time" content="2020-01-28T06:50:40.467Z">
 <meta property="article:author" content="楚兴">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20191116230107526.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70">
 
 
 
@@ -116,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/01/28/Introduction-of-Service-Mesh/"/>
 
 
 
 
 
-  <title>聊斋志技</title>
+  <title>Service Mesh概述 | 聊斋志技</title>
   
 
 
@@ -141,8 +148,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -215,9 +221,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -247,9 +253,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/01/28/Introduction-of-Service-Mesh/" itemprop="url">Service Mesh概述</a></h1>
+          <h1 class="post-title" itemprop="name headline">Service Mesh概述</h1>
         
 
         <div class="post-meta">
@@ -299,9 +303,7 @@
       
 
       
-        
-          
-            <h1 id="什么是服务网格？"><a href="#什么是服务网格？" class="headerlink" title="什么是服务网格？"></a>什么是服务网格？</h1><p>服务网格是用于处理服务间通信的专用基础设施层。它负责通过包含现代云原生应用程序的复杂服务拓扑来可靠地传递请求。实际上，服务网格通常通过一组轻量级网络代理来实现，这些代理与应用程序代码一起部署，而不需要感知应用程序本身。</p>
+        <h1 id="什么是服务网格？"><a href="#什么是服务网格？" class="headerlink" title="什么是服务网格？"></a>什么是服务网格？</h1><p>服务网格是用于处理服务间通信的专用基础设施层。它负责通过包含现代云原生应用程序的复杂服务拓扑来可靠地传递请求。实际上，服务网格通常通过一组轻量级网络代理来实现，这些代理与应用程序代码一起部署，而不需要感知应用程序本身。</p>
 <h2 id="服务网格的特点"><a href="#服务网格的特点" class="headerlink" title="服务网格的特点"></a>服务网格的特点</h2><p>服务网格有如下几个特点：</p>
 <ul>
 <li>应用程序间通讯的中间层</li>
@@ -393,8 +395,6 @@
 <hr>
 <p>本文是针对ServiceMesher社区系列文章而整理的学习笔记，文章地址：<a href="https://www.servicemesher.com/istio-handbook/intro/service-mesh-the-microservices-in-post-kubernetes-era.html" target="_blank" rel="noopener">https://www.servicemesher.com/istio-handbook/intro/service-mesh-the-microservices-in-post-kubernetes-era.html</a></p>
 
-          
-        
       
     </div>
     
@@ -411,181 +411,28 @@
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/27/Introduction-of-API-GateWay/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="楚兴">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="聊斋志技">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/01/27/Introduction-of-API-GateWay/" itemprop="url">API网关概述</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-27T22:51:43+08:00">
-                2020-01-27
-              </time>
+              <a href="/2020/01/27/Introduction-of-API-GateWay/" rel="next" title="API网关概述">
+                <i class="fa fa-chevron-left"></i> API网关概述
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <h1 id="1-背景"><a href="#1-背景" class="headerlink" title="1 背景"></a>1 背景</h1><ul>
-<li>由于后端的微服务拆分，客户端通常需要请求多个服务获取所需数据。</li>
-<li>不同客户端所需要的数据不一样。例如，PC需要的数据通常比移动端更加详细。</li>
-<li>不同客户端网络环境差异大。例如，WAN vs LAN，移动网络 vs 非移动网络。</li>
-<li>服务端实例的地址信息（IP + port）会动态更新。</li>
-<li>微服务的拆分逻辑会变化，这种变化应该应该对客户端透明。</li>
-<li>不同的服务可能采用不同的协议，有些协议是非web的。</li>
-</ul>
-<h1 id="2-什么是API网关？"><a href="#2-什么是API网关？" class="headerlink" title="2 什么是API网关？"></a>2 什么是API网关？</h1><p>API网关接收客户端的所有请求，并将请求路由到相应的后端服务，并提供接口聚合和协议转换。通常来说，API网关通过调用多个后端服务，并聚合结果的方式处理请求。它可将web协议转化为非web的内部后台协议。</p>
-<p>核心功能：</p>
-<ul>
-<li>服务发现：</li>
-<li>负载均衡：以某种算法分摊系统压力。</li>
-<li>服务熔断：直接返回失败或者执行降价逻辑，防止雪崩。</li>
-<li>流量控制：防止短时间内大量请求转发到后台压垮服务器。</li>
-<li>认证鉴权：验证客户端的请求是否被授权。</li>
-<li>灰度发布：</li>
-</ul>
-<p>其他功能：</p>
-<ul>
-<li>协议转换：web协议转非Web协议。</li>
-<li>参数校验：对入参设置校验规则，由网关根据规则对无效请求进行过滤。</li>
-<li>API管理：包括 API 的创建、测试、发布、下线、版本切换等。</li>
-<li>监控告警：监控API请求次数、API调用延迟和API错误信息。</li>
-<li>SDK生成：</li>
-</ul>
-<h1 id="3-实现方式"><a href="#3-实现方式" class="headerlink" title="3 实现方式"></a>3 实现方式</h1><p>将API网关作为客户端的唯一接入点。API网关主要有两种类型：</p>
-<ul>
-<li>one-size-fits-all网关</li>
-<li>Backends for frontends网关</li>
-</ul>
-<h2 id="3-1-One-size-fits-all网关"><a href="#3-1-One-size-fits-all网关" class="headerlink" title="3.1 One-size-fits-all网关"></a>3.1 One-size-fits-all网关</h2><p>简单地将请求路由到相应服务。将请求扇出到多个后端服务。<br><img src="https://img-blog.csdnimg.cn/20191013124932708.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70" alt="OSFA API Gateway"></p>
-<h2 id="3-2-Backends-for-fronts网关"><a href="#3-2-Backends-for-fronts网关" class="headerlink" title="3.2 Backends for fronts网关"></a>3.2 Backends for fronts网关</h2><p>为每种客户端暴露不同的API。为每种客户端设计一个API网关，每个API网关为其客户端提供一种API。<br><img src="https://img-blog.csdnimg.cn/20191013125314703.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70" alt="Backends fro frontends API Gateway"></p>
-<h1 id="4-优点"><a href="#4-优点" class="headerlink" title="4 优点"></a>4 优点</h1><ul>
-<li>使后端的微服务拆分对客户端透明。</li>
-<li>客户端无需关心后端服务的实例地址（IP + port）。</li>
-<li>可为每个客户端提供最优API。</li>
-<li>减少请求次数。</li>
-<li>简化客户端的逻辑（由调用多个后台服务变为只调用API网关）。</li>
-<li>可将标准的Web API协议转化为任意的后端协议。</li>
-</ul>
-<h1 id="5-缺点"><a href="#5-缺点" class="headerlink" title="5 缺点"></a>5 缺点</h1><ul>
-<li>增加复杂性。增加了API网关模块，带来了额外的开发、部署、管理成本。</li>
-<li>增加响应时间。调用链路多了一跳（API网关）。</li>
-</ul>
-<p><strong>Issues:</strong></p>
-<blockquote>
-<p>How implement the API gateway?<br>event-driven/reactive approach is the best if it must scale to handle high loads.</p>
-</blockquote>
-<p>参考来源：<br>[1] <a href="https://microservices.io/patterns/apigateway.html" target="_blank" rel="noopener">https://microservices.io/patterns/apigateway.html</a><br>[2] <a href="https://www.nginx.com/learn/api-gateway/" target="_blank" rel="noopener">https://www.nginx.com/learn/api-gateway/</a><br>[3] <a href="https://aws.amazon.com/cn/api-gateway/features/" target="_blank" rel="noopener">https://aws.amazon.com/cn/api-gateway/features/</a><br>[4] <a href="https://cloud.tencent.com/document/product/628/11755" target="_blank" rel="noopener">https://cloud.tencent.com/document/product/628/11755</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -595,152 +442,11 @@
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/27/How-to-create-a-hexo-blog/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="楚兴">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="聊斋志技">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/01/27/How-to-create-a-hexo-blog/" itemprop="url">如何通过GitHub+Hexo搭建博客</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-27T21:52:50+08:00">
-                2020-01-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="安装Node"><a href="#安装Node" class="headerlink" title="安装Node"></a>安装Node</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install node</span><br></pre></td></tr></table></figure>
-
-<h2 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g hexo</span><br></pre></td></tr></table></figure>
-
-<h2 id="初始化Hexo"><a href="#初始化Hexo" class="headerlink" title="初始化Hexo"></a>初始化Hexo</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init</span><br></pre></td></tr></table></figure>
-
-<h2 id="生成网页文件和开启服务器"><a href="#生成网页文件和开启服务器" class="headerlink" title="生成网页文件和开启服务器"></a>生成网页文件和开启服务器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g</span><br><span class="line">$ hexo s</span><br></pre></td></tr></table></figure>
-
-<h2 id="关联Github"><a href="#关联Github" class="headerlink" title="关联Github"></a>关联Github</h2><ol>
-<li><p>修改<code>_config.yml</code>，修改deploy为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: &#39;git&#39;</span><br><span class="line">  repository: https:&#x2F;&#x2F;github.com&#x2F;xzygis&#x2F;xzygis.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>生成静态文件并上传Github</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g</span><br><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<p>若执行<code>hexo d</code>出错则执行<code>npm install hexo-deployer-git --save</code>。</p>
-<p>执行<code>hexo d</code>会提示输入用户名密码。</p>
-<h2 id="配置next主题"><a href="#配置next主题" class="headerlink" title="配置next主题"></a>配置next主题</h2><p>在blog目录下执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone --branch v5.1.4 https:&#x2F;&#x2F;github.com&#x2F;iissnan&#x2F;hexo-theme-next themes&#x2F;next</span><br></pre></td></tr></table></figure>
-
-<p>修改<code>_config.yml</code>，设置theme为next。</p>
-
-          
-        
+    <div class="post-spread">
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
@@ -748,6 +454,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -768,8 +478,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -811,6 +530,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是服务网格？"><span class="nav-number">1.</span> <span class="nav-text">什么是服务网格？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#服务网格的特点"><span class="nav-number">1.1.</span> <span class="nav-text">服务网格的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理解服务网格"><span class="nav-number">1.2.</span> <span class="nav-text">理解服务网格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为何使用服务网格？"><span class="nav-number">1.3.</span> <span class="nav-text">为何使用服务网格？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#服务网格架构"><span class="nav-number">2.</span> <span class="nav-text">服务网格架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#服务网格的实现模式"><span class="nav-number">2.1.</span> <span class="nav-text">服务网格的实现模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Istio-架构解析"><span class="nav-number">2.2.</span> <span class="nav-text">Istio 架构解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从边车模式到-Service-Mesh"><span class="nav-number">2.3.</span> <span class="nav-text">从边车模式到 Service Mesh</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是边车模式"><span class="nav-number">2.3.1.</span> <span class="nav-text">什么是边车模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#边车模式设计"><span class="nav-number">2.3.2.</span> <span class="nav-text">边车模式设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#边车模式解决了什么问题"><span class="nav-number">2.3.3.</span> <span class="nav-text">边车模式解决了什么问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从边车模式到-Service-Mesh-1"><span class="nav-number">2.3.4.</span> <span class="nav-text">从边车模式到 Service Mesh</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kubernetes-vs-Service-Mesh"><span class="nav-number">3.</span> <span class="nav-text">Kubernetes vs Service Mesh</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -951,6 +686,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

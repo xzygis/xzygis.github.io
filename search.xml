@@ -81,6 +81,12 @@
 <li><a href="https://labs.play-with-k8s.com/" target="_blank" rel="noopener">https://labs.play-with-k8s.com/</a></li>
 </ol>
 ]]></content>
+      <categories>
+        <category>Cloud Native</category>
+      </categories>
+      <tags>
+        <tag>Cloud Native</tag>
+      </tags>
   </entry>
   <entry>
     <title>Service Mesh概述</title>
@@ -177,6 +183,13 @@
 <hr>
 <p>本文是针对ServiceMesher社区系列文章而整理的学习笔记，文章地址：<a href="https://www.servicemesher.com/istio-handbook/intro/service-mesh-the-microservices-in-post-kubernetes-era.html" target="_blank" rel="noopener">https://www.servicemesher.com/istio-handbook/intro/service-mesh-the-microservices-in-post-kubernetes-era.html</a></p>
 ]]></content>
+      <categories>
+        <category>Service Mesh</category>
+      </categories>
+      <tags>
+        <tag>Service Mesh</tag>
+        <tag>Istio</tag>
+      </tags>
   </entry>
   <entry>
     <title>API网关概述</title>
@@ -232,6 +245,12 @@
 </blockquote>
 <p>参考来源：<br>[1] <a href="https://microservices.io/patterns/apigateway.html" target="_blank" rel="noopener">https://microservices.io/patterns/apigateway.html</a><br>[2] <a href="https://www.nginx.com/learn/api-gateway/" target="_blank" rel="noopener">https://www.nginx.com/learn/api-gateway/</a><br>[3] <a href="https://aws.amazon.com/cn/api-gateway/features/" target="_blank" rel="noopener">https://aws.amazon.com/cn/api-gateway/features/</a><br>[4] <a href="https://cloud.tencent.com/document/product/628/11755" target="_blank" rel="noopener">https://cloud.tencent.com/document/product/628/11755</a></p>
 ]]></content>
+      <categories>
+        <category>后台开发</category>
+      </categories>
+      <tags>
+        <tag>API网关</tag>
+      </tags>
   </entry>
   <entry>
     <title>如何通过GitHub+Hexo搭建博客</title>
@@ -260,5 +279,11 @@
 
 <p>修改<code>_config.yml</code>，设置theme为next。</p>
 ]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
   </entry>
 </search>

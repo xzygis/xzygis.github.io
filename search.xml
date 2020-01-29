@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Introduction of K8S</title>
+    <title>Kubernetes概述</title>
     <url>/2020/01/29/Introduction-of-K8S/</url>
     <content><![CDATA[<h1 id="Kubernetes-简介"><a href="#Kubernetes-简介" class="headerlink" title="Kubernetes 简介"></a>Kubernetes 简介</h1><p>Kubernetes 是谷歌开源的容器集群管理系统，是 Google 多年大规模容器管理技术 Borg 的开源版本，主要功能包括：</p>
 <ul>

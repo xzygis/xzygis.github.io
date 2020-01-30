@@ -57,7 +57,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://chuxing.club/2020/01/30/Usage-of-JSON-Web-Token/jwt-example.png">
 <meta property="article:published_time" content="2020-01-30T05:10:39.000Z">
-<meta property="article:modified_time" content="2020-01-30T05:34:04.158Z">
+<meta property="article:modified_time" content="2020-01-30T08:10:38.658Z">
 <meta property="article:author" content="楚兴">
 <meta property="article:tag" content="jwt">
 <meta name="twitter:card" content="summary">
@@ -288,6 +288,8 @@
 <li>一种解决方案是 session 数据持久化，写入数据库或别的持久层。各种服务收到请求后，都向持久层请求数据。这种方案的优点是架构清晰，缺点是工程量比较大。另外，持久层万一挂了，就会单点失败。</li>
 <li>另一种方案是服务器索性不保存 session 数据了，所有数据都保存在客户端，每次请求都发回服务器。JWT 就是这种方案的一个代表。</li>
 </ul>
+<a id="more"></a>
+
 <h1 id="什么是JWT？"><a href="#什么是JWT？" class="headerlink" title="什么是JWT？"></a>什么是JWT？</h1><p>Json web token (JWT)，是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（(RFC 7519)。该token被设计为紧凑且安全的，特别适用于分布式站点的单点登录（SSO）场景。JWT的声明一般被用来在身份提供者和服务提供者间传递被认证的用户身份信息，以便于从资源服务器获取资源，也可以增加一些额外的其它业务逻辑所必须的声明信息，该token可直接被用于认证，也可被加密。</p>
 <h1 id="JWT-的原理"><a href="#JWT-的原理" class="headerlink" title="JWT 的原理"></a>JWT 的原理</h1><p>服务器认证以后，生成一个经过签名的 JSON 对象，发回给用户，服务器则不用保存任何 session 数据了。从而把服务器变成无状态的，易于实现扩展。</p>
 <h1 id="JWT-的使用场景"><a href="#JWT-的使用场景" class="headerlink" title="JWT 的使用场景"></a>JWT 的使用场景</h1><p>以下是两个JWT的应用场景：</p>

@@ -56,7 +56,7 @@
 <meta property="og:description" content="Consul是什么？Consul是一个服务发现和配置工具，它是分布式和高可用的，而且极易扩展。 Consul主要提供了以下特性：  服务发现：Consul使得服务注册和服务发现（通过DNS或HTTP接口）变得非常简单。 健康检查：健康检查使得Consul可以快速向管理员报告集群状况。将它与服务发现集成，可以防止流量路由到故障节点，实现服务熔断。 KV存储：灵活的KV存储，可用于尺寸出动态配置、功能">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-01-30T05:35:59.000Z">
-<meta property="article:modified_time" content="2020-01-30T05:40:27.871Z">
+<meta property="article:modified_time" content="2020-01-30T08:13:23.176Z">
 <meta property="article:author" content="楚兴">
 <meta property="article:tag" content="consul">
 <meta name="twitter:card" content="summary">
@@ -282,6 +282,8 @@
 <li>服务鉴权（Service Segmentation）：Consul连接基于自动TLS加密和基于签名的鉴权实现安全的服务间通信。</li>
 </ol>
 <p>Consul支持Linux, Mac OS X, FreeBSD, Solaris, Windows等操作系统。</p>
+<a id="more"></a>
+
 <h2 id="基本架构"><a href="#基本架构" class="headerlink" title="基本架构"></a>基本架构</h2><p>每个提供服务给Consul的节点都运行了一个Consul Agent。运行一个Agent并不需要对其他服务做发现或读写KV存储。Agent负责对该节点上的服务做健康检查。</p>
 <p>Agent会与一个或多个Consul Server通信。Consul Server通常有多个实例，负责数据存储和备份、选举主节点等。虽然Consul支持在只有一个Server实例的情况下工具，但通常推荐使用3至5个实例，从而避免由于某些异常场景而导致数据丢失。同时，推荐在每个数据中心部署一个Consul集群。</p>
 <p>每个数据中运行了一个Consul server集群。当一个跨数据中心的服务发现和配置请求创建时，本地Consul Server转发请求到远程的数据中心并返回结果.</p>

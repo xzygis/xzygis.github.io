@@ -48,19 +48,19 @@
   };
 </script>
 
-  <meta name="description" content="什么是服务网格？服务网格是用于处理服务间通信的专用基础设施层。它负责通过包含现代云原生应用程序的复杂服务拓扑来可靠地传递请求。实际上，服务网格通常通过一组轻量级网络代理来实现，这些代理与应用程序代码一起部署，而不需要感知应用程序本身。 服务网格的特点服务网格有如下几个特点：  应用程序间通讯的中间层 轻量级网络代理 应用程序无感知 解耦应用程序的重试&#x2F;超时、监控、追踪和服务发现  理解服务网格如果">
+  <meta name="description" content="什么是服务网格？服务网格是用于处理服务间通信的专用基础设施层。它负责通过包含现代云原生应用程序的复杂服务拓扑来可靠地传递请求。实际上，服务网格通常通过一组轻量级网络代理来实现，这些代理与应用程序代码一起部署，而不需要感知应用程序本身。 服务网格的特点服务网格有如下几个特点：  应用程序间通讯的中间层 轻量级网络代理 应用程序无感知 解耦应用程序的重试&#x2F;超时、监控、追踪和服务发现">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Service Mesh概述">
 <meta property="og:url" content="https://chuxing.club/2020/01/28/Introduction-of-Service-Mesh/index.html">
 <meta property="og:site_name" content="聊斋志技">
-<meta property="og:description" content="什么是服务网格？服务网格是用于处理服务间通信的专用基础设施层。它负责通过包含现代云原生应用程序的复杂服务拓扑来可靠地传递请求。实际上，服务网格通常通过一组轻量级网络代理来实现，这些代理与应用程序代码一起部署，而不需要感知应用程序本身。 服务网格的特点服务网格有如下几个特点：  应用程序间通讯的中间层 轻量级网络代理 应用程序无感知 解耦应用程序的重试&#x2F;超时、监控、追踪和服务发现  理解服务网格如果">
+<meta property="og:description" content="什么是服务网格？服务网格是用于处理服务间通信的专用基础设施层。它负责通过包含现代云原生应用程序的复杂服务拓扑来可靠地传递请求。实际上，服务网格通常通过一组轻量级网络代理来实现，这些代理与应用程序代码一起部署，而不需要感知应用程序本身。 服务网格的特点服务网格有如下几个特点：  应用程序间通讯的中间层 轻量级网络代理 应用程序无感知 解耦应用程序的重试&#x2F;超时、监控、追踪和服务发现">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191116230107526.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191116231047738.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191116231618741.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/2019111623235962.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70">
 <meta property="article:published_time" content="2020-01-28T06:48:01.000Z">
-<meta property="article:modified_time" content="2020-01-29T06:31:16.073Z">
+<meta property="article:modified_time" content="2020-01-30T08:13:23.167Z">
 <meta property="article:author" content="楚兴">
 <meta property="article:tag" content="Service Mesh">
 <meta property="article:tag" content="Istio">
@@ -286,6 +286,8 @@
 <li>应用程序无感知</li>
 <li>解耦应用程序的重试/超时、监控、追踪和服务发现</li>
 </ul>
+<a id="more"></a>
+
 <h2 id="理解服务网格"><a href="#理解服务网格" class="headerlink" title="理解服务网格"></a>理解服务网格</h2><p>如果用一句话来解释什么是服务网格，可以将它比作是应用程序或者说微服务间的 TCP/IP，负责服务之间的网络调用、限流、熔断和监控。</p>
 <p>服务网格的架构如下图所示：<br><img src="https://img-blog.csdnimg.cn/20191116230107526.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70" alt="Service Mesh架构图"></p>
 <h2 id="为何使用服务网格？"><a href="#为何使用服务网格？" class="headerlink" title="为何使用服务网格？"></a>为何使用服务网格？</h2><p>服务网格并没有给我们带来新功能，它是用于解决其他工具已经解决过的问题，只不过这次是在云原生的 Kubernetes 环境下的实现。</p>

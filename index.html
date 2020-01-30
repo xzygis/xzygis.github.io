@@ -273,60 +273,14 @@
 <li>服务鉴权（Service Segmentation）：Consul连接基于自动TLS加密和基于签名的鉴权实现安全的服务间通信。</li>
 </ol>
 <p>Consul支持Linux, Mac OS X, FreeBSD, Solaris, Windows等操作系统。</p>
-<h2 id="基本架构"><a href="#基本架构" class="headerlink" title="基本架构"></a>基本架构</h2><p>每个提供服务给Consul的节点都运行了一个Consul Agent。运行一个Agent并不需要对其他服务做发现或读写KV存储。Agent负责对该节点上的服务做健康检查。</p>
-<p>Agent会与一个或多个Consul Server通信。Consul Server通常有多个实例，负责数据存储和备份、选举主节点等。虽然Consul支持在只有一个Server实例的情况下工具，但通常推荐使用3至5个实例，从而避免由于某些异常场景而导致数据丢失。同时，推荐在每个数据中心部署一个Consul集群。</p>
-<p>每个数据中运行了一个Consul server集群。当一个跨数据中心的服务发现和配置请求创建时，本地Consul Server转发请求到远程的数据中心并返回结果.</p>
-<h1 id="安装Consul"><a href="#安装Consul" class="headerlink" title="安装Consul"></a>安装Consul</h1><p>Consul集群的每个节点都必须先安装Consul，安装非常简单。在Mac上安装Consul命令如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install consul</span><br></pre></td></tr></table></figure>
-<p>安装成功后执行consul命令输出如下结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">$ consul</span><br><span class="line">Usage: consul [--version] [--help] &lt;command&gt; [&lt;args&gt;]</span><br><span class="line"></span><br><span class="line">Available commands are:</span><br><span class="line">    acl            Interact with Consul&#39;s ACLs</span><br><span class="line">    agent          Runs a Consul agent</span><br><span class="line">    catalog        Interact with the catalog</span><br><span class="line">    config         Interact with Consul&#39;s Centralized Configurations</span><br><span class="line">    connect        Interact with Consul Connect</span><br><span class="line">    debug          Records a debugging archive for operators</span><br><span class="line">    event          Fire a new event</span><br><span class="line">    exec           Executes a command on Consul nodes</span><br><span class="line">    force-leave    Forces a member of the cluster to enter the &quot;left&quot; state</span><br><span class="line">    info           Provides debugging information for operators.</span><br><span class="line">    intention      Interact with Connect service intentions</span><br><span class="line">    join           Tell Consul agent to join cluster</span><br><span class="line">    keygen         Generates a new encryption key</span><br><span class="line">    keyring        Manages gossip layer encryption keys</span><br><span class="line">    kv             Interact with the key-value store</span><br><span class="line">    leave          Gracefully leaves the Consul cluster and shuts down</span><br><span class="line">    lock           Execute a command holding a lock</span><br><span class="line">    login          Login to Consul using an auth method</span><br><span class="line">    logout         Destroy a Consul token created with login</span><br><span class="line">    maint          Controls node or service maintenance mode</span><br><span class="line">    members        Lists the members of a Consul cluster</span><br><span class="line">    monitor        Stream logs from a Consul agent</span><br><span class="line">    operator       Provides cluster-level tools for Consul operators</span><br><span class="line">    reload         Triggers the agent to reload configuration files</span><br><span class="line">    rtt            Estimates network round trip time between nodes</span><br><span class="line">    services       Interact with services</span><br><span class="line">    snapshot       Saves, restores and inspects snapshots of Consul server state</span><br><span class="line">    tls            Builtin helpers for creating CAs and certificates</span><br><span class="line">    validate       Validate config files&#x2F;directories</span><br><span class="line">    version        Prints the Consul version</span><br><span class="line">    watch          Watch for changes in Consul</span><br></pre></td></tr></table></figure>
-
-<h1 id="运行Agent"><a href="#运行Agent" class="headerlink" title="运行Agent"></a>运行Agent</h1><p>完成Consul的安装后，可运行Agent。Agent可以运行为Server或Client模式。每个数据中心至少必须拥有一台server，建议在一个集群中部署或者3至5个Server。部署单一的Server，在出现失败时会不可避免的造成数据丢失.</p>
-<p>其他的Agent运行为Client模式，一个Client是一个非常轻量级的进程，用于注册服务，运行健康检查和转发对Server的查询，Agent必须在集群中的每个主机上运行。</p>
-<h2 id="启动Agent"><a href="#启动Agent" class="headerlink" title="启动Agent"></a>启动Agent</h2><p>命令<code>consul agent -dev</code>可以启动一个开发模式的Agent，这种模式不能用于生产环境，因为它不持久化任何状态。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">$ consul agent -dev</span><br><span class="line">&#x3D;&#x3D;&gt; Starting Consul agent...</span><br><span class="line">           Version: &#39;v1.6.1&#39;</span><br><span class="line">           Node ID: &#39;2e524113-7caf-643a-80bb-a2fa00c2673b&#39;</span><br><span class="line">         Node name: &#39;C02Z35N9LVCF&#39;</span><br><span class="line">        Datacenter: &#39;dc1&#39; (Segment: &#39;&lt;all&gt;&#39;)</span><br><span class="line">            Server: true (Bootstrap: false)</span><br><span class="line">       Client Addr: [127.0.0.1] (HTTP: 8500, HTTPS: -1, gRPC: 8502, DNS: 8600)</span><br><span class="line">      Cluster Addr: 127.0.0.1 (LAN: 8301, WAN: 8302)</span><br><span class="line">           Encrypt: Gossip: false, TLS-Outgoing: false, TLS-Incoming: false, Auto-Encrypt-TLS: false</span><br><span class="line"></span><br><span class="line">&#x3D;&#x3D;&gt; Log data will now stream in as it occurs:</span><br><span class="line"></span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [DEBUG] agent: Using random ID &quot;2e524113-7caf-643a-80bb-a2fa00c2673b&quot; as node ID</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [DEBUG] tlsutil: Update with version 1</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [DEBUG] tlsutil: OutgoingRPCWrapper with version 1</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [INFO]  raft: Initial configuration (index&#x3D;1): [&#123;Suffrage:Voter ID:2e524113-7caf-643a-80bb-a2fa00c2673b Address:127.0.0.1:8300&#125;]</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [INFO]  raft: Node at 127.0.0.1:8300 [Follower] entering Follower state (Leader: &quot;&quot;)</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [INFO] serf: EventMemberJoin: C02Z35N9LVCF.dc1 127.0.0.1</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [INFO] serf: EventMemberJoin: C02Z35N9LVCF 127.0.0.1</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [INFO] consul: Adding LAN server C02Z35N9LVCF (Addr: tcp&#x2F;127.0.0.1:8300) (DC: dc1)</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [INFO] consul: Handled member-join event for server &quot;C02Z35N9LVCF.dc1&quot; in area &quot;wan&quot;</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [INFO] agent: Started DNS server 127.0.0.1:8600 (tcp)</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [INFO] agent: Started DNS server 127.0.0.1:8600 (udp)</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [INFO] agent: Started HTTP server on 127.0.0.1:8500 (tcp)</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [INFO] agent: Started gRPC server on 127.0.0.1:8502 (tcp)</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [INFO] agent: started state syncer</span><br><span class="line">&#x3D;&#x3D;&gt; Consul agent running!</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [WARN]  raft: Heartbeat timeout from &quot;&quot; reached, starting election</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [INFO]  raft: Node at 127.0.0.1:8300 [Candidate] entering Candidate state in term 2</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [DEBUG] raft: Votes needed: 1</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [DEBUG] raft: Vote granted from 2e524113-7caf-643a-80bb-a2fa00c2673b in term 2. Tally: 1</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [INFO]  raft: Election won. Tally: 1</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [INFO]  raft: Node at 127.0.0.1:8300 [Leader] entering Leader state</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [INFO] consul: cluster leadership acquired</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [INFO] consul: New leader elected: C02Z35N9LVCF</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [INFO] connect: initialized primary datacenter CA with provider &quot;consul&quot;</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [DEBUG] consul: Skipping self join check for &quot;C02Z35N9LVCF&quot; since the cluster is too small</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [INFO] consul: member &#39;C02Z35N9LVCF&#39; joined, marking health alive</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [DEBUG] agent: Skipping remote check &quot;serfHealth&quot; since it is managed automatically</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [INFO] agent: Synced node info</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [DEBUG] agent: Node info in sync</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [DEBUG] agent: Skipping remote check &quot;serfHealth&quot; since it is managed automatically</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:09 [DEBUG] agent: Node info in sync</span><br><span class="line">    2019&#x2F;11&#x2F;20 21:56:11 [DEBUG] tlsutil: OutgoingRPCWrapper with version 1</span><br></pre></td></tr></table></figure>
-
-<h2 id="集群成员"><a href="#集群成员" class="headerlink" title="集群成员"></a>集群成员</h2><p>新开一个终端窗口运行<code>consul members</code>, 就可以看到Consul集群的成员。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ consul members</span><br><span class="line">Node          Address         Status  Type    Build  Protocol  DC   Segment</span><br><span class="line">C02Z35N9LVCF  127.0.0.1:8301  alive   server  1.6.1  2         dc1  &lt;all&gt;</span><br></pre></td></tr></table></figure>
-<p>以上输出显示了我们自己的节点运行的节点、地址、健康状态、自己在集群中的角色、版本信息等。添加<code>-detailed</code>选项可以查看到额外的信息，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ consul members --detailed</span><br><span class="line">Node          Address         Status  Tags</span><br><span class="line">C02Z35N9LVCF  127.0.0.1:8301  alive   acls&#x3D;0,build&#x3D;1.6.1:9be6dfc+,dc&#x3D;dc1,id&#x3D;2e524113-7caf-643a-80bb-a2fa00c2673b,port&#x3D;8300,raft_vsn&#x3D;3,role&#x3D;consul,segment&#x3D;&lt;all&gt;,vsn&#x3D;2,vsn_max&#x3D;3,vsn_min&#x3D;2,wan_join_port&#x3D;8302</span><br></pre></td></tr></table></figure>
-<p><code>members</code>命令的输出是基于gossip协议，它是最终一致的。这意味着，在任何时候，通过你本地Agent看到的结果可能不能准确匹配server的状态。为了查看到一致的信息，可使用HTTP API(将自动转发)到Consul Server上去进行查询：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ curl localhost:8500&#x2F;v1&#x2F;catalog&#x2F;nodes</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;ID&quot;: &quot;2e524113-7caf-643a-80bb-a2fa00c2673b&quot;,</span><br><span class="line">        &quot;Node&quot;: &quot;C02Z35N9LVCF&quot;,</span><br><span class="line">        &quot;Address&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">        &quot;Datacenter&quot;: &quot;dc1&quot;,</span><br><span class="line">        &quot;TaggedAddresses&quot;: &#123;</span><br><span class="line">            &quot;lan&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">            &quot;wan&quot;: &quot;127.0.0.1&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;Meta&quot;: &#123;</span><br><span class="line">            &quot;consul-network-segment&quot;: &quot;&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;CreateIndex&quot;: 9,</span><br><span class="line">        &quot;ModifyIndex&quot;: 10</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<h2 id="停止Agent"><a href="#停止Agent" class="headerlink" title="停止Agent"></a>停止Agent</h2><p>你可以使用 Ctrl-C 优雅的关闭Agent，中断Agent之后你可以看到它离开了集群并关闭.<br>退出后，Consul提醒其他集群成员，这个节点离开了。如果你强行杀掉进程，集群的其他成员应该能检测到这个节点失效了。当一个成员离开，他的服务和检测也会从目录中移除。当一个成员失效了，他的健康状况被简单的标记为危险，但是不会从目录中移除。Consul会自动尝试对失效的节点进行重连，允许他从某些网络条件下恢复过来。</p>
-<h1 id="注册服务"><a href="#注册服务" class="headerlink" title="注册服务"></a>注册服务</h1><p>在之前的步骤我们运行了第一个agent，看到了集群的成员。现在我们将注册第一个服务并查询这些服务。</p>
-<h2 id="定义一个服务"><a href="#定义一个服务" class="headerlink" title="定义一个服务"></a>定义一个服务</h2><p>可以通过提供服务定义或者调用HTTP API来注册一个服务，服务定义文件是注册服务的最通用的方式。</p>
-<p>首先，为Consul配置创建一个目录：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mkdir &#x2F;etc&#x2F;consul.d</span><br></pre></td></tr></table></figure>
-<p>然后，编写服务定义配置文件。假设我们有一个名叫web的服务运行在 80端口。另外，我们将给他设置一个标签，这样我们可以使用它作为额外的查询方式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &#39;&#123;&quot;service&quot;: &#123;&quot;name&quot;: &quot;web&quot;, &quot;tags&quot;: [&quot;rails&quot;], &quot;port&quot;: 80&#125;&#125;&#39; &gt; &#x2F;etc&#x2F;consul.d&#x2F;web.json</span><br></pre></td></tr></table></figure>
-<p>重新启动Agent，设置配置目录：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">$ sudo consul agent -dev -config-dir &#x2F;etc&#x2F;consul.d&#x2F;web.json</span><br><span class="line">&#x3D;&#x3D;&gt; Starting Consul agent...</span><br><span class="line">           Version: &#39;v1.6.1&#39;</span><br><span class="line">           Node ID: &#39;feba8d74-4a3a-9b42-305f-eea7da207c9c&#39;</span><br><span class="line">         Node name: &#39;C02Z35N9LVCF&#39;</span><br><span class="line">        Datacenter: &#39;dc1&#39; (Segment: &#39;&lt;all&gt;&#39;)</span><br><span class="line">            Server: true (Bootstrap: false)</span><br><span class="line">       Client Addr: [127.0.0.1] (HTTP: 8500, HTTPS: -1, gRPC: 8502, DNS: 8600)</span><br><span class="line">      Cluster Addr: 127.0.0.1 (LAN: 8301, WAN: 8302)</span><br><span class="line">           Encrypt: Gossip: false, TLS-Outgoing: false, TLS-Incoming: false, Auto-Encrypt-TLS: false</span><br><span class="line"></span><br><span class="line">&#x3D;&#x3D;&gt; Log data will now stream in as it occurs:</span><br><span class="line"></span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:29 [DEBUG] agent: Using random ID &quot;feba8d74-4a3a-9b42-305f-eea7da207c9c&quot; as node ID</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:29 [DEBUG] tlsutil: Update with version 1</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:29 [DEBUG] tlsutil: OutgoingRPCWrapper with version 1</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:29 [INFO]  raft: Initial configuration (index&#x3D;1): [&#123;Suffrage:Voter ID:feba8d74-4a3a-9b42-305f-eea7da207c9c Address:127.0.0.1:8300&#125;]</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:29 [INFO]  raft: Node at 127.0.0.1:8300 [Follower] entering Follower state (Leader: &quot;&quot;)</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:29 [INFO] serf: EventMemberJoin: C02Z35N9LVCF.dc1 127.0.0.1</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:29 [INFO] serf: EventMemberJoin: C02Z35N9LVCF 127.0.0.1</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:29 [INFO] consul: Adding LAN server C02Z35N9LVCF (Addr: tcp&#x2F;127.0.0.1:8300) (DC: dc1)</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:29 [INFO] consul: Handled member-join event for server &quot;C02Z35N9LVCF.dc1&quot; in area &quot;wan&quot;</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:29 [INFO] agent: Started DNS server 127.0.0.1:8600 (tcp)</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:29 [INFO] agent: Started DNS server 127.0.0.1:8600 (udp)</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:29 [INFO] agent: Started HTTP server on 127.0.0.1:8500 (tcp)</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:29 [INFO] agent: Started gRPC server on 127.0.0.1:8502 (tcp)</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:29 [INFO] agent: started state syncer</span><br><span class="line">&#x3D;&#x3D;&gt; Consul agent running!</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:30 [WARN]  raft: Heartbeat timeout from &quot;&quot; reached, starting election</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:30 [INFO]  raft: Node at 127.0.0.1:8300 [Candidate] entering Candidate state in term 2</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:30 [DEBUG] raft: Votes needed: 1</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:30 [DEBUG] raft: Vote granted from feba8d74-4a3a-9b42-305f-eea7da207c9c in term 2. Tally: 1</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:30 [INFO]  raft: Election won. Tally: 1</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:30 [INFO]  raft: Node at 127.0.0.1:8300 [Leader] entering Leader state</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:30 [INFO] consul: cluster leadership acquired</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:30 [INFO] consul: New leader elected: C02Z35N9LVCF</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:30 [INFO] connect: initialized primary datacenter CA with provider &quot;consul&quot;</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:30 [DEBUG] consul: Skipping self join check for &quot;C02Z35N9LVCF&quot; since the cluster is too small</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:30 [INFO] consul: member &#39;C02Z35N9LVCF&#39; joined, marking health alive</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:30 [DEBUG] agent: Skipping remote check &quot;serfHealth&quot; since it is managed automatically</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:30 [INFO] agent: Synced service &quot;web&quot;</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:30 [DEBUG] agent: Node info in sync</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:32 [DEBUG] tlsutil: OutgoingRPCWrapper with version 1</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:32 [DEBUG] agent: Skipping remote check &quot;serfHealth&quot; since it is managed automatically</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:32 [DEBUG] agent: Service &quot;web&quot; in sync</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:32 [DEBUG] agent: Node info in sync</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:32 [DEBUG] agent: Service &quot;web&quot; in sync</span><br><span class="line">    2019&#x2F;11&#x2F;20 22:17:32 [DEBUG] agent: Node info in sync</span><br></pre></td></tr></table></figure>
-<p>日志中的<code>Synced service &#39;web&#39;</code>表示Agent从配置文件中载入了服务定义，并且成功注册到服务目录。</p>
-<p>如果想注册多个服务，就可以在Consul配置目录创建多个服务定义文件。</p>
-<h2 id="查询服务"><a href="#查询服务" class="headerlink" title="查询服务"></a>查询服务</h2><p>一旦Agent启动并且服务同步了，我们可就以通过DNS或者HTTP API来查询服务。</p>
-<h3 id="DNS-API"><a href="#DNS-API" class="headerlink" title="DNS API"></a>DNS API</h3><p>我们首先使用DNS API来查询。在DNS API中，服务的DNS名字是 <code>NAME.service.consul</code>。虽然是可配置的，但默认的所有DNS名字会都在consul命名空间下，这个子域告诉Consul，我们在查询服务，<code>NAME</code>则是服务的名称.</p>
-<p>对于我们上面注册的Web服务.它的域名是 <code>web.service.consul</code>:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">$ dig @127.0.0.1 -p 8600 web.service.consul</span><br><span class="line"></span><br><span class="line">; &lt;&lt;&gt;&gt; DiG 9.10.6 &lt;&lt;&gt;&gt; @127.0.0.1 -p 8600 web.service.consul</span><br><span class="line">; (1 server found)</span><br><span class="line">;; global options: +cmd</span><br><span class="line">;; Got answer:</span><br><span class="line">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 27222</span><br><span class="line">;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 2</span><br><span class="line">;; WARNING: recursion requested but not available</span><br><span class="line"></span><br><span class="line">;; OPT PSEUDOSECTION:</span><br><span class="line">; EDNS: version: 0, flags:; udp: 4096</span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;web.service.consul.                IN        A</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">web.service.consul.        0        IN        A        127.0.0.1</span><br><span class="line"></span><br><span class="line">;; ADDITIONAL SECTION:</span><br><span class="line">web.service.consul.        0        IN        TXT        &quot;consul-network-segment&#x3D;&quot;</span><br><span class="line"></span><br><span class="line">;; Query time: 8 msec</span><br><span class="line">;; SERVER: 127.0.0.1#8600(127.0.0.1)</span><br><span class="line">;; WHEN: Wed Nov 20 22:26:14 CST 2019</span><br><span class="line">;; MSG SIZE  rcvd: 99</span><br></pre></td></tr></table></figure>
-<p>如你所见,一个A记录返回了一个可用的服务所在的节点的IP地址。A记录只能设置为IP地址，有也可用使用 DNS API 来接收包含地址和端口的 <code>SRV</code> 记录：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">$ dig @127.0.0.1 -p 8600 web.service.consul SRV</span><br><span class="line"></span><br><span class="line">; &lt;&lt;&gt;&gt; DiG 9.10.6 &lt;&lt;&gt;&gt; @127.0.0.1 -p 8600 web.service.consul SRV</span><br><span class="line">; (1 server found)</span><br><span class="line">;; global options: +cmd</span><br><span class="line">;; Got answer:</span><br><span class="line">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 49043</span><br><span class="line">;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 3</span><br><span class="line">;; WARNING: recursion requested but not available</span><br><span class="line"></span><br><span class="line">;; OPT PSEUDOSECTION:</span><br><span class="line">; EDNS: version: 0, flags:; udp: 4096</span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;web.service.consul.                IN        SRV</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">web.service.consul.        0        IN        SRV        1 1 80 C02Z35N9LVCF.node.dc1.consul.</span><br><span class="line"></span><br><span class="line">;; ADDITIONAL SECTION:</span><br><span class="line">C02Z35N9LVCF.node.dc1.consul. 0        IN        A        127.0.0.1</span><br><span class="line">C02Z35N9LVCF.node.dc1.consul. 0        IN        TXT        &quot;consul-network-segment&#x3D;&quot;</span><br><span class="line"></span><br><span class="line">;; Query time: 1 msec</span><br><span class="line">;; SERVER: 127.0.0.1#8600(127.0.0.1)</span><br><span class="line">;; WHEN: Wed Nov 20 22:28:14 CST 2019</span><br><span class="line">;; MSG SIZE  rcvd: 147</span><br></pre></td></tr></table></figure>
-<p><code>SRV</code>记录告诉我们 web 这个服务运行于节点<code>C02Z35N9LVCF.node.dc1.consul</code> 的80端口，DNS额外返回了节点的A记录。</p>
-<p>最后，我们也可以用 DNS API 通过标签来过滤服务，基于标签的服务查询格式为<code>TAG.NAME.service.consul</code>。在下面的例子中，我们请求Consul返回有 rails标签的 web服务：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ dig @127.0.0.1 -p 8600 rails.web.service.consul SRV</span><br><span class="line"># 输出信息略</span><br></pre></td></tr></table></figure>
-
-<h3 id="HTTP-API"><a href="#HTTP-API" class="headerlink" title="HTTP API"></a>HTTP API</h3><p>除了DNS API之外，也可以使用HTTP API查询所有服务实例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">$ curl http:&#x2F;&#x2F;localhost:8500&#x2F;v1&#x2F;catalog&#x2F;service&#x2F;web</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;ID&quot;: &quot;feba8d74-4a3a-9b42-305f-eea7da207c9c&quot;,</span><br><span class="line">        &quot;Node&quot;: &quot;C02Z35N9LVCF&quot;,</span><br><span class="line">        &quot;Address&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">        &quot;Datacenter&quot;: &quot;dc1&quot;,</span><br><span class="line">        &quot;TaggedAddresses&quot;: &#123;</span><br><span class="line">            &quot;lan&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">            &quot;wan&quot;: &quot;127.0.0.1&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;NodeMeta&quot;: &#123;</span><br><span class="line">            &quot;consul-network-segment&quot;: &quot;&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;ServiceKind&quot;: &quot;&quot;,</span><br><span class="line">        &quot;ServiceID&quot;: &quot;web&quot;,</span><br><span class="line">        &quot;ServiceName&quot;: &quot;web&quot;,</span><br><span class="line">        &quot;ServiceTags&quot;: [</span><br><span class="line">            &quot;rails&quot;</span><br><span class="line">        ],</span><br><span class="line">        &quot;ServiceAddress&quot;: &quot;&quot;,</span><br><span class="line">        &quot;ServiceWeights&quot;: &#123;</span><br><span class="line">            &quot;Passing&quot;: 1,</span><br><span class="line">            &quot;Warning&quot;: 1</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;ServiceMeta&quot;: &#123;&#125;,</span><br><span class="line">        &quot;ServicePort&quot;: 80,</span><br><span class="line">        &quot;ServiceEnableTagOverride&quot;: false,</span><br><span class="line">        &quot;ServiceProxy&quot;: &#123;</span><br><span class="line">            &quot;MeshGateway&quot;: &#123;&#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;ServiceConnect&quot;: &#123;&#125;,</span><br><span class="line">        &quot;CreateIndex&quot;: 10,</span><br><span class="line">        &quot;ModifyIndex&quot;: 10</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<p>只查看健康服务实例的方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ curl http:&#x2F;&#x2F;localhost:8500&#x2F;v1&#x2F;catalog&#x2F;service&#x2F;web?passing</span><br><span class="line"># 输出信息略</span><br></pre></td></tr></table></figure>
-
-<h2 id="更新服务"><a href="#更新服务" class="headerlink" title="更新服务"></a>更新服务</h2><p>服务定义可以通过修改配置文件并发送<code>SIGHUP</code>给Agent来进行更新，这样可以在不关闭服务或者保持服务请求可用的情况下进行更新。</p>
-<p>参考来源：</p>
-<ol>
-<li><a href="https://github.com/hashicorp/consul" target="_blank" rel="noopener">https://github.com/hashicorp/consul</a></li>
-<li><a href="https://www.consul.io/intro/getting-started.html" target="_blank" rel="noopener">https://www.consul.io/intro/getting-started.html</a></li>
-<li><a href="https://book-consul-guide.vnzmi.com/01_what_is_consul.html" target="_blank" rel="noopener">https://book-consul-guide.vnzmi.com/01_what_is_consul.html</a></li>
-</ol>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/30/Manual-of-consul/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -408,76 +362,14 @@
 <li>一种解决方案是 session 数据持久化，写入数据库或别的持久层。各种服务收到请求后，都向持久层请求数据。这种方案的优点是架构清晰，缺点是工程量比较大。另外，持久层万一挂了，就会单点失败。</li>
 <li>另一种方案是服务器索性不保存 session 数据了，所有数据都保存在客户端，每次请求都发回服务器。JWT 就是这种方案的一个代表。</li>
 </ul>
-<h1 id="什么是JWT？"><a href="#什么是JWT？" class="headerlink" title="什么是JWT？"></a>什么是JWT？</h1><p>Json web token (JWT)，是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（(RFC 7519)。该token被设计为紧凑且安全的，特别适用于分布式站点的单点登录（SSO）场景。JWT的声明一般被用来在身份提供者和服务提供者间传递被认证的用户身份信息，以便于从资源服务器获取资源，也可以增加一些额外的其它业务逻辑所必须的声明信息，该token可直接被用于认证，也可被加密。</p>
-<h1 id="JWT-的原理"><a href="#JWT-的原理" class="headerlink" title="JWT 的原理"></a>JWT 的原理</h1><p>服务器认证以后，生成一个经过签名的 JSON 对象，发回给用户，服务器则不用保存任何 session 数据了。从而把服务器变成无状态的，易于实现扩展。</p>
-<h1 id="JWT-的使用场景"><a href="#JWT-的使用场景" class="headerlink" title="JWT 的使用场景"></a>JWT 的使用场景</h1><p>以下是两个JWT的应用场景：</p>
-<ol>
-<li>鉴权：这是JWT最常见的应用场景。当用户登录成功后，随后的每个请求都将带上JWT，从而允许用户访问被授权的服务和资源。由于它开销小切易于使用，当前被广泛应用于单点登录（Single Sign On）。</li>
-<li>信息交换：JWT是不同组织间交换信息的一种很好的方式。因为JWT可以被签名（例如，通过公钥/私钥对），你可以确信信息发送者就是它们说声明的身份。此外，签名是用Header和Payload计算出来的，你可以验证内容是否被篡改。</li>
-</ol>
-<h1 id="JWT-的数据结构"><a href="#JWT-的数据结构" class="headerlink" title="JWT 的数据结构"></a>JWT 的数据结构</h1><p>扁平化形式的JWT是由通过 <code>.</code> 分隔的三部分组成，他们分别是：</p>
-<ul>
-<li><code>Header</code></li>
-<li><code>Payload</code></li>
-<li><code>Signature</code></li>
-</ul>
-<p>所以，一个JWT看起来通常是如下的形式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xxxxx.yyyyy.zzzzz</span><br></pre></td></tr></table></figure>
-
-<h2 id="Header"><a href="#Header" class="headerlink" title="Header"></a>Header</h2><p>头部由两部分组成：</p>
-<ul>
-<li>token类型，即JWT；</li>
-<li>签名算法，例如HMAC SHA256或RSA。</li>
-</ul>
-<p>一个Header的例子：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"alg"</span>: <span class="string">"HS256"</span>,</span><br><span class="line">  <span class="attr">"typ"</span>: <span class="string">"JWT"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>随后，以上JSON对象会通过 <code>Base64Url</code> 编码为JWT的第一部分。</p>
-<h2 id="Payload"><a href="#Payload" class="headerlink" title="Payload"></a>Payload</h2><p>载荷就是存放有效信息的地方。这个名字像是特指飞机上承载的货品，这些有效信息包含三个部分</p>
-<ul>
-<li>标准中注册的声明</li>
-<li>公共的声明</li>
-<li>私有的声明</li>
-</ul>
-<p><strong>标准中注册的声明：</strong></p>
-<ul>
-<li>iss: jwt签发者</li>
-<li>sub: jwt所面向的用户</li>
-<li>aud: 接收jwt的一方</li>
-<li>exp: jwt的过期时间，这个过期时间必须要大于签发时间</li>
-<li>nbf: 定义在什么时间之前，该jwt都是不可用的.</li>
-<li>iat: jwt的签发时间</li>
-<li>jti: jwt的唯一身份标识，主要用来作为一次性token,从而回避重放攻击。</li>
-</ul>
-<p><strong>公共的声明 ：</strong><br>公共的声明可以添加任何的信息，一般添加用户的相关信息或其他业务需要的必要信息.但不建议添加敏感信息，因为该部分在客户端可解密。</p>
-<p><strong>私有的声明 ：</strong><br>私有声明是提供者和消费者所共同定义的声明，一般不建议存放敏感信息，因为base64是对称解密的，意味着该部分信息可以归类为明文信息。</p>
-<p>一个Payload的例子：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"sub"</span>: <span class="string">"1234567890"</span>,</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"John Doe"</span>,</span><br><span class="line">  <span class="attr">"admin"</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>随后，Payload会通过 <code>Base64Url</code> 编码为JWT的第二部分。</p>
-<h2 id="Signature"><a href="#Signature" class="headerlink" title="Signature"></a>Signature</h2><p>创建签名需要用到编码后的 Header、编码后的 Payload、秘钥、Header中指定的算法。</p>
-<p>如果你想使用HMAC SHA256算法，签名将通过如下方式生成：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HMACSHA256(</span><br><span class="line">  base64UrlEncode(header) + <span class="string">"."</span> +</span><br><span class="line">  base64UrlEncode(payload),</span><br><span class="line">  secret)</span><br></pre></td></tr></table></figure>
-<p>如果你想把以上概念付诸实践，可以通过 <a href="https://jwt.io/" target="_blank" rel="noopener">https://jwt.io/</a> 提供的工具来玩一玩 JWT 。如下图所示：<img src="jwt-example.png" alt="jwt.io"></p>
-<h1 id="JWT-的使用方式"><a href="#JWT-的使用方式" class="headerlink" title="JWT 的使用方式"></a>JWT 的使用方式</h1><p>客户端收到服务器返回的 JWT，可以储存在 Cookie 里面，也可以储存在 localStorage。<br>此后，客户端每次与服务器通信，都要带上这个 JWT。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP 请求的头信息Authorization字段里面。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Authorization: Bearer &lt;token&gt;</span><br></pre></td></tr></table></figure>
-<p>另一种做法是，跨域的时候，JWT 就放在 POST 请求的数据体里面。</p>
-<h1 id="JWT-的几个特点"><a href="#JWT-的几个特点" class="headerlink" title="JWT 的几个特点"></a>JWT 的几个特点</h1><ul>
-<li>JWT 默认是不加密，但也是可以加密的。生成原始 Token 以后，可以用密钥再加密一次。</li>
-<li>JWT 不加密的情况下，不能将秘密数据写入 JWT。</li>
-<li>JWT 不仅可以用于认证，也可以用于交换信息。有效使用 JWT，可以降低服务器查询数据库的次数。</li>
-<li>JWT 的最大缺点是，由于服务器不保存 session 状态，因此无法在使用过程中废止某个 token，或者更改 token 的权限。也就是说，一旦 JWT 签发了，在到期之前就会始终有效，除非服务器部署额外的逻辑。</li>
-<li>JWT 本身包含了认证信息，一旦泄露，任何人都可以获得该令牌的所有权限。为了减少盗用，JWT 的有效期应该设置得比较短。对于一些比较重要的权限，使用时应该再次对用户进行认证。</li>
-<li>为了减少盗用，JWT 不应该使用 HTTP 协议明码传输，要使用 HTTPS 协议传输。</li>
-</ul>
-<h1 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h1><p>Go语言版本：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> util</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"crypto/rsa"</span></span><br><span class="line">	<span class="string">"crypto/x509"</span></span><br><span class="line">	<span class="string">"encoding/pem"</span></span><br><span class="line">	<span class="string">"errors"</span></span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"github.com/dgrijalva/jwt-go"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> ErrVerifyFailed = fmt.Errorf(<span class="string">"verify failed"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//https://godoc.org/github.com/dgrijalva/jwt-go#example-New--Hmac</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">CreateToken</span><span class="params">(claims jwt.MapClaims, privateKey []<span class="keyword">byte</span>)</span> <span class="params">(<span class="keyword">string</span>, error)</span></span> &#123;</span><br><span class="line">	token := jwt.NewWithClaims(jwt.SigningMethodRS512, claims)</span><br><span class="line"></span><br><span class="line">	block, _ := pem.Decode(privateKey)</span><br><span class="line">	<span class="keyword">if</span> block == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">""</span>, errors.New(<span class="string">"private key error"</span>)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	priv, err := x509.ParsePKCS8PrivateKey(block.Bytes)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">""</span>, err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> token.SignedString(priv)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//https://godoc.org/github.com/dgrijalva/jwt-go#example-Parse--Hmac</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">VerifyToken</span><span class="params">(tokenString <span class="keyword">string</span>, publicKey []<span class="keyword">byte</span>)</span> <span class="params">(jwt.MapClaims, error)</span></span> &#123;</span><br><span class="line">	token, err := jwt.Parse(tokenString, <span class="function"><span class="keyword">func</span><span class="params">(token *jwt.Token)</span> <span class="params">(<span class="keyword">interface</span>&#123;&#125;, error)</span></span> &#123;</span><br><span class="line">		<span class="keyword">if</span> _, ok := token.Method.(*jwt.SigningMethodRSA); !ok &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nil</span>, fmt.Errorf(<span class="string">"unexpected signing method: %v"</span>, token.Header[<span class="string">"alg"</span>])</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> token.Header[<span class="string">"alg"</span>] != <span class="string">"RS512"</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nil</span>, fmt.Errorf(<span class="string">"unexpected siging alg: %v"</span>, token.Header[<span class="string">"alg"</span>])</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		block, _ := pem.Decode(publicKey)</span><br><span class="line">		<span class="keyword">if</span> block == <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nil</span>, ErrVerifyFailed</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		pubInterface, err := x509.ParsePKIXPublicKey(block.Bytes)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nil</span>, ErrVerifyFailed</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		pub := pubInterface.(*rsa.PublicKey)</span><br><span class="line">		<span class="keyword">return</span> pub, <span class="literal">nil</span></span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, ErrVerifyFailed</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> claims, ok := token.Claims.(jwt.MapClaims); ok &amp;&amp; token.Valid &#123;</span><br><span class="line">		<span class="keyword">return</span> claims, <span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span>, ErrVerifyFailed</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>参考来源：</p>
-<ol>
-<li><a href="https://jwt.io/introduction/" target="_blank" rel="noopener">https://jwt.io/introduction/</a></li>
-<li><a href="https://www.jianshu.com/p/576dbf44b2ae" target="_blank" rel="noopener">https://www.jianshu.com/p/576dbf44b2ae</a></li>
-<li><a href="https://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html" target="_blank" rel="noopener">https://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html</a></li>
-</ol>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/30/Usage-of-JSON-Web-Token/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -548,39 +440,14 @@
           <h2 id="获取镜像"><a href="#获取镜像" class="headerlink" title="获取镜像"></a>获取镜像</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull ubuntu</span><br></pre></td></tr></table></figure>
 
 <h2 id="启动容器："><a href="#启动容器：" class="headerlink" title="启动容器："></a>启动容器：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -it ubuntu &#x2F;bin&#x2F;bash</span><br><span class="line"># 要退出终端，直接输入 exit</span><br></pre></td></tr></table></figure>
-
-<h2 id="启动已停止运行的容器"><a href="#启动已停止运行的容器" class="headerlink" title="启动已停止运行的容器"></a>启动已停止运行的容器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker ps -a</span><br></pre></td></tr></table></figure>
-
-<h2 id="启动已停止运行的容器-1"><a href="#启动已停止运行的容器-1" class="headerlink" title="启动已停止运行的容器"></a>启动已停止运行的容器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker start b750bbbcfd88</span><br></pre></td></tr></table></figure>
-
-<h2 id="后台运行"><a href="#后台运行" class="headerlink" title="后台运行"></a>后台运行</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -itd --name ubuntu-test ubuntu &#x2F;bin&#x2F;bash</span><br></pre></td></tr></table></figure>
-
-<h2 id="停止一个容器"><a href="#停止一个容器" class="headerlink" title="停止一个容器"></a>停止一个容器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker stop &lt;容器 ID&gt;</span><br></pre></td></tr></table></figure>
-
-<p>停止的容器可以通过 docker restart 重启：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker restart &lt;容器 ID&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="进入容器"><a href="#进入容器" class="headerlink" title="进入容器"></a>进入容器</h2><p>在使用 <code>-d</code> 参数时，容器启动后会进入后台。此时想要进入容器，可以通过以下指令进入：</p>
-<ul>
-<li><code>docker attach</code>： 如果从这个容器退出（<code>exit</code>），会导致容器的停止。</li>
-<li><code>docker exec</code>：推荐大家使用 <code>docker exec</code> 命令，因为此退出容器终端，不会导致容器的停止。</li>
-</ul>
-<p>exec命令使用：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker exec -it 243c32535da7 &#x2F;bin&#x2F;bash</span><br></pre></td></tr></table></figure>
-
-<h2 id="导出和导入容器"><a href="#导出和导入容器" class="headerlink" title="导出和导入容器"></a>导出和导入容器</h2><h3 id="导出容器"><a href="#导出容器" class="headerlink" title="导出容器"></a>导出容器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker export 1e560fca3906 &gt; ubuntu.tar</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="导入容器"><a href="#导入容器" class="headerlink" title="导入容器"></a>导入容器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cat docker&#x2F;ubuntu.tar | docker import - test&#x2F;ubuntu:v1</span><br></pre></td></tr></table></figure>
-<p>或</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker import docker&#x2F;ubuntu.tar test&#x2F;ubuntu:v1</span><br></pre></td></tr></table></figure>
-
-<p>也可以通过指定 URL 或者某个目录来导入，例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker import http:&#x2F;&#x2F;example.com&#x2F;exampleimage.tgz example&#x2F;imagerepo</span><br></pre></td></tr></table></figure>
-
-<p>参考来源：</p>
-<p>[1] <a href="https://www.runoob.com/docker/docker-container-usage.html" target="_blank" rel="noopener">https://www.runoob.com/docker/docker-container-usage.html</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/30/Usage-of-docker-container/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -659,69 +526,14 @@
 <li><code>ubuntu:18.04</code>：这是指用 ubuntu:18.04 镜像为基础来启动容器。</li>
 <li><code>bash</code>：放在镜像名后的是命令，这里我们希望有个交互式 Shell，因此用的是 bash。</li>
 </ul>
-<h2 id="查看镜像列表"><a href="#查看镜像列表" class="headerlink" title="查看镜像列表"></a>查看镜像列表</h2><p>使用<code>docker image ls</code>或者<code>docker images</code>:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ docker image ls</span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">ubuntu              18.04               93fd78260bd1        5 weeks ago         86.2MB</span><br><span class="line">ubuntu              latest              93fd78260bd1        5 weeks ago         86.2MB</span><br><span class="line">hello-world         latest              4ab4c602aa5e        3 months ago        1.84kB</span><br><span class="line"></span><br><span class="line">$ docker images</span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">ubuntu              18.04               93fd78260bd1        5 weeks ago         86.2MB</span><br><span class="line">ubuntu              latest              93fd78260bd1        5 weeks ago         86.2MB</span><br><span class="line">hello-world         latest              4ab4c602aa5e        3 months ago        1.84kB</span><br></pre></td></tr></table></figure>
-<p>列表包含了 仓库名、标签、镜像 ID、创建时间 以及 所占用的空间。</p>
-<h2 id="镜像体积"><a href="#镜像体积" class="headerlink" title="镜像体积"></a>镜像体积</h2><p>这里标识的所占用空间和在 Docker Hub 上看到的镜像大小不同。比如，<code>ubuntu:18.04</code> 镜像大小，在这里是 127 MB，但是在 Docker Hub 显示的却是 50 MB。这是因为 Docker Hub 中显示的体积是压缩后的体积。在镜像下载和上传过程中镜像是保持着压缩状态的，因此 Docker Hub 所显示的大小是网络传输中更关心的流量大小。而 <code>docker image ls</code> 显示的是镜像下载到本地后展开的大小，准确说，是展开后的各层所占空间的总和，因为镜像到本地后，查看空间的时候，更关心的是本地磁盘空间占用的大小。</p>
-<p>另外一个需要注意的问题是，<code>docker image ls</code> 列表中的镜像体积总和并非是所有镜像实际硬盘消耗。由于 Docker 镜像是多层存储结构，并且可以继承、复用，因此不同镜像可能会因为使用相同的基础镜像，从而拥有共同的层。由于 Docker 使用 Union FS，相同的层只需要保存一份即可，因此实际镜像硬盘占用空间很可能要比这个列表镜像大小的总和要小的多。</p>
-<p>你可以通过以下命令来便捷的查看镜像、容器、数据卷所占用的空间。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ docker system df</span><br><span class="line">TYPE                TOTAL               ACTIVE              SIZE                RECLAIMABLE</span><br><span class="line">Images              2                   2                   86.18MB             0B (0%)</span><br><span class="line">Containers          14                  2                   148B                25B (16%)</span><br><span class="line">Local Volumes       0                   0                   0B                  0B</span><br><span class="line">Build Cache         0                   0                   0B                  0B</span><br></pre></td></tr></table></figure>
-
-<h2 id="虚悬镜像"><a href="#虚悬镜像" class="headerlink" title="虚悬镜像"></a>虚悬镜像</h2><p>由于新旧镜像同名，旧镜像名称被取消，从而出现仓库名、标签均为<code>&lt;none&gt;</code>的镜像。这类无标签镜像也被称为 虚悬镜像(dangling image) 。</p>
-<h2 id="中间层镜像"><a href="#中间层镜像" class="headerlink" title="中间层镜像"></a>中间层镜像</h2><p>为了加速镜像构建、重复利用资源，Docker 会利用 中间层镜像。所以在使用一段时间后，可能会看到一些依赖的中间层镜像。默认的 docker image ls 列表中只会显示顶层镜像，如果希望显示包括中间层镜像在内的所有镜像的话，需要加 -a 参数。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker image ls -a</span><br></pre></td></tr></table></figure>
-<p>这样会看到很多无标签的镜像，与之前的虚悬镜像不同，这些无标签的镜像很多都是中间层镜像，是其它镜像所依赖的镜像。这些无标签镜像不应该删除，否则会导致上层镜像因为依赖丢失而出错。实际上，这些镜像也没必要删除，因为之前说过，相同的层只会存一遍，而这些镜像是别的镜像的依赖，因此并不会因为它们被列出来而多存了一份，无论如何你也会需要它们。只要删除那些依赖它们的镜像后，这些依赖的中间层镜像也会被连带删除。</p>
-<p>以特定格式显示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ docker image ls --format &quot;&#123;&#123;.ID&#125;&#125;: &#123;&#123;.Repository&#125;&#125;&quot;</span><br><span class="line">93fd78260bd1: ubuntu</span><br><span class="line">93fd78260bd1: ubuntu</span><br><span class="line">4ab4c602aa5e: hello-world</span><br><span class="line"></span><br><span class="line">$ docker image ls --format &quot;table &#123;&#123;.ID&#125;&#125;\t&#123;&#123;.Repository&#125;&#125;\t&#123;&#123;.Tag&#125;&#125;&quot;</span><br><span class="line">IMAGE ID            REPOSITORY          TAG</span><br><span class="line">93fd78260bd1        ubuntu              18.04</span><br><span class="line">93fd78260bd1        ubuntu              latest</span><br><span class="line">4ab4c602aa5e        hello-world         latest</span><br></pre></td></tr></table></figure>
-
-<h2 id="删除本地镜像"><a href="#删除本地镜像" class="headerlink" title="删除本地镜像"></a>删除本地镜像</h2><p>如果要删除本地的镜像，可以使用 <code>docker image rm</code> 命令，其格式为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker image rm [选项] &lt;镜像1&gt; [&lt;镜像2&gt; ...]</span><br></pre></td></tr></table></figure>
-<p>其中，<code>&lt;镜像&gt;</code> 可以是 <code>镜像短 ID</code>、<code>镜像长 ID</code>、<code>镜像名</code> 或者 <code>镜像摘要</code>。</p>
-<h2 id="Untagged-和-Deleted"><a href="#Untagged-和-Deleted" class="headerlink" title="Untagged 和 Deleted"></a>Untagged 和 Deleted</h2><p>如果观察上面这几个命令的运行输出信息的话，你会注意到删除行为分为两类，一类是<code>Untagged</code>，另一类是 <code>Deleted</code>。我们之前介绍过，镜像的唯一标识是其 ID 和摘要，而一个镜像可以有多个标签。</p>
-<p>因此当我们使用上面命令删除镜像的时候，实际上是在要求删除某个标签的镜像。所以首先需要做的是将满足我们要求的所有镜像标签都取消，这就是我们看到的 Untagged 的信息。因为一个镜像可以对应多个标签，因此当我们删除了所指定的标签后，可能还有别的标签指向了这个镜像，如果是这种情况，那么 Delete 行为就不会发生。所以并非所有的 <code>docker image rm</code> 都会产生删除镜像的行为，有可能仅仅是取消了某个标签而已。</p>
-<p>当该镜像所有的标签都被取消了，该镜像很可能会失去了存在的意义，因此会触发删除行为。镜像是多层存储结构，因此在删除的时候也是从上层向基础层方向依次进行判断删除。镜像的多层结构让镜像复用变动非常容易，因此很有可能某个其它镜像正依赖于当前镜像的某一层。这种情况，依旧不会触发删除该层的行为。直到没有任何层依赖当前层时，才会真实的删除当前层。</p>
-<p>除了镜像依赖以外，还需要注意的是<strong>容器对镜像的依赖</strong>。<strong>如果有用这个镜像启动的容器存在（即使容器没有运行），那么同样不可以删除这个镜像</strong>。之前讲过，容器是以镜像为基础，再加一层容器存储层，组成这样的多层存储结构去运行的。因此该镜像如果被这个容器所依赖的，那么删除必然会导致故障。如果这些容器是不需要的，应该先将它们删除，然后再来删除镜像。</p>
-<h2 id="利用-commit-理解镜像构成"><a href="#利用-commit-理解镜像构成" class="headerlink" title="利用 commit 理解镜像构成"></a>利用 commit 理解镜像构成</h2><p>注意： <code>docker commit</code> 命令除了学习之外，还有一些特殊的应用场合，比如被入侵后保存现场等。但是，不要使用 <code>docker commit</code> 定制镜像，定制镜像应该使用 <code>Dockerfile</code> 来完成。</p>
-<p>镜像是多层存储，每一层是在前一层的基础上进行的修改；而容器同样也是多层存储，是在以镜像为基础层，在其基础上加一层作为容器运行时的存储层。</p>
-<p>现在让我们以定制一个 Web 服务器为例子，来讲解镜像是如何构建的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run --name webserver -d -p 80:80 nginx</span><br></pre></td></tr></table></figure>
-<p>这条命令会用 <code>nginx</code> 镜像启动一个容器，命名为 webserver，并且映射了 <code>80</code> 端口，这样我们可以用浏览器去访问这个 <code>nginx</code> 服务器。</p>
-<p>用浏览器访问的话，我们会看到默认的 <code>Nginx</code> 欢迎页面内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Welcome to nginx!</span><br><span class="line"></span><br><span class="line">If you see this page, the nginx web server is successfully installed and working. Further configuration is required.</span><br><span class="line"></span><br><span class="line">For online documentation and support please refer to nginx.org.</span><br><span class="line"> Commercial support is available at nginx.com.</span><br><span class="line"></span><br><span class="line">Thank you for using nginx.</span><br></pre></td></tr></table></figure>
-
-<p>如果我们想要修改欢迎页面的内容，可以使用 <code>docker exec</code> 命令进入容器，修改其内容。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ docker exec -it webserver bash</span><br><span class="line">root@3729b97e8226:&#x2F;# echo &#39;&lt;h1&gt;Hello, Docker!&lt;&#x2F;h1&gt;&#39; &gt; &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&#x2F;index.html</span><br><span class="line">root@3729b97e8226:&#x2F;# exit</span><br><span class="line">exit</span><br></pre></td></tr></table></figure>
-<p>我们以交互式终端方式进入 <code>webserver</code> 容器，并执行了 <code>bash</code> 命令，也就是获得一个可操作的 Shell。</p>
-<p>然后，我们用 <code>&lt;h1&gt;Hello, Docker!&lt;/h1&gt;</code> 覆盖了 /usr/share/nginx/html/index.html 的内容。现在我们再刷新浏览器的话，会发现内容被改变了。</p>
-<p>我们修改了容器的文件，也就是改动了容器的存储层。我们可以通过 <code>docker diff</code> 命令看到具体的改动。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ docker diff webserver</span><br><span class="line">C &#x2F;usr</span><br><span class="line">C &#x2F;usr&#x2F;share</span><br><span class="line">C &#x2F;usr&#x2F;share&#x2F;nginx</span><br><span class="line">C &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html</span><br><span class="line">C &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&#x2F;index.html</span><br><span class="line">C &#x2F;root</span><br><span class="line">A &#x2F;root&#x2F;.bash_history</span><br><span class="line">C &#x2F;var</span><br><span class="line">C &#x2F;var&#x2F;cache</span><br><span class="line">C &#x2F;var&#x2F;cache&#x2F;nginx</span><br><span class="line">A &#x2F;var&#x2F;cache&#x2F;nginx&#x2F;scgi_temp</span><br><span class="line">A &#x2F;var&#x2F;cache&#x2F;nginx&#x2F;uwsgi_temp</span><br><span class="line">A &#x2F;var&#x2F;cache&#x2F;nginx&#x2F;client_temp</span><br><span class="line">A &#x2F;var&#x2F;cache&#x2F;nginx&#x2F;fastcgi_temp</span><br><span class="line">A &#x2F;var&#x2F;cache&#x2F;nginx&#x2F;proxy_temp</span><br><span class="line">C &#x2F;run</span><br><span class="line">A &#x2F;run&#x2F;nginx.pid</span><br></pre></td></tr></table></figure>
-<p>当我们运行一个容器的时候（如果不使用卷的话），我们做的任何文件修改都会被记录于容器存储层里。Docker 提供了一个 <code>docker commit</code> 命令，可以将容器的存储层保存下来成为镜像。换句话说，就是在原有镜像的基础上，再叠加上容器的存储层，并构成新的镜像。</p>
-<p>docker commit 的语法格式为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit [选项] &lt;容器ID或容器名&gt; [&lt;仓库名&gt;[:&lt;标签&gt;]]</span><br></pre></td></tr></table></figure>
-
-<p>我们可以用下面的命令将容器保存为镜像：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker commit --author &quot;chuxing&quot; --message &quot;update page&quot; webserver nginx:v2</span><br><span class="line">sha256:8aaa0b63a1b842fb301d5d691cae92d9fdb52c73f37858eefada4325a36474f0</span><br></pre></td></tr></table></figure>
-
-<p>我们可以在 <code>docker image ls</code> 中看到这个新定制的镜像：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ docker image ls nginx</span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED              SIZE</span><br><span class="line">nginx               v2                  8aaa0b63a1b8        About a minute ago   109MB</span><br><span class="line">nginx               latest              568c4670fa80        4 weeks ago          109MB</span><br></pre></td></tr></table></figure>
-
-<p>新的镜像定制好后，我们可以运行这个镜像:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name web2 -d -p 81:80 nginx:v2</span><br></pre></td></tr></table></figure>
-<h2 id="慎用-docker-commit"><a href="#慎用-docker-commit" class="headerlink" title="慎用 docker commit"></a>慎用 docker commit</h2><p>使用 <code>docker commit</code> 命令虽然可以比较直观的帮助理解镜像分层存储的概念，但是实际环境中并不会这样使用。</p>
-<ol>
-<li>如果仔细观察之前的 <code>docker diff webserver</code> 的结果，你会发现除了真正想要修改的 <code>/usr/share/nginx/html/index.html</code> 文件外，还有很多文件被改动或添加了。这还仅仅是最简单的操作，如果是安装软件包、编译构建，那会有大量的无关内容被添加进来，如果不小心清理，将会导致镜像极为臃肿。</li>
-<li>使用 <code>docker commit</code> 意味着所有对镜像的操作都是黑箱操作，生成的镜像也被称为黑箱镜像，换句话说，就是除了制作镜像的人知道执行过什么命令、怎么生成的镜像，别人根本无从得知。</li>
-<li>回顾之前提及的镜像所使用的分层存储的概念，任何修改的结果仅仅是在当前层进行标记、添加、修改，而不会改动上一层。如果使用 <code>docker commit</code> 制作镜像，每一次修改都会让镜像更加臃肿一次，这会让镜像更加臃肿。</li>
-</ol>
-<h2 id="镜像导入和导出"><a href="#镜像导入和导出" class="headerlink" title="镜像导入和导出"></a>镜像导入和导出</h2><h3 id="导出镜像"><a href="#导出镜像" class="headerlink" title="导出镜像"></a>导出镜像</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker save -o nginx.tar nginx:latest</span><br></pre></td></tr></table></figure>
-<p>或</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker save &gt; nginx.tar nginx:latest</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="导入镜像"><a href="#导入镜像" class="headerlink" title="导入镜像"></a>导入镜像</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker load -i nginx.tar</span><br></pre></td></tr></table></figure>
-<p>或</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker load &lt; nginx.tar</span><br></pre></td></tr></table></figure>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/30/Usage-of-docker-image/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -974,69 +786,14 @@
 <li>广泛的 Volume 支持</li>
 <li>插件机制保证扩展性</li>
 </ul>
-<h2 id="Kubernetes-是一个平台"><a href="#Kubernetes-是一个平台" class="headerlink" title="Kubernetes 是一个平台"></a>Kubernetes 是一个平台</h2><p>Kubernetes 提供了很多的功能，它可以简化应用程序的工作流，加快开发速度。</p>
-<ul>
-<li>用户可以使用 Label 以自己的方式组织管理资源，还可以使用 Annotation 来自定义资源的描述信息，比如为管理工具提供状态检查等。</li>
-<li>Kubernetes 控制器也是构建在跟开发人员和用户使用的相同的 API 之上。用户还可以编写自己的控制器和调度器，也可以通过各种插件机制扩展系统的功能。</li>
-</ul>
-<h2 id="Kubernetes-不是什么"><a href="#Kubernetes-不是什么" class="headerlink" title="Kubernetes 不是什么"></a>Kubernetes 不是什么</h2><p>Kubernetes 不是一个传统意义上，包罗万象的 PaaS (平台即服务) 系统，它给用户保留了选择的自由和灵活性。</p>
-<ul>
-<li>不限制支持的应用程序类型。Kubernetes 旨在支持极其多样化的工作负载，包括无状态、有状态和数据处理工作负载。只要应用可以在容器中运行，那么它就可以很好的在 Kubernetes 上运行。</li>
-<li>不提供内置的中间件 (如消息中间件)、数据处理框架 (如 Spark)、数据库 (如 mysql) 或集群存储系统 (如 Ceph) 等。</li>
-<li>不直接部署代码，也不会构建您的应用程序。</li>
-<li>允许用户选择自己的日志、监控和告警系统。</li>
-<li>不提供应用程序配置语言或系统 (如 jsonnet)。</li>
-<li>不提供机器配置、维护、管理或自愈系统。</li>
-</ul>
-<h2 id="核心组件"><a href="#核心组件" class="headerlink" title="核心组件"></a>核心组件</h2><p>Kubernetes 主要由以下几个核心组件组成：</p>
-<ul>
-<li>etcd 保存了整个集群的状态；</li>
-<li>apiserver 提供了资源操作的唯一入口，并提供认证、授权、访问控制、API 注册和发现等机制；</li>
-<li>controller manager 负责维护集群的状态，比如故障检测、自动扩展、滚动更新等；</li>
-<li>scheduler 负责资源的调度，按照预定的调度策略将 Pod 调度到相应的机器上；</li>
-<li>kubelet 负责维护容器的生命周期，同时也负责 Volume（CVI）和网络（CNI）的管理；</li>
-<li>Container runtime 负责镜像管理以及 Pod 和容器的真正运行（CRI）；</li>
-<li>kube-proxy 负责为 Service 提供 cluster 内部的服务发现和负载均衡<br><img src="https://img-blog.csdnimg.cn/20191118230100546.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70" alt="k8s核心组件"><h1 id="Kubernetes-基本概念"><a href="#Kubernetes-基本概念" class="headerlink" title="Kubernetes 基本概念"></a>Kubernetes 基本概念</h1><h2 id="Container"><a href="#Container" class="headerlink" title="Container"></a>Container</h2>Container（容器）是一种便携式、轻量级的操作系统级虚拟化技术。它使用 namespace 隔离不同的软件运行环境，并通过镜像自包含软件的运行环境，从而使得容器可以很方便的在任何地方运行。</li>
-</ul>
-<p>使用容器，不需要与外部的基础架构环境绑定，因为每一个应用程序都不需要外部依赖，更不需要与外部的基础架构环境依赖。完美解决了从开发到生产环境的一致性问题。</p>
-<p>容器同样比虚拟机更加透明，这有助于监测和管理。尤其是容器进程的生命周期由基础设施管理，而不是被进程管理器隐藏在容器内部。最后，每个应用程序用容器封装，管理容器部署就等同于管理应用程序部署。</p>
-<p>容器的其他优点：</p>
-<ul>
-<li>敏捷的应用程序创建和部署：与虚拟机镜像相比，容器镜像更易用、更高效。</li>
-<li>持续开发、集成和部署：提供可靠与频繁的容器镜像构建、部署和快速简便的回滚（镜像是不可变的）。</li>
-<li>开发与运维的关注分离：在构建/发布时即创建容器镜像，从而将应用与基础架构分离。</li>
-<li>开发、测试与生产环境的一致性：在笔记本电脑上运行和云中一样。</li>
-<li>可观测：不仅显示操作系统的信息和度量，还显示应用自身的信息和度量。</li>
-<li>云和操作系统的分发可移植性：可运行在 Ubuntu, RHEL, CoreOS, 物理机, GKE 以及其他任何地方。</li>
-<li>以应用为中心的管理：从传统的硬件上部署操作系统提升到操作系统中部署应用程序。</li>
-<li>松耦合、分布式、弹性伸缩、微服务：应用程序被分成更小，更独立的模块，并可以动态管理和部署。</li>
-<li>资源隔离：可预测的应用程序性能。</li>
-<li>资源利用：高效率和高密度。</li>
-</ul>
-<h2 id="Pod"><a href="#Pod" class="headerlink" title="Pod"></a>Pod</h2><p>Kubernetes 使用 Pod 来管理容器，每个 Pod 可以包含一个或多个紧密关联的容器。</p>
-<p>Pod 是一组紧密关联的容器集合，它们共享 PID、IPC、Network 和 UTS namespace，是 Kubernetes 调度的基本单位。Pod 内的多个容器共享网络和文件系统，可以通过进程间通信和文件共享这种简单高效的方式组合完成服务。</p>
-<p>在 Kubernetes 中，所有对象都使用 manifest（yaml 或 json）来定义，比如一个简单的 nginx 服务可以定义为 nginx.yaml，它包含一个镜像为 nginx 的容器：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Node"><a href="#Node" class="headerlink" title="Node"></a>Node</h2><p>Node 是 Pod 真正运行的主机，可以是物理机，也可以是虚拟机。为了管理 Pod，每个 Node 节点上至少要运行 container runtime（比如 docker 或者 rkt）、kubelet 和 kube-proxy 服务。</p>
-<h2 id="Namespace"><a href="#Namespace" class="headerlink" title="Namespace"></a>Namespace</h2><p>Namespace 是对一组资源和对象的抽象集合，比如可以用来将系统内部的对象划分为不同的项目组或用户组。常见的 pods, services, replication controllers 和 deployments 等都是属于某一个 namespace 的（默认是 default），而 node, persistentVolumes 等则不属于任何 namespace。</p>
-<h2 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h2><p>Service 是应用服务的抽象，通过 labels 为应用提供负载均衡和服务发现。匹配 labels 的 Pod IP 和端口列表组成 endpoints，由 kube-proxy 负责将服务 IP 负载均衡到这些 endpoints 上。<br>每个 Service 都会自动分配一个 cluster IP（仅在集群内部可访问的虚拟地址）和 DNS 名，其他容器可以通过该地址或 DNS 来访问服务，而不需要了解后端容器的运行。<br><img src="https://img-blog.csdnimg.cn/20191118230137955.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70" alt="k8s-service"></p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">8078</span> <span class="comment"># the port that this service should serve on</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">http</span></span><br><span class="line">    <span class="comment"># the container on each pod to connect to, can be a name</span></span><br><span class="line">    <span class="comment"># (e.g. 'www') or a number (e.g. 80)</span></span><br><span class="line">    <span class="attr">targetPort:</span> <span class="number">80</span></span><br><span class="line">    <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">nginx</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Label"><a href="#Label" class="headerlink" title="Label"></a>Label</h2><p>Label 是识别 Kubernetes 对象的标签，以 key/value 的方式附加到对象上（key 最长不能超过 63 字节，value 可以为空，也可以是不超过 253 字节的字符串）。</p>
-<p>Label 不提供唯一性，并且实际上经常是很多对象（如 Pods）都使用相同的 label 来标志具体的应用。<br>Label 定义好后其他对象可以使用 Label Selector 来选择一组相同 label 的对象（比如 ReplicaSet 和 Service 用 label 来选择一组 Pod）。Label Selector 支持以下几种方式：</p>
-<ul>
-<li>等式，如 app=nginx 和 env!=production</li>
-<li>集合，如 env in (production, qa)</li>
-<li>多个 label（它们之间是 AND 关系），如 app=nginx,env=test</li>
-</ul>
-<h2 id="Annotations"><a href="#Annotations" class="headerlink" title="Annotations"></a>Annotations</h2><p>Annotations 是 key/value 形式附加于对象的注解。不同于 Labels 用于标志和选择对象，Annotations 则是用来记录一些附加信息，用来辅助应用部署、安全策略以及调度策略等。比如 deployment 使用 annotations 来记录 rolling update 的状态。</p>
-<p>参考来源：</p>
-<ol>
-<li><a href="https://feisky.gitbooks.io/kubernetes/introduction/" target="_blank" rel="noopener">https://feisky.gitbooks.io/kubernetes/introduction/</a></li>
-<li><a href="https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/" target="_blank" rel="noopener">https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/</a></li>
-</ol>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/29/Introduction-of-K8S/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1106,82 +863,14 @@
       
           <h1 id="云原生的定义"><a href="#云原生的定义" class="headerlink" title="云原生的定义"></a>云原生的定义</h1><p>云原生技术有利于各组织在公有云、私有云和混合云等新型动态环境中，构建和运行可弹性扩展的应用。云原生的代表技术包括容器、服务网格、微服务、不可变基础设施和声明式API。</p>
 <p>这些技术能够构建容错性好、易于管理和便于观察的松耦合系统。结合可靠的自动化手段，云原生技术使工程师能够轻松地对系统作出频繁和可预测的重大变更。</p>
-<h1 id="云原生的设计哲学"><a href="#云原生的设计哲学" class="headerlink" title="云原生的设计哲学"></a>云原生的设计哲学</h1><p>云原生本身甚至不能称为是一种架构，它首先是一种基础设施，运行在其上的应用称作云原生应用，只有符合云原生设计哲学的应用架构才叫云原生应用架构。</p>
-<h2 id="云原生的设计理念"><a href="#云原生的设计理念" class="headerlink" title="云原生的设计理念"></a>云原生的设计理念</h2><p>云原生系统的设计理念如下:</p>
-<ul>
-<li>面向分布式设计（Distribution）：容器、微服务、API 驱动的开发；</li>
-<li>面向配置设计（Configuration）：一个镜像，多个环境配置；</li>
-<li>面向韧性设计（Resistancy）：故障容忍和自愈；</li>
-<li>面向弹性设计（Elasticity）：弹性扩展和对环境变化（负载）做出响应；</li>
-<li>面向交付设计（Delivery）：自动拉起，缩短交付时间；</li>
-<li>面向性能设计（Performance）：响应式，并发和资源高效利用；</li>
-<li>面向自动化设计（Automation）：自动化的 DevOps；</li>
-<li>面向诊断性设计（Diagnosability）：集群级别的日志、metric 和追踪；</li>
-<li>面向安全性设计（Security）：安全端点、API Gateway、端到端加密；</li>
-</ul>
-<h2 id="云原生应用程序"><a href="#云原生应用程序" class="headerlink" title="云原生应用程序"></a>云原生应用程序</h2><p>云原生应用程序被设计为在平台上运行，并设计用于弹性，敏捷性，可操作性和可观察性。弹性包含失败而不是试图阻止它们；它利用了在平台上运行的动态特性。敏捷性允许快速部署和快速迭代。可操作性从应用程序内部控制应用程序生命周期，而不是依赖外部进程和监视器。可观察性提供信息来回答有关应用程序状态的问题。</p>
-<p>实现云原生应用程序所需特性的常用方法：</p>
-<ul>
-<li>微服务</li>
-<li>健康报告</li>
-<li>遥测数据</li>
-<li>弹性</li>
-<li>声明式的，而不是命令式的</li>
-</ul>
-<h3 id="微服务"><a href="#微服务" class="headerlink" title="微服务"></a>微服务</h3><p>微服务 (Microservices) 是一种软件架构风格，它是以专注于单一责任与功能的小型功能区块 (Small Building Blocks) 为基础，利用模块化的方式组合出复杂的大型应用程序，各功能区块使用与语言无关 (Language-Independent/Language agnostic) 的 API 集相互通信。</p>
-<p>微服务是一种以业务功能为主的服务设计概念，每一个服务都具有自主运行的业务功能，对外开放不受语言限制的 API (最常用的是 HTTP)，应用程序则是由一个或多个微服务组成。</p>
-<h3 id="健康报告"><a href="#健康报告" class="headerlink" title="健康报告"></a>健康报告</h3><p>为了提高云原生应用程序的可操作性，应用程序应该暴露健康检查。开发人员可以将其实施为命令或过程信号，以便应用程序在执行自我检查之后响应，或者更常见的是：通过应用程序提供Web服务，返回HTTP状态码来检查健康状态。</p>
-<p>一个很好的例子就是当平台需要知道应用程序何时可以接收流量。在应用程序启动时，如果它不能正确处理流量，它就应该表现为未准备好。</p>
-<h3 id="遥测数据"><a href="#遥测数据" class="headerlink" title="遥测数据"></a>遥测数据</h3><p>遥测数据是进行决策所需的信息。确实，遥测数据可能与健康报告重叠，但它们有不同的用途。健康报告通知我们应用程序生命周期状态，而遥测数据通知我们应用程序业务目标。</p>
-<p>测量的指标有时称为服务级指标（SLI）或关键性能指标（KPI）。这些是特定于应用程序的数据，可以确保应用程序的性能处于服务级别目标（SLO）内。</p>
-<h3 id="弹性"><a href="#弹性" class="headerlink" title="弹性"></a>弹性</h3><p>一旦你有遥测和监测数据，你需要确保你的应用程序对故障有适应能力。弹性是基础设施的责任，但云原生应用程序也需要承担部分工作。在云原生应用程序中考虑弹性的两个主要方面：为失败设计和优雅降级。</p>
-<h4 id="为失败设计"><a href="#为失败设计" class="headerlink" title="为失败设计"></a>为失败设计</h4><p>设计一个以失败期望为目标的应用程序将比假定可用性的应用程序更具防御性。当故障不可避免时，将会有额外的检查，故障模式和日志内置到应用程序中。</p>
-<h4 id="优雅降级"><a href="#优雅降级" class="headerlink" title="优雅降级"></a>优雅降级</h4><p>云原生应用程序处理过载的一种方式。</p>
-<h3 id="声明式，非命令式"><a href="#声明式，非命令式" class="headerlink" title="声明式，非命令式"></a>声明式，非命令式</h3><p>声明式编程是一种编程范式，与命令式编程相对立。它描述目标的性质，让电脑明白目标，而非流程。声明式编程不用告诉电脑问题领域，从而避免随之而来的副作用。而命令式编程则需要用算法来明确的指出每一步该怎么做。</p>
-<p>声明式通信模型规范了通信模型，并且它将功能实现从应用程序转移到远程API或服务端点，从而实现某种状态到达期望状态。这有助于简化应用程序，并使它们彼此的行为更具可预测性。</p>
-<p>例子：SQL数据库<br>其实你很早就接触过声明式编程语言， SQL语言就是很典型的例子：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">WHERE</span> user_name = Ben</span><br></pre></td></tr></table></figure>
-<p>上面是一个很普通的SQL查询语句，我只只声明我想要找一个叫Ben的用户（What) , 就是不说SQL该怎么（How）去寻找怎么做。接下来我们看看如果用命令式语言写会是什么样的：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//user=[&#123;user_name:'ou',user_id=1&#125;,.....]</span></span><br><span class="line"><span class="keyword">var</span> user</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; user.length; i++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(user.user_name == <span class="string">"Ben"</span>)</span><br><span class="line">    &#123;</span><br><span class="line">         print(<span class="string">"find"</span>);</span><br><span class="line">         <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>通过上面的对比你可以看出声明式语言的优势-短小精悍，你并不会知道程序的控制流（control flow）我们不需要告诉程序如何去寻找（How），而是只告诉程序我们想要的结果（What），让程序自己来解决过程（How）。当然SQL具体的细节还是用命令式的编程风格来实现的。</p>
-<h1 id="Play-with-Kubernetes"><a href="#Play-with-Kubernetes" class="headerlink" title="Play with Kubernetes"></a>Play with Kubernetes</h1><h2 id="创建Kubernetes集群"><a href="#创建Kubernetes集群" class="headerlink" title="创建Kubernetes集群"></a>创建Kubernetes集群</h2><p>登陆Play with Kubernetes，启动第一个实例作为Master节点，在web终端上执行：</p>
-<ol>
-<li><p>初始化master节点：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubeadm init --apiserver-advertise-address $(hostname -i)</span><br></pre></td></tr></table></figure>
-<p>输出如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">[node1 ~]$ kubeadm init --apiserver-advertise-address $(hostname -i)</span><br><span class="line">Initializing machine ID from random generator.</span><br><span class="line">[init] using Kubernetes version: v1.11.10</span><br><span class="line">[preflight] running pre-flight checks</span><br><span class="line">        [WARNING Service-Docker]: docker service is not active, please run &#39;systemctl start docker.service&#39;</span><br><span class="line">        [WARNING FileContent--proc-sys-net-bridge-bridge-nf-call-iptables]: &#x2F;proc&#x2F;sys&#x2F;net&#x2F;bridge&#x2F;bridge-nf-call-iptables does not exist</span><br><span class="line">I1117 13:53:18.409493     885 kernel_validator.go:81] Validating kernel version</span><br><span class="line">I1117 13:53:18.409685     885 kernel_validator.go:96] Validating kernel config</span><br><span class="line">[preflight] The system verification failed. Printing the output from the verification:</span><br><span class="line">KERNEL_VERSION: 4.4.0-148-generic</span><br><span class="line">DOCKER_VERSION: 18.06.1-ce</span><br><span class="line">OS: Linux</span><br><span class="line">CGROUPS_CPU: enabled</span><br><span class="line">CGROUPS_CPUACCT: enabled</span><br><span class="line">CGROUPS_CPUSET: enabled</span><br><span class="line">CGROUPS_DEVICES: enabled</span><br><span class="line">CGROUPS_FREEZER: enabled</span><br><span class="line">CGROUPS_MEMORY: enabled</span><br><span class="line">        [WARNING SystemVerification]: docker version is greater than the most recently validated version. Docker version: 18.06.1-ce. Max validated version: 17.03</span><br><span class="line">        [WARNING SystemVerification]: failed to parse kernel config: unable to load kernel module &quot;configs&quot;: output - &quot;&quot;, err - exit status 1</span><br><span class="line"></span><br><span class="line">[preflight&#x2F;images] Pulling images required for setting up a Kubernetes cluster</span><br><span class="line">[preflight&#x2F;images] This might take a minute or two, depending on the speed of your internet connection</span><br><span class="line">[preflight&#x2F;images] You can also perform this action in beforehand using &#39;kubeadm config images pull&#39;</span><br><span class="line">[kubelet] Writing kubelet environment file with flags to file &quot;&#x2F;var&#x2F;lib&#x2F;kubelet&#x2F;kubeadm-flags.env&quot;</span><br><span class="line">[kubelet] Writing kubelet configuration to file &quot;&#x2F;var&#x2F;lib&#x2F;kubelet&#x2F;config.yaml&quot;</span><br><span class="line">[preflight] Activating the kubelet service</span><br><span class="line">[certificates] Generated ca certificate and key.</span><br><span class="line">[certificates] Generated apiserver certificate and key.</span><br><span class="line">[certificates] apiserver serving cert is signed for DNS names [node1 kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local] and IPs [10.96.0.1 192.168.0.18]</span><br><span class="line">[certificates] Generated apiserver-kubelet-client certificate and key.</span><br><span class="line">[certificates] Generated sa key and public key.</span><br><span class="line">[certificates] Generated front-proxy-ca certificate and key.</span><br><span class="line">[certificates] Generated front-proxy-client certificate and key.</span><br><span class="line">[certificates] Generated etcd&#x2F;ca certificate and key.</span><br><span class="line">[certificates] Generated etcd&#x2F;server certificate and key.</span><br><span class="line">[certificates] etcd&#x2F;server serving cert is signed for DNS names [node1 localhost] and IPs [127.0.0.1 ::1]</span><br><span class="line">[certificates] Generated etcd&#x2F;peer certificate and key.</span><br><span class="line">[certificates] etcd&#x2F;peer serving cert is signed for DNS names [node1 localhost] and IPs [192.168.0.18 127.0.0.1 ::1]</span><br><span class="line">[certificates] Generated etcd&#x2F;healthcheck-client certificate and key.</span><br><span class="line">[certificates] Generated apiserver-etcd-client certificate and key.</span><br><span class="line">[certificates] valid certificates and keys now exist in &quot;&#x2F;etc&#x2F;kubernetes&#x2F;pki&quot;</span><br><span class="line">[kubeconfig] Wrote KubeConfig file to disk: &quot;&#x2F;etc&#x2F;kubernetes&#x2F;admin.conf&quot;</span><br><span class="line">[kubeconfig] Wrote KubeConfig file to disk: &quot;&#x2F;etc&#x2F;kubernetes&#x2F;kubelet.conf&quot;</span><br><span class="line">[kubeconfig] Wrote KubeConfig file to disk: &quot;&#x2F;etc&#x2F;kubernetes&#x2F;controller-manager.conf&quot;</span><br><span class="line">[kubeconfig] Wrote KubeConfig file to disk: &quot;&#x2F;etc&#x2F;kubernetes&#x2F;scheduler.conf&quot;</span><br><span class="line">[controlplane] wrote Static Pod manifest for component kube-apiserver to &quot;&#x2F;etc&#x2F;kubernetes&#x2F;manifests&#x2F;kube-apiserver.yaml&quot;</span><br><span class="line">[controlplane] wrote Static Pod manifest for component kube-controller-manager to &quot;&#x2F;etc&#x2F;kubernetes&#x2F;manifests&#x2F;kube-controller-manager.yaml&quot;</span><br><span class="line">[controlplane] wrote Static Pod manifest for component kube-scheduler to &quot;&#x2F;etc&#x2F;kubernetes&#x2F;manifests&#x2F;kube-scheduler.yaml&quot;</span><br><span class="line">[etcd] Wrote Static Pod manifest for a local etcd instance to &quot;&#x2F;etc&#x2F;kubernetes&#x2F;manifests&#x2F;etcd.yaml&quot;</span><br><span class="line">[init] waiting for the kubelet to boot up the control plane as Static Pods from directory &quot;&#x2F;etc&#x2F;kubernetes&#x2F;manifests&quot;</span><br><span class="line">[init] this might take a minute or longer if the control plane images have to be pulled</span><br><span class="line">[apiclient] All control plane components are healthy after 51.503514 seconds</span><br><span class="line">[uploadconfig] storing the configuration used in ConfigMap &quot;kubeadm-config&quot; in the &quot;kube-system&quot; Namespace</span><br><span class="line">[kubelet] Creating a ConfigMap &quot;kubelet-config-1.11&quot; in namespace kube-system with the configuration for the kubelets in the cluster</span><br><span class="line">[markmaster] Marking the node node1 as master by adding the label &quot;node-role.kubernetes.io&#x2F;master&#x3D;&#39;&#39;&quot;</span><br><span class="line">[markmaster] Marking the node node1 as master by adding the taints [node-role.kubernetes.io&#x2F;master:NoSchedule]</span><br><span class="line">[patchnode] Uploading the CRI Socket information &quot;&#x2F;var&#x2F;run&#x2F;dockershim.sock&quot; to the Node API object &quot;node1&quot; as an annotation</span><br><span class="line">[bootstraptoken] using token: 5f1nyz.351cet8vt4g2ix78</span><br><span class="line">[bootstraptoken] configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order for nodes to get long term certificate credentials</span><br><span class="line">[bootstraptoken] configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token</span><br><span class="line">[bootstraptoken] configured RBAC rules to allow certificate rotation for all node client certificates in the cluster</span><br><span class="line">[bootstraptoken] creating the &quot;cluster-info&quot; ConfigMap in the &quot;kube-public&quot; namespace</span><br><span class="line">[addons] Applied essential addon: CoreDNS</span><br><span class="line">[addons] Applied essential addon: kube-proxy</span><br><span class="line"></span><br><span class="line">Your Kubernetes master has initialized successfully!</span><br><span class="line"></span><br><span class="line">To start using your cluster, you need to run the following as a regular user:</span><br><span class="line"></span><br><span class="line">  mkdir -p $HOME&#x2F;.kube</span><br><span class="line">  sudo cp -i &#x2F;etc&#x2F;kubernetes&#x2F;admin.conf $HOME&#x2F;.kube&#x2F;config</span><br><span class="line">  sudo chown $(id -u):$(id -g) $HOME&#x2F;.kube&#x2F;config</span><br><span class="line"></span><br><span class="line">You should now deploy a pod network to the cluster.</span><br><span class="line">Run &quot;kubectl apply -f [podnetwork].yaml&quot; with one of the options listed at:</span><br><span class="line">  https:&#x2F;&#x2F;kubernetes.io&#x2F;docs&#x2F;concepts&#x2F;cluster-administration&#x2F;addons&#x2F;</span><br><span class="line"></span><br><span class="line">You can now join any number of machines by running the following on each node</span><br><span class="line">as root:</span><br><span class="line"></span><br><span class="line">  kubeadm join 192.168.0.18:6443 --token 5f1nyz.351cet8vt4g2ix78 --discovery-token-ca-cert-hash sha256:d105d049cf090f7814473e5554b79e09cd13e4acfd8a56b09754ba9181d08fd8</span><br><span class="line"></span><br><span class="line">Waiting for api server to startup</span><br><span class="line">Warning: kubectl apply should be used on resource created by either kubectl create --save-config or kubectl apply</span><br><span class="line">daemonset.extensions&#x2F;kube-proxy configured</span><br><span class="line">No resources found</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>初始化集群网络：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -n kube-system -f  "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"</span><br></pre></td></tr></table></figure>
-<p>输出如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">serviceaccount&#x2F;weave-net created</span><br><span class="line">clusterrole.rbac.authorization.k8s.io&#x2F;weave-net created</span><br><span class="line">clusterrolebinding.rbac.authorization.k8s.io&#x2F;weave-net created</span><br><span class="line">role.rbac.authorization.k8s.io&#x2F;weave-net created</span><br><span class="line">rolebinding.rbac.authorization.k8s.io&#x2F;weave-net created</span><br><span class="line">daemonset.apps&#x2F;weave-net created</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>执行下列初始化命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p $HOME/.kube</span><br><span class="line">cp -i /etc/kubernetes/admin.conf $HOME/.kube/config</span><br><span class="line">chown $(id -u):$(id -g) $HOME/.kube/config</span><br></pre></td></tr></table></figure></li>
-<li><p>根据master节点上的提示，在新的web终端上执行：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubeadm join 192.168.0.18:6443 --token 5f1nyz.351cet8vt4g2ix78 --discovery-token-ca-cert-hash sha256:d105d049cf090f7814473e5554b79e09cd13e4acfd8a56b09754ba9181d08fd8</span><br></pre></td></tr></table></figure>
-<p>输出如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">[preflight] running pre-flight checks</span><br><span class="line">        [WARNING DirAvailable--etc-kubernetes-manifests]: &#x2F;etc&#x2F;kubernetes&#x2F;manifests is not empty</span><br><span class="line">        [WARNING FileAvailable--etc-kubernetes-pki-ca.crt]: &#x2F;etc&#x2F;kubernetes&#x2F;pki&#x2F;ca.crt already exists</span><br><span class="line">        [WARNING FileAvailable--etc-kubernetes-kubelet.conf]: &#x2F;etc&#x2F;kubernetes&#x2F;kubelet.conf already exists</span><br><span class="line">        [WARNING RequiredIPVSKernelModulesAvailable]: error getting required builtin kernel modules: exit status 1(cut: &#x2F;lib&#x2F;modules&#x2F;4.4.0-166-generic&#x2F;modules.builtin: No such file or directory</span><br><span class="line">)</span><br><span class="line">        [WARNING Service-Docker]: docker service is not active, please run &#39;systemctl start docker.service&#39;</span><br><span class="line">        [WARNING FileContent--proc-sys-net-bridge-bridge-nf-call-iptables]: &#x2F;proc&#x2F;sys&#x2F;net&#x2F;bridge&#x2F;bridge-nf-call-iptables does not exist</span><br><span class="line">I1117 14:09:02.416363    7243 kernel_validator.go:81] Validating kernel version</span><br><span class="line">I1117 14:09:02.419283    7243 kernel_validator.go:96] Validating kernel config</span><br><span class="line">[preflight] The system verification failed. Printing the output from the verification:</span><br><span class="line">KERNEL_VERSION: 4.4.0-166-generic</span><br><span class="line">DOCKER_VERSION: 18.06.1-ce</span><br><span class="line">OS: Linux</span><br><span class="line">CGROUPS_CPU: enabled</span><br><span class="line">CGROUPS_CPUACCT: enabled</span><br><span class="line">CGROUPS_CPUSET: enabled</span><br><span class="line">CGROUPS_DEVICES: enabled</span><br><span class="line">CGROUPS_FREEZER: enabled</span><br><span class="line">CGROUPS_MEMORY: enabled</span><br><span class="line">        [WARNING SystemVerification]: docker version is greater than the most recently validated version. Docker version: 18.06.1-ce. Max validated version: 17.03</span><br><span class="line">        [WARNING SystemVerification]: failed to parse kernel config: unable to load kernel module &quot;configs&quot;: output - &quot;&quot;, err - exit status 1</span><br><span class="line">        [WARNING Port-10250]: Port 10250 is in use</span><br><span class="line">[discovery] Trying to connect to API Server &quot;192.168.0.28:6443&quot;</span><br><span class="line">[discovery] Created cluster-info discovery client, requesting info from &quot;https:&#x2F;&#x2F;192.168.0.28:6443&quot;</span><br><span class="line">[discovery] Requesting info from &quot;https:&#x2F;&#x2F;192.168.0.28:6443&quot; again to validate TLS against the pinned public key</span><br><span class="line">[discovery] Cluster info signature and contents are valid and TLS certificate validates against pinned roots, will use API Server &quot;192.168.0.28:6443&quot;</span><br><span class="line">[discovery] Successfully established connection with API Server &quot;192.168.0.28:6443&quot;</span><br><span class="line">[kubelet] Downloading configuration for the kubelet from the &quot;kubelet-config-1.11&quot; ConfigMap in the kube-system namespace</span><br><span class="line">[kubelet] Writing kubelet configuration to file &quot;&#x2F;var&#x2F;lib&#x2F;kubelet&#x2F;config.yaml&quot;</span><br><span class="line">[kubelet] Writing kubelet environment file with flags to file &quot;&#x2F;var&#x2F;lib&#x2F;kubelet&#x2F;kubeadm-flags.env&quot;</span><br><span class="line">[preflight] Activating the kubelet service</span><br><span class="line">[tlsbootstrap] Waiting for the kubelet to perform the TLS Bootstrap...</span><br><span class="line">[patchnode] Uploading the CRI Socket information &quot;&#x2F;var&#x2F;run&#x2F;dockershim.sock&quot; to the Node API object &quot;node1&quot; as an annotation</span><br><span class="line"></span><br><span class="line">This node has joined the cluster:</span><br><span class="line">* Certificate signing request was sent to master and a response</span><br><span class="line">  was received.</span><br><span class="line">* The Kubelet was informed of the new secure connection details.</span><br><span class="line"></span><br><span class="line">Run &#39;kubectl get nodes&#39; on the master to see this node join the cluster.</span><br></pre></td></tr></table></figure>
-<p>多开几个实例，重复执行第四步，即可向Kubernetes集群中增加节点。</p>
-</li>
-</ol>
-<p>此时在master节点上执行<code>kubectl get nodes</code>查看节点所有节点状态：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[node1 ~]$ kubectl get nodes</span><br><span class="line">NAME      STATUS    ROLES     AGE       VERSION</span><br><span class="line">node1     Ready     master    19m       v1.11.3</span><br><span class="line">node2     Ready     &lt;none&gt;    2m        v1.11.3</span><br><span class="line">node3     Ready     &lt;none&gt;    1m        v1.11.3</span><br></pre></td></tr></table></figure>
-
-<h2 id="创建nginx-deployment"><a href="#创建nginx-deployment" class="headerlink" title="创建nginx deployment"></a>创建nginx deployment</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[node1 ~]$ curl https://raw.githubusercontent.com/kubernetes/website/master/content/en/examples/application/nginx-app.yaml &gt; nginx-app.yaml</span><br><span class="line"><span class="meta">  %</span><span class="bash"> Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span></span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">100   497  100   497    0     0   1252      0 --:--:-- --:--:-- --:--:--  1255</span><br><span class="line">[node1 ~]$</span><br><span class="line">[node1 ~]$ kubectl apply -f nginx-app.yaml</span><br><span class="line">service/my-nginx-svc created</span><br><span class="line">deployment.apps/my-nginx created</span><br></pre></td></tr></table></figure>
-<p>此时查看nodes和pods：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[node1 ~]$ kubectl get nodes</span><br><span class="line">NAME      STATUS    ROLES     AGE       VERSION</span><br><span class="line">node1     Ready     master    29m       v1.11.3</span><br><span class="line">node2     Ready     &lt;none&gt;    11m       v1.11.3</span><br><span class="line">node3     Ready     &lt;none&gt;    11m       v1.11.3</span><br><span class="line">[node1 ~]$</span><br><span class="line">[node1 ~]$ kubectl get pods</span><br><span class="line">NAME                        READY     STATUS    RESTARTS   AGE</span><br><span class="line">my-nginx-67594d6bf6-2cbbz   1/1       Running   0          1m</span><br><span class="line">my-nginx-67594d6bf6-r2p6w   1/1       Running   0          1m</span><br><span class="line">my-nginx-67594d6bf6-vjqn4   1/1       Running   0          1m</span><br></pre></td></tr></table></figure>
-
-
-<p>参考来源：</p>
-<ol>
-<li><a href="https://github.com/cncf/toc/blob/master/DEFINITION.md" target="_blank" rel="noopener">https://github.com/cncf/toc/blob/master/DEFINITION.md</a></li>
-<li><a href="https://zh.wikipedia.org/wiki/%E5%BE%AE%E6%9C%8D%E5%8B%99" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/%E5%BE%AE%E6%9C%8D%E5%8B%99</a></li>
-<li><a href="https://zh.wikipedia.org/zh-cn/%E5%AE%A3%E5%91%8A%E5%BC%8F%E7%B7%A8%E7%A8%8B" target="_blank" rel="noopener">https://zh.wikipedia.org/zh-cn/%E5%AE%A3%E5%91%8A%E5%BC%8F%E7%B7%A8%E7%A8%8B</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/34445114" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/34445114</a></li>
-<li><a href="https://labs.play-with-k8s.com/" target="_blank" rel="noopener">https://labs.play-with-k8s.com/</a></li>
-</ol>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/28/Introduction-of-Cloud-Native/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1257,90 +946,14 @@
 <li>应用程序无感知</li>
 <li>解耦应用程序的重试/超时、监控、追踪和服务发现</li>
 </ul>
-<h2 id="理解服务网格"><a href="#理解服务网格" class="headerlink" title="理解服务网格"></a>理解服务网格</h2><p>如果用一句话来解释什么是服务网格，可以将它比作是应用程序或者说微服务间的 TCP/IP，负责服务之间的网络调用、限流、熔断和监控。</p>
-<p>服务网格的架构如下图所示：<br><img src="https://img-blog.csdnimg.cn/20191116230107526.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70" alt="Service Mesh架构图"></p>
-<h2 id="为何使用服务网格？"><a href="#为何使用服务网格？" class="headerlink" title="为何使用服务网格？"></a>为何使用服务网格？</h2><p>服务网格并没有给我们带来新功能，它是用于解决其他工具已经解决过的问题，只不过这次是在云原生的 Kubernetes 环境下的实现。</p>
-<p>在传统的 MVC 三层 Web 应用程序架构下，服务之间的通讯并不复杂，在应用程序内部自己管理即可，但是在现今的复杂的大型网站情况下，单体应用被分解为众多的微服务，服务之间的依赖和通讯十分复杂，出现了 twitter 开发的 Finagle、Netflix 开发的 Hystrix 和 Google 的 Stubby 这样的 “胖客户端” 库，这些就是早期的服务网格，但是它们都仅适用于特定的环境和特定的开发语言，并不能作为平台级的服务网格支持。</p>
-<p>在云原生架构下，容器的使用给予了异构应用程序的更多可行性，Kubernetes 增强的应用的横向扩容能力，用户可以快速的编排出复杂环境、复杂依赖关系的应用程序，同时开发者又无须过多关心应用程序的监控、扩展性、服务发现和分布式追踪这些繁琐的事情而专注于程序开发，赋予开发者更多的创造性。</p>
-<h1 id="服务网格架构"><a href="#服务网格架构" class="headerlink" title="服务网格架构"></a>服务网格架构</h1><p>服务网格中分为控制平面和数据平面，当前流行的两款开源的服务网格 Istio 和 Linkerd 实际上都是这种架构，只不过 Istio 的划分更清晰，而且部署更零散，很多组件都被拆分，控制平面中包括 Mixer、Pilot、Citadel，数据平面默认是用 Envoy；而 Linkerd 中只分为 Linkerd 做数据平面，namerd 作为控制平面。</p>
-<p><strong>控制平面的特点</strong></p>
-<ul>
-<li>不直接解析数据包</li>
-<li>与数据平面中的代理通信，下发策略和配置</li>
-<li>负责网络行为的可视化</li>
-<li>通常提供 API 或者命令行工具可用于配置版本化管理，便于持续集成和部署</li>
-</ul>
-<p><strong>数据平面的特点</strong></p>
-<ul>
-<li>通常是按照无状态目标设计的，但实际上为了提高流量转发性能，需要缓存一些数据，因此无状态也是有争议的</li>
-<li>直接处理入站和出站数据包，转发、路由、健康检查、负载均衡、认证、鉴权、产生监控数据等</li>
-<li>对应用来说透明，即可以做到无感知部署</li>
-</ul>
-<h2 id="服务网格的实现模式"><a href="#服务网格的实现模式" class="headerlink" title="服务网格的实现模式"></a>服务网格的实现模式</h2><p>Service Mesh 架构示意图：<br><img src="https://img-blog.csdnimg.cn/20191116231047738.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70" alt="Service Mesh架构示意图"></p>
-<h2 id="Istio-架构解析"><a href="#Istio-架构解析" class="headerlink" title="Istio 架构解析"></a>Istio 架构解析</h2><p><img src="https://img-blog.csdnimg.cn/20191116231618741.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<ul>
-<li>Istio 是独立于平台的，可以在 Kubernetes 、 Consul 、虚拟机上部署的服务</li>
-<li>Istio 的组成<ul>
-<li>Envoy：智能代理、流量控制</li>
-<li>Pilot：服务发现、流量管理</li>
-<li>Mixer：访问控制、遥测</li>
-<li>Citadel：终端用户认证、流量加密</li>
-<li>Galley（1.1新增）：验证、处理和分配配置</li>
-</ul>
-</li>
-<li>Service mesh 关注的方面<ul>
-<li>可观察性</li>
-<li>安全性</li>
-<li>可运维性</li>
-<li>可拓展性</li>
-</ul>
-</li>
-<li>Istio 的策略执行组件可以扩展和定制，同时也是可拔插的</li>
-<li>Istio 在数据平面为每个服务中注入一个 Envoy 代理以 Sidecar 形式运行来劫持所有进出服务的流量，同时对流量加以控制，通俗的讲就是应用程序你只管处理你的业务逻辑，其他的事情 Sidecar 会汇报给 Istio 控制平面处理</li>
-<li>应用程序只需关注于业务逻辑（这才能生钱）即可，非功能性需求交给 Istio</li>
-</ul>
-<p><strong>设计目标</strong></p>
-<ul>
-<li>最大化透明度</li>
-<li>可扩展性</li>
-<li>可移植性</li>
-<li>策略一致性</li>
-</ul>
-<h2 id="从边车模式到-Service-Mesh"><a href="#从边车模式到-Service-Mesh" class="headerlink" title="从边车模式到 Service Mesh"></a>从边车模式到 Service Mesh</h2><h3 id="什么是边车模式"><a href="#什么是边车模式" class="headerlink" title="什么是边车模式"></a>什么是边车模式</h3><blockquote>
-<p>Deploy components of an application into a separate process or container to provide isolation and encapsulation.<br>— Sidecar pattern</p>
-</blockquote>
-<p><img src="https://img-blog.csdnimg.cn/2019111623235962.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70" alt="SideCar"></p>
-<h3 id="边车模式设计"><a href="#边车模式设计" class="headerlink" title="边车模式设计"></a>边车模式设计</h3><p>有两种方法来实现边车模式：</p>
-<ul>
-<li>通过 SDK、Lib 等软件包的形式，在开发时引入该软件包依赖，使其与业务服务集成起来。</li>
-<li>以 Sidecar 的形式，在运维的时候与应用服务集成在一起。</li>
-</ul>
-<h3 id="边车模式解决了什么问题"><a href="#边车模式解决了什么问题" class="headerlink" title="边车模式解决了什么问题"></a>边车模式解决了什么问题</h3><ul>
-<li>控制与逻辑分离的问题<ul>
-<li>业务代码只需要关心其复杂的业务逻辑</li>
-<li>日志记录、监控、流量控制、服务注册、服务发现、服务限流、服务熔断、鉴权、访问控制等交给边车</li>
-</ul>
-</li>
-<li>解决服务之间调用越来越复杂的问题<ul>
-<li>随着分布式架构越来越复杂和微服务越拆越细，我们越来越迫切的希望有一个统一的控制面来管理我们的微服务，来帮助我们维护和管理所有微服务</li>
-</ul>
-</li>
-</ul>
-<h3 id="从边车模式到-Service-Mesh-1"><a href="#从边车模式到-Service-Mesh-1" class="headerlink" title="从边车模式到 Service Mesh"></a>从边车模式到 Service Mesh</h3><p>遵循边车模式进行实践从很早以前就开始了，开发人员一直试图将服务治理等通用功能提取成一个标准化的 Sidecar ，通过 Sidecar 代理来与其他系统进行交互，这样可以大大简化业务开发和运维。而随着分布式架构和微服务被越来越多的公司和开发者接受并使用，这一需求日益凸显。这就是 Service Mesh 服务网格诞生的契机，它是 CNCF（Cloud Native Computing Foundation，云原生基金会）目前主推的新一代微服务架构。</p>
-<p>Service Mesh 将底层那些难以控制的网络通讯统一管理，诸如：流量管控，丢包重试，访问控制等。而上层的应用层协议只需关心业务逻辑即可。Service Mesh 是一个用于处理服务间通信的基础设施层，它负责为构建复杂的云原生应用传递可靠的网络请求。</p>
-<h1 id="Kubernetes-vs-Service-Mesh"><a href="#Kubernetes-vs-Service-Mesh" class="headerlink" title="Kubernetes vs Service Mesh"></a>Kubernetes vs Service Mesh</h1><blockquote>
-<p>Kubernetes 管理的对象是 Pod，Service Mesh 中管理的对象是 Service。</p>
-</blockquote>
-<ul>
-<li>Kubernetes 的本质是应用的生命周期管理，具体来说就是部署和管理（扩缩容、自动恢复、发布）。</li>
-<li>Kubernetes 为微服务提供了可扩展、高弹性的部署和管理平台。</li>
-<li>Service Mesh 的基础是透明代理，通过 sidecar proxy 拦截到微服务间流量后再通过控制平面配置管理微服务的行为。</li>
-<li>Service Mesh 将流量管理从 Kubernetes 中解耦，Service Mesh 内部的流量无需 kube-proxy 组件的支持，通过为更接近微服务应用层的抽象，管理服务间的流量、安全性和可观察性。</li>
-<li>Service Mesh 是对 Kubernetes 中的 service 更上层的抽象，它的下一步是 serverless。</li>
-</ul>
-<hr>
-<p>本文是针对ServiceMesher社区系列文章而整理的学习笔记，文章地址：<a href="https://www.servicemesher.com/istio-handbook/intro/service-mesh-the-microservices-in-post-kubernetes-era.html" target="_blank" rel="noopener">https://www.servicemesher.com/istio-handbook/intro/service-mesh-the-microservices-in-post-kubernetes-era.html</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/28/Introduction-of-Service-Mesh/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1417,48 +1030,14 @@
 <li>不同的服务可能采用不同的协议，有些协议是非web的。</li>
 </ul>
 <h1 id="2-什么是API网关？"><a href="#2-什么是API网关？" class="headerlink" title="2 什么是API网关？"></a>2 什么是API网关？</h1><p>API网关接收客户端的所有请求，并将请求路由到相应的后端服务，并提供接口聚合和协议转换。通常来说，API网关通过调用多个后端服务，并聚合结果的方式处理请求。它可将web协议转化为非web的内部后台协议。</p>
-<p>核心功能：</p>
-<ul>
-<li>服务发现：</li>
-<li>负载均衡：以某种算法分摊系统压力。</li>
-<li>服务熔断：直接返回失败或者执行降价逻辑，防止雪崩。</li>
-<li>流量控制：防止短时间内大量请求转发到后台压垮服务器。</li>
-<li>认证鉴权：验证客户端的请求是否被授权。</li>
-<li>灰度发布：</li>
-</ul>
-<p>其他功能：</p>
-<ul>
-<li>协议转换：web协议转非Web协议。</li>
-<li>参数校验：对入参设置校验规则，由网关根据规则对无效请求进行过滤。</li>
-<li>API管理：包括 API 的创建、测试、发布、下线、版本切换等。</li>
-<li>监控告警：监控API请求次数、API调用延迟和API错误信息。</li>
-<li>SDK生成：</li>
-</ul>
-<h1 id="3-实现方式"><a href="#3-实现方式" class="headerlink" title="3 实现方式"></a>3 实现方式</h1><p>将API网关作为客户端的唯一接入点。API网关主要有两种类型：</p>
-<ul>
-<li>one-size-fits-all网关</li>
-<li>Backends for frontends网关</li>
-</ul>
-<h2 id="3-1-One-size-fits-all网关"><a href="#3-1-One-size-fits-all网关" class="headerlink" title="3.1 One-size-fits-all网关"></a>3.1 One-size-fits-all网关</h2><p>简单地将请求路由到相应服务。将请求扇出到多个后端服务。<br><img src="https://img-blog.csdnimg.cn/20191013124932708.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70" alt="OSFA API Gateway"></p>
-<h2 id="3-2-Backends-for-fronts网关"><a href="#3-2-Backends-for-fronts网关" class="headerlink" title="3.2 Backends for fronts网关"></a>3.2 Backends for fronts网关</h2><p>为每种客户端暴露不同的API。为每种客户端设计一个API网关，每个API网关为其客户端提供一种API。<br><img src="https://img-blog.csdnimg.cn/20191013125314703.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70" alt="Backends fro frontends API Gateway"></p>
-<h1 id="4-优点"><a href="#4-优点" class="headerlink" title="4 优点"></a>4 优点</h1><ul>
-<li>使后端的微服务拆分对客户端透明。</li>
-<li>客户端无需关心后端服务的实例地址（IP + port）。</li>
-<li>可为每个客户端提供最优API。</li>
-<li>减少请求次数。</li>
-<li>简化客户端的逻辑（由调用多个后台服务变为只调用API网关）。</li>
-<li>可将标准的Web API协议转化为任意的后端协议。</li>
-</ul>
-<h1 id="5-缺点"><a href="#5-缺点" class="headerlink" title="5 缺点"></a>5 缺点</h1><ul>
-<li>增加复杂性。增加了API网关模块，带来了额外的开发、部署、管理成本。</li>
-<li>增加响应时间。调用链路多了一跳（API网关）。</li>
-</ul>
-<p><strong>Issues:</strong></p>
-<blockquote>
-<p>How implement the API gateway?<br>event-driven/reactive approach is the best if it must scale to handle high loads.</p>
-</blockquote>
-<p>参考来源：<br>[1] <a href="https://microservices.io/patterns/apigateway.html" target="_blank" rel="noopener">https://microservices.io/patterns/apigateway.html</a><br>[2] <a href="https://www.nginx.com/learn/api-gateway/" target="_blank" rel="noopener">https://www.nginx.com/learn/api-gateway/</a><br>[3] <a href="https://aws.amazon.com/cn/api-gateway/features/" target="_blank" rel="noopener">https://aws.amazon.com/cn/api-gateway/features/</a><br>[4] <a href="https://cloud.tencent.com/document/product/628/11755" target="_blank" rel="noopener">https://cloud.tencent.com/document/product/628/11755</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/27/Introduction-of-API-GateWay/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

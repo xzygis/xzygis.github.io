@@ -13,6 +13,8 @@
 <li>服务鉴权（Service Segmentation）：Consul连接基于自动TLS加密和基于签名的鉴权实现安全的服务间通信。</li>
 </ol>
 <p>Consul支持Linux, Mac OS X, FreeBSD, Solaris, Windows等操作系统。</p>
+<a id="more"></a>
+
 <h2 id="基本架构"><a href="#基本架构" class="headerlink" title="基本架构"></a>基本架构</h2><p>每个提供服务给Consul的节点都运行了一个Consul Agent。运行一个Agent并不需要对其他服务做发现或读写KV存储。Agent负责对该节点上的服务做健康检查。</p>
 <p>Agent会与一个或多个Consul Server通信。Consul Server通常有多个实例，负责数据存储和备份、选举主节点等。虽然Consul支持在只有一个Server实例的情况下工具，但通常推荐使用3至5个实例，从而避免由于某些异常场景而导致数据丢失。同时，推荐在每个数据中心部署一个Consul集群。</p>
 <p>每个数据中运行了一个Consul server集群。当一个跨数据中心的服务发现和配置请求创建时，本地Consul Server转发请求到远程的数据中心并返回结果.</p>
@@ -91,6 +93,8 @@
 <li>一种解决方案是 session 数据持久化，写入数据库或别的持久层。各种服务收到请求后，都向持久层请求数据。这种方案的优点是架构清晰，缺点是工程量比较大。另外，持久层万一挂了，就会单点失败。</li>
 <li>另一种方案是服务器索性不保存 session 数据了，所有数据都保存在客户端，每次请求都发回服务器。JWT 就是这种方案的一个代表。</li>
 </ul>
+<a id="more"></a>
+
 <h1 id="什么是JWT？"><a href="#什么是JWT？" class="headerlink" title="什么是JWT？"></a>什么是JWT？</h1><p>Json web token (JWT)，是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（(RFC 7519)。该token被设计为紧凑且安全的，特别适用于分布式站点的单点登录（SSO）场景。JWT的声明一般被用来在身份提供者和服务提供者间传递被认证的用户身份信息，以便于从资源服务器获取资源，也可以增加一些额外的其它业务逻辑所必须的声明信息，该token可直接被用于认证，也可被加密。</p>
 <h1 id="JWT-的原理"><a href="#JWT-的原理" class="headerlink" title="JWT 的原理"></a>JWT 的原理</h1><p>服务器认证以后，生成一个经过签名的 JSON 对象，发回给用户，服务器则不用保存任何 session 数据了。从而把服务器变成无状态的，易于实现扩展。</p>
 <h1 id="JWT-的使用场景"><a href="#JWT-的使用场景" class="headerlink" title="JWT 的使用场景"></a>JWT 的使用场景</h1><p>以下是两个JWT的应用场景：</p>
@@ -175,6 +179,8 @@
 
 <h2 id="启动容器："><a href="#启动容器：" class="headerlink" title="启动容器："></a>启动容器：</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ docker run -it ubuntu &#x2F;bin&#x2F;bash</span><br><span class="line"># 要退出终端，直接输入 exit</span><br></pre></td></tr></table></figure>
 
+<a id="more"></a>
+
 <h2 id="启动已停止运行的容器"><a href="#启动已停止运行的容器" class="headerlink" title="启动已停止运行的容器"></a>启动已停止运行的容器</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ docker ps -a</span><br></pre></td></tr></table></figure>
 
 <h2 id="启动已停止运行的容器-1"><a href="#启动已停止运行的容器-1" class="headerlink" title="启动已停止运行的容器"></a>启动已停止运行的容器</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ docker start b750bbbcfd88</span><br></pre></td></tr></table></figure>
@@ -228,6 +234,8 @@
 <li><code>ubuntu:18.04</code>：这是指用 ubuntu:18.04 镜像为基础来启动容器。</li>
 <li><code>bash</code>：放在镜像名后的是命令，这里我们希望有个交互式 Shell，因此用的是 bash。</li>
 </ul>
+<a id="more"></a>
+
 <h2 id="查看镜像列表"><a href="#查看镜像列表" class="headerlink" title="查看镜像列表"></a>查看镜像列表</h2><p>使用<code>docker image ls</code>或者<code>docker images</code>:</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ docker image ls</span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">ubuntu              18.04               93fd78260bd1        5 weeks ago         86.2MB</span><br><span class="line">ubuntu              latest              93fd78260bd1        5 weeks ago         86.2MB</span><br><span class="line">hello-world         latest              4ab4c602aa5e        3 months ago        1.84kB</span><br><span class="line"></span><br><span class="line">$ docker images</span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">ubuntu              18.04               93fd78260bd1        5 weeks ago         86.2MB</span><br><span class="line">ubuntu              latest              93fd78260bd1        5 weeks ago         86.2MB</span><br><span class="line">hello-world         latest              4ab4c602aa5e        3 months ago        1.84kB</span><br></pre></td></tr></table></figure>
 <p>列表包含了 仓库名、标签、镜像 ID、创建时间 以及 所占用的空间。</p>
@@ -373,6 +381,8 @@
 <li>广泛的 Volume 支持</li>
 <li>插件机制保证扩展性</li>
 </ul>
+<a id="more"></a>
+
 <h2 id="Kubernetes-是一个平台"><a href="#Kubernetes-是一个平台" class="headerlink" title="Kubernetes 是一个平台"></a>Kubernetes 是一个平台</h2><p>Kubernetes 提供了很多的功能，它可以简化应用程序的工作流，加快开发速度。</p>
 <ul>
 <li>用户可以使用 Label 以自己的方式组织管理资源，还可以使用 Annotation 来自定义资源的描述信息，比如为管理工具提供状态检查等。</li>
@@ -448,6 +458,8 @@
     <url>/2020/01/28/Introduction-of-Cloud-Native/</url>
     <content><![CDATA[<h1 id="云原生的定义"><a href="#云原生的定义" class="headerlink" title="云原生的定义"></a>云原生的定义</h1><p>云原生技术有利于各组织在公有云、私有云和混合云等新型动态环境中，构建和运行可弹性扩展的应用。云原生的代表技术包括容器、服务网格、微服务、不可变基础设施和声明式API。</p>
 <p>这些技术能够构建容错性好、易于管理和便于观察的松耦合系统。结合可靠的自动化手段，云原生技术使工程师能够轻松地对系统作出频繁和可预测的重大变更。</p>
+<a id="more"></a>
+
 <h1 id="云原生的设计哲学"><a href="#云原生的设计哲学" class="headerlink" title="云原生的设计哲学"></a>云原生的设计哲学</h1><p>云原生本身甚至不能称为是一种架构，它首先是一种基础设施，运行在其上的应用称作云原生应用，只有符合云原生设计哲学的应用架构才叫云原生应用架构。</p>
 <h2 id="云原生的设计理念"><a href="#云原生的设计理念" class="headerlink" title="云原生的设计理念"></a>云原生的设计理念</h2><p>云原生系统的设计理念如下:</p>
 <ul>
@@ -542,6 +554,8 @@
 <li>应用程序无感知</li>
 <li>解耦应用程序的重试/超时、监控、追踪和服务发现</li>
 </ul>
+<a id="more"></a>
+
 <h2 id="理解服务网格"><a href="#理解服务网格" class="headerlink" title="理解服务网格"></a>理解服务网格</h2><p>如果用一句话来解释什么是服务网格，可以将它比作是应用程序或者说微服务间的 TCP/IP，负责服务之间的网络调用、限流、熔断和监控。</p>
 <p>服务网格的架构如下图所示：<br><img src="https://img-blog.csdnimg.cn/20191116230107526.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70" alt="Service Mesh架构图"></p>
 <h2 id="为何使用服务网格？"><a href="#为何使用服务网格？" class="headerlink" title="为何使用服务网格？"></a>为何使用服务网格？</h2><p>服务网格并没有给我们带来新功能，它是用于解决其他工具已经解决过的问题，只不过这次是在云原生的 Kubernetes 环境下的实现。</p>
@@ -646,6 +660,8 @@
 <li>不同的服务可能采用不同的协议，有些协议是非web的。</li>
 </ul>
 <h1 id="2-什么是API网关？"><a href="#2-什么是API网关？" class="headerlink" title="2 什么是API网关？"></a>2 什么是API网关？</h1><p>API网关接收客户端的所有请求，并将请求路由到相应的后端服务，并提供接口聚合和协议转换。通常来说，API网关通过调用多个后端服务，并聚合结果的方式处理请求。它可将web协议转化为非web的内部后台协议。</p>
+<a id="more"></a>
+
 <p>核心功能：</p>
 <ul>
 <li>服务发现：</li>
@@ -705,6 +721,8 @@
 <h2 id="初始化Hexo"><a href="#初始化Hexo" class="headerlink" title="初始化Hexo"></a>初始化Hexo</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo init</span><br></pre></td></tr></table></figure>
 
 <h2 id="生成网页文件和开启服务器"><a href="#生成网页文件和开启服务器" class="headerlink" title="生成网页文件和开启服务器"></a>生成网页文件和开启服务器</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo g</span><br><span class="line">$ hexo s</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
 
 <h2 id="关联Github"><a href="#关联Github" class="headerlink" title="关联Github"></a>关联Github</h2><ol>
 <li><p>修改<code>_config.yml</code>，修改deploy为：</p>

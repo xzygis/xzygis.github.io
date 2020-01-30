@@ -56,7 +56,7 @@
 <meta property="og:description" content="1. 移除旧的版本12345678910sudo yum remove docker \                  docker-client \                  docker-client-latest \                  docker-common \                  docker-latest \">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-01-30T04:56:35.000Z">
-<meta property="article:modified_time" content="2020-01-30T05:00:09.590Z">
+<meta property="article:modified_time" content="2020-01-30T08:15:22.879Z">
 <meta property="article:author" content="楚兴">
 <meta property="article:tag" content="docker">
 <meta name="twitter:card" content="summary">
@@ -281,6 +281,8 @@
 <h3 id="4-更新-yum-缓存"><a href="#4-更新-yum-缓存" class="headerlink" title="4. 更新 yum 缓存"></a>4. 更新 yum 缓存</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum makecache fast</span><br></pre></td></tr></table></figure>
 
 <h3 id="5-安装-Docker-ce"><a href="#5-安装-Docker-ce" class="headerlink" title="5. 安装 Docker-ce"></a>5. 安装 Docker-ce</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum -y install docker-ce</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
 
 <h3 id="6-启动-Docker-后台服务"><a href="#6-启动-Docker-后台服务" class="headerlink" title="6. 启动 Docker 后台服务"></a>6. 启动 Docker 后台服务</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl start docker</span><br></pre></td></tr></table></figure>
 

@@ -319,6 +319,8 @@
 
 <h3 id="5-安装-Docker-ce"><a href="#5-安装-Docker-ce" class="headerlink" title="5. 安装 Docker-ce"></a>5. 安装 Docker-ce</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo yum -y install docker-ce</span><br></pre></td></tr></table></figure>
 
+<a id="more"></a>
+
 <h3 id="6-启动-Docker-后台服务"><a href="#6-启动-Docker-后台服务" class="headerlink" title="6. 启动 Docker 后台服务"></a>6. 启动 Docker 后台服务</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl start docker</span><br></pre></td></tr></table></figure>
 
 <h3 id="7-测试运行-hello-world"><a href="#7-测试运行-hello-world" class="headerlink" title="7. 测试运行 hello-world"></a>7. 测试运行 hello-world</h3><p>初次运行可能会报如下的错误信息：</p>

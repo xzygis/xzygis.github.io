@@ -55,13 +55,13 @@
 <meta property="og:site_name" content="聊斋志技">
 <meta property="og:description" content="跨域认证问题互联网服务离不开用户认证。一般流程是下面这样：  用户向服务器发送用户名和密码。 服务器验证通过后，在当前对话（session）里面保存相关数据，比如用户角色、登录时间等等。 服务器向用户返回一个 session_id，写入用户的 Cookie。 用户随后的每一次请求，都会通过 Cookie，将 session_id 传回服务器。 服务器收到 session_id，找到前期保存的数据，">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://chuxing.club/2020/01/30/Usage-of-JSON-Web-Token/20200130-Usage-of-JSON-Web-Token/jwt-example.png">
+<meta property="og:image" content="https://chuxing.club/2020/01/30/Usage-of-JSON-Web-Token/jwt-example.png">
 <meta property="article:published_time" content="2020-01-30T05:10:39.000Z">
-<meta property="article:modified_time" content="2020-01-30T05:26:23.882Z">
+<meta property="article:modified_time" content="2020-01-30T05:29:47.592Z">
 <meta property="article:author" content="楚兴">
 <meta property="article:tag" content="jwt">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://chuxing.club/2020/01/30/Usage-of-JSON-Web-Token/20200130-Usage-of-JSON-Web-Token/jwt-example.png">
+<meta name="twitter:image" content="https://chuxing.club/2020/01/30/Usage-of-JSON-Web-Token/jwt-example.png">
 
 <link rel="canonical" href="https://chuxing.club/2020/01/30/Usage-of-JSON-Web-Token/">
 
@@ -336,7 +336,7 @@
 <h2 id="Signature"><a href="#Signature" class="headerlink" title="Signature"></a>Signature</h2><p>创建签名需要用到编码后的 Header、编码后的 Payload、秘钥、Header中指定的算法。</p>
 <p>如果你想使用HMAC SHA256算法，签名将通过如下方式生成：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HMACSHA256(</span><br><span class="line">  base64UrlEncode(header) + <span class="string">"."</span> +</span><br><span class="line">  base64UrlEncode(payload),</span><br><span class="line">  secret)</span><br></pre></td></tr></table></figure>
-<p>如果你想把以上概念付诸实践，可以通过 <a href="https://jwt.io/" target="_blank" rel="noopener">https://jwt.io/</a> 提供的工具来玩一玩 JWT 。如下图所示：<img src="20200130-Usage-of-JSON-Web-Token/jwt-example.png" alt="jwt.io"></p>
+<p>如果你想把以上概念付诸实践，可以通过 <a href="https://jwt.io/" target="_blank" rel="noopener">https://jwt.io/</a> 提供的工具来玩一玩 JWT 。如下图所示：<img src="jwt-example.png" alt="jwt.io"></p>
 <h1 id="JWT-的使用方式"><a href="#JWT-的使用方式" class="headerlink" title="JWT 的使用方式"></a>JWT 的使用方式</h1><p>客户端收到服务器返回的 JWT，可以储存在 Cookie 里面，也可以储存在 localStorage。<br>此后，客户端每次与服务器通信，都要带上这个 JWT。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP 请求的头信息Authorization字段里面。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Authorization: Bearer &lt;token&gt;</span><br></pre></td></tr></table></figure>
 <p>另一种做法是，跨域的时候，JWT 就放在 POST 请求的数据体里面。</p>

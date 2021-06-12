@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://chuxing.club').hostname,
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":false},
+    bookmark: {"enable":true,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="什么是WebSocket？WebSocket是一种网络传输协议，可在单个TCP连接上进行全双工通信，位于OSI模型的应用层。WebSocket协议在2011年由IETF标准化为RFC 6455，后由RFC 7936补充规范。 WebSocket使得客户端和服务器之间的数据交换变得更加简单，允许服务端主动向客户端推送数据。在WebSocket API中，浏览器和服务器只需要完成一次握手，两者之间就可">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Websocket介绍">
+<meta property="og:url" content="https://chuxing.club/2021/06/12/introduction-of-websocket/index.html">
+<meta property="og:site_name" content="楚兴">
+<meta property="og:description" content="什么是WebSocket？WebSocket是一种网络传输协议，可在单个TCP连接上进行全双工通信，位于OSI模型的应用层。WebSocket协议在2011年由IETF标准化为RFC 6455，后由RFC 7936补充规范。 WebSocket使得客户端和服务器之间的数据交换变得更加简单，允许服务端主动向客户端推送数据。在WebSocket API中，浏览器和服务器只需要完成一次握手，两者之间就可">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chuxing.club/2021/06/12/introduction-of-websocket/websocket.org-1.png">
+<meta property="og:image" content="https://chuxing.club/2021/06/12/introduction-of-websocket/websocket.org-2.png">
+<meta property="og:image" content="https://chuxing.club/2021/06/12/introduction-of-websocket/websocket.org-3.png">
+<meta property="article:published_time" content="2021-06-12T07:25:21.000Z">
+<meta property="article:modified_time" content="2021-06-12T08:00:38.822Z">
+<meta property="article:author" content="楚兴">
+<meta property="article:tag" content="websocket">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chuxing.club/2021/06/12/introduction-of-websocket/websocket.org-1.png">
+
+<link rel="canonical" href="https://chuxing.club/2021/06/12/introduction-of-websocket/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Websocket介绍 | 楚兴</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?ee40507d136c154c7de59656d27ab7d1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">楚兴</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">求知若渴，虚心若愚~</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/xzygis" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chuxing.club/2021/06/12/introduction-of-websocket/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="楚兴">
+      <meta itemprop="description" content="聊技术，谈人生">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="楚兴">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Websocket介绍
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-12 15:25:21" itemprop="dateCreated datePublished" datetime="2021-06-12T15:25:21+08:00">2021-06-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
+                    <span itemprop="name">后台开发</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="什么是WebSocket？"><a href="#什么是WebSocket？" class="headerlink" title="什么是WebSocket？"></a>什么是WebSocket？</h1><p>WebSocket是一种网络传输协议，可在单个TCP连接上进行全双工通信，位于OSI模型的应用层。WebSocket协议在2011年由IETF标准化为RFC 6455，后由RFC 7936补充规范。</p>
+<p>WebSocket使得客户端和服务器之间的数据交换变得更加简单，允许服务端主动向客户端推送数据。在WebSocket API中，浏览器和服务器只需要完成一次握手，两者之间就可以创建持久性的连接，并进行双向数据传输。</p>
+<h2 id="有哪些优点？"><a href="#有哪些优点？" class="headerlink" title="有哪些优点？"></a>有哪些优点？</h2><ol>
+<li>较少的控制开销。在连接创建后，服务器和客户端之间交换数据时，用于协议控制的数据包头部相对较小。在不包含扩展的情况下，对于服务器到客户端的内容，此头部大小只有2至10字节（和数据包长度有关）；对于客户端到服务器的内容，此头部还需要加上额外的4字节的掩码。相对于HTTP请求每次都要携带完整的头部，此项开销显著减少了。</li>
+<li>强的实时性。由于协议是全双工的，所以服务器可以随时主动给客户端下发数据。相对于HTTP请求需要等待客户端发起请求服务端才能响应，延迟明显更少；即使是和Comet等类似的长轮询比较，其也能在短时间内更多次地传递数据。</li>
+<li>保持连接状态。与HTTP不同的是，Websocket需要先创建连接，这就使得其成为一种有状态的协议，之后通信时可以省略部分状态信息。而HTTP请求可能需要在每个请求都携带状态信息（如身份认证等）。</li>
+<li>更好的二进制支持。Websocket定义了二进制帧，相对HTTP，可以更轻松地处理二进制内容。</li>
+<li>可以支持扩展。Websocket定义了扩展，用户可以扩展协议、实现部分自定义的子协议。如部分浏览器支持压缩等。</li>
+</ol>
+<a id="more"></a>
+
+<h1 id="握手协议"><a href="#握手协议" class="headerlink" title="握手协议"></a>握手协议</h1><p>WebSocket是一种与HTTP不同的协议。两者都位于OSI模型的应用层，并且都依赖于传输层的TCP协议。 虽然它们不同，但是RFC 6455中规定：it is designed to work over HTTP ports 80 and 443 as well as to support HTTP proxies and intermediaries（WebSocket通过HTTP端口80和443进行工作，并支持HTTP代理和中介），从而使其与HTTP协议兼容。 为了实现兼容性，WebSocket握手使用HTTP Upgrade头从HTTP协议更改为WebSocket协议。</p>
+<h2 id="握手例子"><a href="#握手例子" class="headerlink" title="握手例子"></a>握手例子</h2><p>一个典型的Websocket握手请求如下：</p>
+<p>客户端请求：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">GET &#x2F;chat HTTP&#x2F;1.1</span><br><span class="line">Host: server.example.com</span><br><span class="line">Upgrade: websocket</span><br><span class="line">Connection: Upgrade</span><br><span class="line">Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ&#x3D;&#x3D;</span><br><span class="line">Origin: http:&#x2F;&#x2F;example.com</span><br><span class="line">Sec-WebSocket-Protocol: chat, superchat</span><br><span class="line">Sec-WebSocket-Version: 13</span><br></pre></td></tr></table></figure>
+
+<p>服务器回应：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">HTTP&#x2F;1.1 101 Switching Protocols</span><br><span class="line">Upgrade: websocket</span><br><span class="line">Connection: Upgrade</span><br><span class="line">Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo&#x3D;</span><br><span class="line">Sec-WebSocket-Protocol: chat</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="字段说明"><a href="#字段说明" class="headerlink" title="字段说明"></a>字段说明</h2><ul>
+<li>Connection必须设置Upgrade，表示客户端希望连接升级。</li>
+<li>Upgrade字段必须设置Websocket，表示希望升级到Websocket协议。</li>
+<li>Sec-WebSocket-Key是随机的字符串，服务器端会用这些数据来构造出一个SHA-1的信息摘要。把“Sec-WebSocket-Key”加上一个特殊字符串“258EAFA5-E914-47DA-95CA-C5AB0DC85B11”，然后计算SHA-1摘要，之后进行Base64编码，将结果做为“Sec-WebSocket-Accept”头的值，返回给客户端。如此操作，可以尽量避免普通HTTP请求被误认为Websocket协议。</li>
+<li>Sec-WebSocket-Version 表示支持的Websocket版本。RFC6455要求使用的版本是13，之前草案的版本均应当弃用。</li>
+<li>Origin字段是必须的。如果缺少origin字段，WebSocket服务器需要回复HTTP 403 状态码（禁止访问）。</li>
+</ul>
+<h2 id="体验一下"><a href="#体验一下" class="headerlink" title="体验一下"></a>体验一下</h2><p><a href="https://www.websocket.org/echo.html" target="_blank" rel="noopener">https://www.websocket.org/echo.html</a></p>
+<p><img src="websocket.org-1.png" alt="Connect"></p>
+<p>握手报文：</p>
+<p><img src="websocket.org-2.png" alt="握手报文"></p>
+<p>数据传输：</p>
+<p><img src="websocket.org-3.png" alt="握手报文"></p>
+<h1 id="数据帧"><a href="#数据帧" class="headerlink" title="数据帧"></a>数据帧</h1><p>WebSocket客户端、服务端通信的最小单位是帧（frame），由1个或多个帧组成一条完整的消息（message）。</p>
+<ul>
+<li>发送端：将消息切割成多个帧，并发送给服务端；</li>
+<li>接收端：接收消息帧，并将关联的帧重新组装成完整的消息；</li>
+</ul>
+<h2 id="帧结构"><a href="#帧结构" class="headerlink" title="帧结构"></a>帧结构</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">+-+-+-+-+-------+-+-------------+-------------------------------+</span><br><span class="line">|F|R|R|R| opcode|M| Payload len |    Extended payload length    |</span><br><span class="line">|I|S|S|S|  (4)  |A|     (7)     |             (16&#x2F;64)           |</span><br><span class="line">|N|V|V|V|       |S|             |   (if payload len&#x3D;&#x3D;126&#x2F;127)   |</span><br><span class="line">| |1|2|3|       |K|             |                               |</span><br><span class="line">+-+-+-+-+-------+-+-------------+ - - - - - - - - - - - - - - - +</span><br><span class="line">|     Extended payload length continued, if payload len &#x3D;&#x3D; 127  |</span><br><span class="line">+ - - - - - - - - - - - - - - - +-------------------------------+</span><br><span class="line">|                               |Masking-key, if MASK set to 1  |</span><br><span class="line">+-------------------------------+-------------------------------+</span><br><span class="line">| Masking-key (continued)       |          Payload Data         |</span><br><span class="line">+-------------------------------- - - - - - - - - - - - - - - - +</span><br><span class="line">:                     Payload Data continued ...                :</span><br><span class="line">+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - +</span><br><span class="line">|                     Payload Data continued ...                |</span><br><span class="line">+---------------------------------------------------------------+</span><br></pre></td></tr></table></figure>
+
+<h2 id="字段说明-1"><a href="#字段说明-1" class="headerlink" title="字段说明"></a>字段说明</h2><p>FIN：1个比特。<br>如果是1，表示这是消息（message）的最后一个分片（fragment），如果是0，表示不是是消息（message）的最后一个分片（fragment）。</p>
+<p>RSV1, RSV2, RSV3：各占1个比特。<br>一般情况下全为0。当客户端、服务端协商采用WebSocket扩展时，这三个标志位可以非0，且值的含义由扩展进行定义。如果出现非零的值，且并没有采用WebSocket扩展，连接出错。</p>
+<p>Opcode: 4个比特。<br>操作代码，Opcode的值决定了应该如何解析后续的数据载荷（data payload）。如果操作代码是不认识的，那么接收端应该断开连接（fail the connection）。可选的操作代码如下：</p>
+<ul>
+<li>%x0：表示一个延续帧。当Opcode为0时，表示本次数据传输采用了数据分片，当前收到的数据帧为其中一个数据分片。</li>
+<li>%x1：表示这是一个文本帧（frame）</li>
+<li>%x2：表示这是一个二进制帧（frame）</li>
+<li>%x3-7：保留的操作代码，用于后续定义的非控制帧。</li>
+<li>%x8：表示连接断开。</li>
+<li>%x9：表示这是一个ping操作。</li>
+<li>%xA：表示这是一个pong操作。</li>
+<li>%xB-F：保留的操作代码，用于后续定义的控制帧。</li>
+</ul>
+<p>Mask: 1个比特。<br>表示是否要对数据载荷进行掩码操作。从客户端向服务端发送数据时，需要对数据进行掩码操作；从服务端向客户端发送数据时，不需要对数据进行掩码操作。<br>如果服务端接收到的数据没有进行过掩码操作，服务端需要断开连接。<br>如果Mask是1，那么在Masking-key中会定义一个掩码键（masking key），并用这个掩码键来对数据载荷进行反掩码。所有客户端发送到服务端的数据帧，Mask都是1。<br>掩码的算法、用途在下一小节讲解。</p>
+<p>Payload length：数据载荷的长度，单位是字节。为7位，或7+16位，或1+64位。<br>假设数Payload length === x，如果</p>
+<ul>
+<li>x为0~126：数据的长度为x字节。</li>
+<li>x为126：后续2个字节代表一个16位的无符号整数，该无符号整数的值为数据的长度。</li>
+<li>x为127：后续8个字节代表一个64位的无符号整数（最高位为0），该无符号整数的值为数据的长度。</li>
+</ul>
+<p>此外，如果payload length占用了多个字节的话，payload length的二进制表达采用网络序（big endian，重要的位在前）。</p>
+<p>Masking-key：0或4字节（32位）<br>所有从客户端传送到服务端的数据帧，数据载荷都进行了掩码操作，Mask为1，且携带了4字节的Masking-key。如果Mask为0，则没有Masking-key。<br>备注：载荷数据的长度，不包括mask key的长度。</p>
+<p>Payload data：(x+y) 字节</p>
+<ul>
+<li>载荷数据：包括了扩展数据、应用数据。其中，扩展数据x字节，应用数据y字节。</li>
+<li>扩展数据：如果没有协商使用扩展的话，扩展数据数据为0字节。所有的扩展都必须声明扩展数据的长度，或者可以如何计算出扩展数据的长度。此外，扩展如何使用必须在握手阶段就协商好。如果扩展数据存在，那么载荷数据长度必须将扩展数据的长度包含在内。</li>
+<li>应用数据：任意的应用数据，在扩展数据之后（如果存在扩展数据），占据了数据帧剩余的位置。载荷数据长度 减去 扩展数据长度，就得到应用数据的长度。</li>
+</ul>
+<h2 id="掩码算法"><a href="#掩码算法" class="headerlink" title="掩码算法"></a>掩码算法</h2><p>掩码键（Masking-key）是由客户端挑选出来的32位的随机数。掩码操作不会影响数据载荷的长度。掩码、反掩码操作都采用如下算法： </p>
+<p>首先，预设：</p>
+<ul>
+<li>original-octet-i：为原始数据的第i字节。</li>
+<li>transformed-octet-i：为转换后的数据的第i字节。</li>
+<li>j：为i mod 4的结果。</li>
+<li>masking-key-octet-j：为mask key第j字节。</li>
+</ul>
+<p>流程为： original-octet-i 与 masking-key-octet-j 异或后，得到 transformed-octet-i。</p>
+<p>伪代码大概是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var DECODED &#x3D; &quot;&quot;;</span><br><span class="line">for (var i &#x3D; 0; i &lt; ENCODED.length; i++) &#123;</span><br><span class="line">    DECODED[i] &#x3D; ENCODED[i] ^ MASK[i % 4];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>数据掩码的作用：<br>WebSocket 协议中，数据掩码的作用是增强协议的安全性。但数据掩码并不是为了保护数据本身，因为算法本身是公开的，运算也不复杂。除了加密通道本身，似乎没有太多有效的保护通信安全的办法。<br>那么为什么还要引入掩码计算呢，除了增加计算机器的运算量外似乎并没有太多的收益（这也是不少同学疑惑的点）。<br>答案还是两个字：安全。但并不是为了防止数据泄密，而是为了防止早期版本的协议中存在的代理缓存污染攻击（proxy cache poisoning attacks）等问题。</p>
+<h1 id="数据传递"><a href="#数据传递" class="headerlink" title="数据传递"></a>数据传递</h1><p>一旦WebSocket客户端、服务端建立连接后，后续的操作都是基于数据帧的传递。<br>WebSocket根据opcode来区分操作的类型。比如0x8表示断开连接，0x0-0x2表示数据交互。</p>
+<h2 id="数据分片"><a href="#数据分片" class="headerlink" title="数据分片"></a>数据分片</h2><p>WebSocket的每条消息可能被切分成多个数据帧。当WebSocket的接收方收到一个数据帧时，会根据FIN的值来判断，是否已经收到消息的最后一个数据帧。<br>FIN=1表示当前数据帧为消息的最后一个数据帧，此时接收方已经收到完整的消息，可以对消息进行处理。FIN=0，则接收方还需要继续监听接收其余的数据帧。<br>此外，opcode在数据交换的场景下，表示的是数据的类型。0x01表示文本，0x02表示二进制。而0x00比较特殊，表示延续帧（continuation frame），顾名思义，就是完整消息对应的数据帧还没接收完。</p>
+<h2 id="数据分片例子"><a href="#数据分片例子" class="headerlink" title="数据分片例子"></a>数据分片例子</h2><p>下面例子来自MDN，可以很好地演示数据的分片。客户端向服务端两次发送消息，服务端收到消息后回应客户端，这里主要看客户端往服务端发送的消息。</p>
+<p><em>第一条消息</em></p>
+<p>FIN=1, 表示是当前消息的最后一个数据帧。服务端收到当前数据帧后，可以处理消息。opcode=0x1，表示客户端发送的是文本类型。</p>
+<p><em>第二条消息</em></p>
+<ol>
+<li>FIN=0，opcode=0x1，表示发送的是文本类型，且消息还没发送完成，还有后续的数据帧。</li>
+<li>FIN=0，opcode=0x0，表示消息还没发送完成，还有后续的数据帧，当前的数据帧需要接在上一条数据帧之后。</li>
+<li>FIN=1，opcode=0x0，表示消息已经发送完成，没有后续的数据帧，当前的数据帧需要接在上一条数据帧之后。服务端可以将关联的数据帧组装成完整的消息。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Client: FIN&#x3D;1, opcode&#x3D;0x1, msg&#x3D;&quot;hello&quot;</span><br><span class="line">Server: (process complete message immediately) Hi.</span><br><span class="line">Client: FIN&#x3D;0, opcode&#x3D;0x1, msg&#x3D;&quot;and a&quot;</span><br><span class="line">Server: (listening, new message containing text started)</span><br><span class="line">Client: FIN&#x3D;0, opcode&#x3D;0x0, msg&#x3D;&quot;happy new&quot;</span><br><span class="line">Server: (listening, payload concatenated to previous message)</span><br><span class="line">Client: FIN&#x3D;1, opcode&#x3D;0x0, msg&#x3D;&quot;year!&quot;</span><br><span class="line">Server: (process complete message) Happy new year to you too!</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h1 id="心跳"><a href="#心跳" class="headerlink" title="心跳"></a>心跳</h1><p>WebSocket 为了保持客户端、服务端的实时双向通信，需要确保客户端、服务端之间的 TCP 通道保持连接没有断开。<br>对于长时间没有数据往来的连接，如果依旧长时间保持着，可能会浪费包括的连接资源。但不排除有些场景，客户端、服务端虽然长时间没有数据往来，但仍需要保持连接。这个时候，可以采用心跳来实现。</p>
+<ul>
+<li>发送方 -&gt; 接收方：ping</li>
+<li>接收方 -&gt; 发送方：pong</li>
+</ul>
+<p>ping、pong 的操作，对应的是 WebSocket 的两个控制帧，opcode分别是0x9、0xA。</p>
+<h1 id="安全性"><a href="#安全性" class="headerlink" title="安全性"></a>安全性</h1><p>WebSocket协议中规定在连接建立时检查Upgrade请求中的某些字段（如Origin，查看每次请求是否一致），对于不符合要求的请求立即断开，在通信过程中，也对Frame中的控制位做了很多限制，以便禁止异常连接。<br>websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL来对通信加密，默认ws的端口为80，wss端口为433，类似HTTP与HTTPS。</p>
+<h1 id="Go实战：Gorilla-WebSocket"><a href="#Go实战：Gorilla-WebSocket" class="headerlink" title="Go实战：Gorilla WebSocket"></a>Go实战：Gorilla WebSocket</h1><blockquote>
+<p>Github：<a href="https://github.com/gorilla/websocket" target="_blank" rel="noopener">https://github.com/gorilla/websocket</a></p>
+</blockquote>
+<p>文件监控例子（当文件被修改后，把文件发给客户端）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line">   http.HandleFunc(&quot;&#x2F;ws&quot;, serveWs)</span><br><span class="line">   if err :&#x3D; http.ListenAndServe(*addr, nil); err !&#x3D; nil &#123;</span><br><span class="line">      log.Fatal(err)</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func serveWs(w http.ResponseWriter, r *http.Request) &#123;</span><br><span class="line">   &#x2F;&#x2F;升级为Websocket协议</span><br><span class="line">   ws, err :&#x3D; upgrader.Upgrade(w, r, nil)</span><br><span class="line">   if err !&#x3D; nil &#123;</span><br><span class="line">      if _, ok :&#x3D; err.(websocket.HandshakeError); !ok &#123;</span><br><span class="line">         log.Println(err)</span><br><span class="line">      &#125;</span><br><span class="line">      return</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   var lastMod time.Time</span><br><span class="line">   if n, err :&#x3D; strconv.ParseInt(r.FormValue(&quot;lastMod&quot;), 16, 64); err &#x3D;&#x3D; nil &#123;</span><br><span class="line">      lastMod &#x3D; time.Unix(0, n)</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   go writer(ws, lastMod) &#x2F;&#x2F;发送数据、Pong</span><br><span class="line">   reader(ws) &#x2F;&#x2F;读数据、处理Ping</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func writer(ws *websocket.Conn, lastMod time.Time) &#123;</span><br><span class="line">   pingTicker :&#x3D; time.NewTicker(pingPeriod)</span><br><span class="line">   fileTicker :&#x3D; time.NewTicker(filePeriod)</span><br><span class="line">   ...</span><br><span class="line">   for &#123;</span><br><span class="line">      select &#123;</span><br><span class="line">      case &lt;-fileTicker.C:</span><br><span class="line">         p, fileModified, err :&#x3D; readFileIfModified(lastMod)</span><br><span class="line">         ...</span><br><span class="line">         if fileModified &#123;</span><br><span class="line">            ws.SetWriteDeadline(time.Now().Add(writeWait))</span><br><span class="line">            if err :&#x3D; ws.WriteMessage(websocket.TextMessage, p); err !&#x3D; nil &#123;</span><br><span class="line">               return</span><br><span class="line">            &#125;</span><br><span class="line">         &#125;</span><br><span class="line">      case &lt;-pingTicker.C:</span><br><span class="line">         ws.SetWriteDeadline(time.Now().Add(writeWait))</span><br><span class="line">         if err :&#x3D; ws.WriteMessage(websocket.PingMessage, []byte&#123;&#125;); err !&#x3D; nil &#123;</span><br><span class="line">            return</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func reader(ws *websocket.Conn) &#123;</span><br><span class="line">   defer ws.Close()</span><br><span class="line">   ws.SetReadLimit(512)</span><br><span class="line">   ws.SetReadDeadline(time.Now().Add(pongWait))</span><br><span class="line">   ws.SetPongHandler(func(string) error &#123; ws.SetReadDeadline(time.Now().Add(pongWait)); return nil &#125;)</span><br><span class="line">   for &#123;</span><br><span class="line">      _, _, err :&#x3D; ws.ReadMessage()</span><br><span class="line">      if err !&#x3D; nil &#123;</span><br><span class="line">         break</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中最重要的几个方法是Upgrade、ReadMessage和WriteMessage，下面逐一介绍。</p>
+<h2 id="Upgrade"><a href="#Upgrade" class="headerlink" title="Upgrade"></a>Upgrade</h2><p>协议升级</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; Upgrade upgrades the HTTP server connection to the WebSocket protocol.</span><br><span class="line">func (u *Upgrader) Upgrade(w http.ResponseWriter, r *http.Request, responseHeader http.Header) (*Conn, error) &#123;</span><br><span class="line">   const badHandshake &#x3D; &quot;websocket: the client is not using the websocket protocol: &quot;</span><br><span class="line">   &#x2F;&#x2F;检查必要的头部字段</span><br><span class="line">   if !tokenListContainsValue(r.Header, &quot;Connection&quot;, &quot;upgrade&quot;) &#123;</span><br><span class="line">      return u.returnError(w, r, http.StatusBadRequest, badHandshake+&quot;&#39;upgrade&#39; token not found in &#39;Connection&#39; header&quot;)</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   if !tokenListContainsValue(r.Header, &quot;Upgrade&quot;, &quot;websocket&quot;) &#123;</span><br><span class="line">      return u.returnError(w, r, http.StatusBadRequest, badHandshake+&quot;&#39;websocket&#39; token not found in &#39;Upgrade&#39; header&quot;)</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   if r.Method !&#x3D; &quot;GET&quot; &#123;</span><br><span class="line">      return u.returnError(w, r, http.StatusMethodNotAllowed, badHandshake+&quot;request method is not GET&quot;)</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   if !tokenListContainsValue(r.Header, &quot;Sec-Websocket-Version&quot;, &quot;13&quot;) &#123;</span><br><span class="line">      return u.returnError(w, r, http.StatusBadRequest, &quot;websocket: unsupported version: 13 not found in &#39;Sec-Websocket-Version&#39; header&quot;)</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   if !checkOrigin(r) &#123;</span><br><span class="line">      return u.returnError(w, r, http.StatusForbidden, &quot;websocket: request origin not allowed by Upgrader.CheckOrigin&quot;)</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   challengeKey :&#x3D; r.Header.Get(&quot;Sec-Websocket-Key&quot;)</span><br><span class="line">   if challengeKey &#x3D;&#x3D; &quot;&quot; &#123;</span><br><span class="line">      return u.returnError(w, r, http.StatusBadRequest, &quot;websocket: not a websocket handshake: &#39;Sec-WebSocket-Key&#39; header is missing or blank&quot;)</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   h, ok :&#x3D; w.(http.Hijacker)</span><br><span class="line">   if !ok &#123;</span><br><span class="line">      return u.returnError(w, r, http.StatusInternalServerError, &quot;websocket: response does not implement http.Hijacker&quot;)</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   &#x2F;&#x2F;创建websocket.Conn</span><br><span class="line">   c :&#x3D; newConn(netConn, true, u.ReadBufferSize, u.WriteBufferSize, u.WriteBufferPool, br, writeBuf)</span><br><span class="line"> </span><br><span class="line">   var p []byte</span><br><span class="line">   p &#x3D; append(p, &quot;HTTP&#x2F;1.1 101 Switching Protocols\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Accept: &quot;...)</span><br><span class="line">   p &#x3D; append(p, computeAcceptKey(challengeKey)...) &#x2F;&#x2F;计算accept</span><br><span class="line">   p &#x3D; append(p, &quot;\r\n&quot;...)</span><br><span class="line">   if c.subprotocol !&#x3D; &quot;&quot; &#123;</span><br><span class="line">      p &#x3D; append(p, &quot;Sec-WebSocket-Protocol: &quot;...)</span><br><span class="line">      p &#x3D; append(p, c.subprotocol...)</span><br><span class="line">      p &#x3D; append(p, &quot;\r\n&quot;...)</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   if _, err &#x3D; netConn.Write(p); err !&#x3D; nil &#123;</span><br><span class="line">      netConn.Close()</span><br><span class="line">      return nil, err</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   return c, nil</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var keyGUID &#x3D; []byte(&quot;258EAFA5-E914-47DA-95CA-C5AB0DC85B11&quot;)</span><br><span class="line">func computeAcceptKey(challengeKey string) string &#123;</span><br><span class="line">   h :&#x3D; sha1.New()</span><br><span class="line">   h.Write([]byte(challengeKey))</span><br><span class="line">   h.Write(keyGUID)</span><br><span class="line">   return base64.StdEncoding.EncodeToString(h.Sum(nil))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func newConn(conn net.Conn, isServer bool, readBufferSize, writeBufferSize int, writeBufferPool BufferPool, br *bufio.Reader, writeBuf []byte) *Conn &#123;</span><br><span class="line">   c :&#x3D; &amp;Conn&#123;</span><br><span class="line">      isServer:               isServer,</span><br><span class="line">      br:                     br,</span><br><span class="line">      conn:                   conn,</span><br><span class="line">      mu:                     mu,</span><br><span class="line">      readFinal:              true,</span><br><span class="line">      writeBuf:               writeBuf,</span><br><span class="line">      writePool:              writeBufferPool,</span><br><span class="line">      writeBufSize:           writeBufferSize,</span><br><span class="line">      enableWriteCompression: true,</span><br><span class="line">      compressionLevel:       defaultCompressionLevel,</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   &#x2F;&#x2F;设置对应的消息处理Handler</span><br><span class="line">   c.SetCloseHandler(nil)</span><br><span class="line">   c.SetPingHandler(nil)</span><br><span class="line">   c.SetPongHandler(nil)</span><br><span class="line">   return c</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (c *Conn) SetCloseHandler(h func(code int, text string) error) &#123;</span><br><span class="line">   if h &#x3D;&#x3D; nil &#123;</span><br><span class="line">      h &#x3D; func(code int, text string) error &#123;</span><br><span class="line">         message :&#x3D; FormatCloseMessage(code, &quot;&quot;)</span><br><span class="line">         c.WriteControl(CloseMessage, message, time.Now().Add(writeWait))</span><br><span class="line">         return nil</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   c.handleClose &#x3D; h</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (c *Conn) SetPingHandler(h func(appData string) error) &#123;</span><br><span class="line">   if h &#x3D;&#x3D; nil &#123;</span><br><span class="line">      h &#x3D; func(message string) error &#123;</span><br><span class="line">         err :&#x3D; c.WriteControl(PongMessage, []byte(message), time.Now().Add(writeWait))</span><br><span class="line">         return err</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   c.handlePing &#x3D; h</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (c *Conn) SetPongHandler(h func(appData string) error) &#123;</span><br><span class="line">   if h &#x3D;&#x3D; nil &#123;</span><br><span class="line">      h &#x3D; func(string) error &#123; return nil &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   c.handlePong &#x3D; h</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="ReadMessage"><a href="#ReadMessage" class="headerlink" title="ReadMessage"></a>ReadMessage</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br></pre></td><td class="code"><pre><span class="line">func (c *Conn) ReadMessage() (messageType int, p []byte, err error) &#123;</span><br><span class="line">   var r io.Reader</span><br><span class="line">   messageType, r, err &#x3D; c.NextReader()</span><br><span class="line">   if err !&#x3D; nil &#123;</span><br><span class="line">      return messageType, nil, err</span><br><span class="line">   &#125;</span><br><span class="line">   p, err &#x3D; ioutil.ReadAll(r)</span><br><span class="line">   return messageType, p, err</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (c *Conn) NextReader() (messageType int, r io.Reader, err error) &#123;</span><br><span class="line">   for c.readErr &#x3D;&#x3D; nil &#123;</span><br><span class="line">       frameType, err :&#x3D; c.advanceFrame()</span><br><span class="line">       if err !&#x3D; nil &#123;</span><br><span class="line">          c.readErr &#x3D; hideTempErr(err)</span><br><span class="line">          break</span><br><span class="line">       &#125;</span><br><span class="line">    </span><br><span class="line">       if frameType &#x3D;&#x3D; TextMessage || frameType &#x3D;&#x3D; BinaryMessage &#123;</span><br><span class="line">          c.messageReader &#x3D; &amp;messageReader&#123;c&#125;</span><br><span class="line">          c.reader &#x3D; c.messageReader</span><br><span class="line">          if c.readDecompress &#123;</span><br><span class="line">             c.reader &#x3D; c.newDecompressionReader(c.reader)</span><br><span class="line">          &#125;</span><br><span class="line">          return frameType, c.reader, nil</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;解析数据帧</span><br><span class="line">func (c *Conn) advanceFrame() (int, error) &#123;</span><br><span class="line">   p, err :&#x3D; c.read(2)</span><br><span class="line">   final :&#x3D; p[0]&amp;finalBit !&#x3D; 0</span><br><span class="line">   frameType :&#x3D; int(p[0] &amp; 0xf)</span><br><span class="line">   mask :&#x3D; p[1]&amp;maskBit !&#x3D; 0</span><br><span class="line">   c.setReadRemaining(int64(p[1] &amp; 0x7f))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   switch frameType &#123;</span><br><span class="line">   case CloseMessage, PingMessage, PongMessage:</span><br><span class="line">      if c.readRemaining &gt; maxControlFramePayloadSize &#123;</span><br><span class="line">         return noFrame, c.handleProtocolError(&quot;control frame length &gt; 125&quot;)</span><br><span class="line">      &#125;</span><br><span class="line">      if !final &#123;</span><br><span class="line">         return noFrame, c.handleProtocolError(&quot;control frame not final&quot;)</span><br><span class="line">      &#125;</span><br><span class="line">   case TextMessage, BinaryMessage:</span><br><span class="line">      if !c.readFinal &#123;</span><br><span class="line">         return noFrame, c.handleProtocolError(&quot;message start before final message frame&quot;)</span><br><span class="line">      &#125;</span><br><span class="line">      c.readFinal &#x3D; final</span><br><span class="line">   case continuationFrame:</span><br><span class="line">      if c.readFinal &#123;</span><br><span class="line">         return noFrame, c.handleProtocolError(&quot;continuation after final message frame&quot;)</span><br><span class="line">      &#125;</span><br><span class="line">      c.readFinal &#x3D; final</span><br><span class="line">   default:</span><br><span class="line">      return noFrame, c.handleProtocolError(&quot;unknown opcode &quot; + strconv.Itoa(frameType))</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   </span><br><span class="line">   switch c.readRemaining &#123;</span><br><span class="line">   case 126:</span><br><span class="line">      p, err :&#x3D; c.read(2)</span><br><span class="line">      if err :&#x3D; c.setReadRemaining(int64(binary.BigEndian.Uint16(p))); err !&#x3D; nil &#123;</span><br><span class="line">         return noFrame, err</span><br><span class="line">      &#125;</span><br><span class="line">   case 127:</span><br><span class="line">      p, err :&#x3D; c.read(8)</span><br><span class="line">      if err !&#x3D; nil &#123;</span><br><span class="line">         return noFrame, err</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      if err :&#x3D; c.setReadRemaining(int64(binary.BigEndian.Uint64(p))); err !&#x3D; nil &#123;</span><br><span class="line">         return noFrame, err</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   if mask !&#x3D; c.isServer &#123;</span><br><span class="line">      return noFrame, c.handleProtocolError(&quot;incorrect mask flag&quot;)</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   if mask &#123;</span><br><span class="line">      c.readMaskPos &#x3D; 0</span><br><span class="line">      p, err :&#x3D; c.read(len(c.readMaskKey))</span><br><span class="line">      if err !&#x3D; nil &#123;</span><br><span class="line">         return noFrame, err</span><br><span class="line">      &#125;</span><br><span class="line">      copy(c.readMaskKey[:], p)</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   &#x2F;&#x2F;处理控制帧</span><br><span class="line">   switch frameType &#123;</span><br><span class="line">   case PongMessage:</span><br><span class="line">      if err :&#x3D; c.handlePong(string(payload)); err !&#x3D; nil &#123;</span><br><span class="line">         return noFrame, err</span><br><span class="line">      &#125;</span><br><span class="line">   case PingMessage:</span><br><span class="line">      if err :&#x3D; c.handlePing(string(payload)); err !&#x3D; nil &#123;</span><br><span class="line">         return noFrame, err</span><br><span class="line">      &#125;</span><br><span class="line">   case CloseMessage:</span><br><span class="line">      closeCode :&#x3D; CloseNoStatusReceived</span><br><span class="line">      closeText :&#x3D; &quot;&quot;</span><br><span class="line">      if len(payload) &gt;&#x3D; 2 &#123;</span><br><span class="line">         closeCode &#x3D; int(binary.BigEndian.Uint16(payload))</span><br><span class="line">         if !isValidReceivedCloseCode(closeCode) &#123;</span><br><span class="line">            return noFrame, c.handleProtocolError(&quot;invalid close code&quot;)</span><br><span class="line">         &#125;</span><br><span class="line">         closeText &#x3D; string(payload[2:])</span><br><span class="line">         if !utf8.ValidString(closeText) &#123;</span><br><span class="line">            return noFrame, c.handleProtocolError(&quot;invalid utf8 payload in close frame&quot;)</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      if err :&#x3D; c.handleClose(closeCode, closeText); err !&#x3D; nil &#123;</span><br><span class="line">         return noFrame, err</span><br><span class="line">      &#125;</span><br><span class="line">      return noFrame, &amp;CloseError&#123;Code: closeCode, Text: closeText&#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   return frameType, nil</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="WriteMessage"><a href="#WriteMessage" class="headerlink" title="WriteMessage"></a>WriteMessage</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">func (c *Conn) WriteMessage(messageType int, data []byte) error &#123;</span><br><span class="line">   var mw messageWriter</span><br><span class="line">   &#x2F;&#x2F; beginMessage prepares a connection and message writer for a new message.</span><br><span class="line">    if err :&#x3D; c.beginMessage(&amp;mw, messageType); err !&#x3D; nil &#123;</span><br><span class="line">       return err</span><br><span class="line">    &#125;</span><br><span class="line">    n :&#x3D; copy(c.writeBuf[mw.pos:], data)</span><br><span class="line">    mw.pos +&#x3D; n</span><br><span class="line">    data &#x3D; data[n:]</span><br><span class="line">    return mw.flushFrame(true, data)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;组装数据帧</span><br><span class="line">func (w *messageWriter) flushFrame(final bool, extra []byte) error &#123;</span><br><span class="line">   c :&#x3D; w.c</span><br><span class="line">   length :&#x3D; w.pos - maxFrameHeaderSize + len(extra)</span><br><span class="line"></span><br><span class="line">   b0 :&#x3D; byte(w.frameType)</span><br><span class="line">   if final &#123;</span><br><span class="line">      b0 |&#x3D; finalBit</span><br><span class="line">   &#125;</span><br><span class="line">   if w.compress &#123;</span><br><span class="line">      b0 |&#x3D; rsv1Bit</span><br><span class="line">   &#125;</span><br><span class="line">   w.compress &#x3D; false</span><br><span class="line"></span><br><span class="line">   b1 :&#x3D; byte(0)</span><br><span class="line">   if !c.isServer &#123;</span><br><span class="line">      b1 |&#x3D; maskBit</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   &#x2F;&#x2F; Assume that the frame starts at beginning of c.writeBuf.</span><br><span class="line">   framePos :&#x3D; 0</span><br><span class="line">   if c.isServer &#123;</span><br><span class="line">      &#x2F;&#x2F; Adjust up if mask not included in the header.</span><br><span class="line">      framePos &#x3D; 4</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   switch &#123;</span><br><span class="line">   case length &gt;&#x3D; 65536:</span><br><span class="line">      c.writeBuf[framePos] &#x3D; b0</span><br><span class="line">      c.writeBuf[framePos+1] &#x3D; b1 | 127</span><br><span class="line">      binary.BigEndian.PutUint64(c.writeBuf[framePos+2:], uint64(length))</span><br><span class="line">   case length &gt; 125:</span><br><span class="line">      framePos +&#x3D; 6</span><br><span class="line">      c.writeBuf[framePos] &#x3D; b0</span><br><span class="line">      c.writeBuf[framePos+1] &#x3D; b1 | 126</span><br><span class="line">      binary.BigEndian.PutUint16(c.writeBuf[framePos+2:], uint16(length))</span><br><span class="line">   default:</span><br><span class="line">      framePos +&#x3D; 8</span><br><span class="line">      c.writeBuf[framePos] &#x3D; b0</span><br><span class="line">      c.writeBuf[framePos+1] &#x3D; b1 | byte(length)</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   if !c.isServer &#123;</span><br><span class="line">      key :&#x3D; newMaskKey()</span><br><span class="line">      copy(c.writeBuf[maxFrameHeaderSize-4:], key[:])</span><br><span class="line">      maskBytes(key, 0, c.writeBuf[maxFrameHeaderSize:w.pos])</span><br><span class="line">      if len(extra) &gt; 0 &#123;</span><br><span class="line">         return w.endMessage(c.writeFatal(errors.New(&quot;websocket: internal error, extra used in client mode&quot;)))</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   &#x2F;&#x2F; Write the buffers to the connection with best-effort detection of</span><br><span class="line">   &#x2F;&#x2F; concurrent writes. See the concurrency section in the package</span><br><span class="line">   &#x2F;&#x2F; documentation for more info.</span><br><span class="line"></span><br><span class="line">   if c.isWriting &#123;</span><br><span class="line">      panic(&quot;concurrent write to websocket connection&quot;)</span><br><span class="line">   &#125;</span><br><span class="line">   c.isWriting &#x3D; true</span><br><span class="line"></span><br><span class="line">   err :&#x3D; c.write(w.frameType, c.writeDeadline, c.writeBuf[framePos:w.pos], extra)</span><br><span class="line"></span><br><span class="line">   ...</span><br><span class="line">   return nil</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Ref：</p>
+<ul>
+<li><a href="https://datatracker.ietf.org/doc/html/rfc6455#" target="_blank" rel="noopener">https://datatracker.ietf.org/doc/html/rfc6455#</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/WebSocket" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/WebSocket</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2017/05/websocket.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2017/05/websocket.html</a></li>
+<li><a href="https://pkg.go.dev/github.com/gorilla/websocket" target="_blank" rel="noopener">https://pkg.go.dev/github.com/gorilla/websocket</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>楚兴
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://chuxing.club/2021/06/12/introduction-of-websocket/" title="Websocket介绍">https://chuxing.club/2021/06/12/introduction-of-websocket/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/websocket/" rel="tag"><i class="fa fa-tag"></i> websocket</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/01/30/Manual-of-consul/" rel="prev" title="Consul入门手册">
+      <i class="fa fa-chevron-left"></i> Consul入门手册
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是WebSocket？"><span class="nav-number">1.</span> <span class="nav-text">什么是WebSocket？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#有哪些优点？"><span class="nav-number">1.1.</span> <span class="nav-text">有哪些优点？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#握手协议"><span class="nav-number">2.</span> <span class="nav-text">握手协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#握手例子"><span class="nav-number">2.1.</span> <span class="nav-text">握手例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字段说明"><span class="nav-number">2.2.</span> <span class="nav-text">字段说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#体验一下"><span class="nav-number">2.3.</span> <span class="nav-text">体验一下</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据帧"><span class="nav-number">3.</span> <span class="nav-text">数据帧</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#帧结构"><span class="nav-number">3.1.</span> <span class="nav-text">帧结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字段说明-1"><span class="nav-number">3.2.</span> <span class="nav-text">字段说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#掩码算法"><span class="nav-number">3.3.</span> <span class="nav-text">掩码算法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据传递"><span class="nav-number">4.</span> <span class="nav-text">数据传递</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据分片"><span class="nav-number">4.1.</span> <span class="nav-text">数据分片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据分片例子"><span class="nav-number">4.2.</span> <span class="nav-text">数据分片例子</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#心跳"><span class="nav-number">5.</span> <span class="nav-text">心跳</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安全性"><span class="nav-number">6.</span> <span class="nav-text">安全性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Go实战：Gorilla-WebSocket"><span class="nav-number">7.</span> <span class="nav-text">Go实战：Gorilla WebSocket</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Upgrade"><span class="nav-number">7.1.</span> <span class="nav-text">Upgrade</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ReadMessage"><span class="nav-number">7.2.</span> <span class="nav-text">ReadMessage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WriteMessage"><span class="nav-number">7.3.</span> <span class="nav-text">WriteMessage</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">楚兴</p>
+  <div class="site-description" itemprop="description">聊技术，谈人生</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xzygis" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xzygis" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://chuxing.blog.csdn.net/" title="CSDN → https:&#x2F;&#x2F;chuxing.blog.csdn.net" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xzygis@163.com" title="E-Mail → mailto:xzygis@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">楚兴</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID: 'b2c2749b4ed086131ab7',
+      clientSecret: '09966e6554398b37329537ccde07740f170f4b72',
+      repo: 'xzygis.github.io',
+      owner: 'xzygis',
+      admin: ['xzygis'],
+      id: '2d2c8d18f0bb61faee220bfe09e1dac6',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

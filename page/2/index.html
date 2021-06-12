@@ -50,9 +50,9 @@
 
   <meta name="description" content="聊技术，谈人生">
 <meta property="og:type" content="website">
-<meta property="og:title" content="聊斋志技">
+<meta property="og:title" content="楚兴">
 <meta property="og:url" content="https://chuxing.club/page/2/index.html">
-<meta property="og:site_name" content="聊斋志技">
+<meta property="og:site_name" content="楚兴">
 <meta property="og:description" content="聊技术，谈人生">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="楚兴">
@@ -70,7 +70,7 @@
   };
 </script>
 
-  <title>聊斋志技</title>
+  <title>楚兴</title>
   
 
 
@@ -123,7 +123,7 @@
     <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">聊斋志技</span>
+        <span class="site-title">楚兴</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -214,6 +214,90 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://chuxing.club/2020/01/27/Introduction-of-API-GateWay/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="楚兴">
+      <meta itemprop="description" content="聊技术，谈人生">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="楚兴">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/27/Introduction-of-API-GateWay/" class="post-title-link" itemprop="url">API网关概述</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-27 22:51:43" itemprop="dateCreated datePublished" datetime="2020-01-27T22:51:43+08:00">2020-01-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91/" itemprop="url" rel="index">
+                    <span itemprop="name">后台开发</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="1-背景"><a href="#1-背景" class="headerlink" title="1 背景"></a>1 背景</h1><ul>
+<li>由于后端的微服务拆分，客户端通常需要请求多个服务获取所需数据。</li>
+<li>不同客户端所需要的数据不一样。例如，PC需要的数据通常比移动端更加详细。</li>
+<li>不同客户端网络环境差异大。例如，WAN vs LAN，移动网络 vs 非移动网络。</li>
+<li>服务端实例的地址信息（IP + port）会动态更新。</li>
+<li>微服务的拆分逻辑会变化，这种变化应该应该对客户端透明。</li>
+<li>不同的服务可能采用不同的协议，有些协议是非web的。</li>
+</ul>
+<h1 id="2-什么是API网关？"><a href="#2-什么是API网关？" class="headerlink" title="2 什么是API网关？"></a>2 什么是API网关？</h1><p>API网关接收客户端的所有请求，并将请求路由到相应的后端服务，并提供接口聚合和协议转换。通常来说，API网关通过调用多个后端服务，并聚合结果的方式处理请求。它可将web协议转化为非web的内部后台协议。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/27/Introduction-of-API-GateWay/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://chuxing.club/2020/01/27/How-to-create-a-hexo-blog/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -223,7 +307,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="聊斋志技">
+      <meta itemprop="name" content="楚兴">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -362,7 +446,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -375,7 +459,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

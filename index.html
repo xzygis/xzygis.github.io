@@ -346,18 +346,18 @@
 
       
           <h1 id="1-nc命令"><a href="#1-nc命令" class="headerlink" title="1 nc命令"></a>1 nc命令</h1><p>执行如下命令，在目标机器(假设ip为<code>10.11.12.13</code>)上监听端口<code>8415</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -l 8415 &gt; data.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs haskell"><span class="hljs-title">nc</span> -l <span class="hljs-number">8415</span> &gt; <span class="hljs-class"><span class="hljs-keyword">data</span>.txt</span><br></code></pre></td></tr></table></figure>
 
 <p>往目标机器发送数据 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -v 10.11.12.13 8415 &lt; ~&#x2F;Downloads&#x2F;data.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">nc -v <span class="hljs-number">10.11</span><span class="hljs-number">.12</span><span class="hljs-number">.13</span> <span class="hljs-number">8415</span> &lt; ~/Downloads/data.txt<br></code></pre></td></tr></table></figure>
 
 <h1 id="2-SimpleHTTPServer"><a href="#2-SimpleHTTPServer" class="headerlink" title="2 SimpleHTTPServer"></a>2 SimpleHTTPServer</h1><p>在服务器(假设ip为<code>10.11.12.13</code>)上执行如下命令: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m SimpleHTTPServer 8411</span><br></pre></td></tr></table></figure>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">python -m SimpleHTTPServer <span class="hljs-number">8411</span><br></code></pre></td></tr></table></figure>
 <p>然后在本地机器打开浏览器，输入<code>http://10.11.12.13:8411/</code>可以访问。</p>
 <h1 id="3-scp命令"><a href="#3-scp命令" class="headerlink" title="3 scp命令"></a>3 scp命令</h1><p>Linux scp命令用于Linux之间复制文件和目录。</p>
 <p>scp是 secure copy的缩写, scp是linux系统下基于ssh登陆进行安全的远程文件拷贝命令。</p>
 <p>在目标机器执行如下命令： </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp -l 700000 username@dev.test.com:~&#x2F;data.txt .&#x2F;</span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs groovy">scp -l <span class="hljs-number">700000</span> username<span class="hljs-meta">@dev</span>.test.<span class="hljs-string">com:</span><span class="hljs-regexp">~/data.txt ./</span><br></code></pre></td></tr></table></figure>
 <p>即可把目标机器dev.test.com的文件~/data.txt拷贝到当前目录。</p>
 
       
@@ -685,9 +685,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="获取镜像"><a href="#获取镜像" class="headerlink" title="获取镜像"></a>获取镜像</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull ubuntu</span><br></pre></td></tr></table></figure>
+          <h2 id="获取镜像"><a href="#获取镜像" class="headerlink" title="获取镜像"></a>获取镜像</h2><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elixir"><span class="hljs-variable">$ </span>docker pull ubuntu<br></code></pre></td></tr></table></figure>
 
-<h2 id="启动容器："><a href="#启动容器：" class="headerlink" title="启动容器："></a>启动容器：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -it ubuntu &#x2F;bin&#x2F;bash</span><br><span class="line"># 要退出终端，直接输入 exit</span><br></pre></td></tr></table></figure>
+<h2 id="启动容器："><a href="#启动容器：" class="headerlink" title="启动容器："></a>启动容器：</h2><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs applescript">$ docker <span class="hljs-built_in">run</span> -<span class="hljs-keyword">it</span> ubuntu /bin/bash<br><span class="hljs-comment"># 要退出终端，直接输入 exit</span><br></code></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/01/30/Usage-of-docker-container/#more" rel="contents">
@@ -764,9 +764,9 @@
 
       
           <h2 id="获取镜像"><a href="#获取镜像" class="headerlink" title="获取镜像"></a>获取镜像</h2><p>用法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull [OPTIONS] NAME[:TAG|@DIGEST]</span><br></pre></td></tr></table></figure>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elixir"><span class="hljs-variable">$ </span>docker pull [OPTIONS] NAME[<span class="hljs-symbol">:TAG|</span><span class="hljs-variable">@DIGEST</span>]<br></code></pre></td></tr></table></figure>
 <p>例如：<code>docker pull ubuntu:18.04</code></p>
-<h2 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -it --rm ubuntu:18.04 bash</span><br></pre></td></tr></table></figure>
+<h2 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h2><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript">$ docker <span class="hljs-built_in">run</span> -<span class="hljs-keyword">it</span> <span class="hljs-comment">--rm ubuntu:18.04 bash</span><br></code></pre></td></tr></table></figure>
 <p>简要的说明一下上面用到的参数:</p>
 <ul>
 <li><code>-it</code>：这是两个参数，一个是 <code>-i</code>表示交互式操作，一个是<code>-t</code>表示终端。我们这里打算进入 bash 执行一些命令并查看返回结果，因此我们需要交互式终端。</li>
@@ -849,15 +849,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="1-移除旧的版本"><a href="#1-移除旧的版本" class="headerlink" title="1. 移除旧的版本"></a>1. 移除旧的版本</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sudo yum remove docker \</span><br><span class="line">                  docker-client \</span><br><span class="line">                  docker-client-latest \</span><br><span class="line">                  docker-common \</span><br><span class="line">                  docker-latest \</span><br><span class="line">                  docker-latest-logrotate \</span><br><span class="line">                  docker-logrotate \</span><br><span class="line">                  docker-selinux \</span><br><span class="line">                  docker-engine-selinux \</span><br><span class="line">                  docker-engine</span><br></pre></td></tr></table></figure>
+          <h3 id="1-移除旧的版本"><a href="#1-移除旧的版本" class="headerlink" title="1. 移除旧的版本"></a>1. 移除旧的版本</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo yum remove docker \<br>                  docker-client \<br>                  docker-client-latest \<br>                  docker-common \<br>                  docker-latest \<br>                  docker-latest-logrotate \<br>                  docker-logrotate \<br>                  docker-selinux \<br>                  docker-engine-selinux \<br>                  docker-engine<br></code></pre></td></tr></table></figure>
 
-<h3 id="2-安装一些必要的系统工具"><a href="#2-安装一些必要的系统工具" class="headerlink" title="2. 安装一些必要的系统工具"></a>2. 安装一些必要的系统工具</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install -y yum-utils device-mapper-persistent-data lvm2</span><br></pre></td></tr></table></figure>
+<h3 id="2-安装一些必要的系统工具"><a href="#2-安装一些必要的系统工具" class="headerlink" title="2. 安装一些必要的系统工具"></a>2. 安装一些必要的系统工具</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo yum install -y yum-utils device-mapper-persistent-data lvm2<br></code></pre></td></tr></table></figure>
 
-<h3 id="3-添加软件源信息"><a href="#3-添加软件源信息" class="headerlink" title="3. 添加软件源信息"></a>3. 添加软件源信息</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br></pre></td></tr></table></figure>
+<h3 id="3-添加软件源信息"><a href="#3-添加软件源信息" class="headerlink" title="3. 添加软件源信息"></a>3. 添加软件源信息</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo<br></code></pre></td></tr></table></figure>
 
-<h3 id="4-更新-yum-缓存"><a href="#4-更新-yum-缓存" class="headerlink" title="4. 更新 yum 缓存"></a>4. 更新 yum 缓存</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum makecache fast</span><br></pre></td></tr></table></figure>
+<h3 id="4-更新-yum-缓存"><a href="#4-更新-yum-缓存" class="headerlink" title="4. 更新 yum 缓存"></a>4. 更新 yum 缓存</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo yum makecache fast<br></code></pre></td></tr></table></figure>
 
-<h3 id="5-安装-Docker-ce"><a href="#5-安装-Docker-ce" class="headerlink" title="5. 安装 Docker-ce"></a>5. 安装 Docker-ce</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum -y install docker-ce</span><br></pre></td></tr></table></figure>
+<h3 id="5-安装-Docker-ce"><a href="#5-安装-Docker-ce" class="headerlink" title="5. 安装 Docker-ce"></a>5. 安装 Docker-ce</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo yum -y install docker-ce<br></code></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/01/30/CentOS-install-docker/#more" rel="contents">

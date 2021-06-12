@@ -48,12 +48,12 @@
   };
 </script>
 
-  <meta name="description" content="1 nc命令执行如下命令，在目标机器(假设ip为10.11.12.13)上监听端口8415 1nc -l 8415 &gt; data.txt  往目标机器发送数据  1nc -v 10.11.12.13 8415 &lt; ~&#x2F;Downloads&#x2F;data.txt  2 SimpleHTTPServer在服务器(假设ip为10.11.12.13)上执行如下命令:  1pyth">
+  <meta name="description" content="1 nc命令执行如下命令，在目标机器(假设ip为10.11.12.13)上监听端口8415 1nc -l 8415 &gt; data.txt  往目标机器发送数据  1nc -v 10.11.12.13 8415 &lt; ~&#x2F;Downloads&#x2F;data.txt  2 SimpleHTTPServer在服务器(假设ip为10.11.12.13)上执行如下命令:  1python -m Simp">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux文件传输的三种方式">
 <meta property="og:url" content="https://chuxing.club/2021/06/12/Three-ways-to-transfer-files-in-Linux/index.html">
 <meta property="og:site_name" content="楚兴">
-<meta property="og:description" content="1 nc命令执行如下命令，在目标机器(假设ip为10.11.12.13)上监听端口8415 1nc -l 8415 &gt; data.txt  往目标机器发送数据  1nc -v 10.11.12.13 8415 &lt; ~&#x2F;Downloads&#x2F;data.txt  2 SimpleHTTPServer在服务器(假设ip为10.11.12.13)上执行如下命令:  1pyth">
+<meta property="og:description" content="1 nc命令执行如下命令，在目标机器(假设ip为10.11.12.13)上监听端口8415 1nc -l 8415 &gt; data.txt  往目标机器发送数据  1nc -v 10.11.12.13 8415 &lt; ~&#x2F;Downloads&#x2F;data.txt  2 SimpleHTTPServer在服务器(假设ip为10.11.12.13)上执行如下命令:  1python -m Simp">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-06-12T08:14:22.000Z">
 <meta property="article:modified_time" content="2021-06-12T08:18:16.213Z">
@@ -273,18 +273,18 @@
 
       
         <h1 id="1-nc命令"><a href="#1-nc命令" class="headerlink" title="1 nc命令"></a>1 nc命令</h1><p>执行如下命令，在目标机器(假设ip为<code>10.11.12.13</code>)上监听端口<code>8415</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -l 8415 &gt; data.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs haskell"><span class="hljs-title">nc</span> -l <span class="hljs-number">8415</span> &gt; <span class="hljs-class"><span class="hljs-keyword">data</span>.txt</span><br></code></pre></td></tr></table></figure>
 
 <p>往目标机器发送数据 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -v 10.11.12.13 8415 &lt; ~&#x2F;Downloads&#x2F;data.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">nc -v <span class="hljs-number">10.11</span><span class="hljs-number">.12</span><span class="hljs-number">.13</span> <span class="hljs-number">8415</span> &lt; ~/Downloads/data.txt<br></code></pre></td></tr></table></figure>
 
 <h1 id="2-SimpleHTTPServer"><a href="#2-SimpleHTTPServer" class="headerlink" title="2 SimpleHTTPServer"></a>2 SimpleHTTPServer</h1><p>在服务器(假设ip为<code>10.11.12.13</code>)上执行如下命令: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m SimpleHTTPServer 8411</span><br></pre></td></tr></table></figure>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">python -m SimpleHTTPServer <span class="hljs-number">8411</span><br></code></pre></td></tr></table></figure>
 <p>然后在本地机器打开浏览器，输入<code>http://10.11.12.13:8411/</code>可以访问。</p>
 <h1 id="3-scp命令"><a href="#3-scp命令" class="headerlink" title="3 scp命令"></a>3 scp命令</h1><p>Linux scp命令用于Linux之间复制文件和目录。</p>
 <p>scp是 secure copy的缩写, scp是linux系统下基于ssh登陆进行安全的远程文件拷贝命令。</p>
 <p>在目标机器执行如下命令： </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp -l 700000 username@dev.test.com:~&#x2F;data.txt .&#x2F;</span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs groovy">scp -l <span class="hljs-number">700000</span> username<span class="hljs-meta">@dev</span>.test.<span class="hljs-string">com:</span><span class="hljs-regexp">~/data.txt ./</span><br></code></pre></td></tr></table></figure>
 <p>即可把目标机器dev.test.com的文件~/data.txt拷贝到当前目录。</p>
 
     </div>

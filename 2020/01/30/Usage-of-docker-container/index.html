@@ -272,22 +272,22 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="获取镜像"><a href="#获取镜像" class="headerlink" title="获取镜像"></a>获取镜像</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull ubuntu</span><br></pre></td></tr></table></figure>
+        <h2 id="获取镜像"><a href="#获取镜像" class="headerlink" title="获取镜像"></a>获取镜像</h2><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elixir"><span class="hljs-variable">$ </span>docker pull ubuntu<br></code></pre></td></tr></table></figure>
 
-<h2 id="启动容器："><a href="#启动容器：" class="headerlink" title="启动容器："></a>启动容器：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -it ubuntu &#x2F;bin&#x2F;bash</span><br><span class="line"># 要退出终端，直接输入 exit</span><br></pre></td></tr></table></figure>
+<h2 id="启动容器："><a href="#启动容器：" class="headerlink" title="启动容器："></a>启动容器：</h2><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs applescript">$ docker <span class="hljs-built_in">run</span> -<span class="hljs-keyword">it</span> ubuntu /bin/bash<br><span class="hljs-comment"># 要退出终端，直接输入 exit</span><br></code></pre></td></tr></table></figure>
 
 <a id="more"></a>
 
-<h2 id="启动已停止运行的容器"><a href="#启动已停止运行的容器" class="headerlink" title="启动已停止运行的容器"></a>启动已停止运行的容器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker ps -a</span><br></pre></td></tr></table></figure>
+<h2 id="启动已停止运行的容器"><a href="#启动已停止运行的容器" class="headerlink" title="启动已停止运行的容器"></a>启动已停止运行的容器</h2><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elixir"><span class="hljs-variable">$ </span>docker ps -a<br></code></pre></td></tr></table></figure>
 
-<h2 id="启动已停止运行的容器-1"><a href="#启动已停止运行的容器-1" class="headerlink" title="启动已停止运行的容器"></a>启动已停止运行的容器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker start b750bbbcfd88</span><br></pre></td></tr></table></figure>
+<h2 id="启动已停止运行的容器-1"><a href="#启动已停止运行的容器-1" class="headerlink" title="启动已停止运行的容器"></a>启动已停止运行的容器</h2><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">$ docker <span class="hljs-literal">start</span> b750bbbcfd88<br></code></pre></td></tr></table></figure>
 
-<h2 id="后台运行"><a href="#后台运行" class="headerlink" title="后台运行"></a>后台运行</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -itd --name ubuntu-test ubuntu &#x2F;bin&#x2F;bash</span><br></pre></td></tr></table></figure>
+<h2 id="后台运行"><a href="#后台运行" class="headerlink" title="后台运行"></a>后台运行</h2><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript">$ docker <span class="hljs-built_in">run</span> -itd <span class="hljs-comment">--name ubuntu-test ubuntu /bin/bash</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="停止一个容器"><a href="#停止一个容器" class="headerlink" title="停止一个容器"></a>停止一个容器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker stop &lt;容器 ID&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="停止一个容器"><a href="#停止一个容器" class="headerlink" title="停止一个容器"></a>停止一个容器</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql">$ docker <span class="hljs-keyword">stop</span> &lt;容器 <span class="hljs-keyword">ID</span>&gt;<br></code></pre></td></tr></table></figure>
 
 <p>停止的容器可以通过 docker restart 重启：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker restart &lt;容器 ID&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml">$ docker restart <span class="hljs-tag">&lt;<span class="hljs-name">容器</span> <span class="hljs-attr">ID</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <h2 id="进入容器"><a href="#进入容器" class="headerlink" title="进入容器"></a>进入容器</h2><p>在使用 <code>-d</code> 参数时，容器启动后会进入后台。此时想要进入容器，可以通过以下指令进入：</p>
 <ul>
@@ -295,17 +295,17 @@
 <li><code>docker exec</code>：推荐大家使用 <code>docker exec</code> 命令，因为此退出容器终端，不会导致容器的停止。</li>
 </ul>
 <p>exec命令使用：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker exec -it 243c32535da7 &#x2F;bin&#x2F;bash</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> docker <span class="hljs-built_in">exec</span> -it 243c32535da7 /bin/bash</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="导出和导入容器"><a href="#导出和导入容器" class="headerlink" title="导出和导入容器"></a>导出和导入容器</h2><h3 id="导出容器"><a href="#导出容器" class="headerlink" title="导出容器"></a>导出容器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker export 1e560fca3906 &gt; ubuntu.tar</span><br></pre></td></tr></table></figure>
+<h2 id="导出和导入容器"><a href="#导出和导入容器" class="headerlink" title="导出和导入容器"></a>导出和导入容器</h2><h3 id="导出容器"><a href="#导出容器" class="headerlink" title="导出容器"></a>导出容器</h3><figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elm">$ docker ex<span class="hljs-keyword">port</span> 1e560fca3906 &gt; ubuntu.tar<br></code></pre></td></tr></table></figure>
 
 
-<h3 id="导入容器"><a href="#导入容器" class="headerlink" title="导入容器"></a>导入容器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cat docker&#x2F;ubuntu.tar | docker import - test&#x2F;ubuntu:v1</span><br></pre></td></tr></table></figure>
+<h3 id="导入容器"><a href="#导入容器" class="headerlink" title="导入容器"></a>导入容器</h3><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elixir"><span class="hljs-variable">$ </span>cat docker/ubuntu.tar | docker <span class="hljs-keyword">import</span> - test/<span class="hljs-symbol">ubuntu:</span>v1<br></code></pre></td></tr></table></figure>
 <p>或</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker import docker&#x2F;ubuntu.tar test&#x2F;ubuntu:v1</span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs groovy">$ docker <span class="hljs-keyword">import</span> docker<span class="hljs-regexp">/ubuntu.tar test/</span><span class="hljs-string">ubuntu:</span>v1<br></code></pre></td></tr></table></figure>
 
 <p>也可以通过指定 URL 或者某个目录来导入，例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker import http:&#x2F;&#x2F;example.com&#x2F;exampleimage.tgz example&#x2F;imagerepo</span><br></pre></td></tr></table></figure>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elixir"><span class="hljs-variable">$ </span>docker <span class="hljs-keyword">import</span> <span class="hljs-symbol">http:</span>/<span class="hljs-regexp">/example.com/exampleimage</span>.tgz example/imagerepo<br></code></pre></td></tr></table></figure>
 
 <p>参考来源：</p>
 <p>[1] <a href="https://www.runoob.com/docker/docker-container-usage.html" target="_blank" rel="noopener">https://www.runoob.com/docker/docker-container-usage.html</a></p>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Chu Xing</title><link>https://chuxing.github.io/</link><description>Recent content on Chu Xing</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Sat, 03 Dec 2022 19:21:25 +0800</lastBuildDate><atom:link href="https://chuxing.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>About</title><link>https://chuxing.github.io/about/</link><pubDate>Thu, 03 Dec 2020 21:38:52 +0800</pubDate><guid>https://chuxing.github.io/about/</guid><description>&lt;p>Hugo is a static site engine written in Go.&lt;/p>
+&lt;p>It makes use of a variety of open source projects including:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://github.com/spf13/cobra">Cobra&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://github.com/spf13/viper">Viper&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://github.com/spf13/jWalterWeatherman">J Walter Weatherman&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://github.com/spf13/cast">Cast&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>Learn more and contribute on &lt;a href="https://github.com/gohugoio">GitHub&lt;/a>.&lt;/p></description></item><item><title>Hugo Quick Start</title><link>https://chuxing.github.io/post/hugo-quick-start/</link><pubDate>Sat, 03 Dec 2022 19:21:25 +0800</pubDate><guid>https://chuxing.github.io/post/hugo-quick-start/</guid><description>&lt;h1 id="intall">Intall&lt;/h1>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>go install github.com/gohugoio/hugo@latest
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="quick-start">Quick Start&lt;/h1>
+&lt;blockquote>
+&lt;p>&lt;a href="https://gohugo.io/getting-started/quick-start/">https://gohugo.io/getting-started/quick-start/&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;p>运行以下命令创建一个使用&lt;code>Ananke&lt;/code>主题的网站：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>hugo new site quickstart
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cd quickstart
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git init
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke themes/ananke
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>echo &lt;span style="color:#e6db74">&amp;#34;theme = &amp;#39;ananke&amp;#39;&amp;#34;&lt;/span> &amp;gt;&amp;gt; config.toml
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>hugo server
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="add-content">Add Content&lt;/h1>
+&lt;p>给网站增加新的网页：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>hugo new posts/my-first-post.md
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Hugo在&lt;code>content/posts&lt;/code>目录创建了&lt;code>my-first-post.md&lt;/code>文件，文件内容如下：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>---
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>title: &lt;span style="color:#e6db74">&amp;#34;My First Post&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>date: 2022-11-20T09:03:20-08:00
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>draft: true
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>---
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>修改并保存文件后启动Hugo服务器可以预览网站，可以使用以下的任一命令以包含draft内容：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>hugo server --buildDrafts
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>hugo server -D
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="configure-the-site">Configure the site&lt;/h1>
+&lt;p>可以通过根目录的&lt;code>config.toml&lt;/code>文件配置网站相关信息：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>baseURL &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;http://example.org/&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>languageCode &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;en-us&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>title &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;My New Hugo Site&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>theme &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;ananke&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="publish-the-site">Publish the site&lt;/h1>
+&lt;p>生成站点的静态文件，文件将生成到根目录下的&lt;code>public&lt;/code>目录&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>hugo
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="host-on-github">Host on GitHub&lt;/h1>
+&lt;p>参考：
+&lt;a href="https://www.xianmin.org/post/2022/07-familiar-one-keybinding-style/">https://www.xianmin.org/post/2022/07-familiar-one-keybinding-style/&lt;/a>&lt;/p>
+&lt;p>Ref：&lt;/p>
+&lt;p>[1] GitHub：https://github.com/gohugoio/hugo&lt;/p></description></item><item><title>My First Post</title><link>https://chuxing.github.io/post/my-first-post/</link><pubDate>Sat, 03 Dec 2022 16:33:10 +0800</pubDate><guid>https://chuxing.github.io/post/my-first-post/</guid><description>&lt;h1 id="reporting-issues">Reporting Issues&lt;/h1>
+&lt;p>We use GitHub Issues as the official bug tracker for the Bigspring Template. Please Search existing issues. Someone may have already reported the same problem. If your problem or idea has not been addressed yet, feel free to open a new issue.&lt;/p></description></item></channel></rss>

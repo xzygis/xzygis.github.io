@@ -2,7 +2,7 @@
 # If you want to see the full configuration, please check `full-config.toml` .
 # And see https://gohugo.io/getting-started/configuration/ .
 
-baseURL = "https://chuxing.github.io/"
+baseURL = "https://xzygis.github.io/"
 title = "Chu Xing"
 enableRobotsTXT = true
 enableEmoji = true

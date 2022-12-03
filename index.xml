@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Chu Xing</title><link>https://chuxing.github.io/</link><description>Recent content on Chu Xing</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Sat, 03 Dec 2022 19:21:25 +0800</lastBuildDate><atom:link href="https://chuxing.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>About</title><link>https://chuxing.github.io/about/</link><pubDate>Thu, 03 Dec 2020 21:38:52 +0800</pubDate><guid>https://chuxing.github.io/about/</guid><description>&lt;p>Hugo is a static site engine written in Go.&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Chu Xing</title><link>https://xzygis.github.io/</link><description>Recent content on Chu Xing</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Sat, 03 Dec 2022 19:21:25 +0800</lastBuildDate><atom:link href="https://xzygis.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>About</title><link>https://xzygis.github.io/about/</link><pubDate>Thu, 03 Dec 2020 21:38:52 +0800</pubDate><guid>https://xzygis.github.io/about/</guid><description>&lt;p>Hugo is a static site engine written in Go.&lt;/p>
 &lt;p>It makes use of a variety of open source projects including:&lt;/p>
 &lt;ul>
 &lt;li>&lt;a href="https://github.com/spf13/cobra">Cobra&lt;/a>&lt;/li>
@@ -6,7 +6,7 @@
 &lt;li>&lt;a href="https://github.com/spf13/jWalterWeatherman">J Walter Weatherman&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://github.com/spf13/cast">Cast&lt;/a>&lt;/li>
 &lt;/ul>
-&lt;p>Learn more and contribute on &lt;a href="https://github.com/gohugoio">GitHub&lt;/a>.&lt;/p></description></item><item><title>Hugo Quick Start</title><link>https://chuxing.github.io/post/hugo-quick-start/</link><pubDate>Sat, 03 Dec 2022 19:21:25 +0800</pubDate><guid>https://chuxing.github.io/post/hugo-quick-start/</guid><description>&lt;h1 id="intall">Intall&lt;/h1>
+&lt;p>Learn more and contribute on &lt;a href="https://github.com/gohugoio">GitHub&lt;/a>.&lt;/p></description></item><item><title>Hugo Quick Start</title><link>https://xzygis.github.io/post/hugo-quick-start/</link><pubDate>Sat, 03 Dec 2022 19:21:25 +0800</pubDate><guid>https://xzygis.github.io/post/hugo-quick-start/</guid><description>&lt;h1 id="intall">Intall&lt;/h1>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>go install github.com/gohugoio/hugo@latest
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="quick-start">Quick Start&lt;/h1>
 &lt;blockquote>
@@ -44,5 +44,5 @@
 &lt;p>参考：
 &lt;a href="https://www.xianmin.org/post/2022/07-familiar-one-keybinding-style/">https://www.xianmin.org/post/2022/07-familiar-one-keybinding-style/&lt;/a>&lt;/p>
 &lt;p>Ref：&lt;/p>
-&lt;p>[1] GitHub：https://github.com/gohugoio/hugo&lt;/p></description></item><item><title>My First Post</title><link>https://chuxing.github.io/post/my-first-post/</link><pubDate>Sat, 03 Dec 2022 16:33:10 +0800</pubDate><guid>https://chuxing.github.io/post/my-first-post/</guid><description>&lt;h1 id="reporting-issues">Reporting Issues&lt;/h1>
+&lt;p>[1] GitHub：https://github.com/gohugoio/hugo&lt;/p></description></item><item><title>My First Post</title><link>https://xzygis.github.io/post/my-first-post/</link><pubDate>Sat, 03 Dec 2022 16:33:10 +0800</pubDate><guid>https://xzygis.github.io/post/my-first-post/</guid><description>&lt;h1 id="reporting-issues">Reporting Issues&lt;/h1>
 &lt;p>We use GitHub Issues as the official bug tracker for the Bigspring Template. Please Search existing issues. Someone may have already reported the same problem. If your problem or idea has not been addressed yet, feel free to open a new issue.&lt;/p></description></item></channel></rss>

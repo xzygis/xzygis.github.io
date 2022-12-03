@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: https://chuxing.github.io/sitemap.xml
+Sitemap: https://xzygis.github.io/sitemap.xml

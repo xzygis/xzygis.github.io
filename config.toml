@@ -9,7 +9,7 @@ enableEmoji = true
 theme = "jane"
 
 hasCJKLanguage = true     # has chinese/japanese/korean ? # 自动检测是否包含 中文\日文\韩文
-paginate = 3              # Number of articles displayed on the homepage  # 首页每页显示的文章数
+paginate = 6              # Number of articles displayed on the homepage  # 首页每页显示的文章数
 rssLimit = 20             # Limit Entry Count to Rss file # 限制 Rss 文章输出数量
 disqusShortname = ""      # disqus_shortname
 googleAnalytics = ""      # UA-XXXXXXXX-X
@@ -18,7 +18,15 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
 # language support # en / zh-cn / other... translations present in i18n/
 defaultContentLanguage = "zh-cn"  # 默认使用的语言
 [Languages.zh-cn]
-languageCode = "zh-cn"
+  languageCode = "zh-cn"
+
+[permalinks]
+  post = "/:year/:month/:day/:title"
+
+[taxonomies]
+  tag = "tags"
+  series = "series"
+  category = "categories"
 
 [author]
   name = "chuxing"        # essential                     # 必需
@@ -51,7 +59,7 @@ languageCode = "zh-cn"
   pageref = "/categories/"
 
 [params]
-  since = "2016"            # Site creation time          # 站点建立时间
+  since = "2020"            # Site creation time          # 站点建立时间
   homeFullContent = false   # if false, show post summaries on home page. Otherwise show full content.
   rssFullContent = true     # if false, Rss feed instead of the summary
 
@@ -73,6 +81,8 @@ languageCode = "zh-cn"
   #   (relative to /static/css and /static/js respectively)
   customCSS = []            # if ['custom.css'], load '/static/css/custom.css' file
   customJS = []             # if ['custom.js'], load '/static/js/custom.js' file
+
+  page_view_conter = true
 
   [params.social]                                         # 社交链接
     a-email = "mailto:xzygis@163.com"
@@ -96,8 +106,3 @@ languageCode = "zh-cn"
     s-mastodon = "http://localhost:1313"
     t-youtube = "http://localhost:1313"
     u-twitch = "http://localhost:1313"
-
-#[taxonomies]
-#  tag = "tags"
-#  series = "series"
-#  category = "categories"

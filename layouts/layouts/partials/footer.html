@@ -39,6 +39,8 @@
       访客数/访问量：<span id="busuanzi_value_site_uv"></span>/<span id="busuanzi_value_site_pv"></span>
     </span>
   {{ end }}
+  {{- /* busuanzi plugin */ -}}
+  {{- partial "plugin/busuanzi.html" (dict "params" .Site.Params.xwi88Cfg.busuanzi "bsz_type" "footer") -}}
 
   {{ if .Site.Params.customFooter }}
     <span>

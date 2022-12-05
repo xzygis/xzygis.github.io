@@ -28,37 +28,43 @@ jobs:
           extended: true
       - name: Build
         run: npm run build
-      - name: Deploy to Github Pages
+      - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/main'
         with:
-          deploy_key: ${{ secrets.GP_DEPLOY_KEY }}
-          external_repository: xzygis/xzygis.github.io
-          publish_branch: main
-          publish_dir: ./public
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
-          commit_message: ':rocket: ${{ github.event.head_commit.message }}'
-          force_orphan: false  # once a year
-      - name: Update Algolia index
-        env:
-          ALGOLIA_APP_ID: MTJNHU0JVB
-          ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
-          ALGOLIA_INDEX_NAME: 'index'
-          ALGOLIA_INDEX_FILE: './public/index.json'
-        run: npm run algolia
-      - name: Install coscmd
-        run: sudo pip install coscmd
-      - name: Configure coscmd
-        env:
-          COS_SECRET_ID: ${{ secrets.COS_SECRET_ID }}
-          COS_SECRET_KEY: ${{ secrets.COS_SECRET_KEY }}
-          COS_BUCKET_NAME: blog-1256932288
-          COS_BUCKET_REGION: ap-chengdu
-        run: coscmd config -a $COS_SECRET_ID -s $COS_SECRET_KEY -b $COS_BUCKET_NAME -r $COS_BUCKET_REGION
-      - name: Deploy to COS Bucket
-        run: coscmd upload -r -s --delete -f public/ /
-      - name: Refresh Qcloud CDN cache
-        env:
-          SECRET_ID: ${{ secrets.COS_SECRET_ID }}
-          SECRET_KEY: ${{ secrets.COS_SECRET_KEY }}
-        run: npm run qcloudcdn
+         github_token: ${{ secrets.GITHUB_TOKEN }}
+         publish_dir: ./public
+#      - name: Deploy to Github Pages
+#        uses: peaceiris/actions-gh-pages@v3
+#        with:
+#          deploy_key: ${{ secrets.GP_DEPLOY_KEY }}
+#          external_repository: xzygis/xzygis.github.io
+#          publish_branch: main
+#          publish_dir: ./public
+#          user_name: 'github-actions[bot]'
+#          user_email: 'github-actions[bot]@users.noreply.github.com'
+#          commit_message: ':rocket: ${{ github.event.head_commit.message }}'
+#          force_orphan: false  # once a year
+#      - name: Update Algolia index
+#        env:
+#          ALGOLIA_APP_ID: MTJNHU0JVB
+#          ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
+#          ALGOLIA_INDEX_NAME: 'index'
+#          ALGOLIA_INDEX_FILE: './public/index.json'
+#        run: npm run algolia
+#      - name: Install coscmd
+#        run: sudo pip install coscmd
+#      - name: Configure coscmd
+#        env:
+#          COS_SECRET_ID: ${{ secrets.COS_SECRET_ID }}
+#          COS_SECRET_KEY: ${{ secrets.COS_SECRET_KEY }}
+#          COS_BUCKET_NAME: blog-1256932288
+#          COS_BUCKET_REGION: ap-chengdu
+#        run: coscmd config -a $COS_SECRET_ID -s $COS_SECRET_KEY -b $COS_BUCKET_NAME -r $COS_BUCKET_REGION
+#      - name: Deploy to COS Bucket
+#        run: coscmd upload -r -s --delete -f public/ /
+#      - name: Refresh Qcloud CDN cache
+#        env:
+#          SECRET_ID: ${{ secrets.COS_SECRET_ID }}
+#          SECRET_KEY: ${{ secrets.COS_SECRET_KEY }}
+#        run: npm run qcloudcdn

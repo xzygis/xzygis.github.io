@@ -3,13 +3,7 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'assets/**'
-      - 'content/**'
-      - 'data/**'
-      - 'static/**'
-      - 'themes/**'
-      - 'config.toml'
+  pull_request:
   workflow_run:
     workflows: ['Update theme']
     types:

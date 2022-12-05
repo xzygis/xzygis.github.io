@@ -161,7 +161,7 @@ theme = "FixIt"
     [params.search.algolia]
       index = "index"
       appID = "MTJNHU0JVB"
-      searchKey = "5486225134d99f43826da401ee9bad57" #TODO:修改
+      searchKey = "5486225134d99f43826da401ee9bad57" #TODO:修改 
 
   # Header config
   [params.header]

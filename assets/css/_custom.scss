@@ -1,0 +1,70 @@
+// ==============================
+// Custom style
+// ==============================
+@import '_custom/shaky.scss';
+
+.header-title {
+  font-family: MMT_H;
+  font-size: 2rem !important;
+  font-weight: normal;
+
+  .logo {
+    min-height: 0.8em;
+    height: 0.8rem;
+    vertical-align: revert;
+  }
+}
+#header-mobile {
+  .header-wrapper {
+    max-height: 3.5rem;
+  }
+
+  .header-subtitle {
+    font-size: 0.55em;
+  }
+}
+
+.single {
+  .single-subtitle {
+    color: #57606a;
+  }
+}
+
+.home {
+  .profile-ghchart {
+    width: MIN(663px, 100%);
+    aspect-ratio: 663/104;
+  }
+  &.posts .summary .content {
+    display: block;
+  }
+}
+
+// Custom font
+@font-face {
+  font-family: MMT_H;
+  src: url('/fonts/mmt_header.ttf');
+  font-display: swap;
+}
+@font-face {
+  font-family: MMT_LRH;
+  src: url('/fonts/mmt_sign.ttf');
+  font-display: swap;
+}
+
+// ==============================
+// Mobile style
+// ==============================
+@media only screen and (max-width: 680px) {
+}
+
+// ==============================
+// Dark style
+// ==============================
+[data-theme='dark'] {
+  .single {
+    .single-subtitle {
+      color: inherit;
+    }
+  }
+}

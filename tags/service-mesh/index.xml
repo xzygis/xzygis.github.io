@@ -1,1 +1,113 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Service Mesh on Chu Xing</title><link>https://xzygis.github.io/tags/service-mesh/</link><description>Recent content in Service Mesh on Chu Xing</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Tue, 28 Jan 2020 14:48:01 +0000</lastBuildDate><atom:link href="https://xzygis.github.io/tags/service-mesh/index.xml" rel="self" type="application/rss+xml"/><item><title>Service Mesh概述</title><link>https://xzygis.github.io/2020/01/28/service-mesh%E6%A6%82%E8%BF%B0/</link><pubDate>Tue, 28 Jan 2020 14:48:01 +0000</pubDate><guid>https://xzygis.github.io/2020/01/28/service-mesh%E6%A6%82%E8%BF%B0/</guid><description>什么是服务网格？ 服务网格是用于处理服务间通信的专用基础设施层。它负责通过包含现代云原生应用程序的复杂服务拓扑来可靠地传递请求。实际上，服务网</description></item></channel></rss>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Service Mesh - 标签 - Chu Xing</title><link>https://xzygis.github.io/tags/service-mesh/</link><description>Service Mesh - 标签 - Chu Xing</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>xzygis@163.com (chuxing)</managingEditor><webMaster>xzygis@163.com (chuxing)</webMaster><lastBuildDate>Tue, 28 Jan 2020 14:48:01 +0000</lastBuildDate><atom:link href="https://xzygis.github.io/tags/service-mesh/" rel="self" type="application/rss+xml"/><item><title>Service Mesh概述</title><link>https://xzygis.github.io/posts/20200128-introduction-of-service-mesh/</link><pubDate>Tue, 28 Jan 2020 14:48:01 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20200128-introduction-of-service-mesh/</guid><description><![CDATA[<h1 id="什么是服务网格">什么是服务网格？</h1>
+<p>服务网格是用于处理服务间通信的专用基础设施层。它负责通过包含现代云原生应用程序的复杂服务拓扑来可靠地传递请求。实际上，服务网格通常通过一组轻量级网络代理来实现，这些代理与应用程序代码一起部署，而不需要感知应用程序本身。</p>
+<h2 id="服务网格的特点">服务网格的特点</h2>
+<p>服务网格有如下几个特点：</p>
+<ul>
+<li>应用程序间通讯的中间层</li>
+<li>轻量级网络代理</li>
+<li>应用程序无感知</li>
+<li>解耦应用程序的重试/超时、监控、追踪和服务发现</li>
+</ul>
+<!-- more -->
+<h2 id="理解服务网格">理解服务网格</h2>
+<p>如果用一句话来解释什么是服务网格，可以将它比作是应用程序或者说微服务间的 TCP/IP，负责服务之间的网络调用、限流、熔断和监控。</p>
+<p>服务网格的架构如下图所示：
+</p>
+<h2 id="为何使用服务网格">为何使用服务网格？</h2>
+<p>服务网格并没有给我们带来新功能，它是用于解决其他工具已经解决过的问题，只不过这次是在云原生的 Kubernetes 环境下的实现。</p>
+<p>在传统的 MVC 三层 Web 应用程序架构下，服务之间的通讯并不复杂，在应用程序内部自己管理即可，但是在现今的复杂的大型网站情况下，单体应用被分解为众多的微服务，服务之间的依赖和通讯十分复杂，出现了 twitter 开发的 Finagle、Netflix 开发的 Hystrix 和 Google 的 Stubby 这样的 “胖客户端” 库，这些就是早期的服务网格，但是它们都仅适用于特定的环境和特定的开发语言，并不能作为平台级的服务网格支持。</p>
+<p>在云原生架构下，容器的使用给予了异构应用程序的更多可行性，Kubernetes 增强的应用的横向扩容能力，用户可以快速的编排出复杂环境、复杂依赖关系的应用程序，同时开发者又无须过多关心应用程序的监控、扩展性、服务发现和分布式追踪这些繁琐的事情而专注于程序开发，赋予开发者更多的创造性。</p>
+<h1 id="服务网格架构">服务网格架构</h1>
+<p>服务网格中分为控制平面和数据平面，当前流行的两款开源的服务网格 Istio 和 Linkerd 实际上都是这种架构，只不过 Istio 的划分更清晰，而且部署更零散，很多组件都被拆分，控制平面中包括 Mixer、Pilot、Citadel，数据平面默认是用 Envoy；而 Linkerd 中只分为 Linkerd 做数据平面，namerd 作为控制平面。</p>
+<p><strong>控制平面的特点</strong></p>
+<ul>
+<li>不直接解析数据包</li>
+<li>与数据平面中的代理通信，下发策略和配置</li>
+<li>负责网络行为的可视化</li>
+<li>通常提供 API 或者命令行工具可用于配置版本化管理，便于持续集成和部署</li>
+</ul>
+<p><strong>数据平面的特点</strong></p>
+<ul>
+<li>通常是按照无状态目标设计的，但实际上为了提高流量转发性能，需要缓存一些数据，因此无状态也是有争议的</li>
+<li>直接处理入站和出站数据包，转发、路由、健康检查、负载均衡、认证、鉴权、产生监控数据等</li>
+<li>对应用来说透明，即可以做到无感知部署</li>
+</ul>
+<h2 id="服务网格的实现模式">服务网格的实现模式</h2>
+<p>Service Mesh 架构示意图：
+</p>
+<h2 id="istio-架构解析">Istio 架构解析</h2>
+<p></p>
+<ul>
+<li>Istio 是独立于平台的，可以在 Kubernetes 、 Consul 、虚拟机上部署的服务</li>
+<li>Istio 的组成
+<ul>
+<li>Envoy：智能代理、流量控制</li>
+<li>Pilot：服务发现、流量管理</li>
+<li>Mixer：访问控制、遥测</li>
+<li>Citadel：终端用户认证、流量加密</li>
+<li>Galley（1.1新增）：验证、处理和分配配置</li>
+</ul>
+</li>
+<li>Service mesh 关注的方面
+<ul>
+<li>可观察性</li>
+<li>安全性</li>
+<li>可运维性</li>
+<li>可拓展性</li>
+</ul>
+</li>
+<li>Istio 的策略执行组件可以扩展和定制，同时也是可拔插的</li>
+<li>Istio 在数据平面为每个服务中注入一个 Envoy 代理以 Sidecar 形式运行来劫持所有进出服务的流量，同时对流量加以控制，通俗的讲就是应用程序你只管处理你的业务逻辑，其他的事情 Sidecar 会汇报给 Istio 控制平面处理</li>
+<li>应用程序只需关注于业务逻辑（这才能生钱）即可，非功能性需求交给 Istio</li>
+</ul>
+<p><strong>设计目标</strong></p>
+<ul>
+<li>最大化透明度</li>
+<li>可扩展性</li>
+<li>可移植性</li>
+<li>策略一致性</li>
+</ul>
+<h2 id="从边车模式到-service-mesh">从边车模式到 Service Mesh</h2>
+<h3 id="什么是边车模式">什么是边车模式</h3>
+<blockquote>
+<p>Deploy components of an application into a separate process or container to provide isolation and encapsulation.
+&mdash; Sidecar pattern</p>
+</blockquote>
+<p></p>
+<h3 id="边车模式设计">边车模式设计</h3>
+<p>有两种方法来实现边车模式：</p>
+<ul>
+<li>通过 SDK、Lib 等软件包的形式，在开发时引入该软件包依赖，使其与业务服务集成起来。</li>
+<li>以 Sidecar 的形式，在运维的时候与应用服务集成在一起。</li>
+</ul>
+<h3 id="边车模式解决了什么问题">边车模式解决了什么问题</h3>
+<ul>
+<li>控制与逻辑分离的问题
+<ul>
+<li>业务代码只需要关心其复杂的业务逻辑</li>
+<li>日志记录、监控、流量控制、服务注册、服务发现、服务限流、服务熔断、鉴权、访问控制等交给边车</li>
+</ul>
+</li>
+<li>解决服务之间调用越来越复杂的问题
+<ul>
+<li>随着分布式架构越来越复杂和微服务越拆越细，我们越来越迫切的希望有一个统一的控制面来管理我们的微服务，来帮助我们维护和管理所有微服务</li>
+</ul>
+</li>
+</ul>
+<h3 id="从边车模式到-service-mesh-1">从边车模式到 Service Mesh</h3>
+<p>遵循边车模式进行实践从很早以前就开始了，开发人员一直试图将服务治理等通用功能提取成一个标准化的 Sidecar ，通过 Sidecar 代理来与其他系统进行交互，这样可以大大简化业务开发和运维。而随着分布式架构和微服务被越来越多的公司和开发者接受并使用，这一需求日益凸显。这就是 Service Mesh 服务网格诞生的契机，它是 CNCF（Cloud Native Computing Foundation，云原生基金会）目前主推的新一代微服务架构。</p>
+<p>Service Mesh 将底层那些难以控制的网络通讯统一管理，诸如：流量管控，丢包重试，访问控制等。而上层的应用层协议只需关心业务逻辑即可。Service Mesh 是一个用于处理服务间通信的基础设施层，它负责为构建复杂的云原生应用传递可靠的网络请求。</p>
+<h1 id="kubernetes-vs-service-mesh">Kubernetes vs Service Mesh</h1>
+<blockquote>
+<p>Kubernetes 管理的对象是 Pod，Service Mesh 中管理的对象是 Service。</p>
+</blockquote>
+<ul>
+<li>Kubernetes 的本质是应用的生命周期管理，具体来说就是部署和管理（扩缩容、自动恢复、发布）。</li>
+<li>Kubernetes 为微服务提供了可扩展、高弹性的部署和管理平台。</li>
+<li>Service Mesh 的基础是透明代理，通过 sidecar proxy 拦截到微服务间流量后再通过控制平面配置管理微服务的行为。</li>
+<li>Service Mesh 将流量管理从 Kubernetes 中解耦，Service Mesh 内部的流量无需 kube-proxy 组件的支持，通过为更接近微服务应用层的抽象，管理服务间的流量、安全性和可观察性。</li>
+<li>Service Mesh 是对 Kubernetes 中的 service 更上层的抽象，它的下一步是 serverless。</li>
+</ul>
+<hr>
+<p>本文是针对ServiceMesher社区系列文章而整理的学习笔记，文章地址：https://www.servicemesher.com/istio-handbook/intro/service-mesh-the-microservices-in-post-kubernetes-era.html</p>
+]]></description></item></channel></rss>

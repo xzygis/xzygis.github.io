@@ -1,1 +1,1991 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>后台开发 on Chu Xing</title><link>https://xzygis.github.io/categories/%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91/</link><description>Recent content in 后台开发 on Chu Xing</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Wed, 30 Nov 2022 22:03:21 +0000</lastBuildDate><atom:link href="https://xzygis.github.io/categories/%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91/index.xml" rel="self" type="application/rss+xml"/><item><title>Redis底层数据结构介绍</title><link>https://xzygis.github.io/2022/11/30/redis%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%BB%8B%E7%BB%8D/</link><pubDate>Wed, 30 Nov 2022 22:03:21 +0000</pubDate><guid>https://xzygis.github.io/2022/11/30/redis%E5%BA%95%E5%B1%82%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%BB%8B%E7%BB%8D/</guid><description>简单动态字符串 每个sds.h/sdshdr结构表示一个SDS值： struct sdshdr { //记录buf数组中已使用字节的数量 //等于SDS所保存字符串的长度 int</description></item><item><title>Tair:分布式键/值存储系统</title><link>https://xzygis.github.io/2022/11/27/tair%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%AE/%E5%80%BC%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/</link><pubDate>Sun, 27 Nov 2022 23:11:28 +0000</pubDate><guid>https://xzygis.github.io/2022/11/27/tair%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%AE/%E5%80%BC%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/</guid><description>产品概览 Tair 是快速访问内存 (MDB)/持久性 (LDB) 存储服务。 Tair采用高性能、高可用的分布式集群架构，可以满足企业对读写性能和可扩展容量的高要求</description></item><item><title>程序员做需求时容易忽视的若干问题</title><link>https://xzygis.github.io/2022/11/20/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%81%9A%E9%9C%80%E6%B1%82%E6%97%B6%E5%AE%B9%E6%98%93%E5%BF%BD%E8%A7%86%E7%9A%84%E8%8B%A5%E5%B9%B2%E9%97%AE%E9%A2%98/</link><pubDate>Sun, 20 Nov 2022 23:33:08 +0000</pubDate><guid>https://xzygis.github.io/2022/11/20/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%81%9A%E9%9C%80%E6%B1%82%E6%97%B6%E5%AE%B9%E6%98%93%E5%BF%BD%E8%A7%86%E7%9A%84%E8%8B%A5%E5%B9%B2%E9%97%AE%E9%A2%98/</guid><description>程序员大部分时间都在承接一个个的需求，在做需求的过程中，有一些问题是我们容易忽视的，究其原因，主要是在做需求的过程中缺少思考，或者思考不够全</description></item><item><title>给新人程序员的职场建议</title><link>https://xzygis.github.io/2022/11/20/%E7%BB%99%E6%96%B0%E4%BA%BA%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E8%81%8C%E5%9C%BA%E5%BB%BA%E8%AE%AE/</link><pubDate>Sun, 20 Nov 2022 22:01:20 +0000</pubDate><guid>https://xzygis.github.io/2022/11/20/%E7%BB%99%E6%96%B0%E4%BA%BA%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E8%81%8C%E5%9C%BA%E5%BB%BA%E8%AE%AE/</guid><description>我是一位在大厂打拼多年的程序员，今天想结合自己的工作经历给新人程序员们提出若干建议，希望能够在一定程度上帮助大家在职场脱颖而出。 积极主动 第一</description></item><item><title>浅谈Bloom Filter基本原理及使用方式</title><link>https://xzygis.github.io/2021/06/12/%E6%B5%85%E8%B0%88bloom-filter%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%E5%8F%8A%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F/</link><pubDate>Sat, 12 Jun 2021 16:22:56 +0000</pubDate><guid>https://xzygis.github.io/2021/06/12/%E6%B5%85%E8%B0%88bloom-filter%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%E5%8F%8A%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F/</guid><description>一提到元素查找，我们会很自然的想到HashMap。通过将哈希函数作用于key上，我们得到了哈希值，基于哈希值我们可以去表里的相应位置获取对应</description></item><item><title>Linux文件传输的三种方式</title><link>https://xzygis.github.io/2021/06/12/linux%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F/</link><pubDate>Sat, 12 Jun 2021 16:14:22 +0000</pubDate><guid>https://xzygis.github.io/2021/06/12/linux%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F/</guid><description>1 nc命令 执行如下命令，在目标机器(假设ip为10.11.12.13)上监听端口8415 nc -l 8415 &amp;gt; data.txt 往目标机器发送数据 nc -v 10.11.12.13 8415 &amp;lt; ~/Downloads/data.txt 2 SimpleHTTPServer 在服务器</description></item><item><title>Websocket介绍</title><link>https://xzygis.github.io/2021/06/12/websocket%E4%BB%8B%E7%BB%8D/</link><pubDate>Sat, 12 Jun 2021 15:25:21 +0000</pubDate><guid>https://xzygis.github.io/2021/06/12/websocket%E4%BB%8B%E7%BB%8D/</guid><description>什么是WebSocket？ WebSocket是一种网络传输协议，可在单个TCP连接上进行全双工通信，位于OSI模型的应用层。WebSocke</description></item><item><title>JSON Web Token入门手册</title><link>https://xzygis.github.io/2020/01/30/json-web-token%E5%85%A5%E9%97%A8%E6%89%8B%E5%86%8C/</link><pubDate>Thu, 30 Jan 2020 13:10:39 +0000</pubDate><guid>https://xzygis.github.io/2020/01/30/json-web-token%E5%85%A5%E9%97%A8%E6%89%8B%E5%86%8C/</guid><description>跨域认证问题 互联网服务离不开用户认证。一般流程是下面这样： 用户向服务器发送用户名和密码。 服务器验证通过后，在当前对话（session）里面保</description></item><item><title>API网关概述</title><link>https://xzygis.github.io/2020/01/27/api%E7%BD%91%E5%85%B3%E6%A6%82%E8%BF%B0/</link><pubDate>Mon, 27 Jan 2020 22:51:43 +0000</pubDate><guid>https://xzygis.github.io/2020/01/27/api%E7%BD%91%E5%85%B3%E6%A6%82%E8%BF%B0/</guid><description>1 背景 由于后端的微服务拆分，客户端通常需要请求多个服务获取所需数据。 不同客户端所需要的数据不一样。例如，PC需要的数据通常比移动端更加详细。</description></item></channel></rss>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>后台开发 - 分类 - Chu Xing</title><link>https://xzygis.github.io/categories/%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91/</link><description>后台开发 - 分类 - Chu Xing</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>xzygis@163.com (chuxing)</managingEditor><webMaster>xzygis@163.com (chuxing)</webMaster><lastBuildDate>Wed, 30 Nov 2022 22:03:21 +0000</lastBuildDate><atom:link href="https://xzygis.github.io/categories/%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91/" rel="self" type="application/rss+xml"/><item><title>Redis底层数据结构介绍</title><link>https://xzygis.github.io/posts/20221130-introduction-to-the-underlying-data-structure-of-redis/</link><pubDate>Wed, 30 Nov 2022 22:03:21 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20221130-introduction-to-the-underlying-data-structure-of-redis/</guid><description><![CDATA[<h1 id="简单动态字符串">简单动态字符串</h1>
+<p>每个sds.h/sdshdr结构表示一个SDS值：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">sdshdr</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//记录buf数组中已使用字节的数量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//等于SDS所保存字符串的长度
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">len</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//记录buf数组中未使用字节的数量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">free</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//字节数组，用于保存字符串
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">char</span> <span class="n">buf</span><span class="p">[];</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="sds与c字符串的区别">SDS与C字符串的区别</h2>
+<ul>
+<li>常数时间复杂度获取字符串长度</li>
+<li>杜绝缓冲区溢出</li>
+<li>减少修改字符串带来的内存重分配次数（空间预分配、惰性空间释放）</li>
+<li>二进制安全</li>
+<li>兼容部分C字符串函数</li>
+</ul>
+<!-- more -->
+<h1 id="链表">链表</h1>
+<p>当一个列表键包含了数量比较多的元素，又或者列表中包含的元素都是比较长的字符串时，Redis就会使用链表作为列表键的底层实现。</p>
+<p>每个链表节点使用一个adlist.h/listNode结构来表示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">listNode</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 前置节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">struct</span> <span class="n">listNode</span> <span class="o">*</span> <span class="n">prev</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 后置节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">struct</span> <span class="n">listNode</span> <span class="o">*</span> <span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//节点的值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">void</span> <span class="o">*</span> <span class="n">value</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span><span class="n">listNode</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>每个链表节点由一个listNode结构来表示，每个节点都有一个指向前置节点和后置节点的指针，所以Redis的链表实现是双端链表。
+每个链表使用一个list结构来表示，这个结构带有表头节点指针、表尾节点指针，以及链表长度等信息。
+因为链表表头节点的前置节点和表尾节点的后置节点都指向NULL，所以Redis的链表实现是无环链表。</p>
+<p>虽然仅仅使用多个listNode结构就可以组成链表，但使用adlist.h/list来持有链表的话，操作起来会更方便：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">list</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="err">表头节点</span>
+</span></span><span class="line"><span class="cl">    <span class="n">listNode</span> <span class="o">*</span> <span class="n">head</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="err">表尾节点</span>
+</span></span><span class="line"><span class="cl">    <span class="n">listNode</span> <span class="o">*</span> <span class="n">tail</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="err">链表所包含的节点数量</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">len</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="err">节点值复制函数</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="n">dup</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">ptr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="err">节点值释放函数</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">free</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">ptr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="err">节点值对比函数</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">match</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">ptr</span><span class="p">,</span><span class="kt">void</span> <span class="o">*</span><span class="n">key</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">list</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过为链表设置不同的类型特定函数，Redis的链表可以用于保存各种不同类型的值。</p>
+<h1 id="字典">字典</h1>
+<p>字典，又称为符号表（symbol table）、关联数组（associative array）或映射（map），是一种用于保存键值对（key-value pair）的抽象数据结构。</p>
+<p>当一个哈希键包含的键值对比较多，又或者键值对中的元素都是比较长的字符串时，Redis就会使用字典作为哈希键的底层实现。</p>
+<p>Redis字典所使用的哈希表由dict.h/dictht结构定义：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">dictht</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//哈希表数组
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">dictEntry</span> <span class="o">**</span><span class="n">table</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//哈希表大小
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">size</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//哈希表大小掩码，用于计算索引值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//总是等于size-1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">sizemask</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//该哈希表已有节点的数量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">used</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">dictht</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>table属性是一个数组，数组中的每个元素都是一个指向dict.h/dictEntry结构的指针，每个dictEntry结构保存着一个键值对。size属性记录了哈希表的大小，也即是table数组的大小，而used属性则记录了哈希表目前已有节点（键值对）的数量。sizemask属性的值总是等于size-1，这个属性和哈希值一起决定一个键应该被放到table数组的哪个索引上面。</p>
+<p>哈希表节点使用dictEntry结构表示，每个dictEntry结构都保存着一个键值对：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">dictEntry</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//键
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">void</span> <span class="o">*</span><span class="n">key</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">union</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">void</span> <span class="o">*</span><span class="n">val</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">uint64_tu64</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">int64_ts64</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="n">v</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//指向下个哈希表节点，形成链表
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">struct</span> <span class="n">dictEntry</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">dictEntry</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>key属性保存着键值对中的键，而v属性则保存着键值对中的值，其中键值对的值可以是一个指针，或者是一个uint64_t整数，又或者是一个int64_t整数。next属性是指向另一个哈希表节点的指针，这个指针可以将多个哈希值相同的键值对连接在一次，以此来解决键冲突（collision）的问题。</p>
+<p>Redis中的字典由dict.h/dict结构表示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">dict</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//类型特定函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">dictType</span> <span class="o">*</span><span class="n">type</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//私有数据
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">void</span> <span class="o">*</span><span class="n">privdata</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//哈希表
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">dictht</span> <span class="n">ht</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// rehash索引
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//当rehash不在进行时，值为-1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">in</span> <span class="n">trehashidx</span><span class="p">;</span> <span class="cm">/* rehashing not in progress if rehashidx == -1 */</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">dict</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>type属性和privdata属性是针对不同类型的键值对，为创建多态字典而设置的：</p>
+<ul>
+<li>type属性是一个指向dictType结构的指针，每个dictType结构保存了一簇用于操作特定类型键值对的函数，Redis会为用途不同的字典设置不同的类型特定函数。</li>
+<li>而privdata属性则保存了需要传给那些类型特定函数的可选参数。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">dictType</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//计算哈希值的函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">hashFunction</span><span class="p">)(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">key</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//复制键的函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">void</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="n">keyDup</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">privdata</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">key</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//复制值的函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">void</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="n">valDup</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">privdata</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">obj</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//对比键的函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">keyCompare</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">privdata</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">key1</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">key2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//销毁键的函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">keyDestructor</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">privdata</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">key</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//销毁值的函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">valDestructor</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">privdata</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">obj</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">dictType</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>ht属性是一个包含两个项的数组，数组中的每个项都是一个dictht哈希表，一般情况下，字典只使用ht[0]哈希表，ht[1]哈希表只会在对ht[0]哈希表进行rehash时使用。除了ht[1]之外，另一个和rehash有关的属性就是rehashidx，它记录了rehash目前的进度，如果目前没有在进行rehash，那么它的值为-1。</p>
+<p>当要将一个新的键值对添加到字典里面时，程序需要先根据键值对的键计算出哈希值和索引值，然后再根据索引值，将包含新键值对的哈希表节点放到哈希表数组的指定索引上面。</p>
+<p>Redis计算哈希值和索引值的方法如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#使用字典设置的哈希函数，计算键key的哈希值
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="n">hash</span> <span class="o">=</span> <span class="n">dict</span><span class="o">-</span><span class="err">＞</span><span class="n">type</span><span class="o">-</span><span class="err">＞</span><span class="nf">hashFunction</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">#使用哈希表的sizemask属性和哈希值，计算出索引值
+</span></span></span><span class="line"><span class="cl"><span class="cp">#根据情况不同，ht[x]可以是ht[0]或者ht[1]
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="n">index</span> <span class="o">=</span> <span class="n">hash</span> <span class="o">&amp;</span> <span class="n">dict</span><span class="o">-</span><span class="err">＞</span><span class="n">ht</span><span class="p">[</span><span class="n">x</span><span class="p">].</span><span class="n">sizemask</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Redis的哈希表使用链地址法（separate chaining）来解决键冲突，每个哈希表节点都有一个next指针，多个哈希表节点可以用next指针构成一个单向链表，被分配到同一个索引上的多个节点可以用这个单向链表连接起来，这就解决了键冲突的问题。</p>
+<h2 id="rehash">rehash</h2>
+<p>根据BGSAVE命令或BGREWRITEAOF命令是否正在执行，服务器执行扩展操作所需的负载因子并不相同，这是因为在执行BGSAVE命令或BGREWRITEAOF命令的过程中，Redis需要创建当前服务器进程的子进程，而大多数操作系统都采用写时复制（copy-on-write）技术来优化子进程的使用效率，所以在子进程存在期间，服务器会提高执行扩展操作所需的负载因子，从而尽可能地避免在子进程存在期间进行哈希表扩展操作，这可以避免不必要的内存写入操作，最大限度地节约内存。</p>
+<p>为了避免rehash对服务器性能造成影响，服务器不是一次性将ht[0]里面的所有键值对全部rehash到ht[1]，而是分多次、渐进式地将ht[0]里面的键值对慢慢地rehash到ht[1]。</p>
+<p>哈希表渐进式rehash的详细步骤：</p>
+<ul>
+<li>为ht[1]分配空间，让字典同时持有ht[0]和ht[1]两个哈希表。</li>
+<li>在字典中维持一个索引计数器变量rehashidx，并将它的值设置为0，表示rehash工作正式开始。</li>
+<li>在rehash进行期间，每次对字典执行添加、删除、查找或者更新操作时，程序除了执行指定的操作以外，还会顺带将ht[0]哈希表在rehashidx索引上的所有键值对rehash到ht[1]，当rehash工作完成之后，程序将rehashidx属性的值增一。</li>
+<li>随着字典操作的不断执行，最终在某个时间点上，ht[0]的所有键值对都会被rehash至ht[1]，这时程序将rehashidx属性的值设为-1，表示rehash操作已完成。渐进式rehash的好处在于它采取分而治之的方式，将rehash键值对所需的计算工作均摊到对字典的每个添加、删除、查找和更新操作上，从而避免了集中式rehash而带来的庞大计算量。</li>
+</ul>
+<p>因为在进行渐进式rehash的过程中，字典会同时使用ht[0]和ht[1]两个哈希表，所以在渐进式rehash进行期间，字典的删除（delete）、查找（find）、更新（update）等操作会在两个哈希表上进行。例如，要在字典里面查找一个键的话，程序会先在ht[0]里面进行查找，如果没找到的话，就会继续到ht[1]里面进行查找，诸如此类。</p>
+<p>另外，在渐进式rehash执行期间，新添加到字典的键值对一律会被保存到ht[1]里面，而ht[0]则不再进行任何添加操作，这一措施保证了ht[0]包含的键值对数量会只减不增，并随着rehash操作的执行而最终变成空表。</p>
+<h1 id="跳跃表">跳跃表</h1>
+<p>跳跃表（skiplist）是一种有序数据结构，它通过在每个节点中维持多个指向其他节点的指针，从而达到快速访问节点的目的。跳跃表支持平均O（logN）、最坏O（N）复杂度的节点查找，还可以通过顺序性操作来批量处理节点。在大部分情况下，跳跃表的效率可以和平衡树相媲美，并且因为跳跃表的实现比平衡树要来得更为简单，所以有不少程序都使用跳跃表来代替平衡树。Redis使用跳跃表作为有序集合键的底层实现之一，如果一个有序集合包含的元素数量比较多，又或者有序集合中元素的成员（member）是比较长的字符串时，Redis就会使用跳跃表来作为有序集合键的底层实现。</p>
+<p>跳跃表节点的实现由redis.h/zskiplistNode结构定义：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">zskiplistNode</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//层
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">struct</span> <span class="n">zskiplistLevel</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//前进指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">struct</span> <span class="n">zskiplistNode</span> <span class="o">*</span><span class="n">forward</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//跨度
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">span</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="n">level</span><span class="p">[];</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//后退指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">struct</span> <span class="n">zskiplistNode</span> <span class="o">*</span><span class="n">backward</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//分值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">double</span> <span class="n">score</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//成员对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">robj</span> <span class="o">*</span><span class="n">obj</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">zskiplistNode</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>每次创建一个新跳跃表节点的时候，程序都根据幂次定律（power law，越大的数出现的概率越小）随机生成一个介于1和32之间的值作为level数组的大小，这个大小就是层的“高度”。</p>
+<p>跨度（span）实际上是用来计算排位（rank）的：在查找某个节点的过程中，将沿途访问过的所有层的跨度累计起来，得到的结果就是目标节点在跳跃表中的排位。</p>
+<p>节点的后退指针（backward属性）用于从表尾向表头方向访问节点：跟可以一次跳过多个节点的前进指针不同，因为每个节点只有一个后退指针，所以每次只能后退至前一个节点。</p>
+<p>zskiplist结构的定义如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">zskiplist</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//表头节点和表尾节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">structz</span> <span class="n">skiplistNode</span> <span class="o">*</span><span class="n">header</span><span class="p">,</span> <span class="o">*</span><span class="n">tail</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//表中节点的数量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">length</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//表中层数最大的节点的层数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">level</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">zskiplist</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="整数集合">整数集合</h1>
+<p>整数集合（intset）是集合键的底层实现之一，当一个集合只包含整数值元素，并且这个集合的元素数量不多时，Redis就会使用整数集合作为集合键的底层实现。</p>
+<p>每个intset.h/intset结构表示一个整数集合：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">intset</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//编码方式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">uint32_t</span> <span class="n">encoding</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//集合包含的元素数量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">uint32_t</span> <span class="n">length</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//保存元素的数组
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int8_t</span> <span class="n">contents</span><span class="p">[];</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">intset</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>contents数组是整数集合的底层实现：整数集合的每个元素都是contents数组的一个数组项（item），各个项在数组中按值的大小从小到大有序地排列，并且数组中不包含任何重复项。</p>
+<p>因为引发升级的新元素的长度总是比整数集合现有所有元素的长度都大，所以这个新元素的值要么就大于所有现有元素，要么就小于所有现有元素：</p>
+<p>要让一个数组可以同时保存int16_t、int32_t、int64_t三种类型的值，最简单的做法就是直接使用int64_t类型的数组作为整数集合的底层实现。不过这样一来，即使添加到整数集合里面的都是int16_t类型或者int32_t类型的值，数组都需要使用int64_t类型的空间去保存它们，从而出现浪费内存的情况。而整数集合现在的做法既可以让集合能同时保存三种不同类型的值，又可以确保升级操作只会在有需要的时候进行，这可以尽量节省内存。</p>
+<p>整数集合不支持降级操作，一旦对数组进行了升级，编码就会一直保持升级后的状态。</p>
+<h1 id="压缩列表">压缩列表</h1>
+<p>压缩列表（ziplist）是列表键和哈希键的底层实现之一。当一个列表键只包含少量列表项，并且每个列表项要么就是小整数值，要么就是长度比较短的字符串，那么Redis就会使用压缩列表来做列表键的底层实现。</p>
+<p>压缩列表是Redis为了节约内存而开发的，是由一系列特殊编码的连续内存块组成的顺序型（sequential）数据结构。一个压缩列表可以包含任意多个节点（entry），每个节点可以保存一个字节数组或者一个整数值。</p>
+<p>ziplist的组成部分：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="p">|</span> zlbytes <span class="p">|</span> ztail <span class="p">|</span> zlen <span class="p">|</span> entry1 <span class="p">|</span> entry2 <span class="p">|</span> ... <span class="p">|</span> entryN <span class="p">|</span> zlend <span class="p">|</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>每个压缩列表节点都由previous_entry_length、encoding、content三个部分组成:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="p">|</span> previous_entry_length <span class="p">|</span> encoding <span class="p">|</span> content <span class="p">|</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>添加新节点到压缩列表，或者从压缩列表中删除节点，可能会引发连锁更新操作，但这种操作出现的几率并不高。</p>
+<p>尽管连锁更新的复杂度较高，但它真正造成性能问题的几率是很低的：</p>
+<ul>
+<li>首先，压缩列表里要恰好有多个连续的、长度介于250字节至253字节之间的节点，连锁更新才有可能被引发，在实际中，这种情况并不多见；-</li>
+<li>其次，即使出现连锁更新，但只要被更新的节点数量不多，就不会对性能造成任何影响：比如说，对三五个节点进行连锁更新是绝对不会影响性能的；</li>
+</ul>
+]]></description></item><item><title>Tair:分布式键/值存储系统</title><link>https://xzygis.github.io/posts/20221127-tair-a-distributed-key-value-storage-system-developed-by-alibaba-group/</link><pubDate>Sun, 27 Nov 2022 23:11:28 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20221127-tair-a-distributed-key-value-storage-system-developed-by-alibaba-group/</guid><description><![CDATA[<h1 id="产品概览">产品概览</h1>
+<p>Tair 是快速访问内存 (MDB)/持久性 (LDB) 存储服务。</p>
+<p>Tair采用高性能、高可用的分布式集群架构，可以满足企业对读写性能和可扩展容量的高要求。</p>
+<h1 id="系统架构">系统架构</h1>
+<p>Tair 集群具有三个必要的模块：ConfigServer、DataServer 和客户端。</p>
+<!-- more -->
+<p></p>
+<p>通常，一个 Tair 集群包括两个 ConfigServer 和多个 DataServer。 两个 ConfigServer 充当主服务器和备用服务器。 DataServer 和 ConfigServer 之间的心跳检查用于检查集群中活跃的和可用的 DataServer，以建立集群中数据的分布（比较表）。 DataServers 按照 ConfigServer 的指示存储、复制和迁移数据。当客户端启动时，它从 ConfigServer 获取数据分布信息。客户端根据这些数据分布信息，与对应的DataServer进行交互，执行用户的请求。</p>
+<p>在架构上，ConfigServer 的作用类似于传统应用系统中的中心节点。整个集群服务依赖于ConfigServer。 事实上，Tair 的 ConfigServers 是非常轻量级的。当一个工作的 ConfigServer 遇到停机时间时，另一个 ConfigServer 会在几秒钟内自动接管。 即使两个 ConfigServer 同时停机，只要 DataServer 没有变化，Tair 也可以正常运行。 用户只需要将应用程序连接到 ConfigServers，不需要知道内部节点的详细信息。</p>
+<h2 id="configserver">ConfigServer</h2>
+<p>两个 ConfigServers 作为主服务器和备用服务器。</p>
+<p>集群的实时和可用 DataServer 节点信息是使用 ConfigServer 和 DataServer 之间的心跳检查确定的。</p>
+<p>ConfigServer根据DataServer节点信息构建数据分布表，展示数据在集群中的分布情况。</p>
+<p>ConfigServer 提供数据分发表查询服务。</p>
+<p>ConfigServer 调度数据服务器之间的数据迁移和复制。</p>
+<h2 id="dataservers-数据服务器">DataServers 数据服务器</h2>
+<p>DataServers 提供存储引擎。</p>
+<p>DataServers 接收客户端发起的操作，例如 put/get/remove。</p>
+<p>DataServers 迁移和复制数据。</p>
+<p>DataServers 提供访问统计信息。</p>
+<h2 id="clients-客户端">Clients 客户端</h2>
+<p>客户端提供用于访问 Tair 集群的 API。</p>
+<p>客户端更新和缓存数据分发表。</p>
+<p>客户端提供LocalCache，防止过热的数据访问影响Tair集群服务。</p>
+<p>客户端控制流量。</p>
+<h1 id="产品特点">产品特点</h1>
+<h2 id="分布式架构">分布式架构</h2>
+<p>分布式集群架构用于提供自动灾难恢复和故障转移。</p>
+<p>支持负载均衡，数据分布均匀。</p>
+<p>系统存储空间和吞吐量性能可以弹性伸缩，解决数据量和QPS性能限制。</p>
+<p>功能齐全且用户友好的访问</p>
+<p>数据结构丰富。 支持单级键值结构和二级索引结构。</p>
+<p>支持各种用途。 还支持计数器模式。</p>
+<p>支持数据过期和版本控制。</p>
+<h2 id="version-支持">Version 支持</h2>
+<p>Tair 中的每个数据都包含版本号，版本号在每次更新后都会递增。这个特性有助于防止由于数据的并发更新导致的问题。</p>
+<p>比如，系统有一个 value 为 “a,b,c”，A 和 B 同时 get 到这个 value。A 执行操作，在后面添加一个 d，value 为 “a,b,c,d”。B 执行操作添加一个 e，value 为”a,b,c,e”。如果不加控制，无论 A 和 B 谁先更新成功，它的更新都会被后到的更新覆盖。</p>
+<p>Tair 无法解决这个问题，但是引入了 version 机制避免这样的问题。还是拿刚才的例子，A 和 B 取到数据，假设版本号为 10，A 先更新，更新成功后，value 为”a,b,c,d”，与此同时，版本号会变为 11。当 B 更新时，由于其基于的版本号是 10，服务器会拒绝更新，从而避免 A 的更新被覆盖。B 可以选择 get 新版本的 value，然后在其基础上修改，也可以选择强行更新。</p>
+<h2 id="item-支持">Item 支持</h2>
+<p>Tair 还支持将 value 视为一个 item 数组，对 value 中的部分 item 进行操作。比如有个 key 的 value 为 [1,2,3,4,5]，我们可以只获取前两个 item，返回 [1,2]，也可以删除第一个 item，还支持将数据删除，并返回被删除的数据，通过这个接口可以实现一个原子的分布式 FIFO 的队列。</p>
+<h1 id="用途">用途</h1>
+<h2 id="数据库缓存">数据库缓存</h2>
+<p>随着业务量的增加，对数据库系统的并发请求越来越多，数据库系统的负载越来越重。当数据库系统过载时，响应速度会变慢，在极端情况下甚至会导致服务中断。</p>
+<p>为了解决这个问题，Tair MDB 可以与数据库产品一起部署，以提供高吞吐量和低延迟的存储。</p>
+<p>MDB 响应速度快，一般毫秒级完成请求。而且，MDB 支持更高的 QPS 速率，可以处理比数据库更多的并发请求。</p>
+<p>通过观察业务，用户可以将热点数据存储在MDB中，显着减轻数据库的负载。这不仅降低了数据库成本，还提高了系统可用性。</p>
+<h2 id="临时数据存储">临时数据存储</h2>
+<p>社交网站、电商网站、游戏、广告等应用需要维护大量的临时数据。</p>
+<p>在 MDB 中存储临时数据可以减少内存管理开销和应用程序负载。在分布式环境中，MDB可以作为统一的全局存储，可以防止单点故障造成的数据丢失，解决多个应用之间同步的问题。</p>
+<p>一个常见的例子是使用 MDB 作为会话管理器。如果网站采用分布式部署，并且流量很大，同一用户的不同请求可能会发送到不同的Web服务器。</p>
+<p>在这种情况下，MDB 可以作为全局存储解决方案来保存会话数据、用户令牌、权限信息等数据。</p>
+<h2 id="数据存储">数据存储</h2>
+<p>推荐和广告业务通常需要离线计算大量数据。 LDB 支持持久存储并提供卓越的性能。</p>
+<p>支持在线服务，允许用户定期将离线数据导入LDB进行在线服务。</p>
+<p>经过计算，列表业务可以将最终列表存储在LDB中，直接展示给前端应用程序。</p>
+<p>这样，LDB 就满足了存储和高速访问的需求。</p>
+<h2 id="黑名单白名单">黑名单/白名单</h2>
+<p>安全应用程序有许多黑名单/白名单方案。这些黑名单/白名单场景的特点是命中率低、访问量大、数据丢失导致业务损失。</p>
+<p>LDB 支持数据持久化和高访问量，因此在这些场景中被广泛使用。</p>
+<h2 id="分布式锁">分布式锁</h2>
+<p>分布式锁通常用于防止多线程并发导致的数据不一致和逻辑混乱。分布式锁可以使用 Tair 的版本特性或计算功能来实现。</p>
+<p>得益于LBS的持久化，即使服务宕机，锁也不会丢失，可以正常释放。</p>
+]]></description></item><item><title>程序员做需求时容易忽视的若干问题</title><link>https://xzygis.github.io/posts/20221120-some-problems-that-programmers-tend-to-ignore-when-making-requirements/</link><pubDate>Sun, 20 Nov 2022 23:33:08 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20221120-some-problems-that-programmers-tend-to-ignore-when-making-requirements/</guid><description><![CDATA[<p>程序员大部分时间都在承接一个个的需求，在做需求的过程中，有一些问题是我们容易忽视的，究其原因，主要是在做需求的过程中缺少思考，或者思考不够全面。而思考的缺失，正是导致部分人所说的“做业务需求没有成长”的主要原因之一。今天主要从研发流程中重要的几个阶段出发，跟大家谈谈做需求的过程中有哪些是我们容易忽视的问题。</p>
+<h1 id="需求分析">需求分析</h1>
+<p>PM是我们的需求的最主要来源，在需求分析阶段，需要避免的问题是：一、没有理解清楚需求细节，而直接进入后续的方案设计和开发阶段；二、需求里说怎么干，我们就怎么干。
+问题一容易造成的结果是，功能开发上线完成了，结果发现不是PM想要的，导致不必要的返工成本。另外，由于没有真正理清需求，也有可能导致项目的整体架构设计产生重大偏差，从而给后续的架构迭代留下隐患。
+问题二容易造成的结果是，PM想做的功能点都做好了，却只是解决了一个本就不存在的问题，导致人力的浪费。特斯拉进行生产线自动化的时候，有一个零件的自动化安装总是出问题，特斯拉的工程师为了优化这个自动化流程，投入了大量的资金和精力。 后来马斯克问他们的技术人员，为什么需要这个零件，结果发现大家居然并不清楚。最后证明其实在电动车上，根本不需要这个零件。
+为了避免以上两个问题，当我们接到PM需求时，应该详细地了解需求的功能细节，以及这个需求需要解决的问题是什么，最终是服务于什么目的，是否有助于达成业务的总体目标。以电商行业为例，我们应该思考所做的需求是否有助于提升商品的导购和流通效率，是否能帮卖家多挣钱，是否能帮买家更快找到想要的商品，是否能帮助平台提升竞争力。</p>
+<!-- more -->
+<h1 id="方案设计">方案设计</h1>
+<p>在方案设计阶段，需要避免的问题是：“这个需求很简单，不用走方案设计和评审环节了，我直接开发吧，很快就可以上线了”。有些需求可能只是简单的修改一两个接口，或者只是对现有的流程做部分调整，这往往容易让我们过于自信，认为直接开干也不会有问题。其实，在我们真正理清楚方案之前，它并不简单，而确保我们真正理清方案的方式，就是按照部门的方案设计模板，把技术方案写出来，对照CheckList，逐一完成各个检查项。
+所谓磨刀不误砍柴工，在方案设计阶段多花一些时间，可以帮助我们建设出更加合理的系统架构，让我们在技术架构上不断积累资产，资产的不断增值会让我们在能力建设和研发效率等方面长期受益。相反，如果我们忽视了方案设计，则会不断地积累技术债，后续需要投入很多精力去还债。</p>
+<h1 id="代码开发">代码开发</h1>
+<p>在代码开发方面，需要避免的问题是：“对工程质量要求低，认为能实现功能就行”。实际上，代码也是一种语言，它不仅用于人与机器之间的交流，而且也用于人与人之间的交流。逻辑复杂、晦涩难懂的代码可能会导致以下问题：一、隐藏bug，而且往往很不好改；二、后续有功能迭代时，逻辑修改非常复杂。
+逻辑的正确性，是我们编码时的最低要求，编码时应该尽可能的追求信、达、雅。在编码方面主要给两点建议：一、遵守公司和部门的研发规范，包括分支规范、代码规范等；二、写代码时要多思考自己的写法是不是最优的，还有没有更好的写法。</p>
+<h1 id="服务上线">服务上线</h1>
+<p>在服务上线阶段，需要避免的是观察不细致，想当然的认为没问题，结果到最后导致了一个大问题。在上线阶段，我们应该加强检查，从多角度对服务进行观察，包括：上游角度、服务本身角度、下游角度，观察的指标，既包括错误率、时延、错误日志等通用指标，也包括业务自定义指标（应该在方案设计阶段考虑清楚后续有什么手段可以观测服务是否正常）。
+值得一提的是，服务上线完成并不是结束，而是一个新的开始。我们需要采取各种手段保障服务的稳定运行，并不断发现其中的可优化点，推动服务SLI稳步提升。</p>
+]]></description></item><item><title>给新人程序员的职场建议</title><link>https://xzygis.github.io/posts/20221120-career-advice-for-beginning-programmers/</link><pubDate>Sun, 20 Nov 2022 22:01:20 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20221120-career-advice-for-beginning-programmers/</guid><description><![CDATA[<p>我是一位在大厂打拼多年的程序员，今天想结合自己的工作经历给新人程序员们提出若干建议，希望能够在一定程度上帮助大家在职场脱颖而出。</p>
+<h1 id="积极主动">积极主动</h1>
+<p>第一个建议是要积极主动，有owner意识，勇于承担工作职责，并在工作中做出成绩。
+首先，领取任务或接受任务应该积极主动。在工作中可以主动向领导提出来自己对什么方向的项目感兴趣，希望承担什么样的任务。当领导知道你是积极主动的人，而且也发现你确实有能力胜任某项工作时，就会优先想到你。在领导主动布置工作任务时，也不应该过多的考虑这项工作好不好干、难度怎么样，而是应该要积极主动的接受。
+其次，在执行任务的过程中，应该发挥主观能动性，从而使成果达到预期或尽可能的超出预期。这就要求我们理清任务的本质，思考任务背后的更深层次的逻辑，从而确定目标、理清思路、拆解任务、贯彻执行。这里特别需要避免的是，简单地成为“任务执行器”，即机械的执行任务，而不知道做完这个任务之后能解决什么问题，后续又还需要做什么。</p>
+<!-- more -->
+<h1 id="善于沟通">善于沟通</h1>
+<p>作为研发，工作中不免要和很多同事进行沟通，比如跟PM对接需求、跟其他前后端RD聊技术方案、跟QA聊测试用例等，因此高效的沟通可以在很大程度上提升我们的工作效率。在善于沟通方面，主要的建议是：一、不要与人争吵；二、换位思考。
+争吵不能解决任何的问题，反而容易让人丧失理智，而且容易影响自己在旁观者心里的印象。换位思考是解决沟通问题的利器，先谈对方最关心的点，让对方感受到你的真诚。遇到分歧时，先找共同点，求同存异，往往事半功倍。</p>
+<h1 id="保持好奇心">保持好奇心</h1>
+<p>软件研发方面的技术日新月异，不断有新的编程语言、存储组件、技术框架等出现，为了保持保持和增加自己的核心竞争力，对于工作中用到的相关组件和框架，应该不断去挖掘背后的底层原理。比如说工作中用到了HTTP协议，那么就应该思考：为什么会有HTTP？它的演进过程是怎样的？有什么设计理念是值得我们学习的？它还有什么缺陷是需要改进的吗？
+除了熟悉工作中用到的技术组件的原理之外，也应该多关注一些前沿的技术趋势，了解业界同行的一些优秀的实践经验，可能的方式包括关注InfoQ、美团技术博客等公众号发布的高质量文档。
+这里特别需要避免的是，整天抱怨自己的工作只是CRUD，认为自己的工作没价值，但是却不愿去发掘自己的工作背后的有价值的东西。</p>
+<h1 id="引人注目">引人注目</h1>
+<p>程序员是技术性很强的工作，技术是我们的立身之本，但我们也要避免只会研究技术、埋头苦干。对于交到我们手里的工作，我们要尽可能地做好，同时也需要积极地向领导汇报进展和成果，这样领导才会知道事情的进度是可控的、成果是可预期的，对于你个人的工作产出也自然心里有数了。
+在引人注目方面，另外很重要的一点是：发表文章。如果只有你自己知道你是绝顶高手，是没有意义的，你需要通过发表文章的方式表述所学所思所想，让其他人知道你的实力，从而扩大你的影响力。</p>
+]]></description></item><item><title>浅谈Bloom Filter基本原理及使用方式</title><link>https://xzygis.github.io/posts/20210612-introduction-to-the-basic-principles-of-bloom-filter/</link><pubDate>Sat, 12 Jun 2021 16:22:56 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20210612-introduction-to-the-basic-principles-of-bloom-filter/</guid><description><![CDATA[<p>一提到元素查找，我们会很自然的想到<code>HashMap</code>。通过将哈希函数作用于key上，我们得到了哈希值，基于哈希值我们可以去表里的相应位置获取对应的数据。除了存在哈希冲突问题之外，<code>HashMap</code>一个很大的问题就是空间效率低。引入<code>Bloom Filter</code>则可以很好的解决空间效率的问题。</p>
+<h2 id="原理">原理</h2>
+<p>Bloom Filter是一种空间效率很高的随机数据结构，Bloom filter 可以看做是对bit-map 的扩展，布隆过滤器被设计为一个具有N的元素的位数组A（bit array），初始时所有的位都置为0。</p>
+<p>当一个元素被加入集合时，通过K个Hash函数将这个元素映射成一个位阵列（Bit array）中的K个点，把它们置为1。检索时，我们只要看看这些点是不是都是1就（大约）知道集合中有没有它了。</p>
+<ul>
+<li>如果这些点有任何一个 0，则被检索元素一定不在；</li>
+<li>如果都是 1，则被检索元素很可能在。</li>
+</ul>
+<!-- more -->
+<h2 id="添加元素">添加元素</h2>
+<p>要添加一个元素，我们需要提供k个哈希函数。每个函数都能返回一个值，这个值必须能够作为位数组的索引（可以通过对数组长度进行取模得到）。然后，我们把位数组在这个索引处的值设为1。例如，第一个哈希函数作用于元素I上，返回x。类似的，第二个第三个哈希函数返回y与z，那么：
+<code>A[x]=A[y]=A[z] = 1</code></p>
+<h2 id="查找元素">查找元素</h2>
+<p>查找的过程与上面的过程类似，元素将会被会被不同的哈希函数处理三次，每个哈希函数都返回一个作为位数组索引值的整数，然后我们检测位数组在x、y与z处的值是否为1。如果有一处不为1，那么就说明这个元素没有被添加到这个布隆过滤器中。如果都为1，就说明这个元素在布隆过滤器里面。当然，会有一定误判的概率。</p>
+<h2 id="算法优化">算法优化</h2>
+<p>通过上面的解释我们可以知道，如果想设计出一个好的布隆过滤器，我们必须遵循以下准则：</p>
+<ul>
+<li>好的哈希函数能够尽可能的返回宽范围的哈希值。</li>
+<li>位数组的大小（用m表示）非常重要：如果太小，那么所有的位很快就都会被赋值为1，这样就增加了误判的几率。</li>
+<li>哈希函数的个数（用k表示）对索引值的均匀分配也很重要。</li>
+</ul>
+<p>计算m的公式如下：
+<code>m = - nlog p / (log2)^2</code>
+这里p为可接受的误判率。</p>
+<p>计算k的公式如下：
+<code>k = m/n log(2)</code>
+这里k=哈希函数个数，m=位数组个数，n=待检测元素的个数（后面会用到这几个字母）。</p>
+<h2 id="哈希算法">哈希算法</h2>
+<p>哈希算法是影响布隆过滤器性能的地方。我们需要选择一个效率高但不耗时的哈希函数，在论文《更少的哈希函数，相同的性能指标：构造一个更好的布隆过滤器》中，讨论了如何选用2个哈希函数来模拟k个哈希函数。首先，我们需要计算两个哈希函数h1(x)与h2(x)。然后，我们可以用这两个哈希函数来模仿产生k个哈希函数的效果：
+<code>gi(x) = h1(x) + ih2(x)</code>
+这里i的取值范围是1到k的整数。</p>
+<p>Google Guava类库使用这个技巧实现了一个布隆过滤器，哈希算法的主要逻辑如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kt">long</span> <span class="n">hash64</span> <span class="o">=</span> <span class="o">...;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">hash1</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="n">hash64</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">hash2</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">hash64</span> <span class="o">&gt;&gt;&gt;</span> <span class="mi">32</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">numHashFunctions</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">combinedHash</span> <span class="o">=</span> <span class="n">hash1</span> <span class="o">+</span> <span class="o">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">hash2</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// Flip all the bits if it&#39;s negative (guaranteed positive number)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">if</span> <span class="o">(</span><span class="n">combinedHash</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">combinedHash</span> <span class="o">=</span> <span class="o">~</span><span class="n">combinedHash</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">  <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Guava中的Bloom Filter使用示例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">expectedInsertions</span> <span class="o">=</span> <span class="o">...;</span> <span class="c1">//待检测元素的个数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">double</span> <span class="n">fpp</span> <span class="o">=</span> <span class="mf">0.03</span><span class="o">;</span> <span class="c1">//误判率(desired false positive probability)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">BloomFilter</span><span class="o">&lt;</span><span class="n">CharSequence</span><span class="o">&gt;</span> <span class="n">bloomFilter</span> <span class="o">=</span> <span class="n">BloomFilter</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">Funnels</span><span class="o">.</span><span class="na">stringFunnel</span><span class="o">(</span><span class="n">Charset</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">&#34;UTF-8&#34;</span><span class="o">)),</span> <span class="n">expectedInsertions</span><span class="o">,</span><span class="n">fpp</span><span class="o">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="优点">优点</h2>
+<p>它的优点是空间效率和查询时间都远远超过一般的算法，布隆过滤器存储空间和插入/查询时间都是常数O(k)。另外, 散列函数相互之间没有关系，方便由硬件并行实现。布隆过滤器不需要存储元素本身，在某些对保密要求非常严格的场合有优势。</p>
+<h2 id="缺点">缺点</h2>
+<p>布隆过滤器的缺点和优点一样明显，误算率是其中之一。</p>
+<p>另外，一般情况下不能从布隆过滤器中删除元素。我们很容易想到把位数组变成整数数组，每插入一个元素相应的计数器加 1，这样删除元素时将计数器减掉就可以了。然而要保证安全地删除元素并非如此简单。首先我们必须保证删除的元素的确在布隆过滤器里面，而这一点单凭这个过滤器是无法保证的。</p>
+<p>参考来源：</p>
+<ul>
+<li><a href="https://www.javacodegeeks.com/2014/07/how-to-use-bloom-filter-to-build-a-large-in-memory-cache-in-java.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.javacodegeeks.com/2014/07/how-to-use-bloom-filter-to-build-a-large-in-memory-cache-in-java.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://www.cnblogs.com/haippy/archive/2012/07/13/2590351.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.cnblogs.com/haippy/archive/2012/07/13/2590351.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://segmentfault.com/a/1190000002729689"target="_blank" rel="external nofollow noopener noreferrer">https://segmentfault.com/a/1190000002729689<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+</ul>
+]]></description></item><item><title>Linux文件传输的三种方式</title><link>https://xzygis.github.io/posts/20210612-three-ways-to-transfer-files-in-linux/</link><pubDate>Sat, 12 Jun 2021 16:14:22 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20210612-three-ways-to-transfer-files-in-linux/</guid><description><![CDATA[<h1 id="1-nc命令">1 nc命令</h1>
+<p>执行如下命令，在目标机器(假设ip为<code>10.11.12.13</code>)上监听端口<code>8415</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">nc -l 8415 &gt; data.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>往目标机器发送数据</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">nc -v 10.11.12.13 8415 &lt; ~/Downloads/data.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="2-simplehttpserver">2 SimpleHTTPServer</h1>
+<p>在服务器(假设ip为<code>10.11.12.13</code>)上执行如下命令:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">python -m SimpleHTTPServer 8411 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后在本地机器打开浏览器，输入<code>http://10.11.12.13:8411/</code>可以访问。</p>
+<h1 id="3-scp命令">3 scp命令</h1>
+<p>Linux scp命令用于Linux之间复制文件和目录。</p>
+<p>scp是 secure copy的缩写, scp是linux系统下基于ssh登陆进行安全的远程文件拷贝命令。</p>
+<p>在目标机器执行如下命令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">scp -l 700000 username@dev.test.com:~/data.txt ./ 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>即可把目标机器dev.test.com的文件~/data.txt拷贝到当前目录。</p>
+]]></description></item><item><title>Websocket介绍</title><link>https://xzygis.github.io/posts/20210612-introduction-of-websocket/</link><pubDate>Sat, 12 Jun 2021 15:25:21 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20210612-introduction-of-websocket/</guid><description><![CDATA[<h1 id="什么是websocket">什么是WebSocket？</h1>
+<p>WebSocket是一种网络传输协议，可在单个TCP连接上进行全双工通信，位于OSI模型的应用层。WebSocket协议在2011年由IETF标准化为RFC 6455，后由RFC 7936补充规范。</p>
+<p>WebSocket使得客户端和服务器之间的数据交换变得更加简单，允许服务端主动向客户端推送数据。在WebSocket API中，浏览器和服务器只需要完成一次握手，两者之间就可以创建持久性的连接，并进行双向数据传输。</p>
+<h2 id="有哪些优点">有哪些优点？</h2>
+<ol>
+<li>较少的控制开销。在连接创建后，服务器和客户端之间交换数据时，用于协议控制的数据包头部相对较小。在不包含扩展的情况下，对于服务器到客户端的内容，此头部大小只有2至10字节（和数据包长度有关）；对于客户端到服务器的内容，此头部还需要加上额外的4字节的掩码。相对于HTTP请求每次都要携带完整的头部，此项开销显著减少了。</li>
+<li>强的实时性。由于协议是全双工的，所以服务器可以随时主动给客户端下发数据。相对于HTTP请求需要等待客户端发起请求服务端才能响应，延迟明显更少；即使是和Comet等类似的长轮询比较，其也能在短时间内更多次地传递数据。</li>
+<li>保持连接状态。与HTTP不同的是，Websocket需要先创建连接，这就使得其成为一种有状态的协议，之后通信时可以省略部分状态信息。而HTTP请求可能需要在每个请求都携带状态信息（如身份认证等）。</li>
+<li>更好的二进制支持。Websocket定义了二进制帧，相对HTTP，可以更轻松地处理二进制内容。</li>
+<li>可以支持扩展。Websocket定义了扩展，用户可以扩展协议、实现部分自定义的子协议。如部分浏览器支持压缩等。</li>
+</ol>
+<!-- more -->
+<h1 id="握手协议">握手协议</h1>
+<p>WebSocket是一种与HTTP不同的协议。两者都位于OSI模型的应用层，并且都依赖于传输层的TCP协议。 虽然它们不同，但是RFC 6455中规定：it is designed to work over HTTP ports 80 and 443 as well as to support HTTP proxies and intermediaries（WebSocket通过HTTP端口80和443进行工作，并支持HTTP代理和中介），从而使其与HTTP协议兼容。 为了实现兼容性，WebSocket握手使用HTTP Upgrade头从HTTP协议更改为WebSocket协议。</p>
+<h2 id="握手例子">握手例子</h2>
+<p>一个典型的Websocket握手请求如下：</p>
+<p>客户端请求：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">GET /chat HTTP/1.1
+</span></span><span class="line"><span class="cl">Host: server.example.com
+</span></span><span class="line"><span class="cl">Upgrade: websocket
+</span></span><span class="line"><span class="cl">Connection: Upgrade
+</span></span><span class="line"><span class="cl">Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==
+</span></span><span class="line"><span class="cl">Origin: http://example.com
+</span></span><span class="line"><span class="cl">Sec-WebSocket-Protocol: chat, superchat
+</span></span><span class="line"><span class="cl">Sec-WebSocket-Version: 13
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>服务器回应：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">HTTP/1.1 101 Switching Protocols
+</span></span><span class="line"><span class="cl">Upgrade: websocket
+</span></span><span class="line"><span class="cl">Connection: Upgrade
+</span></span><span class="line"><span class="cl">Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
+</span></span><span class="line"><span class="cl">Sec-WebSocket-Protocol: chat
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="字段说明">字段说明</h2>
+<ul>
+<li>Connection必须设置Upgrade，表示客户端希望连接升级。</li>
+<li>Upgrade字段必须设置Websocket，表示希望升级到Websocket协议。</li>
+<li>Sec-WebSocket-Key是随机的字符串，服务器端会用这些数据来构造出一个SHA-1的信息摘要。把“Sec-WebSocket-Key”加上一个特殊字符串“258EAFA5-E914-47DA-95CA-C5AB0DC85B11”，然后计算SHA-1摘要，之后进行Base64编码，将结果做为“Sec-WebSocket-Accept”头的值，返回给客户端。如此操作，可以尽量避免普通HTTP请求被误认为Websocket协议。</li>
+<li>Sec-WebSocket-Version 表示支持的Websocket版本。RFC6455要求使用的版本是13，之前草案的版本均应当弃用。</li>
+<li>Origin字段是必须的。如果缺少origin字段，WebSocket服务器需要回复HTTP 403 状态码（禁止访问）。</li>
+</ul>
+<h2 id="体验一下">体验一下</h2>
+<blockquote>
+<p><a href="https://www.websocket.org/echo.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.websocket.org/echo.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
+</blockquote>
+<p></p>
+<p>握手报文：</p>
+<p></p>
+<p>数据传输：</p>
+<p></p>
+<h1 id="数据帧">数据帧</h1>
+<p>WebSocket客户端、服务端通信的最小单位是帧（frame），由1个或多个帧组成一条完整的消息（message）。</p>
+<ul>
+<li>发送端：将消息切割成多个帧，并发送给服务端；</li>
+<li>接收端：接收消息帧，并将关联的帧重新组装成完整的消息；</li>
+</ul>
+<h2 id="帧结构">帧结构</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> +-+-+-+-+-------+-+-------------+-------------------------------+
+</span></span><span class="line"><span class="cl"> |F|R|R|R| opcode|M| Payload len |    Extended payload length    |
+</span></span><span class="line"><span class="cl"> |I|S|S|S|  (4)  |A|     (7)     |             (16/64)           |
+</span></span><span class="line"><span class="cl"> |N|V|V|V|       |S|             |   (if payload len==126/127)   |
+</span></span><span class="line"><span class="cl"> | |1|2|3|       |K|             |                               |
+</span></span><span class="line"><span class="cl"> +-+-+-+-+-------+-+-------------+ - - - - - - - - - - - - - - - +
+</span></span><span class="line"><span class="cl"> |     Extended payload length continued, if payload len == 127  |
+</span></span><span class="line"><span class="cl"> + - - - - - - - - - - - - - - - +-------------------------------+
+</span></span><span class="line"><span class="cl"> |                               |Masking-key, if MASK set to 1  |
+</span></span><span class="line"><span class="cl"> +-------------------------------+-------------------------------+
+</span></span><span class="line"><span class="cl"> | Masking-key (continued)       |          Payload Data         |
+</span></span><span class="line"><span class="cl"> +-------------------------------- - - - - - - - - - - - - - - - +
+</span></span><span class="line"><span class="cl"> :                     Payload Data continued ...                :
+</span></span><span class="line"><span class="cl"> + - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - +
+</span></span><span class="line"><span class="cl"> |                     Payload Data continued ...                |
+</span></span><span class="line"><span class="cl"> +---------------------------------------------------------------+
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="字段说明-1">字段说明</h2>
+<p>FIN：1个比特。
+如果是1，表示这是消息（message）的最后一个分片（fragment），如果是0，表示不是是消息（message）的最后一个分片（fragment）。</p>
+<p>RSV1, RSV2, RSV3：各占1个比特。
+一般情况下全为0。当客户端、服务端协商采用WebSocket扩展时，这三个标志位可以非0，且值的含义由扩展进行定义。如果出现非零的值，且并没有采用WebSocket扩展，连接出错。</p>
+<p>Opcode: 4个比特。
+操作代码，Opcode的值决定了应该如何解析后续的数据载荷（data payload）。如果操作代码是不认识的，那么接收端应该断开连接（fail the connection）。可选的操作代码如下：</p>
+<ul>
+<li>%x0：表示一个延续帧。当Opcode为0时，表示本次数据传输采用了数据分片，当前收到的数据帧为其中一个数据分片。</li>
+<li>%x1：表示这是一个文本帧（frame）</li>
+<li>%x2：表示这是一个二进制帧（frame）</li>
+<li>%x3-7：保留的操作代码，用于后续定义的非控制帧。</li>
+<li>%x8：表示连接断开。</li>
+<li>%x9：表示这是一个ping操作。</li>
+<li>%xA：表示这是一个pong操作。</li>
+<li>%xB-F：保留的操作代码，用于后续定义的控制帧。</li>
+</ul>
+<p>Mask: 1个比特。
+表示是否要对数据载荷进行掩码操作。从客户端向服务端发送数据时，需要对数据进行掩码操作；从服务端向客户端发送数据时，不需要对数据进行掩码操作。
+如果服务端接收到的数据没有进行过掩码操作，服务端需要断开连接。
+如果Mask是1，那么在Masking-key中会定义一个掩码键（masking key），并用这个掩码键来对数据载荷进行反掩码。所有客户端发送到服务端的数据帧，Mask都是1。
+掩码的算法、用途在下一小节讲解。</p>
+<p>Payload length：数据载荷的长度，单位是字节。为7位，或7+16位，或1+64位。
+假设数Payload length === x，如果</p>
+<ul>
+<li>x为0~126：数据的长度为x字节。</li>
+<li>x为126：后续2个字节代表一个16位的无符号整数，该无符号整数的值为数据的长度。</li>
+<li>x为127：后续8个字节代表一个64位的无符号整数（最高位为0），该无符号整数的值为数据的长度。</li>
+</ul>
+<p>此外，如果payload length占用了多个字节的话，payload length的二进制表达采用网络序（big endian，重要的位在前）。</p>
+<p>Masking-key：0或4字节（32位）
+所有从客户端传送到服务端的数据帧，数据载荷都进行了掩码操作，Mask为1，且携带了4字节的Masking-key。如果Mask为0，则没有Masking-key。
+备注：载荷数据的长度，不包括mask key的长度。</p>
+<p>Payload data：(x+y) 字节</p>
+<ul>
+<li>载荷数据：包括了扩展数据、应用数据。其中，扩展数据x字节，应用数据y字节。</li>
+<li>扩展数据：如果没有协商使用扩展的话，扩展数据数据为0字节。所有的扩展都必须声明扩展数据的长度，或者可以如何计算出扩展数据的长度。此外，扩展如何使用必须在握手阶段就协商好。如果扩展数据存在，那么载荷数据长度必须将扩展数据的长度包含在内。</li>
+<li>应用数据：任意的应用数据，在扩展数据之后（如果存在扩展数据），占据了数据帧剩余的位置。载荷数据长度 减去 扩展数据长度，就得到应用数据的长度。</li>
+</ul>
+<h2 id="掩码算法">掩码算法</h2>
+<p>掩码键（Masking-key）是由客户端挑选出来的32位的随机数。掩码操作不会影响数据载荷的长度。掩码、反掩码操作都采用如下算法：</p>
+<p>首先，预设：</p>
+<ul>
+<li>original-octet-i：为原始数据的第i字节。</li>
+<li>transformed-octet-i：为转换后的数据的第i字节。</li>
+<li>j：为i mod 4的结果。</li>
+<li>masking-key-octet-j：为mask key第j字节。</li>
+</ul>
+<p>流程为： original-octet-i 与 masking-key-octet-j 异或后，得到 transformed-octet-i。</p>
+<p>伪代码大概是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">var DECODED = &#34;&#34;;
+</span></span><span class="line"><span class="cl">for (var i = 0; i &lt; ENCODED.length; i++) {
+</span></span><span class="line"><span class="cl">    DECODED[i] = ENCODED[i] ^ MASK[i % 4];
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>数据掩码的作用：
+WebSocket 协议中，数据掩码的作用是增强协议的安全性。但数据掩码并不是为了保护数据本身，因为算法本身是公开的，运算也不复杂。除了加密通道本身，似乎没有太多有效的保护通信安全的办法。
+那么为什么还要引入掩码计算呢，除了增加计算机器的运算量外似乎并没有太多的收益（这也是不少同学疑惑的点）。
+答案还是两个字：安全。但并不是为了防止数据泄密，而是为了防止早期版本的协议中存在的代理缓存污染攻击（proxy cache poisoning attacks）等问题。</p>
+<h1 id="数据传递">数据传递</h1>
+<p>一旦WebSocket客户端、服务端建立连接后，后续的操作都是基于数据帧的传递。
+WebSocket根据opcode来区分操作的类型。比如0x8表示断开连接，0x0-0x2表示数据交互。</p>
+<h2 id="数据分片">数据分片</h2>
+<p>WebSocket的每条消息可能被切分成多个数据帧。当WebSocket的接收方收到一个数据帧时，会根据FIN的值来判断，是否已经收到消息的最后一个数据帧。
+FIN=1表示当前数据帧为消息的最后一个数据帧，此时接收方已经收到完整的消息，可以对消息进行处理。FIN=0，则接收方还需要继续监听接收其余的数据帧。
+此外，opcode在数据交换的场景下，表示的是数据的类型。0x01表示文本，0x02表示二进制。而0x00比较特殊，表示延续帧（continuation frame），顾名思义，就是完整消息对应的数据帧还没接收完。</p>
+<h2 id="数据分片例子">数据分片例子</h2>
+<p>下面例子来自MDN，可以很好地演示数据的分片。客户端向服务端两次发送消息，服务端收到消息后回应客户端，这里主要看客户端往服务端发送的消息。</p>
+<p><em>第一条消息</em></p>
+<p>FIN=1, 表示是当前消息的最后一个数据帧。服务端收到当前数据帧后，可以处理消息。opcode=0x1，表示客户端发送的是文本类型。</p>
+<p><em>第二条消息</em></p>
+<ol>
+<li>FIN=0，opcode=0x1，表示发送的是文本类型，且消息还没发送完成，还有后续的数据帧。</li>
+<li>FIN=0，opcode=0x0，表示消息还没发送完成，还有后续的数据帧，当前的数据帧需要接在上一条数据帧之后。</li>
+<li>FIN=1，opcode=0x0，表示消息已经发送完成，没有后续的数据帧，当前的数据帧需要接在上一条数据帧之后。服务端可以将关联的数据帧组装成完整的消息。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Client: FIN=1, opcode=0x1, msg=&#34;hello&#34;
+</span></span><span class="line"><span class="cl">Server: (process complete message immediately) Hi.
+</span></span><span class="line"><span class="cl">Client: FIN=0, opcode=0x1, msg=&#34;and a&#34;
+</span></span><span class="line"><span class="cl">Server: (listening, new message containing text started)
+</span></span><span class="line"><span class="cl">Client: FIN=0, opcode=0x0, msg=&#34;happy new&#34;
+</span></span><span class="line"><span class="cl">Server: (listening, payload concatenated to previous message)
+</span></span><span class="line"><span class="cl">Client: FIN=1, opcode=0x0, msg=&#34;year!&#34;
+</span></span><span class="line"><span class="cl">Server: (process complete message) Happy new year to you too!
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="心跳">心跳</h1>
+<p>WebSocket 为了保持客户端、服务端的实时双向通信，需要确保客户端、服务端之间的 TCP 通道保持连接没有断开。
+对于长时间没有数据往来的连接，如果依旧长时间保持着，可能会浪费包括的连接资源。但不排除有些场景，客户端、服务端虽然长时间没有数据往来，但仍需要保持连接。这个时候，可以采用心跳来实现。</p>
+<ul>
+<li>发送方 -&gt; 接收方：ping</li>
+<li>接收方 -&gt; 发送方：pong</li>
+</ul>
+<p>ping、pong 的操作，对应的是 WebSocket 的两个控制帧，opcode分别是0x9、0xA。</p>
+<h1 id="安全性">安全性</h1>
+<p>WebSocket协议中规定在连接建立时检查Upgrade请求中的某些字段（如Origin，查看每次请求是否一致），对于不符合要求的请求立即断开，在通信过程中，也对Frame中的控制位做了很多限制，以便禁止异常连接。
+websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL来对通信加密，默认ws的端口为80，wss端口为433，类似HTTP与HTTPS。</p>
+<h1 id="go实战gorilla-websocket">Go实战：Gorilla WebSocket</h1>
+<blockquote>
+<p>Github：https://github.com/gorilla/websocket</p>
+</blockquote>
+<p>文件监控例子（当文件被修改后，把文件发给客户端）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">func main() {
+</span></span><span class="line"><span class="cl">   http.HandleFunc(&#34;/ws&#34;, serveWs)
+</span></span><span class="line"><span class="cl">   if err := http.ListenAndServe(*addr, nil); err != nil {
+</span></span><span class="line"><span class="cl">      log.Fatal(err)
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">func serveWs(w http.ResponseWriter, r *http.Request) {
+</span></span><span class="line"><span class="cl">   //升级为Websocket协议
+</span></span><span class="line"><span class="cl">   ws, err := upgrader.Upgrade(w, r, nil)
+</span></span><span class="line"><span class="cl">   if err != nil {
+</span></span><span class="line"><span class="cl">      if _, ok := err.(websocket.HandshakeError); !ok {
+</span></span><span class="line"><span class="cl">         log.Println(err)
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">      return
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   var lastMod time.Time
+</span></span><span class="line"><span class="cl">   if n, err := strconv.ParseInt(r.FormValue(&#34;lastMod&#34;), 16, 64); err == nil {
+</span></span><span class="line"><span class="cl">      lastMod = time.Unix(0, n)
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   go writer(ws, lastMod) //发送数据、Pong
+</span></span><span class="line"><span class="cl">   reader(ws) //读数据、处理Ping
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">func writer(ws *websocket.Conn, lastMod time.Time) {
+</span></span><span class="line"><span class="cl">   pingTicker := time.NewTicker(pingPeriod)
+</span></span><span class="line"><span class="cl">   fileTicker := time.NewTicker(filePeriod)
+</span></span><span class="line"><span class="cl">   ...
+</span></span><span class="line"><span class="cl">   for {
+</span></span><span class="line"><span class="cl">      select {
+</span></span><span class="line"><span class="cl">      case &lt;-fileTicker.C:
+</span></span><span class="line"><span class="cl">         p, fileModified, err := readFileIfModified(lastMod)
+</span></span><span class="line"><span class="cl">         ...
+</span></span><span class="line"><span class="cl">         if fileModified {
+</span></span><span class="line"><span class="cl">            ws.SetWriteDeadline(time.Now().Add(writeWait))
+</span></span><span class="line"><span class="cl">            if err := ws.WriteMessage(websocket.TextMessage, p); err != nil {
+</span></span><span class="line"><span class="cl">               return
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">         }
+</span></span><span class="line"><span class="cl">      case &lt;-pingTicker.C:
+</span></span><span class="line"><span class="cl">         ws.SetWriteDeadline(time.Now().Add(writeWait))
+</span></span><span class="line"><span class="cl">         if err := ws.WriteMessage(websocket.PingMessage, []byte{}); err != nil {
+</span></span><span class="line"><span class="cl">            return
+</span></span><span class="line"><span class="cl">         }
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">func reader(ws *websocket.Conn) {
+</span></span><span class="line"><span class="cl">   defer ws.Close()
+</span></span><span class="line"><span class="cl">   ws.SetReadLimit(512)
+</span></span><span class="line"><span class="cl">   ws.SetReadDeadline(time.Now().Add(pongWait))
+</span></span><span class="line"><span class="cl">   ws.SetPongHandler(func(string) error { ws.SetReadDeadline(time.Now().Add(pongWait)); return nil })
+</span></span><span class="line"><span class="cl">   for {
+</span></span><span class="line"><span class="cl">      _, _, err := ws.ReadMessage()
+</span></span><span class="line"><span class="cl">      if err != nil {
+</span></span><span class="line"><span class="cl">         break
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中最重要的几个方法是Upgrade、ReadMessage和WriteMessage，下面逐一介绍。</p>
+<h2 id="upgrade">Upgrade</h2>
+<p>协议升级</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// Upgrade upgrades the HTTP server connection to the WebSocket protocol.
+</span></span><span class="line"><span class="cl">func (u *Upgrader) Upgrade(w http.ResponseWriter, r *http.Request, responseHeader http.Header) (*Conn, error) {
+</span></span><span class="line"><span class="cl">   const badHandshake = &#34;websocket: the client is not using the websocket protocol: &#34;
+</span></span><span class="line"><span class="cl">   //检查必要的头部字段
+</span></span><span class="line"><span class="cl">   if !tokenListContainsValue(r.Header, &#34;Connection&#34;, &#34;upgrade&#34;) {
+</span></span><span class="line"><span class="cl">      return u.returnError(w, r, http.StatusBadRequest, badHandshake+&#34;&#39;upgrade&#39; token not found in &#39;Connection&#39; header&#34;)
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   if !tokenListContainsValue(r.Header, &#34;Upgrade&#34;, &#34;websocket&#34;) {
+</span></span><span class="line"><span class="cl">      return u.returnError(w, r, http.StatusBadRequest, badHandshake+&#34;&#39;websocket&#39; token not found in &#39;Upgrade&#39; header&#34;)
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   if r.Method != &#34;GET&#34; {
+</span></span><span class="line"><span class="cl">      return u.returnError(w, r, http.StatusMethodNotAllowed, badHandshake+&#34;request method is not GET&#34;)
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   if !tokenListContainsValue(r.Header, &#34;Sec-Websocket-Version&#34;, &#34;13&#34;) {
+</span></span><span class="line"><span class="cl">      return u.returnError(w, r, http.StatusBadRequest, &#34;websocket: unsupported version: 13 not found in &#39;Sec-Websocket-Version&#39; header&#34;)
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   if !checkOrigin(r) {
+</span></span><span class="line"><span class="cl">      return u.returnError(w, r, http.StatusForbidden, &#34;websocket: request origin not allowed by Upgrader.CheckOrigin&#34;)
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   challengeKey := r.Header.Get(&#34;Sec-Websocket-Key&#34;)
+</span></span><span class="line"><span class="cl">   if challengeKey == &#34;&#34; {
+</span></span><span class="line"><span class="cl">      return u.returnError(w, r, http.StatusBadRequest, &#34;websocket: not a websocket handshake: &#39;Sec-WebSocket-Key&#39; header is missing or blank&#34;)
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   h, ok := w.(http.Hijacker)
+</span></span><span class="line"><span class="cl">   if !ok {
+</span></span><span class="line"><span class="cl">      return u.returnError(w, r, http.StatusInternalServerError, &#34;websocket: response does not implement http.Hijacker&#34;)
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">   
+</span></span><span class="line"><span class="cl">   //创建websocket.Conn
+</span></span><span class="line"><span class="cl">   c := newConn(netConn, true, u.ReadBufferSize, u.WriteBufferSize, u.WriteBufferPool, br, writeBuf)
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">   var p []byte
+</span></span><span class="line"><span class="cl">   p = append(p, &#34;HTTP/1.1 101 Switching Protocols\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Accept: &#34;...)
+</span></span><span class="line"><span class="cl">   p = append(p, computeAcceptKey(challengeKey)...) //计算accept
+</span></span><span class="line"><span class="cl">   p = append(p, &#34;\r\n&#34;...)
+</span></span><span class="line"><span class="cl">   if c.subprotocol != &#34;&#34; {
+</span></span><span class="line"><span class="cl">      p = append(p, &#34;Sec-WebSocket-Protocol: &#34;...)
+</span></span><span class="line"><span class="cl">      p = append(p, c.subprotocol...)
+</span></span><span class="line"><span class="cl">      p = append(p, &#34;\r\n&#34;...)
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   if _, err = netConn.Write(p); err != nil {
+</span></span><span class="line"><span class="cl">      netConn.Close()
+</span></span><span class="line"><span class="cl">      return nil, err
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   return c, nil
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">var keyGUID = []byte(&#34;258EAFA5-E914-47DA-95CA-C5AB0DC85B11&#34;)
+</span></span><span class="line"><span class="cl">func computeAcceptKey(challengeKey string) string {
+</span></span><span class="line"><span class="cl">   h := sha1.New()
+</span></span><span class="line"><span class="cl">   h.Write([]byte(challengeKey))
+</span></span><span class="line"><span class="cl">   h.Write(keyGUID)
+</span></span><span class="line"><span class="cl">   return base64.StdEncoding.EncodeToString(h.Sum(nil))
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">func newConn(conn net.Conn, isServer bool, readBufferSize, writeBufferSize int, writeBufferPool BufferPool, br *bufio.Reader, writeBuf []byte) *Conn {
+</span></span><span class="line"><span class="cl">   c := &amp;Conn{
+</span></span><span class="line"><span class="cl">      isServer:               isServer,
+</span></span><span class="line"><span class="cl">      br:                     br,
+</span></span><span class="line"><span class="cl">      conn:                   conn,
+</span></span><span class="line"><span class="cl">      mu:                     mu,
+</span></span><span class="line"><span class="cl">      readFinal:              true,
+</span></span><span class="line"><span class="cl">      writeBuf:               writeBuf,
+</span></span><span class="line"><span class="cl">      writePool:              writeBufferPool,
+</span></span><span class="line"><span class="cl">      writeBufSize:           writeBufferSize,
+</span></span><span class="line"><span class="cl">      enableWriteCompression: true,
+</span></span><span class="line"><span class="cl">      compressionLevel:       defaultCompressionLevel,
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">   
+</span></span><span class="line"><span class="cl">   //设置对应的消息处理Handler
+</span></span><span class="line"><span class="cl">   c.SetCloseHandler(nil)
+</span></span><span class="line"><span class="cl">   c.SetPingHandler(nil)
+</span></span><span class="line"><span class="cl">   c.SetPongHandler(nil)
+</span></span><span class="line"><span class="cl">   return c
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">func (c *Conn) SetCloseHandler(h func(code int, text string) error) {
+</span></span><span class="line"><span class="cl">   if h == nil {
+</span></span><span class="line"><span class="cl">      h = func(code int, text string) error {
+</span></span><span class="line"><span class="cl">         message := FormatCloseMessage(code, &#34;&#34;)
+</span></span><span class="line"><span class="cl">         c.WriteControl(CloseMessage, message, time.Now().Add(writeWait))
+</span></span><span class="line"><span class="cl">         return nil
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">   c.handleClose = h
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">func (c *Conn) SetPingHandler(h func(appData string) error) {
+</span></span><span class="line"><span class="cl">   if h == nil {
+</span></span><span class="line"><span class="cl">      h = func(message string) error {
+</span></span><span class="line"><span class="cl">         err := c.WriteControl(PongMessage, []byte(message), time.Now().Add(writeWait))
+</span></span><span class="line"><span class="cl">         return err
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">   c.handlePing = h
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">func (c *Conn) SetPongHandler(h func(appData string) error) {
+</span></span><span class="line"><span class="cl">   if h == nil {
+</span></span><span class="line"><span class="cl">      h = func(string) error { return nil }
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">   c.handlePong = h
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="readmessage">ReadMessage</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">func (c *Conn) ReadMessage() (messageType int, p []byte, err error) {
+</span></span><span class="line"><span class="cl">   var r io.Reader
+</span></span><span class="line"><span class="cl">   messageType, r, err = c.NextReader()
+</span></span><span class="line"><span class="cl">   if err != nil {
+</span></span><span class="line"><span class="cl">      return messageType, nil, err
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">   p, err = ioutil.ReadAll(r)
+</span></span><span class="line"><span class="cl">   return messageType, p, err
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">func (c *Conn) NextReader() (messageType int, r io.Reader, err error) {
+</span></span><span class="line"><span class="cl">   for c.readErr == nil {
+</span></span><span class="line"><span class="cl">       frameType, err := c.advanceFrame()
+</span></span><span class="line"><span class="cl">       if err != nil {
+</span></span><span class="line"><span class="cl">          c.readErr = hideTempErr(err)
+</span></span><span class="line"><span class="cl">          break
+</span></span><span class="line"><span class="cl">       }
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">       if frameType == TextMessage || frameType == BinaryMessage {
+</span></span><span class="line"><span class="cl">          c.messageReader = &amp;messageReader{c}
+</span></span><span class="line"><span class="cl">          c.reader = c.messageReader
+</span></span><span class="line"><span class="cl">          if c.readDecompress {
+</span></span><span class="line"><span class="cl">             c.reader = c.newDecompressionReader(c.reader)
+</span></span><span class="line"><span class="cl">          }
+</span></span><span class="line"><span class="cl">          return frameType, c.reader, nil
+</span></span><span class="line"><span class="cl">       }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">//解析数据帧
+</span></span><span class="line"><span class="cl">func (c *Conn) advanceFrame() (int, error) {
+</span></span><span class="line"><span class="cl">   p, err := c.read(2)
+</span></span><span class="line"><span class="cl">   final := p[0]&amp;finalBit != 0
+</span></span><span class="line"><span class="cl">   frameType := int(p[0] &amp; 0xf)
+</span></span><span class="line"><span class="cl">   mask := p[1]&amp;maskBit != 0
+</span></span><span class="line"><span class="cl">   c.setReadRemaining(int64(p[1] &amp; 0x7f))
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   switch frameType {
+</span></span><span class="line"><span class="cl">   case CloseMessage, PingMessage, PongMessage:
+</span></span><span class="line"><span class="cl">      if c.readRemaining &gt; maxControlFramePayloadSize {
+</span></span><span class="line"><span class="cl">         return noFrame, c.handleProtocolError(&#34;control frame length &gt; 125&#34;)
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">      if !final {
+</span></span><span class="line"><span class="cl">         return noFrame, c.handleProtocolError(&#34;control frame not final&#34;)
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">   case TextMessage, BinaryMessage:
+</span></span><span class="line"><span class="cl">      if !c.readFinal {
+</span></span><span class="line"><span class="cl">         return noFrame, c.handleProtocolError(&#34;message start before final message frame&#34;)
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">      c.readFinal = final
+</span></span><span class="line"><span class="cl">   case continuationFrame:
+</span></span><span class="line"><span class="cl">      if c.readFinal {
+</span></span><span class="line"><span class="cl">         return noFrame, c.handleProtocolError(&#34;continuation after final message frame&#34;)
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">      c.readFinal = final
+</span></span><span class="line"><span class="cl">   default:
+</span></span><span class="line"><span class="cl">      return noFrame, c.handleProtocolError(&#34;unknown opcode &#34; + strconv.Itoa(frameType))
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   
+</span></span><span class="line"><span class="cl">   switch c.readRemaining {
+</span></span><span class="line"><span class="cl">   case 126:
+</span></span><span class="line"><span class="cl">      p, err := c.read(2)
+</span></span><span class="line"><span class="cl">      if err := c.setReadRemaining(int64(binary.BigEndian.Uint16(p))); err != nil {
+</span></span><span class="line"><span class="cl">         return noFrame, err
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">   case 127:
+</span></span><span class="line"><span class="cl">      p, err := c.read(8)
+</span></span><span class="line"><span class="cl">      if err != nil {
+</span></span><span class="line"><span class="cl">         return noFrame, err
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      if err := c.setReadRemaining(int64(binary.BigEndian.Uint64(p))); err != nil {
+</span></span><span class="line"><span class="cl">         return noFrame, err
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   if mask != c.isServer {
+</span></span><span class="line"><span class="cl">      return noFrame, c.handleProtocolError(&#34;incorrect mask flag&#34;)
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   if mask {
+</span></span><span class="line"><span class="cl">      c.readMaskPos = 0
+</span></span><span class="line"><span class="cl">      p, err := c.read(len(c.readMaskKey))
+</span></span><span class="line"><span class="cl">      if err != nil {
+</span></span><span class="line"><span class="cl">         return noFrame, err
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">      copy(c.readMaskKey[:], p)
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   //处理控制帧
+</span></span><span class="line"><span class="cl">   switch frameType {
+</span></span><span class="line"><span class="cl">   case PongMessage:
+</span></span><span class="line"><span class="cl">      if err := c.handlePong(string(payload)); err != nil {
+</span></span><span class="line"><span class="cl">         return noFrame, err
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">   case PingMessage:
+</span></span><span class="line"><span class="cl">      if err := c.handlePing(string(payload)); err != nil {
+</span></span><span class="line"><span class="cl">         return noFrame, err
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">   case CloseMessage:
+</span></span><span class="line"><span class="cl">      closeCode := CloseNoStatusReceived
+</span></span><span class="line"><span class="cl">      closeText := &#34;&#34;
+</span></span><span class="line"><span class="cl">      if len(payload) &gt;= 2 {
+</span></span><span class="line"><span class="cl">         closeCode = int(binary.BigEndian.Uint16(payload))
+</span></span><span class="line"><span class="cl">         if !isValidReceivedCloseCode(closeCode) {
+</span></span><span class="line"><span class="cl">            return noFrame, c.handleProtocolError(&#34;invalid close code&#34;)
+</span></span><span class="line"><span class="cl">         }
+</span></span><span class="line"><span class="cl">         closeText = string(payload[2:])
+</span></span><span class="line"><span class="cl">         if !utf8.ValidString(closeText) {
+</span></span><span class="line"><span class="cl">            return noFrame, c.handleProtocolError(&#34;invalid utf8 payload in close frame&#34;)
+</span></span><span class="line"><span class="cl">         }
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">      if err := c.handleClose(closeCode, closeText); err != nil {
+</span></span><span class="line"><span class="cl">         return noFrame, err
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">      return noFrame, &amp;CloseError{Code: closeCode, Text: closeText}
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   return frameType, nil
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="writemessage">WriteMessage</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">func (c *Conn) WriteMessage(messageType int, data []byte) error {
+</span></span><span class="line"><span class="cl">   var mw messageWriter
+</span></span><span class="line"><span class="cl">   // beginMessage prepares a connection and message writer for a new message.
+</span></span><span class="line"><span class="cl">    if err := c.beginMessage(&amp;mw, messageType); err != nil {
+</span></span><span class="line"><span class="cl">       return err
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    n := copy(c.writeBuf[mw.pos:], data)
+</span></span><span class="line"><span class="cl">    mw.pos += n
+</span></span><span class="line"><span class="cl">    data = data[n:]
+</span></span><span class="line"><span class="cl">    return mw.flushFrame(true, data)
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">//组装数据帧
+</span></span><span class="line"><span class="cl">func (w *messageWriter) flushFrame(final bool, extra []byte) error {
+</span></span><span class="line"><span class="cl">   c := w.c
+</span></span><span class="line"><span class="cl">   length := w.pos - maxFrameHeaderSize + len(extra)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   b0 := byte(w.frameType)
+</span></span><span class="line"><span class="cl">   if final {
+</span></span><span class="line"><span class="cl">      b0 |= finalBit
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">   if w.compress {
+</span></span><span class="line"><span class="cl">      b0 |= rsv1Bit
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">   w.compress = false
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   b1 := byte(0)
+</span></span><span class="line"><span class="cl">   if !c.isServer {
+</span></span><span class="line"><span class="cl">      b1 |= maskBit
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   // Assume that the frame starts at beginning of c.writeBuf.
+</span></span><span class="line"><span class="cl">   framePos := 0
+</span></span><span class="line"><span class="cl">   if c.isServer {
+</span></span><span class="line"><span class="cl">      // Adjust up if mask not included in the header.
+</span></span><span class="line"><span class="cl">      framePos = 4
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   switch {
+</span></span><span class="line"><span class="cl">   case length &gt;= 65536:
+</span></span><span class="line"><span class="cl">      c.writeBuf[framePos] = b0
+</span></span><span class="line"><span class="cl">      c.writeBuf[framePos+1] = b1 | 127
+</span></span><span class="line"><span class="cl">      binary.BigEndian.PutUint64(c.writeBuf[framePos+2:], uint64(length))
+</span></span><span class="line"><span class="cl">   case length &gt; 125:
+</span></span><span class="line"><span class="cl">      framePos += 6
+</span></span><span class="line"><span class="cl">      c.writeBuf[framePos] = b0
+</span></span><span class="line"><span class="cl">      c.writeBuf[framePos+1] = b1 | 126
+</span></span><span class="line"><span class="cl">      binary.BigEndian.PutUint16(c.writeBuf[framePos+2:], uint16(length))
+</span></span><span class="line"><span class="cl">   default:
+</span></span><span class="line"><span class="cl">      framePos += 8
+</span></span><span class="line"><span class="cl">      c.writeBuf[framePos] = b0
+</span></span><span class="line"><span class="cl">      c.writeBuf[framePos+1] = b1 | byte(length)
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   if !c.isServer {
+</span></span><span class="line"><span class="cl">      key := newMaskKey()
+</span></span><span class="line"><span class="cl">      copy(c.writeBuf[maxFrameHeaderSize-4:], key[:])
+</span></span><span class="line"><span class="cl">      maskBytes(key, 0, c.writeBuf[maxFrameHeaderSize:w.pos])
+</span></span><span class="line"><span class="cl">      if len(extra) &gt; 0 {
+</span></span><span class="line"><span class="cl">         return w.endMessage(c.writeFatal(errors.New(&#34;websocket: internal error, extra used in client mode&#34;)))
+</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   // Write the buffers to the connection with best-effort detection of
+</span></span><span class="line"><span class="cl">   // concurrent writes. See the concurrency section in the package
+</span></span><span class="line"><span class="cl">   // documentation for more info.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   if c.isWriting {
+</span></span><span class="line"><span class="cl">      panic(&#34;concurrent write to websocket connection&#34;)
+</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">   c.isWriting = true
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   err := c.write(w.frameType, c.writeDeadline, c.writeBuf[framePos:w.pos], extra)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   ...
+</span></span><span class="line"><span class="cl">   return nil
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Ref：</p>
+<ul>
+<li><a href="https://datatracker.ietf.org/doc/html/rfc6455#"target="_blank" rel="external nofollow noopener noreferrer">https://datatracker.ietf.org/doc/html/rfc6455#<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://zh.wikipedia.org/wiki/WebSocket"target="_blank" rel="external nofollow noopener noreferrer">https://zh.wikipedia.org/wiki/WebSocket<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2017/05/websocket.html"target="_blank" rel="external nofollow noopener noreferrer">http://www.ruanyifeng.com/blog/2017/05/websocket.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://pkg.go.dev/github.com/gorilla/websocket"target="_blank" rel="external nofollow noopener noreferrer">https://pkg.go.dev/github.com/gorilla/websocket<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+</ul>
+]]></description></item><item><title>JSON Web Token入门手册</title><link>https://xzygis.github.io/posts/20200130-usage-of-json-web-token/</link><pubDate>Thu, 30 Jan 2020 13:10:39 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20200130-usage-of-json-web-token/</guid><description><![CDATA[<h1 id="跨域认证问题">跨域认证问题</h1>
+<p>互联网服务离不开用户认证。一般流程是下面这样：</p>
+<ol>
+<li>用户向服务器发送用户名和密码。</li>
+<li>服务器验证通过后，在当前对话（session）里面保存相关数据，比如用户角色、登录时间等等。</li>
+<li>服务器向用户返回一个 session_id，写入用户的 Cookie。</li>
+<li>用户随后的每一次请求，都会通过 Cookie，将 session_id 传回服务器。</li>
+<li>服务器收到 session_id，找到前期保存的数据，由此得知用户的身份。</li>
+</ol>
+<p>这种模式的问题在于，扩展性（scaling）不好。单机当然没有问题，如果是服务器集群，或者是跨域的服务导向架构，就要求 session 数据共享，每台服务器都能够读取 session。</p>
+<p>举例来说，A 网站和 B 网站是同一家公司的关联服务。现在要求，用户只要在其中一个网站登录，再访问另一个网站就会自动登录，请问怎么实现？</p>
+<ul>
+<li>一种解决方案是 session 数据持久化，写入数据库或别的持久层。各种服务收到请求后，都向持久层请求数据。这种方案的优点是架构清晰，缺点是工程量比较大。另外，持久层万一挂了，就会单点失败。</li>
+<li>另一种方案是服务器索性不保存 session 数据了，所有数据都保存在客户端，每次请求都发回服务器。JWT 就是这种方案的一个代表。</li>
+</ul>
+<!-- more -->
+<h1 id="什么是jwt">什么是JWT？</h1>
+<p>Json web token (JWT)，是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（(RFC 7519)。该token被设计为紧凑且安全的，特别适用于分布式站点的单点登录（SSO）场景。JWT的声明一般被用来在身份提供者和服务提供者间传递被认证的用户身份信息，以便于从资源服务器获取资源，也可以增加一些额外的其它业务逻辑所必须的声明信息，该token可直接被用于认证，也可被加密。</p>
+<h1 id="jwt-的原理">JWT 的原理</h1>
+<p>服务器认证以后，生成一个经过签名的 JSON 对象，发回给用户，服务器则不用保存任何 session 数据了。从而把服务器变成无状态的，易于实现扩展。</p>
+<h1 id="jwt-的使用场景">JWT 的使用场景</h1>
+<p>以下是两个JWT的应用场景：</p>
+<ol>
+<li>鉴权：这是JWT最常见的应用场景。当用户登录成功后，随后的每个请求都将带上JWT，从而允许用户访问被授权的服务和资源。由于它开销小切易于使用，当前被广泛应用于单点登录（Single Sign On）。</li>
+<li>信息交换：JWT是不同组织间交换信息的一种很好的方式。因为JWT可以被签名（例如，通过公钥/私钥对），你可以确信信息发送者就是它们说声明的身份。此外，签名是用Header和Payload计算出来的，你可以验证内容是否被篡改。</li>
+</ol>
+<h1 id="jwt-的数据结构">JWT 的数据结构</h1>
+<p>扁平化形式的JWT是由通过 <code>.</code> 分隔的三部分组成，他们分别是：</p>
+<ul>
+<li><code>Header</code></li>
+<li><code>Payload</code></li>
+<li><code>Signature</code></li>
+</ul>
+<p>所以，一个JWT看起来通常是如下的形式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">xxxxx.yyyyy.zzzzz
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="header">Header</h2>
+<p>头部由两部分组成：</p>
+<ul>
+<li>token类型，即JWT；</li>
+<li>签名算法，例如HMAC SHA256或RSA。</li>
+</ul>
+<p>一个Header的例子：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;alg&#34;</span><span class="p">:</span> <span class="s2">&#34;HS256&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;typ&#34;</span><span class="p">:</span> <span class="s2">&#34;JWT&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>随后，以上JSON对象会通过 <code>Base64Url</code> 编码为JWT的第一部分。</p>
+<h2 id="payload">Payload</h2>
+<p>载荷就是存放有效信息的地方。这个名字像是特指飞机上承载的货品，这些有效信息包含三个部分</p>
+<ul>
+<li>标准中注册的声明</li>
+<li>公共的声明</li>
+<li>私有的声明</li>
+</ul>
+<p><strong>标准中注册的声明：</strong></p>
+<ul>
+<li>iss: jwt签发者</li>
+<li>sub: jwt所面向的用户</li>
+<li>aud: 接收jwt的一方</li>
+<li>exp: jwt的过期时间，这个过期时间必须要大于签发时间</li>
+<li>nbf: 定义在什么时间之前，该jwt都是不可用的.</li>
+<li>iat: jwt的签发时间</li>
+<li>jti: jwt的唯一身份标识，主要用来作为一次性token,从而回避重放攻击。</li>
+</ul>
+<p><strong>公共的声明 ：</strong>
+公共的声明可以添加任何的信息，一般添加用户的相关信息或其他业务需要的必要信息.但不建议添加敏感信息，因为该部分在客户端可解密。</p>
+<p><strong>私有的声明 ：</strong>
+私有声明是提供者和消费者所共同定义的声明，一般不建议存放敏感信息，因为base64是对称解密的，意味着该部分信息可以归类为明文信息。</p>
+<p>一个Payload的例子：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;sub&#34;</span><span class="p">:</span> <span class="s2">&#34;1234567890&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;John Doe&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;admin&#34;</span><span class="p">:</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>随后，Payload会通过 <code>Base64Url</code> 编码为JWT的第二部分。</p>
+<h2 id="signature">Signature</h2>
+<p>创建签名需要用到编码后的 Header、编码后的 Payload、秘钥、Header中指定的算法。</p>
+<p>如果你想使用HMAC SHA256算法，签名将通过如下方式生成：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nf">HMACSHA256</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">base64UrlEncode</span><span class="p">(</span><span class="nx">header</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#34;.&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">base64UrlEncode</span><span class="p">(</span><span class="nx">payload</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">secret</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果你想把以上概念付诸实践，可以通过 <a href="https://jwt.io/"target="_blank" rel="external nofollow noopener noreferrer">https://jwt.io/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> 提供的工具来玩一玩 JWT 。如下图所示：</p>
+<h1 id="jwt-的使用方式">JWT 的使用方式</h1>
+<p>客户端收到服务器返回的 JWT，可以储存在 Cookie 里面，也可以储存在 localStorage。
+此后，客户端每次与服务器通信，都要带上这个 JWT。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP 请求的头信息Authorization字段里面。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">Authorization</span><span class="o">:</span> <span class="nx">Bearer</span> <span class="o">&lt;</span><span class="nx">token</span><span class="o">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>另一种做法是，跨域的时候，JWT 就放在 POST 请求的数据体里面。</p>
+<h1 id="jwt-的几个特点">JWT 的几个特点</h1>
+<ul>
+<li>JWT 默认是不加密，但也是可以加密的。生成原始 Token 以后，可以用密钥再加密一次。</li>
+<li>JWT 不加密的情况下，不能将秘密数据写入 JWT。</li>
+<li>JWT 不仅可以用于认证，也可以用于交换信息。有效使用 JWT，可以降低服务器查询数据库的次数。</li>
+<li>JWT 的最大缺点是，由于服务器不保存 session 状态，因此无法在使用过程中废止某个 token，或者更改 token 的权限。也就是说，一旦 JWT 签发了，在到期之前就会始终有效，除非服务器部署额外的逻辑。</li>
+<li>JWT 本身包含了认证信息，一旦泄露，任何人都可以获得该令牌的所有权限。为了减少盗用，JWT 的有效期应该设置得比较短。对于一些比较重要的权限，使用时应该再次对用户进行认证。</li>
+<li>为了减少盗用，JWT 不应该使用 HTTP 协议明码传输，要使用 HTTPS 协议传输。</li>
+</ul>
+<h1 id="示例代码">示例代码</h1>
+<p>Go语言版本：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">util</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;crypto/rsa&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;crypto/x509&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;encoding/pem&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;errors&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;github.com/dgrijalva/jwt-go&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">ErrVerifyFailed</span> <span class="p">=</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;verify failed&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//https://godoc.org/github.com/dgrijalva/jwt-go#example-New--Hmac
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">CreateToken</span><span class="p">(</span><span class="nx">claims</span> <span class="nx">jwt</span><span class="p">.</span><span class="nx">MapClaims</span><span class="p">,</span> <span class="nx">privateKey</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">token</span> <span class="o">:=</span> <span class="nx">jwt</span><span class="p">.</span><span class="nf">NewWithClaims</span><span class="p">(</span><span class="nx">jwt</span><span class="p">.</span><span class="nx">SigningMethodRS512</span><span class="p">,</span> <span class="nx">claims</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">block</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">pem</span><span class="p">.</span><span class="nf">Decode</span><span class="p">(</span><span class="nx">privateKey</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">block</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;private key error&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">priv</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">x509</span><span class="p">.</span><span class="nf">ParsePKCS8PrivateKey</span><span class="p">(</span><span class="nx">block</span><span class="p">.</span><span class="nx">Bytes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">token</span><span class="p">.</span><span class="nf">SignedString</span><span class="p">(</span><span class="nx">priv</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//https://godoc.org/github.com/dgrijalva/jwt-go#example-Parse--Hmac
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">VerifyToken</span><span class="p">(</span><span class="nx">tokenString</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">publicKey</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">(</span><span class="nx">jwt</span><span class="p">.</span><span class="nx">MapClaims</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">token</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">jwt</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="nx">tokenString</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">token</span> <span class="o">*</span><span class="nx">jwt</span><span class="p">.</span><span class="nx">Token</span><span class="p">)</span> <span class="p">(</span><span class="kd">interface</span><span class="p">{},</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">token</span><span class="p">.</span><span class="nx">Method</span><span class="p">.(</span><span class="o">*</span><span class="nx">jwt</span><span class="p">.</span><span class="nx">SigningMethodRSA</span><span class="p">);</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;unexpected signing method: %v&#34;</span><span class="p">,</span> <span class="nx">token</span><span class="p">.</span><span class="nx">Header</span><span class="p">[</span><span class="s">&#34;alg&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">token</span><span class="p">.</span><span class="nx">Header</span><span class="p">[</span><span class="s">&#34;alg&#34;</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&#34;RS512&#34;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;unexpected siging alg: %v&#34;</span><span class="p">,</span> <span class="nx">token</span><span class="p">.</span><span class="nx">Header</span><span class="p">[</span><span class="s">&#34;alg&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="nx">block</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">pem</span><span class="p">.</span><span class="nf">Decode</span><span class="p">(</span><span class="nx">publicKey</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">block</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">ErrVerifyFailed</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="nx">pubInterface</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">x509</span><span class="p">.</span><span class="nf">ParsePKIXPublicKey</span><span class="p">(</span><span class="nx">block</span><span class="p">.</span><span class="nx">Bytes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">ErrVerifyFailed</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="nx">pub</span> <span class="o">:=</span> <span class="nx">pubInterface</span><span class="p">.(</span><span class="o">*</span><span class="nx">rsa</span><span class="p">.</span><span class="nx">PublicKey</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">pub</span><span class="p">,</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl">	<span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">ErrVerifyFailed</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">claims</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">token</span><span class="p">.</span><span class="nx">Claims</span><span class="p">.(</span><span class="nx">jwt</span><span class="p">.</span><span class="nx">MapClaims</span><span class="p">);</span> <span class="nx">ok</span> <span class="o">&amp;&amp;</span> <span class="nx">token</span><span class="p">.</span><span class="nx">Valid</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">claims</span><span class="p">,</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">ErrVerifyFailed</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>参考来源：</p>
+<ol>
+<li><a href="https://jwt.io/introduction/"target="_blank" rel="external nofollow noopener noreferrer">https://jwt.io/introduction/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://www.jianshu.com/p/576dbf44b2ae"target="_blank" rel="external nofollow noopener noreferrer">https://www.jianshu.com/p/576dbf44b2ae<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+</ol>
+]]></description></item><item><title>API网关概述</title><link>https://xzygis.github.io/posts/20200127-introduction-of-api-gateway/</link><pubDate>Mon, 27 Jan 2020 22:51:43 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20200127-introduction-of-api-gateway/</guid><description><![CDATA[<h1 id="1-背景">1 背景</h1>
+<ul>
+<li>由于后端的微服务拆分，客户端通常需要请求多个服务获取所需数据。</li>
+<li>不同客户端所需要的数据不一样。例如，PC需要的数据通常比移动端更加详细。</li>
+<li>不同客户端网络环境差异大。例如，WAN vs LAN，移动网络 vs 非移动网络。</li>
+<li>服务端实例的地址信息（IP + port）会动态更新。</li>
+<li>微服务的拆分逻辑会变化，这种变化应该应该对客户端透明。</li>
+<li>不同的服务可能采用不同的协议，有些协议是非web的。</li>
+</ul>
+<h1 id="2-什么是api网关">2 什么是API网关？</h1>
+<p>API网关接收客户端的所有请求，并将请求路由到相应的后端服务，并提供接口聚合和协议转换。通常来说，API网关通过调用多个后端服务，并聚合结果的方式处理请求。它可将web协议转化为非web的内部后台协议。</p>
+<!-- more -->
+<p>核心功能：</p>
+<ul>
+<li>服务发现：</li>
+<li>负载均衡：以某种算法分摊系统压力。</li>
+<li>服务熔断：直接返回失败或者执行降价逻辑，防止雪崩。</li>
+<li>流量控制：防止短时间内大量请求转发到后台压垮服务器。</li>
+<li>认证鉴权：验证客户端的请求是否被授权。</li>
+<li>灰度发布：</li>
+</ul>
+<p>其他功能：</p>
+<ul>
+<li>协议转换：web协议转非Web协议。</li>
+<li>参数校验：对入参设置校验规则，由网关根据规则对无效请求进行过滤。</li>
+<li>API管理：包括 API 的创建、测试、发布、下线、版本切换等。</li>
+<li>监控告警：监控API请求次数、API调用延迟和API错误信息。</li>
+<li>SDK生成：</li>
+</ul>
+<h1 id="3-实现方式">3 实现方式</h1>
+<p>将API网关作为客户端的唯一接入点。API网关主要有两种类型：</p>
+<ul>
+<li>one-size-fits-all网关</li>
+<li>Backends for frontends网关</li>
+</ul>
+<h2 id="31-one-size-fits-all网关">3.1 One-size-fits-all网关</h2>
+<p>简单地将请求路由到相应服务。将请求扇出到多个后端服务。
+</p>
+<h2 id="32-backends-for-fronts网关">3.2 Backends for fronts网关</h2>
+<p>为每种客户端暴露不同的API。为每种客户端设计一个API网关，每个API网关为其客户端提供一种API。
+</p>
+<h1 id="4-优点">4 优点</h1>
+<ul>
+<li>使后端的微服务拆分对客户端透明。</li>
+<li>客户端无需关心后端服务的实例地址（IP + port）。</li>
+<li>可为每个客户端提供最优API。</li>
+<li>减少请求次数。</li>
+<li>简化客户端的逻辑（由调用多个后台服务变为只调用API网关）。</li>
+<li>可将标准的Web API协议转化为任意的后端协议。</li>
+</ul>
+<h1 id="5-缺点">5 缺点</h1>
+<ul>
+<li>增加复杂性。增加了API网关模块，带来了额外的开发、部署、管理成本。</li>
+<li>增加响应时间。调用链路多了一跳（API网关）。</li>
+</ul>
+<blockquote>
+<p><strong>Issues:</strong></p>
+<p>How implement the API gateway?</p>
+<p>event-driven/reactive approach is the best if it must scale to handle high loads.</p>
+</blockquote>
+<p>参考来源：</p>
+<ul>
+<li><a href="https://microservices.io/patterns/apigateway.html"target="_blank" rel="external nofollow noopener noreferrer">https://microservices.io/patterns/apigateway.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://www.nginx.com/learn/api-gateway/"target="_blank" rel="external nofollow noopener noreferrer">https://www.nginx.com/learn/api-gateway/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://aws.amazon.com/cn/api-gateway/features/"target="_blank" rel="external nofollow noopener noreferrer">https://aws.amazon.com/cn/api-gateway/features/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://cloud.tencent.com/document/product/628/11755"target="_blank" rel="external nofollow noopener noreferrer">https://cloud.tencent.com/document/product/628/11755<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+</ul>
+]]></description></item></channel></rss>

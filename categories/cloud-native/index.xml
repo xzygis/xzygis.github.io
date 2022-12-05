@@ -1,1 +1,502 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Cloud Native on Chu Xing</title><link>https://xzygis.github.io/categories/cloud-native/</link><description>Recent content in Cloud Native on Chu Xing</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Tue, 28 Jan 2020 15:05:10 +0000</lastBuildDate><atom:link href="https://xzygis.github.io/categories/cloud-native/index.xml" rel="self" type="application/rss+xml"/><item><title>云原生概述</title><link>https://xzygis.github.io/2020/01/28/%E4%BA%91%E5%8E%9F%E7%94%9F%E6%A6%82%E8%BF%B0/</link><pubDate>Tue, 28 Jan 2020 15:05:10 +0000</pubDate><guid>https://xzygis.github.io/2020/01/28/%E4%BA%91%E5%8E%9F%E7%94%9F%E6%A6%82%E8%BF%B0/</guid><description>云原生的定义 云原生技术有利于各组织在公有云、私有云和混合云等新型动态环境中，构建和运行可弹性扩展的应用。云原生的代表技术包括容器、服务网格、</description></item></channel></rss>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Cloud Native - 分类 - Chu Xing</title><link>https://xzygis.github.io/categories/cloud-native/</link><description>Cloud Native - 分类 - Chu Xing</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>xzygis@163.com (chuxing)</managingEditor><webMaster>xzygis@163.com (chuxing)</webMaster><lastBuildDate>Tue, 28 Jan 2020 15:05:10 +0000</lastBuildDate><atom:link href="https://xzygis.github.io/categories/cloud-native/" rel="self" type="application/rss+xml"/><item><title>云原生概述</title><link>https://xzygis.github.io/posts/20200128-introduction-of-cloud-native/</link><pubDate>Tue, 28 Jan 2020 15:05:10 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20200128-introduction-of-cloud-native/</guid><description><![CDATA[<h1 id="云原生的定义">云原生的定义</h1>
+<p>云原生技术有利于各组织在公有云、私有云和混合云等新型动态环境中，构建和运行可弹性扩展的应用。云原生的代表技术包括容器、服务网格、微服务、不可变基础设施和声明式API。</p>
+<p>这些技术能够构建容错性好、易于管理和便于观察的松耦合系统。结合可靠的自动化手段，云原生技术使工程师能够轻松地对系统作出频繁和可预测的重大变更。</p>
+<!-- more -->
+<h1 id="云原生的设计哲学">云原生的设计哲学</h1>
+<p>云原生本身甚至不能称为是一种架构，它首先是一种基础设施，运行在其上的应用称作云原生应用，只有符合云原生设计哲学的应用架构才叫云原生应用架构。</p>
+<h2 id="云原生的设计理念">云原生的设计理念</h2>
+<p>云原生系统的设计理念如下:</p>
+<ul>
+<li>面向分布式设计（Distribution）：容器、微服务、API 驱动的开发；</li>
+<li>面向配置设计（Configuration）：一个镜像，多个环境配置；</li>
+<li>面向韧性设计（Resistancy）：故障容忍和自愈；</li>
+<li>面向弹性设计（Elasticity）：弹性扩展和对环境变化（负载）做出响应；</li>
+<li>面向交付设计（Delivery）：自动拉起，缩短交付时间；</li>
+<li>面向性能设计（Performance）：响应式，并发和资源高效利用；</li>
+<li>面向自动化设计（Automation）：自动化的 DevOps；</li>
+<li>面向诊断性设计（Diagnosability）：集群级别的日志、metric 和追踪；</li>
+<li>面向安全性设计（Security）：安全端点、API Gateway、端到端加密；</li>
+</ul>
+<h2 id="云原生应用程序">云原生应用程序</h2>
+<p>云原生应用程序被设计为在平台上运行，并设计用于弹性，敏捷性，可操作性和可观察性。弹性包含失败而不是试图阻止它们；它利用了在平台上运行的动态特性。敏捷性允许快速部署和快速迭代。可操作性从应用程序内部控制应用程序生命周期，而不是依赖外部进程和监视器。可观察性提供信息来回答有关应用程序状态的问题。</p>
+<p>实现云原生应用程序所需特性的常用方法：</p>
+<ul>
+<li>微服务</li>
+<li>健康报告</li>
+<li>遥测数据</li>
+<li>弹性</li>
+<li>声明式的，而不是命令式的</li>
+</ul>
+<h3 id="微服务">微服务</h3>
+<p>微服务 (Microservices) 是一种软件架构风格，它是以专注于单一责任与功能的小型功能区块 (Small Building Blocks) 为基础，利用模块化的方式组合出复杂的大型应用程序，各功能区块使用与语言无关 (Language-Independent/Language agnostic) 的 API 集相互通信。</p>
+<p>微服务是一种以业务功能为主的服务设计概念，每一个服务都具有自主运行的业务功能，对外开放不受语言限制的 API (最常用的是 HTTP)，应用程序则是由一个或多个微服务组成。</p>
+<h3 id="健康报告">健康报告</h3>
+<p>为了提高云原生应用程序的可操作性，应用程序应该暴露健康检查。开发人员可以将其实施为命令或过程信号，以便应用程序在执行自我检查之后响应，或者更常见的是：通过应用程序提供Web服务，返回HTTP状态码来检查健康状态。</p>
+<p>一个很好的例子就是当平台需要知道应用程序何时可以接收流量。在应用程序启动时，如果它不能正确处理流量，它就应该表现为未准备好。</p>
+<h3 id="遥测数据">遥测数据</h3>
+<p>遥测数据是进行决策所需的信息。确实，遥测数据可能与健康报告重叠，但它们有不同的用途。健康报告通知我们应用程序生命周期状态，而遥测数据通知我们应用程序业务目标。</p>
+<p>测量的指标有时称为服务级指标（SLI）或关键性能指标（KPI）。这些是特定于应用程序的数据，可以确保应用程序的性能处于服务级别目标（SLO）内。</p>
+<h3 id="弹性">弹性</h3>
+<p>一旦你有遥测和监测数据，你需要确保你的应用程序对故障有适应能力。弹性是基础设施的责任，但云原生应用程序也需要承担部分工作。在云原生应用程序中考虑弹性的两个主要方面：为失败设计和优雅降级。</p>
+<h4 id="为失败设计">为失败设计</h4>
+<p>设计一个以失败期望为目标的应用程序将比假定可用性的应用程序更具防御性。当故障不可避免时，将会有额外的检查，故障模式和日志内置到应用程序中。</p>
+<h4 id="优雅降级">优雅降级</h4>
+<p>云原生应用程序处理过载的一种方式。</p>
+<h3 id="声明式非命令式">声明式，非命令式</h3>
+<p>声明式编程是一种编程范式，与命令式编程相对立。它描述目标的性质，让电脑明白目标，而非流程。声明式编程不用告诉电脑问题领域，从而避免随之而来的副作用。而命令式编程则需要用算法来明确的指出每一步该怎么做。</p>
+<p>声明式通信模型规范了通信模型，并且它将功能实现从应用程序转移到远程API或服务端点，从而实现某种状态到达期望状态。这有助于简化应用程序，并使它们彼此的行为更具可预测性。</p>
+<p>例子：SQL数据库
+其实你很早就接触过声明式编程语言， SQL语言就是很典型的例子：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ben</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>上面是一个很普通的SQL查询语句，我只只声明我想要找一个叫Ben的用户（What) , 就是不说SQL该怎么（How）去寻找怎么做。接下来我们看看如果用命令式语言写会是什么样的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">//user=[{user_name:&#39;ou&#39;,user_id=1},.....]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">var</span> <span class="nx">user</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">user</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">user_name</span> <span class="o">==</span> <span class="s2">&#34;Ben&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="nx">print</span><span class="p">(</span><span class="s2">&#34;find&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">         <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过上面的对比你可以看出声明式语言的优势-短小精悍，你并不会知道程序的控制流（control flow）我们不需要告诉程序如何去寻找（How），而是只告诉程序我们想要的结果（What），让程序自己来解决过程（How）。当然SQL具体的细节还是用命令式的编程风格来实现的。</p>
+<h1 id="play-with-kubernetes">Play with Kubernetes</h1>
+<h2 id="创建kubernetes集群">创建Kubernetes集群</h2>
+<p>登陆Play with Kubernetes，启动第一个实例作为Master节点，在web终端上执行：</p>
+<ol>
+<li>初始化master节点：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">kubeadm init --apiserver-advertise-address <span class="k">$(</span>hostname -i<span class="k">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>输出如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-v" data-lang="v"><span class="line"><span class="cl"><span class="p">[</span><span class="na">node1</span> <span class="err">~</span><span class="p">]</span><span class="err">$</span> <span class="nv">kubeadm</span> <span class="nv">init</span> <span class="o">--</span><span class="nv">apiserver</span><span class="o">-</span><span class="nv">advertise</span><span class="o">-</span><span class="nv">address</span> <span class="err">$</span><span class="p">(</span><span class="nv">hostname</span> <span class="o">-</span><span class="nv">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nc">Initializing</span> <span class="nv">machine</span> <span class="nc">ID</span> <span class="nv">from</span> <span class="nv">random</span> <span class="nv">generator</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">init</span><span class="p">]</span> <span class="nv">using</span> <span class="nc">Kubernetes</span> <span class="nv">version</span><span class="p">:</span> <span class="nv">v1</span><span class="mf">.11.10</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">preflight</span><span class="p">]</span> <span class="nv">running</span> <span class="nv">pre</span><span class="o">-</span><span class="nv">flight</span> <span class="nv">checks</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="na">WARNING</span> <span class="na">Service</span><span class="err">-</span><span class="na">Docker</span><span class="p">]:</span> <span class="nv">docker</span> <span class="nv">service</span> <span class="k">is</span> <span class="nv">not</span> <span class="nv">active</span><span class="p">,</span> <span class="nv">please</span> <span class="nv">run</span> <span class="s1">&#39;systemctl start docker.service&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="nc">WARNING</span> <span class="nc">FileContent</span><span class="o">--</span><span class="nv">proc</span><span class="o">-</span><span class="nv">sys</span><span class="o">-</span><span class="nv">net</span><span class="o">-</span><span class="nv">bridge</span><span class="o">-</span><span class="nv">bridge</span><span class="o">-</span><span class="nv">nf</span><span class="o">-</span><span class="nv">call</span><span class="o">-</span><span class="nv">iptables</span><span class="p">]:</span> <span class="o">/</span><span class="nv">proc</span><span class="o">/</span><span class="nv">sys</span><span class="o">/</span><span class="nv">net</span><span class="o">/</span><span class="nv">bridge</span><span class="o">/</span><span class="nv">bridge</span><span class="o">-</span><span class="nv">nf</span><span class="o">-</span><span class="nv">call</span><span class="o">-</span><span class="nv">iptables</span> <span class="nv">does</span> <span class="nv">not</span> <span class="nv">exist</span>
+</span></span><span class="line"><span class="cl"><span class="nc">I1117</span> <span class="mi">13</span><span class="p">:</span><span class="mi">53</span><span class="p">:</span><span class="mf">18.409493</span>     <span class="mi">885</span> <span class="nv">kernel_validator</span><span class="p">.</span><span class="k">go</span><span class="p">:</span><span class="mi">81</span><span class="p">]</span> <span class="nc">Validating</span> <span class="nv">kernel</span> <span class="nv">version</span>
+</span></span><span class="line"><span class="cl"><span class="nc">I1117</span> <span class="mi">13</span><span class="p">:</span><span class="mi">53</span><span class="p">:</span><span class="mf">18.409685</span>     <span class="mi">885</span> <span class="nv">kernel_validator</span><span class="p">.</span><span class="k">go</span><span class="p">:</span><span class="mi">96</span><span class="p">]</span> <span class="nc">Validating</span> <span class="nv">kernel</span> <span class="nv">config</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">preflight</span><span class="p">]</span> <span class="nc">The</span> <span class="nv">system</span> <span class="nv">verification</span> <span class="nv">failed</span><span class="p">.</span> <span class="nc">Printing</span> <span class="nv">the</span> <span class="nv">output</span> <span class="nv">from</span> <span class="nv">the</span> <span class="nl">verification</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="nc">KERNEL_VERSION</span><span class="p">:</span> <span class="mf">4.4.0</span><span class="o">-</span><span class="mi">148</span><span class="o">-</span><span class="nv">generic</span>
+</span></span><span class="line"><span class="cl"><span class="nc">DOCKER_VERSION</span><span class="p">:</span> <span class="mf">18.06.1</span><span class="o">-</span><span class="nv">ce</span>
+</span></span><span class="line"><span class="cl"><span class="nc">OS</span><span class="p">:</span> <span class="nc">Linux</span>
+</span></span><span class="line"><span class="cl"><span class="nc">CGROUPS_CPU</span><span class="p">:</span> <span class="nv">enabled</span>
+</span></span><span class="line"><span class="cl"><span class="nc">CGROUPS_CPUACCT</span><span class="p">:</span> <span class="nv">enabled</span>
+</span></span><span class="line"><span class="cl"><span class="nc">CGROUPS_CPUSET</span><span class="p">:</span> <span class="nv">enabled</span>
+</span></span><span class="line"><span class="cl"><span class="nc">CGROUPS_DEVICES</span><span class="p">:</span> <span class="nv">enabled</span>
+</span></span><span class="line"><span class="cl"><span class="nc">CGROUPS_FREEZER</span><span class="p">:</span> <span class="nv">enabled</span>
+</span></span><span class="line"><span class="cl"><span class="nc">CGROUPS_MEMORY</span><span class="p">:</span> <span class="nv">enabled</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="na">WARNING</span> <span class="na">SystemVerification</span><span class="p">]:</span> <span class="nv">docker</span> <span class="nv">version</span> <span class="k">is</span> <span class="nv">greater</span> <span class="nv">than</span> <span class="nv">the</span> <span class="nv">most</span> <span class="nv">recently</span> <span class="nv">validated</span> <span class="nv">version</span><span class="p">.</span> <span class="nc">Docker</span> <span class="nv">version</span><span class="p">:</span> <span class="mf">18.06.1</span><span class="o">-</span><span class="nv">ce</span><span class="p">.</span> <span class="nc">Max</span> <span class="nv">validated</span> <span class="nv">version</span><span class="p">:</span> <span class="mf">17.03</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="na">WARNING</span> <span class="na">SystemVerification</span><span class="p">]:</span> <span class="nv">failed</span> <span class="nv">to</span> <span class="nv">parse</span> <span class="nv">kernel</span> <span class="nv">config</span><span class="p">:</span> <span class="nv">unable</span> <span class="nv">to</span> <span class="nv">load</span> <span class="nv">kernel</span> <span class="kn">module</span> <span class="s2">&#34;configs&#34;</span><span class="p">:</span> <span class="nv">output</span> <span class="o">-</span> <span class="s2">&#34;&#34;</span><span class="p">,</span> <span class="nv">err</span> <span class="o">-</span> <span class="nv">exit</span> <span class="nv">status</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">preflight</span><span class="err">/</span><span class="na">images</span><span class="p">]</span> <span class="nc">Pulling</span> <span class="nv">images</span> <span class="nv">required</span> <span class="k">for</span> <span class="nv">setting</span> <span class="nv">up</span> <span class="nv">a</span> <span class="nc">Kubernetes</span> <span class="nv">cluster</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">preflight</span><span class="err">/</span><span class="na">images</span><span class="p">]</span> <span class="nc">This</span> <span class="nv">might</span> <span class="nv">take</span> <span class="nv">a</span> <span class="nv">minute</span> <span class="k">or</span> <span class="nv">two</span><span class="p">,</span> <span class="nv">depending</span> <span class="nv">on</span> <span class="nv">the</span> <span class="nv">speed</span> <span class="nv">of</span> <span class="nv">your</span> <span class="nv">internet</span> <span class="nv">connection</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">preflight</span><span class="err">/</span><span class="na">images</span><span class="p">]</span> <span class="nc">You</span> <span class="nv">can</span> <span class="nv">also</span> <span class="nv">perform</span> <span class="nv">this</span> <span class="nv">action</span> <span class="k">in</span> <span class="nv">beforehand</span> <span class="nv">using</span> <span class="s1">&#39;kubeadm config images pull&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">kubelet</span><span class="p">]</span> <span class="nc">Writing</span> <span class="nv">kubelet</span> <span class="nv">environment</span> <span class="nv">file</span> <span class="nv">with</span> <span class="nv">flags</span> <span class="nv">to</span> <span class="nv">file</span> <span class="s2">&#34;/var/lib/kubelet/kubeadm-flags.env&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">kubelet</span><span class="p">]</span> <span class="nc">Writing</span> <span class="nv">kubelet</span> <span class="nv">configuration</span> <span class="nv">to</span> <span class="nv">file</span> <span class="s2">&#34;/var/lib/kubelet/config.yaml&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">preflight</span><span class="p">]</span> <span class="nc">Activating</span> <span class="nv">the</span> <span class="nv">kubelet</span> <span class="nv">service</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">certificates</span><span class="p">]</span> <span class="nc">Generated</span> <span class="nv">ca</span> <span class="nv">certificate</span> <span class="nv">and</span> <span class="nv">key</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">certificates</span><span class="p">]</span> <span class="nc">Generated</span> <span class="nv">apiserver</span> <span class="nv">certificate</span> <span class="nv">and</span> <span class="nv">key</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">certificates</span><span class="p">]</span> <span class="nv">apiserver</span> <span class="nv">serving</span> <span class="nv">cert</span> <span class="k">is</span> <span class="nv">signed</span> <span class="k">for</span> <span class="nc">DNS</span> <span class="nv">names</span> <span class="p">[</span><span class="na">node1</span> <span class="na">kubernetes</span> <span class="na">kubernetes</span><span class="err">.</span><span class="na">default</span> <span class="na">kubernetes</span><span class="err">.</span><span class="na">default</span><span class="err">.</span><span class="na">svc</span> <span class="na">kubernetes</span><span class="err">.</span><span class="na">default</span><span class="err">.</span><span class="na">svc</span><span class="err">.</span><span class="na">cluster</span><span class="err">.</span><span class="na">local</span><span class="p">]</span> <span class="nv">and</span> <span class="nc">IPs</span> <span class="p">[</span><span class="err">10.96.0.1</span> <span class="err">192.168.0.18</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">certificates</span><span class="p">]</span> <span class="nc">Generated</span> <span class="nv">apiserver</span><span class="o">-</span><span class="nv">kubelet</span><span class="o">-</span><span class="nv">client</span> <span class="nv">certificate</span> <span class="nv">and</span> <span class="nv">key</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">certificates</span><span class="p">]</span> <span class="nc">Generated</span> <span class="nv">sa</span> <span class="nv">key</span> <span class="nv">and</span> <span class="nv">public</span> <span class="nv">key</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">certificates</span><span class="p">]</span> <span class="nc">Generated</span> <span class="nv">front</span><span class="o">-</span><span class="nv">proxy</span><span class="o">-</span><span class="nv">ca</span> <span class="nv">certificate</span> <span class="nv">and</span> <span class="nv">key</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">certificates</span><span class="p">]</span> <span class="nc">Generated</span> <span class="nv">front</span><span class="o">-</span><span class="nv">proxy</span><span class="o">-</span><span class="nv">client</span> <span class="nv">certificate</span> <span class="nv">and</span> <span class="nv">key</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">certificates</span><span class="p">]</span> <span class="nc">Generated</span> <span class="nv">etcd</span><span class="o">/</span><span class="nv">ca</span> <span class="nv">certificate</span> <span class="nv">and</span> <span class="nv">key</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">certificates</span><span class="p">]</span> <span class="nc">Generated</span> <span class="nv">etcd</span><span class="o">/</span><span class="nv">server</span> <span class="nv">certificate</span> <span class="nv">and</span> <span class="nv">key</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">certificates</span><span class="p">]</span> <span class="nv">etcd</span><span class="o">/</span><span class="nv">server</span> <span class="nv">serving</span> <span class="nv">cert</span> <span class="k">is</span> <span class="nv">signed</span> <span class="k">for</span> <span class="nc">DNS</span> <span class="nv">names</span> <span class="p">[</span><span class="na">node1</span> <span class="na">localhost</span><span class="p">]</span> <span class="nv">and</span> <span class="nc">IPs</span> <span class="p">[</span><span class="err">127.0.0.1</span> <span class="p">::</span><span class="s">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">certificates</span><span class="p">]</span> <span class="nc">Generated</span> <span class="nv">etcd</span><span class="o">/</span><span class="nv">peer</span> <span class="nv">certificate</span> <span class="nv">and</span> <span class="nv">key</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">certificates</span><span class="p">]</span> <span class="nv">etcd</span><span class="o">/</span><span class="nv">peer</span> <span class="nv">serving</span> <span class="nv">cert</span> <span class="k">is</span> <span class="nv">signed</span> <span class="k">for</span> <span class="nc">DNS</span> <span class="nv">names</span> <span class="p">[</span><span class="na">node1</span> <span class="na">localhost</span><span class="p">]</span> <span class="nv">and</span> <span class="nc">IPs</span> <span class="p">[</span><span class="err">192.168.0.18</span> <span class="err">127.0.0.1</span> <span class="p">::</span><span class="s">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">certificates</span><span class="p">]</span> <span class="nc">Generated</span> <span class="nv">etcd</span><span class="o">/</span><span class="nv">healthcheck</span><span class="o">-</span><span class="nv">client</span> <span class="nv">certificate</span> <span class="nv">and</span> <span class="nv">key</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">certificates</span><span class="p">]</span> <span class="nc">Generated</span> <span class="nv">apiserver</span><span class="o">-</span><span class="nv">etcd</span><span class="o">-</span><span class="nv">client</span> <span class="nv">certificate</span> <span class="nv">and</span> <span class="nv">key</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">certificates</span><span class="p">]</span> <span class="nv">valid</span> <span class="nv">certificates</span> <span class="nv">and</span> <span class="nv">keys</span> <span class="nv">now</span> <span class="nv">exist</span> <span class="k">in</span> <span class="s2">&#34;/etc/kubernetes/pki&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">kubeconfig</span><span class="p">]</span> <span class="nc">Wrote</span> <span class="nc">KubeConfig</span> <span class="nv">file</span> <span class="nv">to</span> <span class="nv">disk</span><span class="p">:</span> <span class="s2">&#34;/etc/kubernetes/admin.conf&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">kubeconfig</span><span class="p">]</span> <span class="nc">Wrote</span> <span class="nc">KubeConfig</span> <span class="nv">file</span> <span class="nv">to</span> <span class="nv">disk</span><span class="p">:</span> <span class="s2">&#34;/etc/kubernetes/kubelet.conf&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">kubeconfig</span><span class="p">]</span> <span class="nc">Wrote</span> <span class="nc">KubeConfig</span> <span class="nv">file</span> <span class="nv">to</span> <span class="nv">disk</span><span class="p">:</span> <span class="s2">&#34;/etc/kubernetes/controller-manager.conf&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">kubeconfig</span><span class="p">]</span> <span class="nc">Wrote</span> <span class="nc">KubeConfig</span> <span class="nv">file</span> <span class="nv">to</span> <span class="nv">disk</span><span class="p">:</span> <span class="s2">&#34;/etc/kubernetes/scheduler.conf&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">controlplane</span><span class="p">]</span> <span class="nv">wrote</span> <span class="nc">Static</span> <span class="nc">Pod</span> <span class="nv">manifest</span> <span class="k">for</span> <span class="nv">component</span> <span class="nv">kube</span><span class="o">-</span><span class="nv">apiserver</span> <span class="nv">to</span> <span class="s2">&#34;/etc/kubernetes/manifests/kube-apiserver.yaml&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">controlplane</span><span class="p">]</span> <span class="nv">wrote</span> <span class="nc">Static</span> <span class="nc">Pod</span> <span class="nv">manifest</span> <span class="k">for</span> <span class="nv">component</span> <span class="nv">kube</span><span class="o">-</span><span class="nv">controller</span><span class="o">-</span><span class="nv">manager</span> <span class="nv">to</span> <span class="s2">&#34;/etc/kubernetes/manifests/kube-controller-manager.yaml&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">controlplane</span><span class="p">]</span> <span class="nv">wrote</span> <span class="nc">Static</span> <span class="nc">Pod</span> <span class="nv">manifest</span> <span class="k">for</span> <span class="nv">component</span> <span class="nv">kube</span><span class="o">-</span><span class="nv">scheduler</span> <span class="nv">to</span> <span class="s2">&#34;/etc/kubernetes/manifests/kube-scheduler.yaml&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">etcd</span><span class="p">]</span> <span class="nc">Wrote</span> <span class="nc">Static</span> <span class="nc">Pod</span> <span class="nv">manifest</span> <span class="k">for</span> <span class="nv">a</span> <span class="nv">local</span> <span class="nv">etcd</span> <span class="nv">instance</span> <span class="nv">to</span> <span class="s2">&#34;/etc/kubernetes/manifests/etcd.yaml&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">init</span><span class="p">]</span> <span class="nv">waiting</span> <span class="k">for</span> <span class="nv">the</span> <span class="nv">kubelet</span> <span class="nv">to</span> <span class="nv">boot</span> <span class="nv">up</span> <span class="nv">the</span> <span class="nv">control</span> <span class="nv">plane</span> <span class="k">as</span> <span class="nc">Static</span> <span class="nc">Pods</span> <span class="nv">from</span> <span class="nv">directory</span> <span class="s2">&#34;/etc/kubernetes/manifests&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">init</span><span class="p">]</span> <span class="nv">this</span> <span class="nv">might</span> <span class="nv">take</span> <span class="nv">a</span> <span class="nv">minute</span> <span class="k">or</span> <span class="nv">longer</span> <span class="k">if</span> <span class="nv">the</span> <span class="nv">control</span> <span class="nv">plane</span> <span class="nv">images</span> <span class="nv">have</span> <span class="nv">to</span> <span class="nv">be</span> <span class="nv">pulled</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">apiclient</span><span class="p">]</span> <span class="nc">All</span> <span class="nv">control</span> <span class="nv">plane</span> <span class="nv">components</span> <span class="nv">are</span> <span class="nv">healthy</span> <span class="nv">after</span> <span class="mf">51.503514</span> <span class="nv">seconds</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">uploadconfig</span><span class="p">]</span> <span class="nv">storing</span> <span class="nv">the</span> <span class="nv">configuration</span> <span class="nv">used</span> <span class="k">in</span> <span class="nc">ConfigMap</span> <span class="s2">&#34;kubeadm-config&#34;</span> <span class="k">in</span> <span class="nv">the</span> <span class="s2">&#34;kube-system&#34;</span> <span class="nc">Namespace</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">kubelet</span><span class="p">]</span> <span class="nc">Creating</span> <span class="nv">a</span> <span class="nc">ConfigMap</span> <span class="s2">&#34;kubelet-config-1.11&#34;</span> <span class="k">in</span> <span class="nv">namespace</span> <span class="nv">kube</span><span class="o">-</span><span class="nv">system</span> <span class="nv">with</span> <span class="nv">the</span> <span class="nv">configuration</span> <span class="k">for</span> <span class="nv">the</span> <span class="nv">kubelets</span> <span class="k">in</span> <span class="nv">the</span> <span class="nv">cluster</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">markmaster</span><span class="p">]</span> <span class="nc">Marking</span> <span class="nv">the</span> <span class="nv">node</span> <span class="nv">node1</span> <span class="k">as</span> <span class="nv">master</span> <span class="nv">by</span> <span class="nv">adding</span> <span class="nv">the</span> <span class="nv">label</span> <span class="s2">&#34;node-role.kubernetes.io/master=&#39;&#39;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">markmaster</span><span class="p">]</span> <span class="nc">Marking</span> <span class="nv">the</span> <span class="nv">node</span> <span class="nv">node1</span> <span class="k">as</span> <span class="nv">master</span> <span class="nv">by</span> <span class="nv">adding</span> <span class="nv">the</span> <span class="nv">taints</span> <span class="p">[</span><span class="na">node</span><span class="err">-</span><span class="na">role</span><span class="err">.</span><span class="na">kubernetes</span><span class="err">.</span><span class="na">io</span><span class="err">/</span><span class="na">master</span><span class="p">:</span><span class="s">NoSchedule</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">patchnode</span><span class="p">]</span> <span class="nc">Uploading</span> <span class="nv">the</span> <span class="nc">CRI</span> <span class="nc">Socket</span> <span class="nv">information</span> <span class="s2">&#34;/var/run/dockershim.sock&#34;</span> <span class="nv">to</span> <span class="nv">the</span> <span class="nc">Node</span> <span class="nc">API</span> <span class="nv">object</span> <span class="s2">&#34;node1&#34;</span> <span class="k">as</span> <span class="nv">an</span> <span class="nv">annotation</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">bootstraptoken</span><span class="p">]</span> <span class="nv">using</span> <span class="nv">token</span><span class="p">:</span> <span class="mi">5</span><span class="nv">f1nyz</span><span class="mf">.351</span><span class="nv">cet8vt4g2ix78</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">bootstraptoken</span><span class="p">]</span> <span class="nv">configured</span> <span class="nc">RBAC</span> <span class="nv">rules</span> <span class="nv">to</span> <span class="nv">allow</span> <span class="nc">Node</span> <span class="nc">Bootstrap</span> <span class="nv">tokens</span> <span class="nv">to</span> <span class="nv">post</span> <span class="nc">CSRs</span> <span class="k">in</span> <span class="nv">order</span> <span class="k">for</span> <span class="nv">nodes</span> <span class="nv">to</span> <span class="nv">get</span> <span class="nv">long</span> <span class="nv">term</span> <span class="nv">certificate</span> <span class="nv">credentials</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">bootstraptoken</span><span class="p">]</span> <span class="nv">configured</span> <span class="nc">RBAC</span> <span class="nv">rules</span> <span class="nv">to</span> <span class="nv">allow</span> <span class="nv">the</span> <span class="nv">csrapprover</span> <span class="nv">controller</span> <span class="nv">automatically</span> <span class="nv">approve</span> <span class="nc">CSRs</span> <span class="nv">from</span> <span class="nv">a</span> <span class="nc">Node</span> <span class="nc">Bootstrap</span> <span class="nc">Token</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">bootstraptoken</span><span class="p">]</span> <span class="nv">configured</span> <span class="nc">RBAC</span> <span class="nv">rules</span> <span class="nv">to</span> <span class="nv">allow</span> <span class="nv">certificate</span> <span class="nv">rotation</span> <span class="k">for</span> <span class="nv">all</span> <span class="nv">node</span> <span class="nv">client</span> <span class="nv">certificates</span> <span class="k">in</span> <span class="nv">the</span> <span class="nv">cluster</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">bootstraptoken</span><span class="p">]</span> <span class="nv">creating</span> <span class="nv">the</span> <span class="s2">&#34;cluster-info&#34;</span> <span class="nc">ConfigMap</span> <span class="k">in</span> <span class="nv">the</span> <span class="s2">&#34;kube-public&#34;</span> <span class="nv">namespace</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">addons</span><span class="p">]</span> <span class="nc">Applied</span> <span class="nv">essential</span> <span class="nv">addon</span><span class="p">:</span> <span class="nc">CoreDNS</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">addons</span><span class="p">]</span> <span class="nc">Applied</span> <span class="nv">essential</span> <span class="nv">addon</span><span class="p">:</span> <span class="nv">kube</span><span class="o">-</span><span class="nv">proxy</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nc">Your</span> <span class="nc">Kubernetes</span> <span class="nv">master</span> <span class="nv">has</span> <span class="nv">initialized</span> <span class="nv">successfully</span><span class="o">!</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nc">To</span> <span class="nv">start</span> <span class="nv">using</span> <span class="nv">your</span> <span class="nv">cluster</span><span class="p">,</span> <span class="nv">you</span> <span class="nv">need</span> <span class="nv">to</span> <span class="nv">run</span> <span class="nv">the</span> <span class="nv">following</span> <span class="k">as</span> <span class="nv">a</span> <span class="nv">regular</span> <span class="nl">user</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nv">mkdir</span> <span class="o">-</span><span class="nv">p</span> <span class="o">$</span><span class="nc">HOME</span><span class="o">/</span><span class="p">.</span><span class="nv">kube</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">sudo</span> <span class="nv">cp</span> <span class="o">-</span><span class="nv">i</span> <span class="o">/</span><span class="nv">etc</span><span class="o">/</span><span class="nv">kubernetes</span><span class="o">/</span><span class="nv">admin</span><span class="p">.</span><span class="nv">conf</span> <span class="o">$</span><span class="nc">HOME</span><span class="o">/</span><span class="p">.</span><span class="nv">kube</span><span class="o">/</span><span class="nv">config</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">sudo</span> <span class="nv">chown</span> <span class="err">$</span><span class="p">(</span><span class="nv">id</span> <span class="o">-</span><span class="nv">u</span><span class="p">):</span><span class="err">$</span><span class="p">(</span><span class="nv">id</span> <span class="o">-</span><span class="nv">g</span><span class="p">)</span> <span class="o">$</span><span class="nc">HOME</span><span class="o">/</span><span class="p">.</span><span class="nv">kube</span><span class="o">/</span><span class="nv">config</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nc">You</span> <span class="nv">should</span> <span class="nv">now</span> <span class="nv">deploy</span> <span class="nv">a</span> <span class="nv">pod</span> <span class="nv">network</span> <span class="nv">to</span> <span class="nv">the</span> <span class="nv">cluster</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="nc">Run</span> <span class="s2">&#34;kubectl apply -f [podnetwork].yaml&#34;</span> <span class="nv">with</span> <span class="nv">one</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">options</span> <span class="nv">listed</span> <span class="nl">at</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">https</span><span class="p">:</span><span class="c1">//kubernetes.io/docs/concepts/cluster-administration/addons/
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="nc">You</span> <span class="nv">can</span> <span class="nv">now</span> <span class="nv">join</span> <span class="kt">any</span> <span class="nv">number</span> <span class="nv">of</span> <span class="nv">machines</span> <span class="nv">by</span> <span class="nv">running</span> <span class="nv">the</span> <span class="nv">following</span> <span class="nv">on</span> <span class="nv">each</span> <span class="nv">node</span>
+</span></span><span class="line"><span class="cl"><span class="k">as</span> <span class="nl">root</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nv">kubeadm</span> <span class="nv">join</span> <span class="mf">192.168.0.18</span><span class="p">:</span><span class="mi">6443</span> <span class="o">--</span><span class="nv">token</span> <span class="mi">5</span><span class="nv">f1nyz</span><span class="mf">.351</span><span class="nv">cet8vt4g2ix78</span> <span class="o">--</span><span class="nv">discovery</span><span class="o">-</span><span class="nv">token</span><span class="o">-</span><span class="nv">ca</span><span class="o">-</span><span class="nv">cert</span><span class="o">-</span><span class="nv">hash</span> <span class="nv">sha256</span><span class="p">:</span><span class="nv">d105d049cf090f7814473e5554b79e09cd13e4acfd8a56b09754ba9181d08fd8</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nc">Waiting</span> <span class="k">for</span> <span class="nv">api</span> <span class="nv">server</span> <span class="nv">to</span> <span class="nv">startup</span>
+</span></span><span class="line"><span class="cl"><span class="nc">Warning</span><span class="p">:</span> <span class="nv">kubectl</span> <span class="nv">apply</span> <span class="nv">should</span> <span class="nv">be</span> <span class="nv">used</span> <span class="nv">on</span> <span class="nv">resource</span> <span class="nv">created</span> <span class="nv">by</span> <span class="nv">either</span> <span class="nv">kubectl</span> <span class="nv">create</span> <span class="o">--</span><span class="nv">save</span><span class="o">-</span><span class="nv">config</span> <span class="k">or</span> <span class="nv">kubectl</span> <span class="nv">apply</span>
+</span></span><span class="line"><span class="cl"><span class="nv">daemonset</span><span class="p">.</span><span class="nv">extensions</span><span class="o">/</span><span class="nv">kube</span><span class="o">-</span><span class="nv">proxy</span> <span class="nv">configured</span>
+</span></span><span class="line"><span class="cl"><span class="nc">No</span> <span class="nv">resources</span> <span class="nv">found</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>初始化集群网络：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">kubectl apply -n kube-system -f  <span class="s2">&#34;https://cloud.weave.works/k8s/net?k8s-version=</span><span class="k">$(</span>kubectl version <span class="p">|</span> base64 <span class="p">|</span> tr -d <span class="s1">&#39;\n&#39;</span><span class="k">)</span><span class="s2">&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>输出如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">serviceaccount/weave-net created
+</span></span><span class="line"><span class="cl">clusterrole.rbac.authorization.k8s.io/weave-net created
+</span></span><span class="line"><span class="cl">clusterrolebinding.rbac.authorization.k8s.io/weave-net created
+</span></span><span class="line"><span class="cl">role.rbac.authorization.k8s.io/weave-net created
+</span></span><span class="line"><span class="cl">rolebinding.rbac.authorization.k8s.io/weave-net created
+</span></span><span class="line"><span class="cl">daemonset.apps/weave-net created
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>执行下列初始化命令：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mkdir -p <span class="nv">$HOME</span>/.kube
+</span></span><span class="line"><span class="cl">cp -i /etc/kubernetes/admin.conf <span class="nv">$HOME</span>/.kube/config
+</span></span><span class="line"><span class="cl">chown <span class="k">$(</span>id -u<span class="k">)</span>:<span class="k">$(</span>id -g<span class="k">)</span> <span class="nv">$HOME</span>/.kube/config
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="4">
+<li>根据master节点上的提示，在新的web终端上执行：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">kubeadm join 192.168.0.18:6443 --token 5f1nyz.351cet8vt4g2ix78 --discovery-token-ca-cert-hash sha256:d105d049cf090f7814473e5554b79e09cd13e4acfd8a56b09754ba9181d08fd8
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>输出如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-v" data-lang="v"><span class="line"><span class="cl"><span class="p">[</span><span class="na">preflight</span><span class="p">]</span> <span class="nv">running</span> <span class="nv">pre</span><span class="o">-</span><span class="nv">flight</span> <span class="nv">checks</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="na">WARNING</span> <span class="na">DirAvailable</span><span class="err">--</span><span class="na">etc</span><span class="err">-</span><span class="na">kubernetes</span><span class="err">-</span><span class="na">manifests</span><span class="p">]:</span> <span class="o">/</span><span class="nv">etc</span><span class="o">/</span><span class="nv">kubernetes</span><span class="o">/</span><span class="nv">manifests</span> <span class="k">is</span> <span class="nv">not</span> <span class="nv">empty</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="na">WARNING</span> <span class="na">FileAvailable</span><span class="err">--</span><span class="na">etc</span><span class="err">-</span><span class="na">kubernetes</span><span class="err">-</span><span class="na">pki</span><span class="err">-</span><span class="na">ca</span><span class="err">.</span><span class="na">crt</span><span class="p">]:</span> <span class="o">/</span><span class="nv">etc</span><span class="o">/</span><span class="nv">kubernetes</span><span class="o">/</span><span class="nv">pki</span><span class="o">/</span><span class="nv">ca</span><span class="p">.</span><span class="nv">crt</span> <span class="nv">already</span> <span class="nv">exists</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="na">WARNING</span> <span class="na">FileAvailable</span><span class="err">--</span><span class="na">etc</span><span class="err">-</span><span class="na">kubernetes</span><span class="err">-</span><span class="na">kubelet</span><span class="err">.</span><span class="na">conf</span><span class="p">]:</span> <span class="o">/</span><span class="nv">etc</span><span class="o">/</span><span class="nv">kubernetes</span><span class="o">/</span><span class="nv">kubelet</span><span class="p">.</span><span class="nv">conf</span> <span class="nv">already</span> <span class="nv">exists</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="na">WARNING</span> <span class="na">RequiredIPVSKernelModulesAvailable</span><span class="p">]:</span> <span class="kt">error</span> <span class="nv">getting</span> <span class="nv">required</span> <span class="nv">builtin</span> <span class="nv">kernel</span> <span class="nv">modules</span><span class="p">:</span> <span class="nv">exit</span> <span class="nv">status</span> <span class="mi">1</span><span class="p">(</span><span class="nv">cut</span><span class="p">:</span> <span class="o">/</span><span class="nv">lib</span><span class="o">/</span><span class="nv">modules</span><span class="o">/</span><span class="mf">4.4.0</span><span class="o">-</span><span class="mi">166</span><span class="o">-</span><span class="nv">generic</span><span class="o">/</span><span class="nv">modules</span><span class="p">.</span><span class="nv">builtin</span><span class="p">:</span> <span class="nc">No</span> <span class="nv">such</span> <span class="nv">file</span> <span class="k">or</span> <span class="nv">directory</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="nc">WARNING</span> <span class="nc">Service</span><span class="o">-</span><span class="nc">Docker</span><span class="p">]:</span> <span class="nv">docker</span> <span class="nv">service</span> <span class="k">is</span> <span class="nv">not</span> <span class="nv">active</span><span class="p">,</span> <span class="nv">please</span> <span class="nv">run</span> <span class="s1">&#39;systemctl start docker.service&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="nc">WARNING</span> <span class="nc">FileContent</span><span class="o">--</span><span class="nv">proc</span><span class="o">-</span><span class="nv">sys</span><span class="o">-</span><span class="nv">net</span><span class="o">-</span><span class="nv">bridge</span><span class="o">-</span><span class="nv">bridge</span><span class="o">-</span><span class="nv">nf</span><span class="o">-</span><span class="nv">call</span><span class="o">-</span><span class="nv">iptables</span><span class="p">]:</span> <span class="o">/</span><span class="nv">proc</span><span class="o">/</span><span class="nv">sys</span><span class="o">/</span><span class="nv">net</span><span class="o">/</span><span class="nv">bridge</span><span class="o">/</span><span class="nv">bridge</span><span class="o">-</span><span class="nv">nf</span><span class="o">-</span><span class="nv">call</span><span class="o">-</span><span class="nv">iptables</span> <span class="nv">does</span> <span class="nv">not</span> <span class="nv">exist</span>
+</span></span><span class="line"><span class="cl"><span class="nc">I1117</span> <span class="mi">14</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mf">02.416363</span>    <span class="mi">7243</span> <span class="nv">kernel_validator</span><span class="p">.</span><span class="k">go</span><span class="p">:</span><span class="mi">81</span><span class="p">]</span> <span class="nc">Validating</span> <span class="nv">kernel</span> <span class="nv">version</span>
+</span></span><span class="line"><span class="cl"><span class="nc">I1117</span> <span class="mi">14</span><span class="p">:</span><span class="mi">09</span><span class="p">:</span><span class="mf">02.419283</span>    <span class="mi">7243</span> <span class="nv">kernel_validator</span><span class="p">.</span><span class="k">go</span><span class="p">:</span><span class="mi">96</span><span class="p">]</span> <span class="nc">Validating</span> <span class="nv">kernel</span> <span class="nv">config</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">preflight</span><span class="p">]</span> <span class="nc">The</span> <span class="nv">system</span> <span class="nv">verification</span> <span class="nv">failed</span><span class="p">.</span> <span class="nc">Printing</span> <span class="nv">the</span> <span class="nv">output</span> <span class="nv">from</span> <span class="nv">the</span> <span class="nl">verification</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="nc">KERNEL_VERSION</span><span class="p">:</span> <span class="mf">4.4.0</span><span class="o">-</span><span class="mi">166</span><span class="o">-</span><span class="nv">generic</span>
+</span></span><span class="line"><span class="cl"><span class="nc">DOCKER_VERSION</span><span class="p">:</span> <span class="mf">18.06.1</span><span class="o">-</span><span class="nv">ce</span>
+</span></span><span class="line"><span class="cl"><span class="nc">OS</span><span class="p">:</span> <span class="nc">Linux</span>
+</span></span><span class="line"><span class="cl"><span class="nc">CGROUPS_CPU</span><span class="p">:</span> <span class="nv">enabled</span>
+</span></span><span class="line"><span class="cl"><span class="nc">CGROUPS_CPUACCT</span><span class="p">:</span> <span class="nv">enabled</span>
+</span></span><span class="line"><span class="cl"><span class="nc">CGROUPS_CPUSET</span><span class="p">:</span> <span class="nv">enabled</span>
+</span></span><span class="line"><span class="cl"><span class="nc">CGROUPS_DEVICES</span><span class="p">:</span> <span class="nv">enabled</span>
+</span></span><span class="line"><span class="cl"><span class="nc">CGROUPS_FREEZER</span><span class="p">:</span> <span class="nv">enabled</span>
+</span></span><span class="line"><span class="cl"><span class="nc">CGROUPS_MEMORY</span><span class="p">:</span> <span class="nv">enabled</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="na">WARNING</span> <span class="na">SystemVerification</span><span class="p">]:</span> <span class="nv">docker</span> <span class="nv">version</span> <span class="k">is</span> <span class="nv">greater</span> <span class="nv">than</span> <span class="nv">the</span> <span class="nv">most</span> <span class="nv">recently</span> <span class="nv">validated</span> <span class="nv">version</span><span class="p">.</span> <span class="nc">Docker</span> <span class="nv">version</span><span class="p">:</span> <span class="mf">18.06.1</span><span class="o">-</span><span class="nv">ce</span><span class="p">.</span> <span class="nc">Max</span> <span class="nv">validated</span> <span class="nv">version</span><span class="p">:</span> <span class="mf">17.03</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="na">WARNING</span> <span class="na">SystemVerification</span><span class="p">]:</span> <span class="nv">failed</span> <span class="nv">to</span> <span class="nv">parse</span> <span class="nv">kernel</span> <span class="nv">config</span><span class="p">:</span> <span class="nv">unable</span> <span class="nv">to</span> <span class="nv">load</span> <span class="nv">kernel</span> <span class="kn">module</span> <span class="s2">&#34;configs&#34;</span><span class="p">:</span> <span class="nv">output</span> <span class="o">-</span> <span class="s2">&#34;&#34;</span><span class="p">,</span> <span class="nv">err</span> <span class="o">-</span> <span class="nv">exit</span> <span class="nv">status</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="na">WARNING</span> <span class="na">Port</span><span class="err">-10250</span><span class="p">]:</span> <span class="nc">Port</span> <span class="mi">10250</span> <span class="k">is</span> <span class="k">in</span> <span class="nv">use</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">discovery</span><span class="p">]</span> <span class="nc">Trying</span> <span class="nv">to</span> <span class="nv">connect</span> <span class="nv">to</span> <span class="nc">API</span> <span class="nc">Server</span> <span class="s2">&#34;192.168.0.28:6443&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">discovery</span><span class="p">]</span> <span class="nc">Created</span> <span class="nv">cluster</span><span class="o">-</span><span class="nv">info</span> <span class="nv">discovery</span> <span class="nv">client</span><span class="p">,</span> <span class="nv">requesting</span> <span class="nv">info</span> <span class="nv">from</span> <span class="s2">&#34;https://192.168.0.28:6443&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">discovery</span><span class="p">]</span> <span class="nc">Requesting</span> <span class="nv">info</span> <span class="nv">from</span> <span class="s2">&#34;https://192.168.0.28:6443&#34;</span> <span class="nv">again</span> <span class="nv">to</span> <span class="nv">validate</span> <span class="nc">TLS</span> <span class="nv">against</span> <span class="nv">the</span> <span class="nv">pinned</span> <span class="nv">public</span> <span class="nv">key</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">discovery</span><span class="p">]</span> <span class="nc">Cluster</span> <span class="nv">info</span> <span class="nv">signature</span> <span class="nv">and</span> <span class="nv">contents</span> <span class="nv">are</span> <span class="nv">valid</span> <span class="nv">and</span> <span class="nc">TLS</span> <span class="nv">certificate</span> <span class="nv">validates</span> <span class="nv">against</span> <span class="nv">pinned</span> <span class="nv">roots</span><span class="p">,</span> <span class="nv">will</span> <span class="nv">use</span> <span class="nc">API</span> <span class="nc">Server</span> <span class="s2">&#34;192.168.0.28:6443&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">discovery</span><span class="p">]</span> <span class="nc">Successfully</span> <span class="nv">established</span> <span class="nv">connection</span> <span class="nv">with</span> <span class="nc">API</span> <span class="nc">Server</span> <span class="s2">&#34;192.168.0.28:6443&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">kubelet</span><span class="p">]</span> <span class="nc">Downloading</span> <span class="nv">configuration</span> <span class="k">for</span> <span class="nv">the</span> <span class="nv">kubelet</span> <span class="nv">from</span> <span class="nv">the</span> <span class="s2">&#34;kubelet-config-1.11&#34;</span> <span class="nc">ConfigMap</span> <span class="k">in</span> <span class="nv">the</span> <span class="nv">kube</span><span class="o">-</span><span class="nv">system</span> <span class="nv">namespace</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">kubelet</span><span class="p">]</span> <span class="nc">Writing</span> <span class="nv">kubelet</span> <span class="nv">configuration</span> <span class="nv">to</span> <span class="nv">file</span> <span class="s2">&#34;/var/lib/kubelet/config.yaml&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">kubelet</span><span class="p">]</span> <span class="nc">Writing</span> <span class="nv">kubelet</span> <span class="nv">environment</span> <span class="nv">file</span> <span class="nv">with</span> <span class="nv">flags</span> <span class="nv">to</span> <span class="nv">file</span> <span class="s2">&#34;/var/lib/kubelet/kubeadm-flags.env&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">preflight</span><span class="p">]</span> <span class="nc">Activating</span> <span class="nv">the</span> <span class="nv">kubelet</span> <span class="nv">service</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">tlsbootstrap</span><span class="p">]</span> <span class="nc">Waiting</span> <span class="k">for</span> <span class="nv">the</span> <span class="nv">kubelet</span> <span class="nv">to</span> <span class="nv">perform</span> <span class="nv">the</span> <span class="nc">TLS</span> <span class="nc">Bootstrap</span><span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="na">patchnode</span><span class="p">]</span> <span class="nc">Uploading</span> <span class="nv">the</span> <span class="nc">CRI</span> <span class="nc">Socket</span> <span class="nv">information</span> <span class="s2">&#34;/var/run/dockershim.sock&#34;</span> <span class="nv">to</span> <span class="nv">the</span> <span class="nc">Node</span> <span class="nc">API</span> <span class="nv">object</span> <span class="s2">&#34;node1&#34;</span> <span class="k">as</span> <span class="nv">an</span> <span class="nv">annotation</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nc">This</span> <span class="nv">node</span> <span class="nv">has</span> <span class="nv">joined</span> <span class="nv">the</span> <span class="nl">cluster</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="o">*</span> <span class="nc">Certificate</span> <span class="nv">signing</span> <span class="nv">request</span> <span class="nv">was</span> <span class="nv">sent</span> <span class="nv">to</span> <span class="nv">master</span> <span class="nv">and</span> <span class="nv">a</span> <span class="nv">response</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">was</span> <span class="nv">received</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="o">*</span> <span class="nc">The</span> <span class="nc">Kubelet</span> <span class="nv">was</span> <span class="nv">informed</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">new</span> <span class="nv">secure</span> <span class="nv">connection</span> <span class="nv">details</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nc">Run</span> <span class="s1">&#39;kubectl get nodes&#39;</span> <span class="nv">on</span> <span class="nv">the</span> <span class="nv">master</span> <span class="nv">to</span> <span class="nv">see</span> <span class="nv">this</span> <span class="nv">node</span> <span class="nv">join</span> <span class="nv">the</span> <span class="nv">cluster</span><span class="p">.</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>多开几个实例，重复执行第四步，即可向Kubernetes集群中增加节点。</p>
+<p>此时在master节点上执行<code>kubectl get nodes</code>查看节点所有节点状态：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[node1 ~]$ kubectl get nodes
+</span></span><span class="line"><span class="cl">NAME      STATUS    ROLES     AGE       VERSION
+</span></span><span class="line"><span class="cl">node1     Ready     master    19m       v1.11.3
+</span></span><span class="line"><span class="cl">node2     Ready     &lt;none&gt;    2m        v1.11.3
+</span></span><span class="line"><span class="cl">node3     Ready     &lt;none&gt;    1m        v1.11.3
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="创建nginx-deployment">创建nginx deployment</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>node1 ~<span class="o">]</span>$ curl https://raw.githubusercontent.com/kubernetes/website/master/content/en/examples/application/nginx-app.yaml &gt; nginx-app.yaml
+</span></span><span class="line"><span class="cl">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+</span></span><span class="line"><span class="cl">                                 Dload  Upload   Total   Spent    Left  Speed
+</span></span><span class="line"><span class="cl"><span class="m">100</span>   <span class="m">497</span>  <span class="m">100</span>   <span class="m">497</span>    <span class="m">0</span>     <span class="m">0</span>   <span class="m">1252</span>      <span class="m">0</span> --:--:-- --:--:-- --:--:--  <span class="m">1255</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>node1 ~<span class="o">]</span>$
+</span></span><span class="line"><span class="cl"><span class="o">[</span>node1 ~<span class="o">]</span>$ kubectl apply -f nginx-app.yaml
+</span></span><span class="line"><span class="cl">service/my-nginx-svc created
+</span></span><span class="line"><span class="cl">deployment.apps/my-nginx created
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>此时查看nodes和pods：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>node1 ~<span class="o">]</span>$ kubectl get nodes
+</span></span><span class="line"><span class="cl">NAME      STATUS    ROLES     AGE       VERSION
+</span></span><span class="line"><span class="cl">node1     Ready     master    29m       v1.11.3
+</span></span><span class="line"><span class="cl">node2     Ready     &lt;none&gt;    11m       v1.11.3
+</span></span><span class="line"><span class="cl">node3     Ready     &lt;none&gt;    11m       v1.11.3
+</span></span><span class="line"><span class="cl"><span class="o">[</span>node1 ~<span class="o">]</span>$
+</span></span><span class="line"><span class="cl"><span class="o">[</span>node1 ~<span class="o">]</span>$ kubectl get pods
+</span></span><span class="line"><span class="cl">NAME                        READY     STATUS    RESTARTS   AGE
+</span></span><span class="line"><span class="cl">my-nginx-67594d6bf6-2cbbz   1/1       Running   <span class="m">0</span>          1m
+</span></span><span class="line"><span class="cl">my-nginx-67594d6bf6-r2p6w   1/1       Running   <span class="m">0</span>          1m
+</span></span><span class="line"><span class="cl">my-nginx-67594d6bf6-vjqn4   1/1       Running   <span class="m">0</span>          1m
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>参考来源：</p>
+<ol>
+<li><a href="https://github.com/cncf/toc/blob/master/DEFINITION.md"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/cncf/toc/blob/master/DEFINITION.md<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%BE%AE%E6%9C%8D%E5%8B%99"target="_blank" rel="external nofollow noopener noreferrer">https://zh.wikipedia.org/wiki/%E5%BE%AE%E6%9C%8D%E5%8B%99<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://zh.wikipedia.org/zh-cn/%E5%AE%A3%E5%91%8A%E5%BC%8F%E7%B7%A8%E7%A8%8B"target="_blank" rel="external nofollow noopener noreferrer">https://zh.wikipedia.org/zh-cn/%E5%AE%A3%E5%91%8A%E5%BC%8F%E7%B7%A8%E7%A8%8B<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/34445114"target="_blank" rel="external nofollow noopener noreferrer">https://zhuanlan.zhihu.com/p/34445114<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://labs.play-with-k8s.com/"target="_blank" rel="external nofollow noopener noreferrer">https://labs.play-with-k8s.com/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+</ol>
+]]></description></item></channel></rss>

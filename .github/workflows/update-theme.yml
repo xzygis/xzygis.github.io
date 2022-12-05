@@ -1,0 +1,37 @@
+name: Update theme
+
+# Controls when the workflow will run
+on:
+  schedule:
+    # Update theme automatically everyday at 00:00 UTC
+    - cron: "0 0 * * *"
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  Update-FixIt:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          ssh-key: ${{ secrets.SYNC_CONTENT }}
+          submodules: true
+          fetch-depth: 0
+
+      - name: Update theme
+        run: git submodule update --remote --merge themes/FixIt
+      
+      - name: Change remote origin
+        run: |
+          git remote remove origin
+          git remote add origin https://github.com/xzygis/xzygis.github.io.git
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          branch: main
+          commit_message: ':arrow_up: Chore(theme): update FixIt version'
+          commit_author: 'github-actions[bot] <github-actions[bot]@users.noreply.github.com>'
+          push_options: '--set-upstream'

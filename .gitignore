@@ -2,3 +2,4 @@
 public/
 *.lock
 .DS_Store
+.hugo_build.lock

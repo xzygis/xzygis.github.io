@@ -1,0 +1,27 @@
+{
+  "name": "chuxing-blog-hugo",
+  "version": "1.0.0",
+  "description": "Chuxing's Note - A backend-end technical blog.",
+  "scripts": {
+    "algolia": "atomic-algolia",
+    "build": "hugo -v --gc --minify",
+    "server": "hugo server -D --disableFastRender --navigateToChanged",
+    "server:production": "npm run server -- --environment production",
+    "update:theme": "git submodule update --remote --merge themes/FixIt && git add . && git commit -m ':arrow_up: Chore(theme): update FixIt version'",
+    "qcloudcdn": "node .scripts/qcloudcdn.js $SECRET_ID $SECRET_KEY"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lruihao/hugo-blog.git"
+  },
+  "author": "xzygis (https://github.com/xzygis)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xzygis/xzygis.github.io/issues"
+  },
+  "homepage": "https://chuxing.club",
+  "dependencies": {
+    "atomic-algolia": "^0.3.19",
+    "qcloud-cdn-node-sdk": "^1.0.0"
+  }
+}

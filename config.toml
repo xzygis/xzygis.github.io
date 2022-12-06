@@ -497,7 +497,7 @@ theme = "FixIt"
     enable = false
     # Google Analytics
     [params.analytics.google]
-      id = ""
+      id = "G-YPVLJZ991S"  #google账号crackcosmas
       # whether to anonymize IP
       anonymizeIP = true
     # Fathom Analytics

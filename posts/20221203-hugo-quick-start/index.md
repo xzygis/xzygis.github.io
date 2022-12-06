@@ -1,12 +1,12 @@
 # Hugo Quick Start
 
 
-# Intall
+## Intall
 ```shell
 go install github.com/gohugoio/hugo@latest
 ```
 
-# Quick Start
+## Quick Start
 > https://gohugo.io/getting-started/quick-start/
 
 运行以下命令创建一个使用`Ananke`主题的网站：
@@ -19,7 +19,7 @@ echo "theme = 'ananke'" >> config.toml
 hugo server
 ```
 
-# Add Content
+## Add Content
 给网站增加新的网页：
 ```shell
 hugo new posts/my-first-post.md
@@ -39,7 +39,7 @@ hugo server --buildDrafts
 hugo server -D
 ```
 
-# Configure the site
+## Configure the site
 可以通过根目录的`config.toml`文件配置网站相关信息：
 ```shell
 baseURL = 'http://example.org/'
@@ -48,13 +48,13 @@ title = 'My New Hugo Site'
 theme = 'ananke'
 ```
 
-# Publish the site
+## Publish the site
 生成站点的静态文件，文件将生成到根目录下的`public`目录
 ```shell
 hugo
 ```
 
-# Host on GitHub
+## Host on GitHub
 > https://gohugo.io/hosting-and-deployment/hosting-on-github/
 
 1. 创建名为`<USERNAME>.github.io` 或 `<ORGANIZATION>.github.io`的GitHub仓库

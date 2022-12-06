@@ -1,7 +1,7 @@
 # Kubernetes概述
 
 
-# Kubernetes 简介
+## Kubernetes 简介
 Kubernetes 是谷歌开源的容器集群管理系统，是 Google 多年大规模容器管理技术 Borg 的开源版本，主要功能包括：
 - 基于容器的应用部署、维护和滚动升级
 - 负载均衡和服务发现
@@ -13,12 +13,12 @@ Kubernetes 是谷歌开源的容器集群管理系统，是 Google 多年大规�
 
 <!-- more -->
 
-## Kubernetes 是一个平台
+### Kubernetes 是一个平台
 Kubernetes 提供了很多的功能，它可以简化应用程序的工作流，加快开发速度。
 - 用户可以使用 Label 以自己的方式组织管理资源，还可以使用 Annotation 来自定义资源的描述信息，比如为管理工具提供状态检查等。
 - Kubernetes 控制器也是构建在跟开发人员和用户使用的相同的 API 之上。用户还可以编写自己的控制器和调度器，也可以通过各种插件机制扩展系统的功能。
 
-## Kubernetes 不是什么
+### Kubernetes 不是什么
 Kubernetes 不是一个传统意义上，包罗万象的 PaaS (平台即服务) 系统，它给用户保留了选择的自由和灵活性。
 - 不限制支持的应用程序类型。Kubernetes 旨在支持极其多样化的工作负载，包括无状态、有状态和数据处理工作负载。只要应用可以在容器中运行，那么它就可以很好的在 Kubernetes 上运行。
 - 不提供内置的中间件 (如消息中间件)、数据处理框架 (如 Spark)、数据库 (如 mysql) 或集群存储系统 (如 Ceph) 等。
@@ -27,7 +27,7 @@ Kubernetes 不是一个传统意义上，包罗万象的 PaaS (平台即服务) 
 - 不提供应用程序配置语言或系统 (如 jsonnet)。
 - 不提供机器配置、维护、管理或自愈系统。
 
-## 核心组件
+### 核心组件
 Kubernetes 主要由以下几个核心组件组成：
 - etcd 保存了整个集群的状态；
 - apiserver 提供了资源操作的唯一入口，并提供认证、授权、访问控制、API 注册和发现等机制；
@@ -37,8 +37,8 @@ Kubernetes 主要由以下几个核心组件组成：
 - Container runtime 负责镜像管理以及 Pod 和容器的真正运行（CRI）；
 - kube-proxy 负责为 Service 提供 cluster 内部的服务发现和负载均衡
 ![k8s核心组件](https://img-blog.csdnimg.cn/20191118230100546.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70)
-# Kubernetes 基本概念
-## Container
+## Kubernetes 基本概念
+### Container
 Container（容器）是一种便携式、轻量级的操作系统级虚拟化技术。它使用 namespace 隔离不同的软件运行环境，并通过镜像自包含软件的运行环境，从而使得容器可以很方便的在任何地方运行。
 
 使用容器，不需要与外部的基础架构环境绑定，因为每一个应用程序都不需要外部依赖，更不需要与外部的基础架构环境依赖。完美解决了从开发到生产环境的一致性问题。
@@ -57,7 +57,7 @@ Container（容器）是一种便携式、轻量级的操作系统级虚拟化�
 - 资源隔离：可预测的应用程序性能。
 - 资源利用：高效率和高密度。
 
-## Pod
+### Pod
 Kubernetes 使用 Pod 来管理容器，每个 Pod 可以包含一个或多个紧密关联的容器。
 
 Pod 是一组紧密关联的容器集合，它们共享 PID、IPC、Network 和 UTS namespace，是 Kubernetes 调度的基本单位。Pod 内的多个容器共享网络和文件系统，可以通过进程间通信和文件共享这种简单高效的方式组合完成服务。
@@ -78,13 +78,13 @@ spec:
     - containerPort: 80
 ```
 
-## Node
+### Node
 Node 是 Pod 真正运行的主机，可以是物理机，也可以是虚拟机。为了管理 Pod，每个 Node 节点上至少要运行 container runtime（比如 docker 或者 rkt）、kubelet 和 kube-proxy 服务。
 
-## Namespace
+### Namespace
 Namespace 是对一组资源和对象的抽象集合，比如可以用来将系统内部的对象划分为不同的项目组或用户组。常见的 pods, services, replication controllers 和 deployments 等都是属于某一个 namespace 的（默认是 default），而 node, persistentVolumes 等则不属于任何 namespace。
 
-## Service
+### Service
 Service 是应用服务的抽象，通过 labels 为应用提供负载均衡和服务发现。匹配 labels 的 Pod IP 和端口列表组成 endpoints，由 kube-proxy 负责将服务 IP 负载均衡到这些 endpoints 上。
 每个 Service 都会自动分配一个 cluster IP（仅在集群内部可访问的虚拟地址）和 DNS 名，其他容器可以通过该地址或 DNS 来访问服务，而不需要了解后端容器的运行。
 ![k8s-service](https://img-blog.csdnimg.cn/20191118230137955.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70)
@@ -105,7 +105,7 @@ spec:
     app: nginx
 ```
 
-## Label
+### Label
 Label 是识别 Kubernetes 对象的标签，以 key/value 的方式附加到对象上（key 最长不能超过 63 字节，value 可以为空，也可以是不超过 253 字节的字符串）。
 
 Label 不提供唯一性，并且实际上经常是很多对象（如 Pods）都使用相同的 label 来标志具体的应用。
@@ -114,7 +114,7 @@ Label 定义好后其他对象可以使用 Label Selector 来选择一组相同 
 - 集合，如 env in (production, qa)
 - 多个 label（它们之间是 AND 关系），如 app=nginx,env=test
 
-## Annotations
+### Annotations
 Annotations 是 key/value 形式附加于对象的注解。不同于 Labels 用于标志和选择对象，Annotations 则是用来记录一些附加信息，用来辅助应用部署、安全策略以及调度策略等。比如 deployment 使用 annotations 来记录 rolling update 的状态。
 
 

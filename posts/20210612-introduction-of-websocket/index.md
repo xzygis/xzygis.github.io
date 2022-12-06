@@ -1,12 +1,12 @@
 # Websocket介绍
 
 
-# 什么是WebSocket？
+## 什么是WebSocket？
 WebSocket是一种网络传输协议，可在单个TCP连接上进行全双工通信，位于OSI模型的应用层。WebSocket协议在2011年由IETF标准化为RFC 6455，后由RFC 7936补充规范。
 
 WebSocket使得客户端和服务器之间的数据交换变得更加简单，允许服务端主动向客户端推送数据。在WebSocket API中，浏览器和服务器只需要完成一次握手，两者之间就可以创建持久性的连接，并进行双向数据传输。
 
-## 有哪些优点？
+### 有哪些优点？
 1. 较少的控制开销。在连接创建后，服务器和客户端之间交换数据时，用于协议控制的数据包头部相对较小。在不包含扩展的情况下，对于服务器到客户端的内容，此头部大小只有2至10字节（和数据包长度有关）；对于客户端到服务器的内容，此头部还需要加上额外的4字节的掩码。相对于HTTP请求每次都要携带完整的头部，此项开销显著减少了。
 2. 强的实时性。由于协议是全双工的，所以服务器可以随时主动给客户端下发数据。相对于HTTP请求需要等待客户端发起请求服务端才能响应，延迟明显更少；即使是和Comet等类似的长轮询比较，其也能在短时间内更多次地传递数据。
 3. 保持连接状态。与HTTP不同的是，Websocket需要先创建连接，这就使得其成为一种有状态的协议，之后通信时可以省略部分状态信息。而HTTP请求可能需要在每个请求都携带状态信息（如身份认证等）。
@@ -15,10 +15,10 @@ WebSocket使得客户端和服务器之间的数据交换变得更加简单，�
 
 <!-- more -->
 
-# 握手协议
+## 握手协议
 WebSocket是一种与HTTP不同的协议。两者都位于OSI模型的应用层，并且都依赖于传输层的TCP协议。 虽然它们不同，但是RFC 6455中规定：it is designed to work over HTTP ports 80 and 443 as well as to support HTTP proxies and intermediaries（WebSocket通过HTTP端口80和443进行工作，并支持HTTP代理和中介），从而使其与HTTP协议兼容。 为了实现兼容性，WebSocket握手使用HTTP Upgrade头从HTTP协议更改为WebSocket协议。
 
-## 握手例子
+### 握手例子
 一个典型的Websocket握手请求如下：
 
 客户端请求：
@@ -43,14 +43,14 @@ Sec-WebSocket-Protocol: chat
 ```
 
 
-## 字段说明
+### 字段说明
 - Connection必须设置Upgrade，表示客户端希望连接升级。
 - Upgrade字段必须设置Websocket，表示希望升级到Websocket协议。
 - Sec-WebSocket-Key是随机的字符串，服务器端会用这些数据来构造出一个SHA-1的信息摘要。把“Sec-WebSocket-Key”加上一个特殊字符串“258EAFA5-E914-47DA-95CA-C5AB0DC85B11”，然后计算SHA-1摘要，之后进行Base64编码，将结果做为“Sec-WebSocket-Accept”头的值，返回给客户端。如此操作，可以尽量避免普通HTTP请求被误认为Websocket协议。
 - Sec-WebSocket-Version 表示支持的Websocket版本。RFC6455要求使用的版本是13，之前草案的版本均应当弃用。
 - Origin字段是必须的。如果缺少origin字段，WebSocket服务器需要回复HTTP 403 状态码（禁止访问）。
 
-## 体验一下
+### 体验一下
 > https://www.websocket.org/echo.html
 
 ![Connect](websocket.org-1.png)
@@ -64,12 +64,12 @@ Sec-WebSocket-Protocol: chat
 
 ![握手报文](websocket.org-3.png)
 
-# 数据帧
+## 数据帧
 WebSocket客户端、服务端通信的最小单位是帧（frame），由1个或多个帧组成一条完整的消息（message）。
 - 发送端：将消息切割成多个帧，并发送给服务端；
 - 接收端：接收消息帧，并将关联的帧重新组装成完整的消息；
 
-## 帧结构
+### 帧结构
 ```
  +-+-+-+-+-------+-+-------------+-------------------------------+
  |F|R|R|R| opcode|M| Payload len |    Extended payload length    |
@@ -89,7 +89,7 @@ WebSocket客户端、服务端通信的最小单位是帧（frame），由1个�
  +---------------------------------------------------------------+
 ```
 
-## 字段说明
+### 字段说明
 FIN：1个比特。
 如果是1，表示这是消息（message）的最后一个分片（fragment），如果是0，表示不是是消息（message）的最后一个分片（fragment）。
 
@@ -130,7 +130,7 @@ Payload data：(x+y) 字节
 - 扩展数据：如果没有协商使用扩展的话，扩展数据数据为0字节。所有的扩展都必须声明扩展数据的长度，或者可以如何计算出扩展数据的长度。此外，扩展如何使用必须在握手阶段就协商好。如果扩展数据存在，那么载荷数据长度必须将扩展数据的长度包含在内。
 - 应用数据：任意的应用数据，在扩展数据之后（如果存在扩展数据），占据了数据帧剩余的位置。载荷数据长度 减去 扩展数据长度，就得到应用数据的长度。
 
-## 掩码算法
+### 掩码算法
 掩码键（Masking-key）是由客户端挑选出来的32位的随机数。掩码操作不会影响数据载荷的长度。掩码、反掩码操作都采用如下算法： 
 
 首先，预设：
@@ -154,16 +154,16 @@ WebSocket 协议中，数据掩码的作用是增强协议的安全性。但数�
 那么为什么还要引入掩码计算呢，除了增加计算机器的运算量外似乎并没有太多的收益（这也是不少同学疑惑的点）。
 答案还是两个字：安全。但并不是为了防止数据泄密，而是为了防止早期版本的协议中存在的代理缓存污染攻击（proxy cache poisoning attacks）等问题。
 
-# 数据传递
+## 数据传递
 一旦WebSocket客户端、服务端建立连接后，后续的操作都是基于数据帧的传递。
 WebSocket根据opcode来区分操作的类型。比如0x8表示断开连接，0x0-0x2表示数据交互。
 
-## 数据分片
+### 数据分片
 WebSocket的每条消息可能被切分成多个数据帧。当WebSocket的接收方收到一个数据帧时，会根据FIN的值来判断，是否已经收到消息的最后一个数据帧。
 FIN=1表示当前数据帧为消息的最后一个数据帧，此时接收方已经收到完整的消息，可以对消息进行处理。FIN=0，则接收方还需要继续监听接收其余的数据帧。
 此外，opcode在数据交换的场景下，表示的是数据的类型。0x01表示文本，0x02表示二进制。而0x00比较特殊，表示延续帧（continuation frame），顾名思义，就是完整消息对应的数据帧还没接收完。
 
-## 数据分片例子
+### 数据分片例子
 下面例子来自MDN，可以很好地演示数据的分片。客户端向服务端两次发送消息，服务端收到消息后回应客户端，这里主要看客户端往服务端发送的消息。
 
 *第一条消息*
@@ -185,7 +185,7 @@ Client: FIN=1, opcode=0x0, msg="year!"
 Server: (process complete message) Happy new year to you too!
 ```
 
-# 心跳
+## 心跳
 WebSocket 为了保持客户端、服务端的实时双向通信，需要确保客户端、服务端之间的 TCP 通道保持连接没有断开。
 对于长时间没有数据往来的连接，如果依旧长时间保持着，可能会浪费包括的连接资源。但不排除有些场景，客户端、服务端虽然长时间没有数据往来，但仍需要保持连接。这个时候，可以采用心跳来实现。
 - 发送方 -> 接收方：ping
@@ -193,11 +193,11 @@ WebSocket 为了保持客户端、服务端的实时双向通信，需要确保�
 
 ping、pong 的操作，对应的是 WebSocket 的两个控制帧，opcode分别是0x9、0xA。
 
-# 安全性
+## 安全性
 WebSocket协议中规定在连接建立时检查Upgrade请求中的某些字段（如Origin，查看每次请求是否一致），对于不符合要求的请求立即断开，在通信过程中，也对Frame中的控制位做了很多限制，以便禁止异常连接。
 websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL来对通信加密，默认ws的端口为80，wss端口为433，类似HTTP与HTTPS。
 
-# Go实战：Gorilla WebSocket
+## Go实战：Gorilla WebSocket
 > Github：https://github.com/gorilla/websocket
 
 文件监控例子（当文件被修改后，把文件发给客户端）：
@@ -268,7 +268,7 @@ func reader(ws *websocket.Conn) {
 
 其中最重要的几个方法是Upgrade、ReadMessage和WriteMessage，下面逐一介绍。
 
-## Upgrade
+### Upgrade
 协议升级
 ```
 // Upgrade upgrades the HTTP server connection to the WebSocket protocol.
@@ -384,7 +384,7 @@ func (c *Conn) SetPongHandler(h func(appData string) error) {
 }
 ```
 
-## ReadMessage
+### ReadMessage
 ```
 func (c *Conn) ReadMessage() (messageType int, p []byte, err error) {
    var r io.Reader
@@ -510,7 +510,7 @@ func (c *Conn) advanceFrame() (int, error) {
 }
 ```
 
-## WriteMessage
+### WriteMessage
 ```
 func (c *Conn) WriteMessage(messageType int, data []byte) error {
    var mw messageWriter

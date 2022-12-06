@@ -1,7 +1,7 @@
 # Linux文件传输的三种方式
 
 
-# 1 nc命令
+## 1 nc命令
 
 执行如下命令，在目标机器(假设ip为`10.11.12.13`)上监听端口`8415`
 ```
@@ -13,7 +13,7 @@ nc -l 8415 > data.txt
 nc -v 10.11.12.13 8415 < ~/Downloads/data.txt
 ```
 
-# 2 SimpleHTTPServer
+## 2 SimpleHTTPServer
 
 在服务器(假设ip为`10.11.12.13`)上执行如下命令: 
 ```
@@ -21,7 +21,7 @@ python -m SimpleHTTPServer 8411
 ```
 然后在本地机器打开浏览器，输入`http://10.11.12.13:8411/`可以访问。
 
-# 3 scp命令
+## 3 scp命令
 
 Linux scp命令用于Linux之间复制文件和目录。
 

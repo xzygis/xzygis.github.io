@@ -1,4 +1,4 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>redis - 标签 - Chu Xing</title><link>https://xzygis.github.io/tags/redis/</link><description>redis - 标签 - Chu Xing</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>xzygis@163.com (chuxing)</managingEditor><webMaster>xzygis@163.com (chuxing)</webMaster><lastBuildDate>Wed, 30 Nov 2022 22:03:21 +0000</lastBuildDate><atom:link href="https://xzygis.github.io/tags/redis/" rel="self" type="application/rss+xml"/><item><title>Redis底层数据结构介绍</title><link>https://xzygis.github.io/posts/20221130-introduction-to-the-underlying-data-structure-of-redis/</link><pubDate>Wed, 30 Nov 2022 22:03:21 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20221130-introduction-to-the-underlying-data-structure-of-redis/</guid><description><![CDATA[<h1 id="简单动态字符串">简单动态字符串</h1>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>redis - 标签 - Chu Xing</title><link>https://xzygis.github.io/tags/redis/</link><description>redis - 标签 - Chu Xing</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>xzygis@163.com (chuxing)</managingEditor><webMaster>xzygis@163.com (chuxing)</webMaster><lastBuildDate>Wed, 30 Nov 2022 22:03:21 +0000</lastBuildDate><atom:link href="https://xzygis.github.io/tags/redis/" rel="self" type="application/rss+xml"/><item><title>Redis底层数据结构介绍</title><link>https://xzygis.github.io/posts/20221130-introduction-to-the-underlying-data-structure-of-redis/</link><pubDate>Wed, 30 Nov 2022 22:03:21 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20221130-introduction-to-the-underlying-data-structure-of-redis/</guid><description><![CDATA[<h2 id="简单动态字符串">简单动态字符串</h2>
 <p>每个sds.h/sdshdr结构表示一个SDS值：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -24,7 +24,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">};</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="sds与c字符串的区别">SDS与C字符串的区别</h2>
+</div><h3 id="sds与c字符串的区别">SDS与C字符串的区别</h3>
 <ul>
 <li>常数时间复杂度获取字符串长度</li>
 <li>杜绝缓冲区溢出</li>
@@ -33,7 +33,7 @@
 <li>兼容部分C字符串函数</li>
 </ul>
 <!-- more -->
-<h1 id="链表">链表</h1>
+<h2 id="链表">链表</h2>
 <p>当一个列表键包含了数量比较多的元素，又或者列表中包含的元素都是比较长的字符串时，Redis就会使用链表作为列表键的底层实现。</p>
 <p>每个链表节点使用一个adlist.h/listNode结构来表示：</p>
 <div class="highlight"><div class="chroma">
@@ -109,7 +109,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>通过为链表设置不同的类型特定函数，Redis的链表可以用于保存各种不同类型的值。</p>
-<h1 id="字典">字典</h1>
+<h2 id="字典">字典</h2>
 <p>字典，又称为符号表（symbol table）、关联数组（associative array）或映射（map），是一种用于保存键值对（key-value pair）的抽象数据结构。</p>
 <p>当一个哈希键包含的键值对比较多，又或者键值对中的元素都是比较长的字符串时，Redis就会使用字典作为哈希键的底层实现。</p>
 <p>Redis字典所使用的哈希表由dict.h/dictht结构定义：</p>
@@ -262,7 +262,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Redis的哈希表使用链地址法（separate chaining）来解决键冲突，每个哈希表节点都有一个next指针，多个哈希表节点可以用next指针构成一个单向链表，被分配到同一个索引上的多个节点可以用这个单向链表连接起来，这就解决了键冲突的问题。</p>
-<h2 id="rehash">rehash</h2>
+<h3 id="rehash">rehash</h3>
 <p>根据BGSAVE命令或BGREWRITEAOF命令是否正在执行，服务器执行扩展操作所需的负载因子并不相同，这是因为在执行BGSAVE命令或BGREWRITEAOF命令的过程中，Redis需要创建当前服务器进程的子进程，而大多数操作系统都采用写时复制（copy-on-write）技术来优化子进程的使用效率，所以在子进程存在期间，服务器会提高执行扩展操作所需的负载因子，从而尽可能地避免在子进程存在期间进行哈希表扩展操作，这可以避免不必要的内存写入操作，最大限度地节约内存。</p>
 <p>为了避免rehash对服务器性能造成影响，服务器不是一次性将ht[0]里面的所有键值对全部rehash到ht[1]，而是分多次、渐进式地将ht[0]里面的键值对慢慢地rehash到ht[1]。</p>
 <p>哈希表渐进式rehash的详细步骤：</p>
@@ -274,7 +274,7 @@
 </ul>
 <p>因为在进行渐进式rehash的过程中，字典会同时使用ht[0]和ht[1]两个哈希表，所以在渐进式rehash进行期间，字典的删除（delete）、查找（find）、更新（update）等操作会在两个哈希表上进行。例如，要在字典里面查找一个键的话，程序会先在ht[0]里面进行查找，如果没找到的话，就会继续到ht[1]里面进行查找，诸如此类。</p>
 <p>另外，在渐进式rehash执行期间，新添加到字典的键值对一律会被保存到ht[1]里面，而ht[0]则不再进行任何添加操作，这一措施保证了ht[0]包含的键值对数量会只减不增，并随着rehash操作的执行而最终变成空表。</p>
-<h1 id="跳跃表">跳跃表</h1>
+<h2 id="跳跃表">跳跃表</h2>
 <p>跳跃表（skiplist）是一种有序数据结构，它通过在每个节点中维持多个指向其他节点的指针，从而达到快速访问节点的目的。跳跃表支持平均O（logN）、最坏O（N）复杂度的节点查找，还可以通过顺序性操作来批量处理节点。在大部分情况下，跳跃表的效率可以和平衡树相媲美，并且因为跳跃表的实现比平衡树要来得更为简单，所以有不少程序都使用跳跃表来代替平衡树。Redis使用跳跃表作为有序集合键的底层实现之一，如果一个有序集合包含的元素数量比较多，又或者有序集合中元素的成员（member）是比较长的字符串时，Redis就会使用跳跃表来作为有序集合键的底层实现。</p>
 <p>跳跃表节点的实现由redis.h/zskiplistNode结构定义：</p>
 <div class="highlight"><div class="chroma">
@@ -339,7 +339,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">zskiplist</span><span class="p">;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h1 id="整数集合">整数集合</h1>
+</div><h2 id="整数集合">整数集合</h2>
 <p>整数集合（intset）是集合键的底层实现之一，当一个集合只包含整数值元素，并且这个集合的元素数量不多时，Redis就会使用整数集合作为集合键的底层实现。</p>
 <p>每个intset.h/intset结构表示一个整数集合：</p>
 <div class="highlight"><div class="chroma">
@@ -368,7 +368,7 @@
 <p>因为引发升级的新元素的长度总是比整数集合现有所有元素的长度都大，所以这个新元素的值要么就大于所有现有元素，要么就小于所有现有元素：</p>
 <p>要让一个数组可以同时保存int16_t、int32_t、int64_t三种类型的值，最简单的做法就是直接使用int64_t类型的数组作为整数集合的底层实现。不过这样一来，即使添加到整数集合里面的都是int16_t类型或者int32_t类型的值，数组都需要使用int64_t类型的空间去保存它们，从而出现浪费内存的情况。而整数集合现在的做法既可以让集合能同时保存三种不同类型的值，又可以确保升级操作只会在有需要的时候进行，这可以尽量节省内存。</p>
 <p>整数集合不支持降级操作，一旦对数组进行了升级，编码就会一直保持升级后的状态。</p>
-<h1 id="压缩列表">压缩列表</h1>
+<h2 id="压缩列表">压缩列表</h2>
 <p>压缩列表（ziplist）是列表键和哈希键的底层实现之一。当一个列表键只包含少量列表项，并且每个列表项要么就是小整数值，要么就是长度比较短的字符串，那么Redis就会使用压缩列表来做列表键的底层实现。</p>
 <p>压缩列表是Redis为了节约内存而开发的，是由一系列特殊编码的连续内存块组成的顺序型（sequential）数据结构。一个压缩列表可以包含任意多个节点（entry），每个节点可以保存一个字节数组或者一个整数值。</p>
 <p>ziplist的组成部分：</p>

@@ -1,4 +1,4 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>后台开发 - 分类 - Chu Xing</title><link>https://xzygis.github.io/categories/%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91/</link><description>后台开发 - 分类 - Chu Xing</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>xzygis@163.com (chuxing)</managingEditor><webMaster>xzygis@163.com (chuxing)</webMaster><lastBuildDate>Wed, 30 Nov 2022 22:03:21 +0000</lastBuildDate><atom:link href="https://xzygis.github.io/categories/%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91/" rel="self" type="application/rss+xml"/><item><title>Redis底层数据结构介绍</title><link>https://xzygis.github.io/posts/20221130-introduction-to-the-underlying-data-structure-of-redis/</link><pubDate>Wed, 30 Nov 2022 22:03:21 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20221130-introduction-to-the-underlying-data-structure-of-redis/</guid><description><![CDATA[<h1 id="简单动态字符串">简单动态字符串</h1>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>后台开发 - 分类 - Chu Xing</title><link>https://xzygis.github.io/categories/%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91/</link><description>后台开发 - 分类 - Chu Xing</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>xzygis@163.com (chuxing)</managingEditor><webMaster>xzygis@163.com (chuxing)</webMaster><lastBuildDate>Wed, 30 Nov 2022 22:03:21 +0000</lastBuildDate><atom:link href="https://xzygis.github.io/categories/%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91/" rel="self" type="application/rss+xml"/><item><title>Redis底层数据结构介绍</title><link>https://xzygis.github.io/posts/20221130-introduction-to-the-underlying-data-structure-of-redis/</link><pubDate>Wed, 30 Nov 2022 22:03:21 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20221130-introduction-to-the-underlying-data-structure-of-redis/</guid><description><![CDATA[<h2 id="简单动态字符串">简单动态字符串</h2>
 <p>每个sds.h/sdshdr结构表示一个SDS值：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -24,7 +24,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">};</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="sds与c字符串的区别">SDS与C字符串的区别</h2>
+</div><h3 id="sds与c字符串的区别">SDS与C字符串的区别</h3>
 <ul>
 <li>常数时间复杂度获取字符串长度</li>
 <li>杜绝缓冲区溢出</li>
@@ -33,7 +33,7 @@
 <li>兼容部分C字符串函数</li>
 </ul>
 <!-- more -->
-<h1 id="链表">链表</h1>
+<h2 id="链表">链表</h2>
 <p>当一个列表键包含了数量比较多的元素，又或者列表中包含的元素都是比较长的字符串时，Redis就会使用链表作为列表键的底层实现。</p>
 <p>每个链表节点使用一个adlist.h/listNode结构来表示：</p>
 <div class="highlight"><div class="chroma">
@@ -109,7 +109,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>通过为链表设置不同的类型特定函数，Redis的链表可以用于保存各种不同类型的值。</p>
-<h1 id="字典">字典</h1>
+<h2 id="字典">字典</h2>
 <p>字典，又称为符号表（symbol table）、关联数组（associative array）或映射（map），是一种用于保存键值对（key-value pair）的抽象数据结构。</p>
 <p>当一个哈希键包含的键值对比较多，又或者键值对中的元素都是比较长的字符串时，Redis就会使用字典作为哈希键的底层实现。</p>
 <p>Redis字典所使用的哈希表由dict.h/dictht结构定义：</p>
@@ -262,7 +262,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Redis的哈希表使用链地址法（separate chaining）来解决键冲突，每个哈希表节点都有一个next指针，多个哈希表节点可以用next指针构成一个单向链表，被分配到同一个索引上的多个节点可以用这个单向链表连接起来，这就解决了键冲突的问题。</p>
-<h2 id="rehash">rehash</h2>
+<h3 id="rehash">rehash</h3>
 <p>根据BGSAVE命令或BGREWRITEAOF命令是否正在执行，服务器执行扩展操作所需的负载因子并不相同，这是因为在执行BGSAVE命令或BGREWRITEAOF命令的过程中，Redis需要创建当前服务器进程的子进程，而大多数操作系统都采用写时复制（copy-on-write）技术来优化子进程的使用效率，所以在子进程存在期间，服务器会提高执行扩展操作所需的负载因子，从而尽可能地避免在子进程存在期间进行哈希表扩展操作，这可以避免不必要的内存写入操作，最大限度地节约内存。</p>
 <p>为了避免rehash对服务器性能造成影响，服务器不是一次性将ht[0]里面的所有键值对全部rehash到ht[1]，而是分多次、渐进式地将ht[0]里面的键值对慢慢地rehash到ht[1]。</p>
 <p>哈希表渐进式rehash的详细步骤：</p>
@@ -274,7 +274,7 @@
 </ul>
 <p>因为在进行渐进式rehash的过程中，字典会同时使用ht[0]和ht[1]两个哈希表，所以在渐进式rehash进行期间，字典的删除（delete）、查找（find）、更新（update）等操作会在两个哈希表上进行。例如，要在字典里面查找一个键的话，程序会先在ht[0]里面进行查找，如果没找到的话，就会继续到ht[1]里面进行查找，诸如此类。</p>
 <p>另外，在渐进式rehash执行期间，新添加到字典的键值对一律会被保存到ht[1]里面，而ht[0]则不再进行任何添加操作，这一措施保证了ht[0]包含的键值对数量会只减不增，并随着rehash操作的执行而最终变成空表。</p>
-<h1 id="跳跃表">跳跃表</h1>
+<h2 id="跳跃表">跳跃表</h2>
 <p>跳跃表（skiplist）是一种有序数据结构，它通过在每个节点中维持多个指向其他节点的指针，从而达到快速访问节点的目的。跳跃表支持平均O（logN）、最坏O（N）复杂度的节点查找，还可以通过顺序性操作来批量处理节点。在大部分情况下，跳跃表的效率可以和平衡树相媲美，并且因为跳跃表的实现比平衡树要来得更为简单，所以有不少程序都使用跳跃表来代替平衡树。Redis使用跳跃表作为有序集合键的底层实现之一，如果一个有序集合包含的元素数量比较多，又或者有序集合中元素的成员（member）是比较长的字符串时，Redis就会使用跳跃表来作为有序集合键的底层实现。</p>
 <p>跳跃表节点的实现由redis.h/zskiplistNode结构定义：</p>
 <div class="highlight"><div class="chroma">
@@ -339,7 +339,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">zskiplist</span><span class="p">;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h1 id="整数集合">整数集合</h1>
+</div><h2 id="整数集合">整数集合</h2>
 <p>整数集合（intset）是集合键的底层实现之一，当一个集合只包含整数值元素，并且这个集合的元素数量不多时，Redis就会使用整数集合作为集合键的底层实现。</p>
 <p>每个intset.h/intset结构表示一个整数集合：</p>
 <div class="highlight"><div class="chroma">
@@ -368,7 +368,7 @@
 <p>因为引发升级的新元素的长度总是比整数集合现有所有元素的长度都大，所以这个新元素的值要么就大于所有现有元素，要么就小于所有现有元素：</p>
 <p>要让一个数组可以同时保存int16_t、int32_t、int64_t三种类型的值，最简单的做法就是直接使用int64_t类型的数组作为整数集合的底层实现。不过这样一来，即使添加到整数集合里面的都是int16_t类型或者int32_t类型的值，数组都需要使用int64_t类型的空间去保存它们，从而出现浪费内存的情况。而整数集合现在的做法既可以让集合能同时保存三种不同类型的值，又可以确保升级操作只会在有需要的时候进行，这可以尽量节省内存。</p>
 <p>整数集合不支持降级操作，一旦对数组进行了升级，编码就会一直保持升级后的状态。</p>
-<h1 id="压缩列表">压缩列表</h1>
+<h2 id="压缩列表">压缩列表</h2>
 <p>压缩列表（ziplist）是列表键和哈希键的底层实现之一。当一个列表键只包含少量列表项，并且每个列表项要么就是小整数值，要么就是长度比较短的字符串，那么Redis就会使用压缩列表来做列表键的底层实现。</p>
 <p>压缩列表是Redis为了节约内存而开发的，是由一系列特殊编码的连续内存块组成的顺序型（sequential）数据结构。一个压缩列表可以包含任意多个节点（entry），每个节点可以保存一个字节数组或者一个整数值。</p>
 <p>ziplist的组成部分：</p>
@@ -395,33 +395,33 @@
 <li>首先，压缩列表里要恰好有多个连续的、长度介于250字节至253字节之间的节点，连锁更新才有可能被引发，在实际中，这种情况并不多见；-</li>
 <li>其次，即使出现连锁更新，但只要被更新的节点数量不多，就不会对性能造成任何影响：比如说，对三五个节点进行连锁更新是绝对不会影响性能的；</li>
 </ul>
-]]></description></item><item><title>Tair:分布式键/值存储系统</title><link>https://xzygis.github.io/posts/20221127-tair-a-distributed-key-value-storage-system-developed-by-alibaba-group/</link><pubDate>Sun, 27 Nov 2022 23:11:28 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20221127-tair-a-distributed-key-value-storage-system-developed-by-alibaba-group/</guid><description><![CDATA[<h1 id="产品概览">产品概览</h1>
+]]></description></item><item><title>Tair:分布式键/值存储系统</title><link>https://xzygis.github.io/posts/20221127-tair-a-distributed-key-value-storage-system-developed-by-alibaba-group/</link><pubDate>Sun, 27 Nov 2022 23:11:28 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20221127-tair-a-distributed-key-value-storage-system-developed-by-alibaba-group/</guid><description><![CDATA[<h2 id="产品概览">产品概览</h2>
 <p>Tair 是快速访问内存 (MDB)/持久性 (LDB) 存储服务。</p>
 <p>Tair采用高性能、高可用的分布式集群架构，可以满足企业对读写性能和可扩展容量的高要求。</p>
-<h1 id="系统架构">系统架构</h1>
+<h2 id="系统架构">系统架构</h2>
 <p>Tair 集群具有三个必要的模块：ConfigServer、DataServer 和客户端。</p>
 <!-- more -->
 <p></p>
 <p>通常，一个 Tair 集群包括两个 ConfigServer 和多个 DataServer。 两个 ConfigServer 充当主服务器和备用服务器。 DataServer 和 ConfigServer 之间的心跳检查用于检查集群中活跃的和可用的 DataServer，以建立集群中数据的分布（比较表）。 DataServers 按照 ConfigServer 的指示存储、复制和迁移数据。当客户端启动时，它从 ConfigServer 获取数据分布信息。客户端根据这些数据分布信息，与对应的DataServer进行交互，执行用户的请求。</p>
 <p>在架构上，ConfigServer 的作用类似于传统应用系统中的中心节点。整个集群服务依赖于ConfigServer。 事实上，Tair 的 ConfigServers 是非常轻量级的。当一个工作的 ConfigServer 遇到停机时间时，另一个 ConfigServer 会在几秒钟内自动接管。 即使两个 ConfigServer 同时停机，只要 DataServer 没有变化，Tair 也可以正常运行。 用户只需要将应用程序连接到 ConfigServers，不需要知道内部节点的详细信息。</p>
-<h2 id="configserver">ConfigServer</h2>
+<h3 id="configserver">ConfigServer</h3>
 <p>两个 ConfigServers 作为主服务器和备用服务器。</p>
 <p>集群的实时和可用 DataServer 节点信息是使用 ConfigServer 和 DataServer 之间的心跳检查确定的。</p>
 <p>ConfigServer根据DataServer节点信息构建数据分布表，展示数据在集群中的分布情况。</p>
 <p>ConfigServer 提供数据分发表查询服务。</p>
 <p>ConfigServer 调度数据服务器之间的数据迁移和复制。</p>
-<h2 id="dataservers-数据服务器">DataServers 数据服务器</h2>
+<h3 id="dataservers-数据服务器">DataServers 数据服务器</h3>
 <p>DataServers 提供存储引擎。</p>
 <p>DataServers 接收客户端发起的操作，例如 put/get/remove。</p>
 <p>DataServers 迁移和复制数据。</p>
 <p>DataServers 提供访问统计信息。</p>
-<h2 id="clients-客户端">Clients 客户端</h2>
+<h3 id="clients-客户端">Clients 客户端</h3>
 <p>客户端提供用于访问 Tair 集群的 API。</p>
 <p>客户端更新和缓存数据分发表。</p>
 <p>客户端提供LocalCache，防止过热的数据访问影响Tair集群服务。</p>
 <p>客户端控制流量。</p>
-<h1 id="产品特点">产品特点</h1>
-<h2 id="分布式架构">分布式架构</h2>
+<h2 id="产品特点">产品特点</h2>
+<h3 id="分布式架构">分布式架构</h3>
 <p>分布式集群架构用于提供自动灾难恢复和故障转移。</p>
 <p>支持负载均衡，数据分布均匀。</p>
 <p>系统存储空间和吞吐量性能可以弹性伸缩，解决数据量和QPS性能限制。</p>
@@ -429,64 +429,64 @@
 <p>数据结构丰富。 支持单级键值结构和二级索引结构。</p>
 <p>支持各种用途。 还支持计数器模式。</p>
 <p>支持数据过期和版本控制。</p>
-<h2 id="version-支持">Version 支持</h2>
+<h3 id="version-支持">Version 支持</h3>
 <p>Tair 中的每个数据都包含版本号，版本号在每次更新后都会递增。这个特性有助于防止由于数据的并发更新导致的问题。</p>
 <p>比如，系统有一个 value 为 “a,b,c”，A 和 B 同时 get 到这个 value。A 执行操作，在后面添加一个 d，value 为 “a,b,c,d”。B 执行操作添加一个 e，value 为”a,b,c,e”。如果不加控制，无论 A 和 B 谁先更新成功，它的更新都会被后到的更新覆盖。</p>
 <p>Tair 无法解决这个问题，但是引入了 version 机制避免这样的问题。还是拿刚才的例子，A 和 B 取到数据，假设版本号为 10，A 先更新，更新成功后，value 为”a,b,c,d”，与此同时，版本号会变为 11。当 B 更新时，由于其基于的版本号是 10，服务器会拒绝更新，从而避免 A 的更新被覆盖。B 可以选择 get 新版本的 value，然后在其基础上修改，也可以选择强行更新。</p>
-<h2 id="item-支持">Item 支持</h2>
+<h3 id="item-支持">Item 支持</h3>
 <p>Tair 还支持将 value 视为一个 item 数组，对 value 中的部分 item 进行操作。比如有个 key 的 value 为 [1,2,3,4,5]，我们可以只获取前两个 item，返回 [1,2]，也可以删除第一个 item，还支持将数据删除，并返回被删除的数据，通过这个接口可以实现一个原子的分布式 FIFO 的队列。</p>
-<h1 id="用途">用途</h1>
-<h2 id="数据库缓存">数据库缓存</h2>
+<h2 id="用途">用途</h2>
+<h3 id="数据库缓存">数据库缓存</h3>
 <p>随着业务量的增加，对数据库系统的并发请求越来越多，数据库系统的负载越来越重。当数据库系统过载时，响应速度会变慢，在极端情况下甚至会导致服务中断。</p>
 <p>为了解决这个问题，Tair MDB 可以与数据库产品一起部署，以提供高吞吐量和低延迟的存储。</p>
 <p>MDB 响应速度快，一般毫秒级完成请求。而且，MDB 支持更高的 QPS 速率，可以处理比数据库更多的并发请求。</p>
 <p>通过观察业务，用户可以将热点数据存储在MDB中，显着减轻数据库的负载。这不仅降低了数据库成本，还提高了系统可用性。</p>
-<h2 id="临时数据存储">临时数据存储</h2>
+<h3 id="临时数据存储">临时数据存储</h3>
 <p>社交网站、电商网站、游戏、广告等应用需要维护大量的临时数据。</p>
 <p>在 MDB 中存储临时数据可以减少内存管理开销和应用程序负载。在分布式环境中，MDB可以作为统一的全局存储，可以防止单点故障造成的数据丢失，解决多个应用之间同步的问题。</p>
 <p>一个常见的例子是使用 MDB 作为会话管理器。如果网站采用分布式部署，并且流量很大，同一用户的不同请求可能会发送到不同的Web服务器。</p>
 <p>在这种情况下，MDB 可以作为全局存储解决方案来保存会话数据、用户令牌、权限信息等数据。</p>
-<h2 id="数据存储">数据存储</h2>
+<h3 id="数据存储">数据存储</h3>
 <p>推荐和广告业务通常需要离线计算大量数据。 LDB 支持持久存储并提供卓越的性能。</p>
 <p>支持在线服务，允许用户定期将离线数据导入LDB进行在线服务。</p>
 <p>经过计算，列表业务可以将最终列表存储在LDB中，直接展示给前端应用程序。</p>
 <p>这样，LDB 就满足了存储和高速访问的需求。</p>
-<h2 id="黑名单白名单">黑名单/白名单</h2>
+<h3 id="黑名单白名单">黑名单/白名单</h3>
 <p>安全应用程序有许多黑名单/白名单方案。这些黑名单/白名单场景的特点是命中率低、访问量大、数据丢失导致业务损失。</p>
 <p>LDB 支持数据持久化和高访问量，因此在这些场景中被广泛使用。</p>
-<h2 id="分布式锁">分布式锁</h2>
+<h3 id="分布式锁">分布式锁</h3>
 <p>分布式锁通常用于防止多线程并发导致的数据不一致和逻辑混乱。分布式锁可以使用 Tair 的版本特性或计算功能来实现。</p>
 <p>得益于LBS的持久化，即使服务宕机，锁也不会丢失，可以正常释放。</p>
 ]]></description></item><item><title>程序员做需求时容易忽视的若干问题</title><link>https://xzygis.github.io/posts/20221120-some-problems-that-programmers-tend-to-ignore-when-making-requirements/</link><pubDate>Sun, 20 Nov 2022 23:33:08 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20221120-some-problems-that-programmers-tend-to-ignore-when-making-requirements/</guid><description><![CDATA[<p>程序员大部分时间都在承接一个个的需求，在做需求的过程中，有一些问题是我们容易忽视的，究其原因，主要是在做需求的过程中缺少思考，或者思考不够全面。而思考的缺失，正是导致部分人所说的“做业务需求没有成长”的主要原因之一。今天主要从研发流程中重要的几个阶段出发，跟大家谈谈做需求的过程中有哪些是我们容易忽视的问题。</p>
-<h1 id="需求分析">需求分析</h1>
+<h2 id="需求分析">需求分析</h2>
 <p>PM是我们的需求的最主要来源，在需求分析阶段，需要避免的问题是：一、没有理解清楚需求细节，而直接进入后续的方案设计和开发阶段；二、需求里说怎么干，我们就怎么干。
 问题一容易造成的结果是，功能开发上线完成了，结果发现不是PM想要的，导致不必要的返工成本。另外，由于没有真正理清需求，也有可能导致项目的整体架构设计产生重大偏差，从而给后续的架构迭代留下隐患。
 问题二容易造成的结果是，PM想做的功能点都做好了，却只是解决了一个本就不存在的问题，导致人力的浪费。特斯拉进行生产线自动化的时候，有一个零件的自动化安装总是出问题，特斯拉的工程师为了优化这个自动化流程，投入了大量的资金和精力。 后来马斯克问他们的技术人员，为什么需要这个零件，结果发现大家居然并不清楚。最后证明其实在电动车上，根本不需要这个零件。
 为了避免以上两个问题，当我们接到PM需求时，应该详细地了解需求的功能细节，以及这个需求需要解决的问题是什么，最终是服务于什么目的，是否有助于达成业务的总体目标。以电商行业为例，我们应该思考所做的需求是否有助于提升商品的导购和流通效率，是否能帮卖家多挣钱，是否能帮买家更快找到想要的商品，是否能帮助平台提升竞争力。</p>
 <!-- more -->
-<h1 id="方案设计">方案设计</h1>
+<h2 id="方案设计">方案设计</h2>
 <p>在方案设计阶段，需要避免的问题是：“这个需求很简单，不用走方案设计和评审环节了，我直接开发吧，很快就可以上线了”。有些需求可能只是简单的修改一两个接口，或者只是对现有的流程做部分调整，这往往容易让我们过于自信，认为直接开干也不会有问题。其实，在我们真正理清楚方案之前，它并不简单，而确保我们真正理清方案的方式，就是按照部门的方案设计模板，把技术方案写出来，对照CheckList，逐一完成各个检查项。
 所谓磨刀不误砍柴工，在方案设计阶段多花一些时间，可以帮助我们建设出更加合理的系统架构，让我们在技术架构上不断积累资产，资产的不断增值会让我们在能力建设和研发效率等方面长期受益。相反，如果我们忽视了方案设计，则会不断地积累技术债，后续需要投入很多精力去还债。</p>
-<h1 id="代码开发">代码开发</h1>
+<h2 id="代码开发">代码开发</h2>
 <p>在代码开发方面，需要避免的问题是：“对工程质量要求低，认为能实现功能就行”。实际上，代码也是一种语言，它不仅用于人与机器之间的交流，而且也用于人与人之间的交流。逻辑复杂、晦涩难懂的代码可能会导致以下问题：一、隐藏bug，而且往往很不好改；二、后续有功能迭代时，逻辑修改非常复杂。
 逻辑的正确性，是我们编码时的最低要求，编码时应该尽可能的追求信、达、雅。在编码方面主要给两点建议：一、遵守公司和部门的研发规范，包括分支规范、代码规范等；二、写代码时要多思考自己的写法是不是最优的，还有没有更好的写法。</p>
-<h1 id="服务上线">服务上线</h1>
+<h2 id="服务上线">服务上线</h2>
 <p>在服务上线阶段，需要避免的是观察不细致，想当然的认为没问题，结果到最后导致了一个大问题。在上线阶段，我们应该加强检查，从多角度对服务进行观察，包括：上游角度、服务本身角度、下游角度，观察的指标，既包括错误率、时延、错误日志等通用指标，也包括业务自定义指标（应该在方案设计阶段考虑清楚后续有什么手段可以观测服务是否正常）。
 值得一提的是，服务上线完成并不是结束，而是一个新的开始。我们需要采取各种手段保障服务的稳定运行，并不断发现其中的可优化点，推动服务SLI稳步提升。</p>
 ]]></description></item><item><title>给新人程序员的职场建议</title><link>https://xzygis.github.io/posts/20221120-career-advice-for-beginning-programmers/</link><pubDate>Sun, 20 Nov 2022 22:01:20 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20221120-career-advice-for-beginning-programmers/</guid><description><![CDATA[<p>我是一位在大厂打拼多年的程序员，今天想结合自己的工作经历给新人程序员们提出若干建议，希望能够在一定程度上帮助大家在职场脱颖而出。</p>
-<h1 id="积极主动">积极主动</h1>
+<h2 id="积极主动">积极主动</h2>
 <p>第一个建议是要积极主动，有owner意识，勇于承担工作职责，并在工作中做出成绩。
 首先，领取任务或接受任务应该积极主动。在工作中可以主动向领导提出来自己对什么方向的项目感兴趣，希望承担什么样的任务。当领导知道你是积极主动的人，而且也发现你确实有能力胜任某项工作时，就会优先想到你。在领导主动布置工作任务时，也不应该过多的考虑这项工作好不好干、难度怎么样，而是应该要积极主动的接受。
 其次，在执行任务的过程中，应该发挥主观能动性，从而使成果达到预期或尽可能的超出预期。这就要求我们理清任务的本质，思考任务背后的更深层次的逻辑，从而确定目标、理清思路、拆解任务、贯彻执行。这里特别需要避免的是，简单地成为“任务执行器”，即机械的执行任务，而不知道做完这个任务之后能解决什么问题，后续又还需要做什么。</p>
 <!-- more -->
-<h1 id="善于沟通">善于沟通</h1>
+<h2 id="善于沟通">善于沟通</h2>
 <p>作为研发，工作中不免要和很多同事进行沟通，比如跟PM对接需求、跟其他前后端RD聊技术方案、跟QA聊测试用例等，因此高效的沟通可以在很大程度上提升我们的工作效率。在善于沟通方面，主要的建议是：一、不要与人争吵；二、换位思考。
 争吵不能解决任何的问题，反而容易让人丧失理智，而且容易影响自己在旁观者心里的印象。换位思考是解决沟通问题的利器，先谈对方最关心的点，让对方感受到你的真诚。遇到分歧时，先找共同点，求同存异，往往事半功倍。</p>
-<h1 id="保持好奇心">保持好奇心</h1>
+<h2 id="保持好奇心">保持好奇心</h2>
 <p>软件研发方面的技术日新月异，不断有新的编程语言、存储组件、技术框架等出现，为了保持保持和增加自己的核心竞争力，对于工作中用到的相关组件和框架，应该不断去挖掘背后的底层原理。比如说工作中用到了HTTP协议，那么就应该思考：为什么会有HTTP？它的演进过程是怎样的？有什么设计理念是值得我们学习的？它还有什么缺陷是需要改进的吗？
 除了熟悉工作中用到的技术组件的原理之外，也应该多关注一些前沿的技术趋势，了解业界同行的一些优秀的实践经验，可能的方式包括关注InfoQ、美团技术博客等公众号发布的高质量文档。
 这里特别需要避免的是，整天抱怨自己的工作只是CRUD，认为自己的工作没价值，但是却不愿去发掘自己的工作背后的有价值的东西。</p>
-<h1 id="引人注目">引人注目</h1>
+<h2 id="引人注目">引人注目</h2>
 <p>程序员是技术性很强的工作，技术是我们的立身之本，但我们也要避免只会研究技术、埋头苦干。对于交到我们手里的工作，我们要尽可能地做好，同时也需要积极地向领导汇报进展和成果，这样领导才会知道事情的进度是可控的、成果是可预期的，对于你个人的工作产出也自然心里有数了。
 在引人注目方面，另外很重要的一点是：发表文章。如果只有你自己知道你是绝顶高手，是没有意义的，你需要通过发表文章的方式表述所学所思所想，让其他人知道你的实力，从而扩大你的影响力。</p>
 ]]></description></item><item><title>浅谈Bloom Filter基本原理及使用方式</title><link>https://xzygis.github.io/posts/20210612-introduction-to-the-basic-principles-of-bloom-filter/</link><pubDate>Sat, 12 Jun 2021 16:22:56 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20210612-introduction-to-the-basic-principles-of-bloom-filter/</guid><description><![CDATA[<p>一提到元素查找，我们会很自然的想到<code>HashMap</code>。通过将哈希函数作用于key上，我们得到了哈希值，基于哈希值我们可以去表里的相应位置获取对应的数据。除了存在哈希冲突问题之外，<code>HashMap</code>一个很大的问题就是空间效率低。引入<code>Bloom Filter</code>则可以很好的解决空间效率的问题。</p>
@@ -573,7 +573,7 @@
 <li><a href="https://www.cnblogs.com/haippy/archive/2012/07/13/2590351.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.cnblogs.com/haippy/archive/2012/07/13/2590351.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
 <li><a href="https://segmentfault.com/a/1190000002729689"target="_blank" rel="external nofollow noopener noreferrer">https://segmentfault.com/a/1190000002729689<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
 </ul>
-]]></description></item><item><title>Linux文件传输的三种方式</title><link>https://xzygis.github.io/posts/20210612-three-ways-to-transfer-files-in-linux/</link><pubDate>Sat, 12 Jun 2021 16:14:22 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20210612-three-ways-to-transfer-files-in-linux/</guid><description><![CDATA[<h1 id="1-nc命令">1 nc命令</h1>
+]]></description></item><item><title>Linux文件传输的三种方式</title><link>https://xzygis.github.io/posts/20210612-three-ways-to-transfer-files-in-linux/</link><pubDate>Sat, 12 Jun 2021 16:14:22 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20210612-three-ways-to-transfer-files-in-linux/</guid><description><![CDATA[<h2 id="1-nc命令">1 nc命令</h2>
 <p>执行如下命令，在目标机器(假设ip为<code>10.11.12.13</code>)上监听端口<code>8415</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -592,7 +592,7 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">nc -v 10.11.12.13 8415 &lt; ~/Downloads/data.txt
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h1 id="2-simplehttpserver">2 SimpleHTTPServer</h1>
+</div><h2 id="2-simplehttpserver">2 SimpleHTTPServer</h2>
 <p>在服务器(假设ip为<code>10.11.12.13</code>)上执行如下命令:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -603,7 +603,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>然后在本地机器打开浏览器，输入<code>http://10.11.12.13:8411/</code>可以访问。</p>
-<h1 id="3-scp命令">3 scp命令</h1>
+<h2 id="3-scp命令">3 scp命令</h2>
 <p>Linux scp命令用于Linux之间复制文件和目录。</p>
 <p>scp是 secure copy的缩写, scp是linux系统下基于ssh登陆进行安全的远程文件拷贝命令。</p>
 <p>在目标机器执行如下命令：</p>
@@ -616,10 +616,10 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>即可把目标机器dev.test.com的文件~/data.txt拷贝到当前目录。</p>
-]]></description></item><item><title>Websocket介绍</title><link>https://xzygis.github.io/posts/20210612-introduction-of-websocket/</link><pubDate>Sat, 12 Jun 2021 15:25:21 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20210612-introduction-of-websocket/</guid><description><![CDATA[<h1 id="什么是websocket">什么是WebSocket？</h1>
+]]></description></item><item><title>Websocket介绍</title><link>https://xzygis.github.io/posts/20210612-introduction-of-websocket/</link><pubDate>Sat, 12 Jun 2021 15:25:21 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20210612-introduction-of-websocket/</guid><description><![CDATA[<h2 id="什么是websocket">什么是WebSocket？</h2>
 <p>WebSocket是一种网络传输协议，可在单个TCP连接上进行全双工通信，位于OSI模型的应用层。WebSocket协议在2011年由IETF标准化为RFC 6455，后由RFC 7936补充规范。</p>
 <p>WebSocket使得客户端和服务器之间的数据交换变得更加简单，允许服务端主动向客户端推送数据。在WebSocket API中，浏览器和服务器只需要完成一次握手，两者之间就可以创建持久性的连接，并进行双向数据传输。</p>
-<h2 id="有哪些优点">有哪些优点？</h2>
+<h3 id="有哪些优点">有哪些优点？</h3>
 <ol>
 <li>较少的控制开销。在连接创建后，服务器和客户端之间交换数据时，用于协议控制的数据包头部相对较小。在不包含扩展的情况下，对于服务器到客户端的内容，此头部大小只有2至10字节（和数据包长度有关）；对于客户端到服务器的内容，此头部还需要加上额外的4字节的掩码。相对于HTTP请求每次都要携带完整的头部，此项开销显著减少了。</li>
 <li>强的实时性。由于协议是全双工的，所以服务器可以随时主动给客户端下发数据。相对于HTTP请求需要等待客户端发起请求服务端才能响应，延迟明显更少；即使是和Comet等类似的长轮询比较，其也能在短时间内更多次地传递数据。</li>
@@ -628,9 +628,9 @@
 <li>可以支持扩展。Websocket定义了扩展，用户可以扩展协议、实现部分自定义的子协议。如部分浏览器支持压缩等。</li>
 </ol>
 <!-- more -->
-<h1 id="握手协议">握手协议</h1>
+<h2 id="握手协议">握手协议</h2>
 <p>WebSocket是一种与HTTP不同的协议。两者都位于OSI模型的应用层，并且都依赖于传输层的TCP协议。 虽然它们不同，但是RFC 6455中规定：it is designed to work over HTTP ports 80 and 443 as well as to support HTTP proxies and intermediaries（WebSocket通过HTTP端口80和443进行工作，并支持HTTP代理和中介），从而使其与HTTP协议兼容。 为了实现兼容性，WebSocket握手使用HTTP Upgrade头从HTTP协议更改为WebSocket协议。</p>
-<h2 id="握手例子">握手例子</h2>
+<h3 id="握手例子">握手例子</h3>
 <p>一个典型的Websocket握手请求如下：</p>
 <p>客户端请求：</p>
 <div class="highlight"><div class="chroma">
@@ -672,7 +672,7 @@
 </span></span><span class="line"><span class="cl">Sec-WebSocket-Protocol: chat
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="字段说明">字段说明</h2>
+</div><h3 id="字段说明">字段说明</h3>
 <ul>
 <li>Connection必须设置Upgrade，表示客户端希望连接升级。</li>
 <li>Upgrade字段必须设置Websocket，表示希望升级到Websocket协议。</li>
@@ -680,7 +680,7 @@
 <li>Sec-WebSocket-Version 表示支持的Websocket版本。RFC6455要求使用的版本是13，之前草案的版本均应当弃用。</li>
 <li>Origin字段是必须的。如果缺少origin字段，WebSocket服务器需要回复HTTP 403 状态码（禁止访问）。</li>
 </ul>
-<h2 id="体验一下">体验一下</h2>
+<h3 id="体验一下">体验一下</h3>
 <blockquote>
 <p><a href="https://www.websocket.org/echo.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.websocket.org/echo.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
 </blockquote>
@@ -689,13 +689,13 @@
 <p></p>
 <p>数据传输：</p>
 <p></p>
-<h1 id="数据帧">数据帧</h1>
+<h2 id="数据帧">数据帧</h2>
 <p>WebSocket客户端、服务端通信的最小单位是帧（frame），由1个或多个帧组成一条完整的消息（message）。</p>
 <ul>
 <li>发送端：将消息切割成多个帧，并发送给服务端；</li>
 <li>接收端：接收消息帧，并将关联的帧重新组装成完整的消息；</li>
 </ul>
-<h2 id="帧结构">帧结构</h2>
+<h3 id="帧结构">帧结构</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -734,7 +734,7 @@
 </span></span><span class="line"><span class="cl"> +---------------------------------------------------------------+
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="字段说明-1">字段说明</h2>
+</div><h3 id="字段说明-1">字段说明</h3>
 <p>FIN：1个比特。
 如果是1，表示这是消息（message）的最后一个分片（fragment），如果是0，表示不是是消息（message）的最后一个分片（fragment）。</p>
 <p>RSV1, RSV2, RSV3：各占1个比特。
@@ -773,7 +773,7 @@
 <li>扩展数据：如果没有协商使用扩展的话，扩展数据数据为0字节。所有的扩展都必须声明扩展数据的长度，或者可以如何计算出扩展数据的长度。此外，扩展如何使用必须在握手阶段就协商好。如果扩展数据存在，那么载荷数据长度必须将扩展数据的长度包含在内。</li>
 <li>应用数据：任意的应用数据，在扩展数据之后（如果存在扩展数据），占据了数据帧剩余的位置。载荷数据长度 减去 扩展数据长度，就得到应用数据的长度。</li>
 </ul>
-<h2 id="掩码算法">掩码算法</h2>
+<h3 id="掩码算法">掩码算法</h3>
 <p>掩码键（Masking-key）是由客户端挑选出来的32位的随机数。掩码操作不会影响数据载荷的长度。掩码、反掩码操作都采用如下算法：</p>
 <p>首先，预设：</p>
 <ul>
@@ -802,14 +802,14 @@
 WebSocket 协议中，数据掩码的作用是增强协议的安全性。但数据掩码并不是为了保护数据本身，因为算法本身是公开的，运算也不复杂。除了加密通道本身，似乎没有太多有效的保护通信安全的办法。
 那么为什么还要引入掩码计算呢，除了增加计算机器的运算量外似乎并没有太多的收益（这也是不少同学疑惑的点）。
 答案还是两个字：安全。但并不是为了防止数据泄密，而是为了防止早期版本的协议中存在的代理缓存污染攻击（proxy cache poisoning attacks）等问题。</p>
-<h1 id="数据传递">数据传递</h1>
+<h2 id="数据传递">数据传递</h2>
 <p>一旦WebSocket客户端、服务端建立连接后，后续的操作都是基于数据帧的传递。
 WebSocket根据opcode来区分操作的类型。比如0x8表示断开连接，0x0-0x2表示数据交互。</p>
-<h2 id="数据分片">数据分片</h2>
+<h3 id="数据分片">数据分片</h3>
 <p>WebSocket的每条消息可能被切分成多个数据帧。当WebSocket的接收方收到一个数据帧时，会根据FIN的值来判断，是否已经收到消息的最后一个数据帧。
 FIN=1表示当前数据帧为消息的最后一个数据帧，此时接收方已经收到完整的消息，可以对消息进行处理。FIN=0，则接收方还需要继续监听接收其余的数据帧。
 此外，opcode在数据交换的场景下，表示的是数据的类型。0x01表示文本，0x02表示二进制。而0x00比较特殊，表示延续帧（continuation frame），顾名思义，就是完整消息对应的数据帧还没接收完。</p>
-<h2 id="数据分片例子">数据分片例子</h2>
+<h3 id="数据分片例子">数据分片例子</h3>
 <p>下面例子来自MDN，可以很好地演示数据的分片。客户端向服务端两次发送消息，服务端收到消息后回应客户端，这里主要看客户端往服务端发送的消息。</p>
 <p><em>第一条消息</em></p>
 <p>FIN=1, 表示是当前消息的最后一个数据帧。服务端收到当前数据帧后，可以处理消息。opcode=0x1，表示客户端发送的是文本类型。</p>
@@ -841,7 +841,7 @@ FIN=1表示当前数据帧为消息的最后一个数据帧，此时接收方已
 </span></span><span class="line"><span class="cl">Server: (process complete message) Happy new year to you too!
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h1 id="心跳">心跳</h1>
+</div><h2 id="心跳">心跳</h2>
 <p>WebSocket 为了保持客户端、服务端的实时双向通信，需要确保客户端、服务端之间的 TCP 通道保持连接没有断开。
 对于长时间没有数据往来的连接，如果依旧长时间保持着，可能会浪费包括的连接资源。但不排除有些场景，客户端、服务端虽然长时间没有数据往来，但仍需要保持连接。这个时候，可以采用心跳来实现。</p>
 <ul>
@@ -849,10 +849,10 @@ FIN=1表示当前数据帧为消息的最后一个数据帧，此时接收方已
 <li>接收方 -&gt; 发送方：pong</li>
 </ul>
 <p>ping、pong 的操作，对应的是 WebSocket 的两个控制帧，opcode分别是0x9、0xA。</p>
-<h1 id="安全性">安全性</h1>
+<h2 id="安全性">安全性</h2>
 <p>WebSocket协议中规定在连接建立时检查Upgrade请求中的某些字段（如Origin，查看每次请求是否一致），对于不符合要求的请求立即断开，在通信过程中，也对Frame中的控制位做了很多限制，以便禁止异常连接。
 websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL来对通信加密，默认ws的端口为80，wss端口为433，类似HTTP与HTTPS。</p>
-<h1 id="go实战gorilla-websocket">Go实战：Gorilla WebSocket</h1>
+<h2 id="go实战gorilla-websocket">Go实战：Gorilla WebSocket</h2>
 <blockquote>
 <p>Github：https://github.com/gorilla/websocket</p>
 </blockquote>
@@ -988,7 +988,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>其中最重要的几个方法是Upgrade、ReadMessage和WriteMessage，下面逐一介绍。</p>
-<h2 id="upgrade">Upgrade</h2>
+<h3 id="upgrade">Upgrade</h3>
 <p>协议升级</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1218,7 +1218,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="readmessage">ReadMessage</h2>
+</div><h3 id="readmessage">ReadMessage</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
@@ -1469,7 +1469,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 </span></span><span class="line"><span class="cl">}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="writemessage">WriteMessage</h2>
+</div><h3 id="writemessage">WriteMessage</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1637,7 +1637,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 <li><a href="http://www.ruanyifeng.com/blog/2017/05/websocket.html"target="_blank" rel="external nofollow noopener noreferrer">http://www.ruanyifeng.com/blog/2017/05/websocket.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
 <li><a href="https://pkg.go.dev/github.com/gorilla/websocket"target="_blank" rel="external nofollow noopener noreferrer">https://pkg.go.dev/github.com/gorilla/websocket<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
 </ul>
-]]></description></item><item><title>JSON Web Token入门手册</title><link>https://xzygis.github.io/posts/20200130-usage-of-json-web-token/</link><pubDate>Thu, 30 Jan 2020 13:10:39 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20200130-usage-of-json-web-token/</guid><description><![CDATA[<h1 id="跨域认证问题">跨域认证问题</h1>
+]]></description></item><item><title>JSON Web Token入门手册</title><link>https://xzygis.github.io/posts/20200130-usage-of-json-web-token/</link><pubDate>Thu, 30 Jan 2020 13:10:39 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20200130-usage-of-json-web-token/</guid><description><![CDATA[<h2 id="跨域认证问题">跨域认证问题</h2>
 <p>互联网服务离不开用户认证。一般流程是下面这样：</p>
 <ol>
 <li>用户向服务器发送用户名和密码。</li>
@@ -1653,17 +1653,17 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 <li>另一种方案是服务器索性不保存 session 数据了，所有数据都保存在客户端，每次请求都发回服务器。JWT 就是这种方案的一个代表。</li>
 </ul>
 <!-- more -->
-<h1 id="什么是jwt">什么是JWT？</h1>
+<h2 id="什么是jwt">什么是JWT？</h2>
 <p>Json web token (JWT)，是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（(RFC 7519)。该token被设计为紧凑且安全的，特别适用于分布式站点的单点登录（SSO）场景。JWT的声明一般被用来在身份提供者和服务提供者间传递被认证的用户身份信息，以便于从资源服务器获取资源，也可以增加一些额外的其它业务逻辑所必须的声明信息，该token可直接被用于认证，也可被加密。</p>
-<h1 id="jwt-的原理">JWT 的原理</h1>
+<h2 id="jwt-的原理">JWT 的原理</h2>
 <p>服务器认证以后，生成一个经过签名的 JSON 对象，发回给用户，服务器则不用保存任何 session 数据了。从而把服务器变成无状态的，易于实现扩展。</p>
-<h1 id="jwt-的使用场景">JWT 的使用场景</h1>
+<h2 id="jwt-的使用场景">JWT 的使用场景</h2>
 <p>以下是两个JWT的应用场景：</p>
 <ol>
 <li>鉴权：这是JWT最常见的应用场景。当用户登录成功后，随后的每个请求都将带上JWT，从而允许用户访问被授权的服务和资源。由于它开销小切易于使用，当前被广泛应用于单点登录（Single Sign On）。</li>
 <li>信息交换：JWT是不同组织间交换信息的一种很好的方式。因为JWT可以被签名（例如，通过公钥/私钥对），你可以确信信息发送者就是它们说声明的身份。此外，签名是用Header和Payload计算出来的，你可以验证内容是否被篡改。</li>
 </ol>
-<h1 id="jwt-的数据结构">JWT 的数据结构</h1>
+<h2 id="jwt-的数据结构">JWT 的数据结构</h2>
 <p>扁平化形式的JWT是由通过 <code>.</code> 分隔的三部分组成，他们分别是：</p>
 <ul>
 <li><code>Header</code></li>
@@ -1679,7 +1679,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">xxxxx.yyyyy.zzzzz
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="header">Header</h2>
+</div><h3 id="header">Header</h3>
 <p>头部由两部分组成：</p>
 <ul>
 <li>token类型，即JWT；</li>
@@ -1701,7 +1701,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>随后，以上JSON对象会通过 <code>Base64Url</code> 编码为JWT的第一部分。</p>
-<h2 id="payload">Payload</h2>
+<h3 id="payload">Payload</h3>
 <p>载荷就是存放有效信息的地方。这个名字像是特指飞机上承载的货品，这些有效信息包含三个部分</p>
 <ul>
 <li>标准中注册的声明</li>
@@ -1740,7 +1740,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>随后，Payload会通过 <code>Base64Url</code> 编码为JWT的第二部分。</p>
-<h2 id="signature">Signature</h2>
+<h3 id="signature">Signature</h3>
 <p>创建签名需要用到编码后的 Header、编码后的 Payload、秘钥、Header中指定的算法。</p>
 <p>如果你想使用HMAC SHA256算法，签名将通过如下方式生成：</p>
 <div class="highlight"><div class="chroma">
@@ -1758,7 +1758,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>如果你想把以上概念付诸实践，可以通过 <a href="https://jwt.io/"target="_blank" rel="external nofollow noopener noreferrer">https://jwt.io/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> 提供的工具来玩一玩 JWT 。如下图所示：</p>
-<h1 id="jwt-的使用方式">JWT 的使用方式</h1>
+<h2 id="jwt-的使用方式">JWT 的使用方式</h2>
 <p>客户端收到服务器返回的 JWT，可以储存在 Cookie 里面，也可以储存在 localStorage。
 此后，客户端每次与服务器通信，都要带上这个 JWT。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP 请求的头信息Authorization字段里面。</p>
 <div class="highlight"><div class="chroma">
@@ -1770,7 +1770,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>另一种做法是，跨域的时候，JWT 就放在 POST 请求的数据体里面。</p>
-<h1 id="jwt-的几个特点">JWT 的几个特点</h1>
+<h2 id="jwt-的几个特点">JWT 的几个特点</h2>
 <ul>
 <li>JWT 默认是不加密，但也是可以加密的。生成原始 Token 以后，可以用密钥再加密一次。</li>
 <li>JWT 不加密的情况下，不能将秘密数据写入 JWT。</li>
@@ -1779,7 +1779,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 <li>JWT 本身包含了认证信息，一旦泄露，任何人都可以获得该令牌的所有权限。为了减少盗用，JWT 的有效期应该设置得比较短。对于一些比较重要的权限，使用时应该再次对用户进行认证。</li>
 <li>为了减少盗用，JWT 不应该使用 HTTP 协议明码传输，要使用 HTTPS 协议传输。</li>
 </ul>
-<h1 id="示例代码">示例代码</h1>
+<h2 id="示例代码">示例代码</h2>
 <p>Go语言版本：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1921,7 +1921,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 <li><a href="https://www.jianshu.com/p/576dbf44b2ae"target="_blank" rel="external nofollow noopener noreferrer">https://www.jianshu.com/p/576dbf44b2ae<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
 <li><a href="https://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
 </ol>
-]]></description></item><item><title>API网关概述</title><link>https://xzygis.github.io/posts/20200127-introduction-of-api-gateway/</link><pubDate>Mon, 27 Jan 2020 22:51:43 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20200127-introduction-of-api-gateway/</guid><description><![CDATA[<h1 id="1-背景">1 背景</h1>
+]]></description></item><item><title>API网关概述</title><link>https://xzygis.github.io/posts/20200127-introduction-of-api-gateway/</link><pubDate>Mon, 27 Jan 2020 22:51:43 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20200127-introduction-of-api-gateway/</guid><description><![CDATA[<h2 id="1-背景">1 背景</h2>
 <ul>
 <li>由于后端的微服务拆分，客户端通常需要请求多个服务获取所需数据。</li>
 <li>不同客户端所需要的数据不一样。例如，PC需要的数据通常比移动端更加详细。</li>
@@ -1930,7 +1930,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 <li>微服务的拆分逻辑会变化，这种变化应该应该对客户端透明。</li>
 <li>不同的服务可能采用不同的协议，有些协议是非web的。</li>
 </ul>
-<h1 id="2-什么是api网关">2 什么是API网关？</h1>
+<h2 id="2-什么是api网关">2 什么是API网关？</h2>
 <p>API网关接收客户端的所有请求，并将请求路由到相应的后端服务，并提供接口聚合和协议转换。通常来说，API网关通过调用多个后端服务，并聚合结果的方式处理请求。它可将web协议转化为非web的内部后台协议。</p>
 <!-- more -->
 <p>核心功能：</p>
@@ -1950,19 +1950,19 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 <li>监控告警：监控API请求次数、API调用延迟和API错误信息。</li>
 <li>SDK生成：</li>
 </ul>
-<h1 id="3-实现方式">3 实现方式</h1>
+<h2 id="3-实现方式">3 实现方式</h2>
 <p>将API网关作为客户端的唯一接入点。API网关主要有两种类型：</p>
 <ul>
 <li>one-size-fits-all网关</li>
 <li>Backends for frontends网关</li>
 </ul>
-<h2 id="31-one-size-fits-all网关">3.1 One-size-fits-all网关</h2>
+<h3 id="31-one-size-fits-all网关">3.1 One-size-fits-all网关</h3>
 <p>简单地将请求路由到相应服务。将请求扇出到多个后端服务。
 </p>
-<h2 id="32-backends-for-fronts网关">3.2 Backends for fronts网关</h2>
+<h3 id="32-backends-for-fronts网关">3.2 Backends for fronts网关</h3>
 <p>为每种客户端暴露不同的API。为每种客户端设计一个API网关，每个API网关为其客户端提供一种API。
 </p>
-<h1 id="4-优点">4 优点</h1>
+<h2 id="4-优点">4 优点</h2>
 <ul>
 <li>使后端的微服务拆分对客户端透明。</li>
 <li>客户端无需关心后端服务的实例地址（IP + port）。</li>
@@ -1971,7 +1971,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 <li>简化客户端的逻辑（由调用多个后台服务变为只调用API网关）。</li>
 <li>可将标准的Web API协议转化为任意的后端协议。</li>
 </ul>
-<h1 id="5-缺点">5 缺点</h1>
+<h2 id="5-缺点">5 缺点</h2>
 <ul>
 <li>增加复杂性。增加了API网关模块，带来了额外的开发、部署、管理成本。</li>
 <li>增加响应时间。调用链路多了一跳（API网关）。</li>

@@ -1,7 +1,7 @@
 # SO_REUSEADDR & SO_REUSEPORT
 
 
-**SO_REUSEADDR**
+## SO_REUSEADDR
 
 1. 当有一个有相同本地地址和端口的socket1处于TIME_WAIT状态时，而你启动的程序的socket2要占用该地址和端口，你的程序就要用到该选项。
 2. SO_REUSEADDR允许同一port上启动同一服务器的多个实例(多个进程)。但每个实例绑定的IP地址是不能相同的。在有多块网卡或用IP Alias技术的机器可
@@ -11,7 +11,7 @@
 
 <!-- more -->
 
-**SO_REUSEPORT**
+## SO_REUSEPORT
 > The new socket option allows multiple sockets on the same host to bind to the same port, and is intended to improve the performance of multithreaded network server applications running on top of multicore systems.
 
 linux kernel 3.9引入了最新的SO_REUSEPORT选项，使得多进程或者多线程可以创建多个绑定同一个ip:port的监听socket，提高服务器的接收连接的并发能力,程序的扩展性更好；此时需要设置SO_REUSEPORT（注意所有进程都要设置才生效）。
@@ -24,7 +24,7 @@ linux kernel 3.9引入了最新的SO_REUSEPORT选项，使得多进程或者多�
 - 内核层面实现负载均衡，保证每个进程或者线程接收均衡的连接数。
 - 只有effective-user-id相同的服务器进程才能监听同一ip:port （安全性考虑）
 
-golang开源实现：https://github.com/kavu/go_reuseport
+> golang开源实现：https://github.com/kavu/go_reuseport
 
 注意：SO_REUSEPORT只支持TCP和UDP。对unix domain socket不生效。
 

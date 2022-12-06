@@ -6,7 +6,7 @@ category: ["后台开发"]
 ---
 
 
-# Consul是什么？
+## Consul是什么？
 Consul是一个服务发现和配置工具，它是分布式和高可用的，而且极易扩展。
 
 Consul主要提供了以下特性：
@@ -20,14 +20,14 @@ Consul支持Linux, Mac OS X, FreeBSD, Solaris, Windows等操作系统。
 
 <!-- more -->
 
-## 基本架构
+### 基本架构
 每个提供服务给Consul的节点都运行了一个Consul Agent。运行一个Agent并不需要对其他服务做发现或读写KV存储。Agent负责对该节点上的服务做健康检查。
 
 Agent会与一个或多个Consul Server通信。Consul Server通常有多个实例，负责数据存储和备份、选举主节点等。虽然Consul支持在只有一个Server实例的情况下工具，但通常推荐使用3至5个实例，从而避免由于某些异常场景而导致数据丢失。同时，推荐在每个数据中心部署一个Consul集群。
 
 每个数据中运行了一个Consul server集群。当一个跨数据中心的服务发现和配置请求创建时，本地Consul Server转发请求到远程的数据中心并返回结果.
 
-# 安装Consul
+## 安装Consul
 Consul集群的每个节点都必须先安装Consul，安装非常简单。在Mac上安装Consul命令如下：
 ```
 $ brew install consul
@@ -71,12 +71,12 @@ Available commands are:
     watch          Watch for changes in Consul
 ```
 
-# 运行Agent
+## 运行Agent
 完成Consul的安装后，可运行Agent。Agent可以运行为Server或Client模式。每个数据中心至少必须拥有一台server，建议在一个集群中部署或者3至5个Server。部署单一的Server，在出现失败时会不可避免的造成数据丢失.
 
 其他的Agent运行为Client模式，一个Client是一个非常轻量级的进程，用于注册服务，运行健康检查和转发对Server的查询，Agent必须在集群中的每个主机上运行。
 
-## 启动Agent
+### 启动Agent
 命令`consul agent -dev`可以启动一个开发模式的Agent，这种模式不能用于生产环境，因为它不持久化任何状态。
 ```
 $ consul agent -dev
@@ -126,7 +126,7 @@ $ consul agent -dev
     2019/11/20 21:56:11 [DEBUG] tlsutil: OutgoingRPCWrapper with version 1
 ```
 
-## 集群成员
+### 集群成员
 新开一个终端窗口运行`consul members`, 就可以看到Consul集群的成员。
 ```
 $ consul members
@@ -161,14 +161,14 @@ $ curl localhost:8500/v1/catalog/nodes
 ]
 ```
 
-## 停止Agent
+### 停止Agent
 你可以使用 Ctrl-C 优雅的关闭Agent，中断Agent之后你可以看到它离开了集群并关闭.
 退出后，Consul提醒其他集群成员，这个节点离开了。如果你强行杀掉进程，集群的其他成员应该能检测到这个节点失效了。当一个成员离开，他的服务和检测也会从目录中移除。当一个成员失效了，他的健康状况被简单的标记为危险，但是不会从目录中移除。Consul会自动尝试对失效的节点进行重连，允许他从某些网络条件下恢复过来。
 
-# 注册服务
+## 注册服务
 在之前的步骤我们运行了第一个agent，看到了集群的成员。现在我们将注册第一个服务并查询这些服务。
 
-## 定义一个服务
+### 定义一个服务
 可以通过提供服务定义或者调用HTTP API来注册一个服务，服务定义文件是注册服务的最通用的方式。
 
 首先，为Consul配置创建一个目录：
@@ -234,10 +234,10 @@ $ sudo consul agent -dev -config-dir /etc/consul.d/web.json
 
 如果想注册多个服务，就可以在Consul配置目录创建多个服务定义文件。
 
-## 查询服务
+### 查询服务
 一旦Agent启动并且服务同步了，我们可就以通过DNS或者HTTP API来查询服务。
 
-### DNS API
+#### DNS API
 我们首先使用DNS API来查询。在DNS API中，服务的DNS名字是 `NAME.service.consul`。虽然是可配置的，但默认的所有DNS名字会都在consul命名空间下，这个子域告诉Consul，我们在查询服务，`NAME`则是服务的名称.
 
 
@@ -306,7 +306,7 @@ $ dig @127.0.0.1 -p 8600 rails.web.service.consul SRV
 # 输出信息略
 ```
 
-### HTTP API
+#### HTTP API
 除了DNS API之外，也可以使用HTTP API查询所有服务实例：
 ```
 $ curl http://localhost:8500/v1/catalog/service/web
@@ -352,7 +352,7 @@ $ curl http://localhost:8500/v1/catalog/service/web?passing
 # 输出信息略
 ```
 
-## 更新服务
+### 更新服务
 服务定义可以通过修改配置文件并发送`SIGHUP`给Agent来进行更新，这样可以在不关闭服务或者保持服务请求可用的情况下进行更新。
 
 参考来源：

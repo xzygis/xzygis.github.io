@@ -1,21 +1,21 @@
 {
-    "name": "菠菜眾長",
-    "short_name": "@Lruihao",
-    "description": "Lruihao's Note",
+    "name": "楚兴",
+    "short_name": "@chuxing",
+    "description": "chuxing's Note",
     "icons": [
       {
-        "src": "/apple-touch-icon.png",
-        "sizes": "180x180",
+        "src": "/xzy192.png",
+        "sizes": "192x192",
         "type": "image/png",
         "purpose": "any maskable"
       },
       {
-        "src": "/android-chrome-192x192.png",
+        "src": "/xzy192.png",
         "sizes": "192x192",
         "type": "image/png"
       },
       {
-        "src": "/android-chrome-512x512.png",
+        "src": "/xzy512.png",
         "sizes": "512x512",
         "type": "image/png"
       }

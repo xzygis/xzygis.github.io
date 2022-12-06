@@ -6,15 +6,17 @@ menu: "main"
 weight: 50
 ---
 
-Hugo is a static site engine written in Go.
+# 个人经历
+- 多年大厂经验：先后工作于美团、腾讯、字节，目前在字节工作。
+- 有比较丰富的高并发、高可用服务开发经验：做过承载数百万QPS的中台服务，也开发过公司级的基础组件（承载数千万的QPS）。
 
+# 个人爱好
+- 读书
+- 跑步
 
-It makes use of a variety of open source projects including:
+# 人生格言
+- 问题的根源通常是认知不足
+- 学而不思则罔，思而不学则殆
+- 知行合一
 
-* [Cobra](https://github.com/spf13/cobra)
-* [Viper](https://github.com/spf13/viper)
-* [J Walter Weatherman](https://github.com/spf13/jWalterWeatherman)
-* [Cast](https://github.com/spf13/cast)
-
-Learn more and contribute on [GitHub](https://github.com/gohugoio).
-
+> 如果您有任何的问题，欢迎与我联系~

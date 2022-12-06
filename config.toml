@@ -52,31 +52,10 @@ theme = "FixIt"
     [menu.main.params]
       icon = "fa-solid fa-tags"
   [[menu.main]]
-    identifier = "img"
-    parent = "about"
-    pre = ""
-    post = ""
-    name = "相册"
-    url = "https://img.lruihao.cn"
-    title = "COS Album"
-    weight = 5
-    [menu.main.params]
-      icon = "fa-solid fa-photo-video"
-  [[menu.main]]
-    identifier = "guestbook"
-    pre = ""
-    post = ""
-    name = "留言"
-    url = "/guestbook/"
-    title = ""
-    weight = 6
-    [menu.main.params]
-      icon = "fa-solid fa-comments"
-  [[menu.main]]
     identifier = "about"
     pre = ""
     post = ""
-    name = "關於"
+    name = "关于"
     url = "/about/"
     title = ""
     weight = 7
@@ -87,7 +66,7 @@ theme = "FixIt"
     pre = "<i class='fa-brands fa-github fa-fw' aria-hidden='true'></i>"
     post = ""
     name = ""
-    url = "https://github.com/xzygis/xzy.github.io"
+    url = "https://github.com/xzygis/xzygis.github.io"
     title = "GitHub"
     weight = ""
     [menu.main.params]
@@ -472,7 +451,7 @@ theme = "FixIt"
   [params.watermark]
     enable = true
     # watermark's text (HTML format is supported)
-    content = '<img style="height: 0.85rem;" src="/logo.png" alt="logo" /> 李瑞豪'
+    content = '<img style="height: 0.85rem;" src="/logo.png" alt="logo" /> 楚兴'
     # watermark's transparency
     opacity = 0.0125
     # parent of watermark's container

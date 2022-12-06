@@ -34,7 +34,7 @@ const Blog = new (function () {
   this.baiduStatistics = () => {
     var _hmt = _hmt || [];
     var hm = document.createElement('script');
-    hm.src = 'https://hm.baidu.com/hm.js?d25f1e053205bf07562f33365fef04d7';
+    hm.src = 'https://hm.baidu.com/hm.js?ee40507d136c154c7de59656d27ab7d1'; //百度账号：1107028186
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(hm, s);
     return this;

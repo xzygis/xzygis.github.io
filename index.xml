@@ -1,4 +1,4 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Chu Xing</title><link>https://xzygis.github.io/</link><description>Chuxing's Tech Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>xzygis@163.com (chuxing)</managingEditor><webMaster>xzygis@163.com (chuxing)</webMaster><lastBuildDate>Sat, 03 Dec 2022 19:21:25 +0800</lastBuildDate><atom:link href="https://xzygis.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Hugo Quick Start</title><link>https://xzygis.github.io/posts/20221203-hugo-quick-start/</link><pubDate>Sat, 03 Dec 2022 19:21:25 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20221203-hugo-quick-start/</guid><description><![CDATA[<h2 id="intall">Intall</h2>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Chu Xing</title><link>https://xzygis.github.io/</link><description>Chuxing's Tech Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>xzygis@163.com (chuxing)</managingEditor><webMaster>xzygis@163.com (chuxing)</webMaster><lastBuildDate>Sat, 03 Dec 2022 19:21:25 +0800</lastBuildDate><atom:link href="https://xzygis.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Hugo Quick Start</title><link>https://xzygis.github.io/posts/hugo-quick-start/</link><pubDate>Sat, 03 Dec 2022 19:21:25 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/hugo-quick-start/</guid><description><![CDATA[<h2 id="intall">Intall</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -178,7 +178,7 @@
 <li><a href="https://github.com/gohugoio/hugo"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/gohugoio/hugo<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
 <li><a href="https://www.xianmin.org/post/2022/07-familiar-one-keybinding-style/"target="_blank" rel="external nofollow noopener noreferrer">https://www.xianmin.org/post/2022/07-familiar-one-keybinding-style/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
 </ol>
-]]></description></item><item><title>Redis底层数据结构介绍</title><link>https://xzygis.github.io/posts/20221130-introduction-to-the-underlying-data-structure-of-redis/</link><pubDate>Wed, 30 Nov 2022 22:03:21 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20221130-introduction-to-the-underlying-data-structure-of-redis/</guid><description><![CDATA[<h2 id="简单动态字符串">简单动态字符串</h2>
+]]></description></item><item><title>Redis底层数据结构介绍</title><link>https://xzygis.github.io/posts/introduction-to-the-underlying-data-structure-of-redis/</link><pubDate>Wed, 30 Nov 2022 22:03:21 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-to-the-underlying-data-structure-of-redis/</guid><description><![CDATA[<h2 id="简单动态字符串">简单动态字符串</h2>
 <p>每个sds.h/sdshdr结构表示一个SDS值：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -575,7 +575,7 @@
 <li>首先，压缩列表里要恰好有多个连续的、长度介于250字节至253字节之间的节点，连锁更新才有可能被引发，在实际中，这种情况并不多见；-</li>
 <li>其次，即使出现连锁更新，但只要被更新的节点数量不多，就不会对性能造成任何影响：比如说，对三五个节点进行连锁更新是绝对不会影响性能的；</li>
 </ul>
-]]></description></item><item><title>Tair:分布式键/值存储系统</title><link>https://xzygis.github.io/posts/20221127-tair-a-distributed-key-value-storage-system-developed-by-alibaba-group/</link><pubDate>Sun, 27 Nov 2022 23:11:28 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20221127-tair-a-distributed-key-value-storage-system-developed-by-alibaba-group/</guid><description><![CDATA[<h2 id="产品概览">产品概览</h2>
+]]></description></item><item><title>Tair:分布式键/值存储系统</title><link>https://xzygis.github.io/posts/tair-a-distributed-key-value-storage-system-developed-by-alibaba-group/</link><pubDate>Sun, 27 Nov 2022 23:11:28 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/tair-a-distributed-key-value-storage-system-developed-by-alibaba-group/</guid><description><![CDATA[<h2 id="产品概览">产品概览</h2>
 <p>Tair 是快速访问内存 (MDB)/持久性 (LDB) 存储服务。</p>
 <p>Tair采用高性能、高可用的分布式集群架构，可以满足企业对读写性能和可扩展容量的高要求。</p>
 <h2 id="系统架构">系统架构</h2>
@@ -637,7 +637,7 @@
 <h3 id="分布式锁">分布式锁</h3>
 <p>分布式锁通常用于防止多线程并发导致的数据不一致和逻辑混乱。分布式锁可以使用 Tair 的版本特性或计算功能来实现。</p>
 <p>得益于LBS的持久化，即使服务宕机，锁也不会丢失，可以正常释放。</p>
-]]></description></item><item><title>程序员做需求时容易忽视的若干问题</title><link>https://xzygis.github.io/posts/20221120-some-problems-that-programmers-tend-to-ignore-when-making-requirements/</link><pubDate>Sun, 20 Nov 2022 23:33:08 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20221120-some-problems-that-programmers-tend-to-ignore-when-making-requirements/</guid><description><![CDATA[<p>程序员大部分时间都在承接一个个的需求，在做需求的过程中，有一些问题是我们容易忽视的，究其原因，主要是在做需求的过程中缺少思考，或者思考不够全面。而思考的缺失，正是导致部分人所说的“做业务需求没有成长”的主要原因之一。今天主要从研发流程中重要的几个阶段出发，跟大家谈谈做需求的过程中有哪些是我们容易忽视的问题。</p>
+]]></description></item><item><title>程序员做需求时容易忽视的若干问题</title><link>https://xzygis.github.io/posts/some-problems-that-programmers-tend-to-ignore-when-making-requirements/</link><pubDate>Sun, 20 Nov 2022 23:33:08 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/some-problems-that-programmers-tend-to-ignore-when-making-requirements/</guid><description><![CDATA[<p>程序员大部分时间都在承接一个个的需求，在做需求的过程中，有一些问题是我们容易忽视的，究其原因，主要是在做需求的过程中缺少思考，或者思考不够全面。而思考的缺失，正是导致部分人所说的“做业务需求没有成长”的主要原因之一。今天主要从研发流程中重要的几个阶段出发，跟大家谈谈做需求的过程中有哪些是我们容易忽视的问题。</p>
 <h2 id="需求分析">需求分析</h2>
 <p>PM是我们的需求的最主要来源，在需求分析阶段，需要避免的问题是：一、没有理解清楚需求细节，而直接进入后续的方案设计和开发阶段；二、需求里说怎么干，我们就怎么干。
 问题一容易造成的结果是，功能开发上线完成了，结果发现不是PM想要的，导致不必要的返工成本。另外，由于没有真正理清需求，也有可能导致项目的整体架构设计产生重大偏差，从而给后续的架构迭代留下隐患。
@@ -653,7 +653,7 @@
 <h2 id="服务上线">服务上线</h2>
 <p>在服务上线阶段，需要避免的是观察不细致，想当然的认为没问题，结果到最后导致了一个大问题。在上线阶段，我们应该加强检查，从多角度对服务进行观察，包括：上游角度、服务本身角度、下游角度，观察的指标，既包括错误率、时延、错误日志等通用指标，也包括业务自定义指标（应该在方案设计阶段考虑清楚后续有什么手段可以观测服务是否正常）。
 值得一提的是，服务上线完成并不是结束，而是一个新的开始。我们需要采取各种手段保障服务的稳定运行，并不断发现其中的可优化点，推动服务SLI稳步提升。</p>
-]]></description></item><item><title>给新人程序员的职场建议</title><link>https://xzygis.github.io/posts/20221120-career-advice-for-beginning-programmers/</link><pubDate>Sun, 20 Nov 2022 22:01:20 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20221120-career-advice-for-beginning-programmers/</guid><description><![CDATA[<p>我是一位在大厂打拼多年的程序员，今天想结合自己的工作经历给新人程序员们提出若干建议，希望能够在一定程度上帮助大家在职场脱颖而出。</p>
+]]></description></item><item><title>给新人程序员的职场建议</title><link>https://xzygis.github.io/posts/career-advice-for-beginning-programmers/</link><pubDate>Sun, 20 Nov 2022 22:01:20 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/career-advice-for-beginning-programmers/</guid><description><![CDATA[<p>我是一位在大厂打拼多年的程序员，今天想结合自己的工作经历给新人程序员们提出若干建议，希望能够在一定程度上帮助大家在职场脱颖而出。</p>
 <h2 id="积极主动">积极主动</h2>
 <p>第一个建议是要积极主动，有owner意识，勇于承担工作职责，并在工作中做出成绩。
 首先，领取任务或接受任务应该积极主动。在工作中可以主动向领导提出来自己对什么方向的项目感兴趣，希望承担什么样的任务。当领导知道你是积极主动的人，而且也发现你确实有能力胜任某项工作时，就会优先想到你。在领导主动布置工作任务时，也不应该过多的考虑这项工作好不好干、难度怎么样，而是应该要积极主动的接受。
@@ -669,7 +669,7 @@
 <h2 id="引人注目">引人注目</h2>
 <p>程序员是技术性很强的工作，技术是我们的立身之本，但我们也要避免只会研究技术、埋头苦干。对于交到我们手里的工作，我们要尽可能地做好，同时也需要积极地向领导汇报进展和成果，这样领导才会知道事情的进度是可控的、成果是可预期的，对于你个人的工作产出也自然心里有数了。
 在引人注目方面，另外很重要的一点是：发表文章。如果只有你自己知道你是绝顶高手，是没有意义的，你需要通过发表文章的方式表述所学所思所想，让其他人知道你的实力，从而扩大你的影响力。</p>
-]]></description></item><item><title>浅谈Bloom Filter基本原理及使用方式</title><link>https://xzygis.github.io/posts/20210612-introduction-to-the-basic-principles-of-bloom-filter/</link><pubDate>Sat, 12 Jun 2021 16:22:56 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20210612-introduction-to-the-basic-principles-of-bloom-filter/</guid><description><![CDATA[<p>一提到元素查找，我们会很自然的想到<code>HashMap</code>。通过将哈希函数作用于key上，我们得到了哈希值，基于哈希值我们可以去表里的相应位置获取对应的数据。除了存在哈希冲突问题之外，<code>HashMap</code>一个很大的问题就是空间效率低。引入<code>Bloom Filter</code>则可以很好的解决空间效率的问题。</p>
+]]></description></item><item><title>浅谈Bloom Filter基本原理及使用方式</title><link>https://xzygis.github.io/posts/introduction-to-the-basic-principles-of-bloom-filter/</link><pubDate>Sat, 12 Jun 2021 16:22:56 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-to-the-basic-principles-of-bloom-filter/</guid><description><![CDATA[<p>一提到元素查找，我们会很自然的想到<code>HashMap</code>。通过将哈希函数作用于key上，我们得到了哈希值，基于哈希值我们可以去表里的相应位置获取对应的数据。除了存在哈希冲突问题之外，<code>HashMap</code>一个很大的问题就是空间效率低。引入<code>Bloom Filter</code>则可以很好的解决空间效率的问题。</p>
 <h2 id="原理">原理</h2>
 <p>Bloom Filter是一种空间效率很高的随机数据结构，Bloom filter 可以看做是对bit-map 的扩展，布隆过滤器被设计为一个具有N的元素的位数组A（bit array），初始时所有的位都置为0。</p>
 <p>当一个元素被加入集合时，通过K个Hash函数将这个元素映射成一个位阵列（Bit array）中的K个点，把它们置为1。检索时，我们只要看看这些点是不是都是1就（大约）知道集合中有没有它了。</p>
@@ -753,7 +753,7 @@
 <li><a href="https://www.cnblogs.com/haippy/archive/2012/07/13/2590351.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.cnblogs.com/haippy/archive/2012/07/13/2590351.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
 <li><a href="https://segmentfault.com/a/1190000002729689"target="_blank" rel="external nofollow noopener noreferrer">https://segmentfault.com/a/1190000002729689<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
 </ul>
-]]></description></item><item><title>Linux文件传输的三种方式</title><link>https://xzygis.github.io/posts/20210612-three-ways-to-transfer-files-in-linux/</link><pubDate>Sat, 12 Jun 2021 16:14:22 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20210612-three-ways-to-transfer-files-in-linux/</guid><description><![CDATA[<h2 id="1-nc命令">1 nc命令</h2>
+]]></description></item><item><title>Linux文件传输的三种方式</title><link>https://xzygis.github.io/posts/three-ways-to-transfer-files-in-linux/</link><pubDate>Sat, 12 Jun 2021 16:14:22 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/three-ways-to-transfer-files-in-linux/</guid><description><![CDATA[<h2 id="1-nc命令">1 nc命令</h2>
 <p>执行如下命令，在目标机器(假设ip为<code>10.11.12.13</code>)上监听端口<code>8415</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -796,7 +796,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>即可把目标机器dev.test.com的文件~/data.txt拷贝到当前目录。</p>
-]]></description></item><item><title>Websocket介绍</title><link>https://xzygis.github.io/posts/20210612-introduction-of-websocket/</link><pubDate>Sat, 12 Jun 2021 15:25:21 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20210612-introduction-of-websocket/</guid><description><![CDATA[<h2 id="什么是websocket">什么是WebSocket？</h2>
+]]></description></item><item><title>Websocket介绍</title><link>https://xzygis.github.io/posts/introduction-of-websocket/</link><pubDate>Sat, 12 Jun 2021 15:25:21 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-of-websocket/</guid><description><![CDATA[<h2 id="什么是websocket">什么是WebSocket？</h2>
 <p>WebSocket是一种网络传输协议，可在单个TCP连接上进行全双工通信，位于OSI模型的应用层。WebSocket协议在2011年由IETF标准化为RFC 6455，后由RFC 7936补充规范。</p>
 <p>WebSocket使得客户端和服务器之间的数据交换变得更加简单，允许服务端主动向客户端推送数据。在WebSocket API中，浏览器和服务器只需要完成一次握手，两者之间就可以创建持久性的连接，并进行双向数据传输。</p>
 <h3 id="有哪些优点">有哪些优点？</h3>
@@ -1817,7 +1817,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 <li><a href="http://www.ruanyifeng.com/blog/2017/05/websocket.html"target="_blank" rel="external nofollow noopener noreferrer">http://www.ruanyifeng.com/blog/2017/05/websocket.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
 <li><a href="https://pkg.go.dev/github.com/gorilla/websocket"target="_blank" rel="external nofollow noopener noreferrer">https://pkg.go.dev/github.com/gorilla/websocket<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
 </ul>
-]]></description></item><item><title>Consul入门手册</title><link>https://xzygis.github.io/posts/20200130-manual-of-consul/</link><pubDate>Thu, 30 Jan 2020 13:35:59 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20200130-manual-of-consul/</guid><description><![CDATA[<h2 id="consul是什么">Consul是什么？</h2>
+]]></description></item><item><title>Consul入门手册</title><link>https://xzygis.github.io/posts/manual-of-consul/</link><pubDate>Thu, 30 Jan 2020 13:35:59 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/manual-of-consul/</guid><description><![CDATA[<h2 id="consul是什么">Consul是什么？</h2>
 <p>Consul是一个服务发现和配置工具，它是分布式和高可用的，而且极易扩展。</p>
 <p>Consul主要提供了以下特性：</p>
 <ol>
@@ -2452,7 +2452,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 <li><a href="https://www.consul.io/intro/getting-started.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.consul.io/intro/getting-started.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
 <li><a href="https://book-consul-guide.vnzmi.com/01_what_is_consul.html"target="_blank" rel="external nofollow noopener noreferrer">https://book-consul-guide.vnzmi.com/01_what_is_consul.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
 </ol>
-]]></description></item><item><title>JSON Web Token入门手册</title><link>https://xzygis.github.io/posts/20200130-usage-of-json-web-token/</link><pubDate>Thu, 30 Jan 2020 13:10:39 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20200130-usage-of-json-web-token/</guid><description><![CDATA[<h2 id="跨域认证问题">跨域认证问题</h2>
+]]></description></item><item><title>JSON Web Token入门手册</title><link>https://xzygis.github.io/posts/usage-of-json-web-token/</link><pubDate>Thu, 30 Jan 2020 13:10:39 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/usage-of-json-web-token/</guid><description><![CDATA[<h2 id="跨域认证问题">跨域认证问题</h2>
 <p>互联网服务离不开用户认证。一般流程是下面这样：</p>
 <ol>
 <li>用户向服务器发送用户名和密码。</li>
@@ -2572,7 +2572,8 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 </span></span><span class="line"><span class="cl">  <span class="nx">secret</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>如果你想把以上概念付诸实践，可以通过 <a href="https://jwt.io/"target="_blank" rel="external nofollow noopener noreferrer">https://jwt.io/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> 提供的工具来玩一玩 JWT 。如下图所示：</p>
+</div><p>如果你想把以上概念付诸实践，可以通过 <a href="https://jwt.io/"target="_blank" rel="external nofollow noopener noreferrer">https://jwt.io/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> 提供的工具来玩一玩 JWT 。如下图所示：
+</p>
 <h2 id="jwt-的使用方式">JWT 的使用方式</h2>
 <p>客户端收到服务器返回的 JWT，可以储存在 Cookie 里面，也可以储存在 localStorage。
 此后，客户端每次与服务器通信，都要带上这个 JWT。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP 请求的头信息Authorization字段里面。</p>
@@ -2736,7 +2737,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 <li><a href="https://www.jianshu.com/p/576dbf44b2ae"target="_blank" rel="external nofollow noopener noreferrer">https://www.jianshu.com/p/576dbf44b2ae<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
 <li><a href="https://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
 </ol>
-]]></description></item><item><title>Docker之容器使用</title><link>https://xzygis.github.io/posts/20200130-usage-of-docker-container/</link><pubDate>Thu, 30 Jan 2020 13:01:19 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20200130-usage-of-docker-container/</guid><description><![CDATA[<h2 id="获取镜像">获取镜像</h2>
+]]></description></item><item><title>Docker之容器使用</title><link>https://xzygis.github.io/posts/usage-of-docker-container/</link><pubDate>Thu, 30 Jan 2020 13:01:19 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/usage-of-docker-container/</guid><description><![CDATA[<h2 id="获取镜像">获取镜像</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -2856,7 +2857,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 </div>
 </div><p>参考来源：</p>
 <p>[1] <a href="https://www.runoob.com/docker/docker-container-usage.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.runoob.com/docker/docker-container-usage.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
-]]></description></item><item><title>Docker之镜像使用</title><link>https://xzygis.github.io/posts/20200130-usage-of-docker-image/</link><pubDate>Thu, 30 Jan 2020 12:58:32 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20200130-usage-of-docker-image/</guid><description><![CDATA[<h2 id="获取镜像">获取镜像</h2>
+]]></description></item><item><title>Docker之镜像使用</title><link>https://xzygis.github.io/posts/usage-of-docker-image/</link><pubDate>Thu, 30 Jan 2020 12:58:32 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/usage-of-docker-image/</guid><description><![CDATA[<h2 id="获取镜像">获取镜像</h2>
 <p>用法：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -3178,7 +3179,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ docker load &lt; nginx.tar
 </span></span></code></pre></td></tr></table>
 </div>
-</div>]]></description></item><item><title>CentOS安装docker</title><link>https://xzygis.github.io/posts/20200130-centos-install-docker/</link><pubDate>Thu, 30 Jan 2020 12:56:35 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20200130-centos-install-docker/</guid><description><![CDATA[<h3 id="1-移除旧的版本">1. 移除旧的版本</h3>
+</div>]]></description></item><item><title>CentOS安装docker</title><link>https://xzygis.github.io/posts/centos-install-docker/</link><pubDate>Thu, 30 Jan 2020 12:56:35 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/centos-install-docker/</guid><description><![CDATA[<h3 id="1-移除旧的版本">1. 移除旧的版本</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -3341,7 +3342,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 </span></span><span class="line"><span class="cl"> https://docs.docker.com/get-started/
 </span></span></code></pre></td></tr></table>
 </div>
-</div>]]></description></item><item><title>SO_REUSEADDR &amp; SO_REUSEPORT</title><link>https://xzygis.github.io/posts/20200130-so-reuseaddr-so-reuseport/</link><pubDate>Thu, 30 Jan 2020 12:50:51 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20200130-so-reuseaddr-so-reuseport/</guid><description><![CDATA[<h2 id="so_reuseaddr">SO_REUSEADDR</h2>
+</div>]]></description></item><item><title>SO_REUSEADDR &amp; SO_REUSEPORT</title><link>https://xzygis.github.io/posts/so-reuseaddr-so-reuseport/</link><pubDate>Thu, 30 Jan 2020 12:50:51 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/so-reuseaddr-so-reuseport/</guid><description><![CDATA[<h2 id="so_reuseaddr">SO_REUSEADDR</h2>
 <ol>
 <li>当有一个有相同本地地址和端口的socket1处于TIME_WAIT状态时，而你启动的程序的socket2要占用该地址和端口，你的程序就要用到该选项。</li>
 <li>SO_REUSEADDR允许同一port上启动同一服务器的多个实例(多个进程)。但每个实例绑定的IP地址是不能相同的。在有多块网卡或用IP Alias技术的机器可
@@ -3366,7 +3367,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 <p>golang开源实现：https://github.com/kavu/go_reuseport</p>
 </blockquote>
 <p>注意：SO_REUSEPORT只支持TCP和UDP。对unix domain socket不生效。</p>
-]]></description></item><item><title>Kubernetes概述</title><link>https://xzygis.github.io/posts/20200129-introduction-of-k8s/</link><pubDate>Wed, 29 Jan 2020 23:53:11 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20200129-introduction-of-k8s/</guid><description><![CDATA[<h2 id="kubernetes-简介">Kubernetes 简介</h2>
+]]></description></item><item><title>Kubernetes概述</title><link>https://xzygis.github.io/posts/introduction-of-k8s/</link><pubDate>Wed, 29 Jan 2020 23:53:11 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-of-k8s/</guid><description><![CDATA[<h2 id="kubernetes-简介">Kubernetes 简介</h2>
 <p>Kubernetes 是谷歌开源的容器集群管理系统，是 Google 多年大规模容器管理技术 Borg 的开源版本，主要功能包括：</p>
 <ul>
 <li>基于容器的应用部署、维护和滚动升级</li>
@@ -3516,7 +3517,7 @@ Label 定义好后其他对象可以使用 Label Selector 来选择一组相同 
 <li><a href="https://feisky.gitbooks.io/kubernetes/introduction/"target="_blank" rel="external nofollow noopener noreferrer">https://feisky.gitbooks.io/kubernetes/introduction/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
 <li><a href="https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/"target="_blank" rel="external nofollow noopener noreferrer">https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
 </ol>
-]]></description></item><item><title>云原生概述</title><link>https://xzygis.github.io/posts/20200128-introduction-of-cloud-native/</link><pubDate>Tue, 28 Jan 2020 15:05:10 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20200128-introduction-of-cloud-native/</guid><description><![CDATA[<h2 id="云原生的定义">云原生的定义</h2>
+]]></description></item><item><title>云原生概述</title><link>https://xzygis.github.io/posts/introduction-of-cloud-native/</link><pubDate>Tue, 28 Jan 2020 15:05:10 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-of-cloud-native/</guid><description><![CDATA[<h2 id="云原生的定义">云原生的定义</h2>
 <p>云原生技术有利于各组织在公有云、私有云和混合云等新型动态环境中，构建和运行可弹性扩展的应用。云原生的代表技术包括容器、服务网格、微服务、不可变基础设施和声明式API。</p>
 <p>这些技术能够构建容错性好、易于管理和便于观察的松耦合系统。结合可靠的自动化手段，云原生技术使工程师能够轻松地对系统作出频繁和可预测的重大变更。</p>
 <!-- more -->
@@ -4017,7 +4018,7 @@ Label 定义好后其他对象可以使用 Label Selector 来选择一组相同 
 <li><a href="https://zhuanlan.zhihu.com/p/34445114"target="_blank" rel="external nofollow noopener noreferrer">https://zhuanlan.zhihu.com/p/34445114<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
 <li><a href="https://labs.play-with-k8s.com/"target="_blank" rel="external nofollow noopener noreferrer">https://labs.play-with-k8s.com/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
 </ol>
-]]></description></item><item><title>Service Mesh概述</title><link>https://xzygis.github.io/posts/20200128-introduction-of-service-mesh/</link><pubDate>Tue, 28 Jan 2020 14:48:01 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20200128-introduction-of-service-mesh/</guid><description><![CDATA[<h2 id="什么是服务网格">什么是服务网格？</h2>
+]]></description></item><item><title>Service Mesh概述</title><link>https://xzygis.github.io/posts/introduction-of-service-mesh/</link><pubDate>Tue, 28 Jan 2020 14:48:01 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-of-service-mesh/</guid><description><![CDATA[<h2 id="什么是服务网格">什么是服务网格？</h2>
 <p>服务网格是用于处理服务间通信的专用基础设施层。它负责通过包含现代云原生应用程序的复杂服务拓扑来可靠地传递请求。实际上，服务网格通常通过一组轻量级网络代理来实现，这些代理与应用程序代码一起部署，而不需要感知应用程序本身。</p>
 <h3 id="服务网格的特点">服务网格的特点</h3>
 <p>服务网格有如下几个特点：</p>
@@ -4129,7 +4130,7 @@ Label 定义好后其他对象可以使用 Label Selector 来选择一组相同 
 </ul>
 <hr>
 <p>本文是针对ServiceMesher社区系列文章而整理的学习笔记，文章地址：https://www.servicemesher.com/istio-handbook/intro/service-mesh-the-microservices-in-post-kubernetes-era.html</p>
-]]></description></item><item><title>API网关概述</title><link>https://xzygis.github.io/posts/20200127-introduction-of-api-gateway/</link><pubDate>Mon, 27 Jan 2020 22:51:43 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20200127-introduction-of-api-gateway/</guid><description><![CDATA[<h2 id="1-背景">1 背景</h2>
+]]></description></item><item><title>API网关概述</title><link>https://xzygis.github.io/posts/introduction-of-api-gateway/</link><pubDate>Mon, 27 Jan 2020 22:51:43 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-of-api-gateway/</guid><description><![CDATA[<h2 id="1-背景">1 背景</h2>
 <ul>
 <li>由于后端的微服务拆分，客户端通常需要请求多个服务获取所需数据。</li>
 <li>不同客户端所需要的数据不一样。例如，PC需要的数据通常比移动端更加详细。</li>
@@ -4196,7 +4197,7 @@ Label 定义好后其他对象可以使用 Label Selector 来选择一组相同 
 <li><a href="https://aws.amazon.com/cn/api-gateway/features/"target="_blank" rel="external nofollow noopener noreferrer">https://aws.amazon.com/cn/api-gateway/features/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
 <li><a href="https://cloud.tencent.com/document/product/628/11755"target="_blank" rel="external nofollow noopener noreferrer">https://cloud.tencent.com/document/product/628/11755<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
 </ul>
-]]></description></item><item><title>如何通过GitHub+Hexo搭建博客</title><link>https://xzygis.github.io/posts/20200127-how-to-create-a-hexo-blog/</link><pubDate>Mon, 27 Jan 2020 21:52:50 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/20200127-how-to-create-a-hexo-blog/</guid><description><![CDATA[<h2 id="安装node">安装Node</h2>
+]]></description></item><item><title>如何通过GitHub+Hexo搭建博客</title><link>https://xzygis.github.io/posts/how-to-create-a-hexo-blog/</link><pubDate>Mon, 27 Jan 2020 21:52:50 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/how-to-create-a-hexo-blog/</guid><description><![CDATA[<h2 id="安装node">安装Node</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1

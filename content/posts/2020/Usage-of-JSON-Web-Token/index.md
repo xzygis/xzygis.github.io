@@ -99,7 +99,8 @@ HMACSHA256(
   base64UrlEncode(payload),
   secret)
 ```
-如果你想把以上概念付诸实践，可以通过 https://jwt.io/ 提供的工具来玩一玩 JWT 。如下图所示：![jwt.io](jwt-example.png)
+如果你想把以上概念付诸实践，可以通过 https://jwt.io/ 提供的工具来玩一玩 JWT 。如下图所示：
+![jwt](jwt-example.png)
 
 
 ## JWT 的使用方式

@@ -1,7 +1,7 @@
 ---
 title: Redis底层数据结构介绍
 date: 2022-11-30 22:03:21
-tags: ["redis"]
+tags: ["Redis"]
 categories: ["后台开发"]
 ---
 

@@ -1,4 +1,247 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>所有文章 - Chu Xing</title><link>https://xzygis.github.io/posts/</link><description>所有文章 | Chu Xing</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>xzygis@163.com (chuxing)</managingEditor><webMaster>xzygis@163.com (chuxing)</webMaster><lastBuildDate>Wed, 07 Dec 2022 20:10:37 +0800</lastBuildDate><atom:link href="https://xzygis.github.io/posts/" rel="self" type="application/rss+xml"/><item><title>Redis底层数据结构介绍</title><link>https://xzygis.github.io/posts/introduction-to-the-underlying-data-structure-of-redis/</link><pubDate>Wed, 30 Nov 2022 22:03:21 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-to-the-underlying-data-structure-of-redis/</guid><description><![CDATA[<h2 id="简单动态字符串">简单动态字符串</h2>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>所有文章 - Chu Xing</title><link>https://xzygis.github.io/posts/</link><description>所有文章 | Chu Xing</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>xzygis@163.com (chuxing)</managingEditor><webMaster>xzygis@163.com (chuxing)</webMaster><lastBuildDate>Wed, 07 Dec 2022 20:10:37 +0800</lastBuildDate><atom:link href="https://xzygis.github.io/posts/" rel="self" type="application/rss+xml"/><item><title>Tair:分布式键/值存储系统</title><link>https://xzygis.github.io/posts/tair-a-distributed-key-value-storage-system-developed-by-alibaba-group/</link><pubDate>Sun, 27 Nov 2022 23:11:28 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/tair-a-distributed-key-value-storage-system-developed-by-alibaba-group/</guid><description><![CDATA[<h2 id="产品概览">产品概览</h2>
+<p>Tair 是快速访问内存 (MDB)/持久性 (LDB) 存储服务。</p>
+<p>Tair采用高性能、高可用的分布式集群架构，可以满足企业对读写性能和可扩展容量的高要求。</p>
+<h2 id="系统架构">系统架构</h2>
+<p>Tair 集群具有三个必要的模块：ConfigServer、DataServer 和客户端。</p>
+<!-- more -->
+<p></p>
+<p>通常，一个 Tair 集群包括两个 ConfigServer 和多个 DataServer。 两个 ConfigServer 充当主服务器和备用服务器。 DataServer 和 ConfigServer 之间的心跳检查用于检查集群中活跃的和可用的 DataServer，以建立集群中数据的分布（比较表）。 DataServers 按照 ConfigServer 的指示存储、复制和迁移数据。当客户端启动时，它从 ConfigServer 获取数据分布信息。客户端根据这些数据分布信息，与对应的DataServer进行交互，执行用户的请求。</p>
+<p>在架构上，ConfigServer 的作用类似于传统应用系统中的中心节点。整个集群服务依赖于ConfigServer。 事实上，Tair 的 ConfigServers 是非常轻量级的。当一个工作的 ConfigServer 遇到停机时间时，另一个 ConfigServer 会在几秒钟内自动接管。 即使两个 ConfigServer 同时停机，只要 DataServer 没有变化，Tair 也可以正常运行。 用户只需要将应用程序连接到 ConfigServers，不需要知道内部节点的详细信息。</p>
+<h3 id="configserver">ConfigServer</h3>
+<p>两个 ConfigServers 作为主服务器和备用服务器。</p>
+<p>集群的实时和可用 DataServer 节点信息是使用 ConfigServer 和 DataServer 之间的心跳检查确定的。</p>
+<p>ConfigServer根据DataServer节点信息构建数据分布表，展示数据在集群中的分布情况。</p>
+<p>ConfigServer 提供数据分发表查询服务。</p>
+<p>ConfigServer 调度数据服务器之间的数据迁移和复制。</p>
+<h3 id="dataservers-数据服务器">DataServers 数据服务器</h3>
+<p>DataServers 提供存储引擎。</p>
+<p>DataServers 接收客户端发起的操作，例如 put/get/remove。</p>
+<p>DataServers 迁移和复制数据。</p>
+<p>DataServers 提供访问统计信息。</p>
+<h3 id="clients-客户端">Clients 客户端</h3>
+<p>客户端提供用于访问 Tair 集群的 API。</p>
+<p>客户端更新和缓存数据分发表。</p>
+<p>客户端提供LocalCache，防止过热的数据访问影响Tair集群服务。</p>
+<p>客户端控制流量。</p>
+<h2 id="产品特点">产品特点</h2>
+<h3 id="分布式架构">分布式架构</h3>
+<p>分布式集群架构用于提供自动灾难恢复和故障转移。</p>
+<p>支持负载均衡，数据分布均匀。</p>
+<p>系统存储空间和吞吐量性能可以弹性伸缩，解决数据量和QPS性能限制。</p>
+<p>功能齐全且用户友好的访问</p>
+<p>数据结构丰富。 支持单级键值结构和二级索引结构。</p>
+<p>支持各种用途。 还支持计数器模式。</p>
+<p>支持数据过期和版本控制。</p>
+<h3 id="version-支持">Version 支持</h3>
+<p>Tair 中的每个数据都包含版本号，版本号在每次更新后都会递增。这个特性有助于防止由于数据的并发更新导致的问题。</p>
+<p>比如，系统有一个 value 为 “a,b,c”，A 和 B 同时 get 到这个 value。A 执行操作，在后面添加一个 d，value 为 “a,b,c,d”。B 执行操作添加一个 e，value 为”a,b,c,e”。如果不加控制，无论 A 和 B 谁先更新成功，它的更新都会被后到的更新覆盖。</p>
+<p>Tair 无法解决这个问题，但是引入了 version 机制避免这样的问题。还是拿刚才的例子，A 和 B 取到数据，假设版本号为 10，A 先更新，更新成功后，value 为”a,b,c,d”，与此同时，版本号会变为 11。当 B 更新时，由于其基于的版本号是 10，服务器会拒绝更新，从而避免 A 的更新被覆盖。B 可以选择 get 新版本的 value，然后在其基础上修改，也可以选择强行更新。</p>
+<h3 id="item-支持">Item 支持</h3>
+<p>Tair 还支持将 value 视为一个 item 数组，对 value 中的部分 item 进行操作。比如有个 key 的 value 为 [1,2,3,4,5]，我们可以只获取前两个 item，返回 [1,2]，也可以删除第一个 item，还支持将数据删除，并返回被删除的数据，通过这个接口可以实现一个原子的分布式 FIFO 的队列。</p>
+<h2 id="用途">用途</h2>
+<h3 id="数据库缓存">数据库缓存</h3>
+<p>随着业务量的增加，对数据库系统的并发请求越来越多，数据库系统的负载越来越重。当数据库系统过载时，响应速度会变慢，在极端情况下甚至会导致服务中断。</p>
+<p>为了解决这个问题，Tair MDB 可以与数据库产品一起部署，以提供高吞吐量和低延迟的存储。</p>
+<p>MDB 响应速度快，一般毫秒级完成请求。而且，MDB 支持更高的 QPS 速率，可以处理比数据库更多的并发请求。</p>
+<p>通过观察业务，用户可以将热点数据存储在MDB中，显着减轻数据库的负载。这不仅降低了数据库成本，还提高了系统可用性。</p>
+<h3 id="临时数据存储">临时数据存储</h3>
+<p>社交网站、电商网站、游戏、广告等应用需要维护大量的临时数据。</p>
+<p>在 MDB 中存储临时数据可以减少内存管理开销和应用程序负载。在分布式环境中，MDB可以作为统一的全局存储，可以防止单点故障造成的数据丢失，解决多个应用之间同步的问题。</p>
+<p>一个常见的例子是使用 MDB 作为会话管理器。如果网站采用分布式部署，并且流量很大，同一用户的不同请求可能会发送到不同的Web服务器。</p>
+<p>在这种情况下，MDB 可以作为全局存储解决方案来保存会话数据、用户令牌、权限信息等数据。</p>
+<h3 id="数据存储">数据存储</h3>
+<p>推荐和广告业务通常需要离线计算大量数据。 LDB 支持持久存储并提供卓越的性能。</p>
+<p>支持在线服务，允许用户定期将离线数据导入LDB进行在线服务。</p>
+<p>经过计算，列表业务可以将最终列表存储在LDB中，直接展示给前端应用程序。</p>
+<p>这样，LDB 就满足了存储和高速访问的需求。</p>
+<h3 id="黑名单白名单">黑名单/白名单</h3>
+<p>安全应用程序有许多黑名单/白名单方案。这些黑名单/白名单场景的特点是命中率低、访问量大、数据丢失导致业务损失。</p>
+<p>LDB 支持数据持久化和高访问量，因此在这些场景中被广泛使用。</p>
+<h3 id="分布式锁">分布式锁</h3>
+<p>分布式锁通常用于防止多线程并发导致的数据不一致和逻辑混乱。分布式锁可以使用 Tair 的版本特性或计算功能来实现。</p>
+<p>得益于LBS的持久化，即使服务宕机，锁也不会丢失，可以正常释放。</p>
+]]></description></item><item><title>Hugo Quick Start</title><link>https://xzygis.github.io/posts/hugo-quick-start/</link><pubDate>Sat, 03 Dec 2022 19:21:25 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/hugo-quick-start/</guid><description><![CDATA[<p>Hugo是由Go语言实现的静态网站生成器。简单、易用、高效、易扩展、快速部署。</p>
+<h2 id="intall">Intall</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">go install github.com/gohugoio/hugo@latest
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="quick-start">Quick Start</h2>
+<blockquote>
+<p><a href="https://gohugo.io/getting-started/quick-start/"target="_blank" rel="external nofollow noopener noreferrer">https://gohugo.io/getting-started/quick-start/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
+</blockquote>
+<p>运行以下命令创建一个使用<code>Ananke</code>主题的网站：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">hugo new site quickstart
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> quickstart
+</span></span><span class="line"><span class="cl">git init
+</span></span><span class="line"><span class="cl">git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke themes/ananke
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;theme = &#39;ananke&#39;&#34;</span> &gt;&gt; config.toml
+</span></span><span class="line"><span class="cl">hugo server
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="add-content">Add Content</h2>
+<p>给网站增加新的网页：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">hugo new posts/my-first-post.md
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Hugo在<code>content/posts</code>目录创建了<code>my-first-post.md</code>文件，文件内容如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">title: <span class="s2">&#34;My First Post&#34;</span>
+</span></span><span class="line"><span class="cl">date: 2022-11-20T09:03:20-08:00
+</span></span><span class="line"><span class="cl">draft: <span class="nb">true</span>
+</span></span><span class="line"><span class="cl">---
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>修改并保存文件后启动Hugo服务器可以预览网站，可以使用以下的任一命令以包含draft内容：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">hugo server --buildDrafts
+</span></span><span class="line"><span class="cl">hugo server -D
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="configure-the-site">Configure the site</h2>
+<p>可以通过根目录的<code>config.toml</code>文件配置网站相关信息：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nv">baseURL</span> <span class="o">=</span> <span class="s1">&#39;http://example.org/&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">languageCode</span> <span class="o">=</span> <span class="s1">&#39;en-us&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">title</span> <span class="o">=</span> <span class="s1">&#39;My New Hugo Site&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">theme</span> <span class="o">=</span> <span class="s1">&#39;ananke&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="publish-the-site">Publish the site</h2>
+<p>生成站点的静态文件，文件将生成到根目录下的<code>public</code>目录</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">hugo
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="host-on-github">Host on GitHub</h2>
+<blockquote>
+<p><a href="https://gohugo.io/hosting-and-deployment/hosting-on-github/"target="_blank" rel="external nofollow noopener noreferrer">https://gohugo.io/hosting-and-deployment/hosting-on-github/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
+</blockquote>
+<ol>
+<li>创建名为<code>&lt;USERNAME&gt;.github.io</code> 或 <code>&lt;ORGANIZATION&gt;.github.io</code>的GitHub仓库</li>
+<li>在仓库中新增文件<code>.github/workflows/gh-pages.yml</code>并填写以下内容：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">github pages</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">on</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">push</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">main </span><span class="w"> </span><span class="c"># Set a branch that will trigger a deployment</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">pull_request</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">jobs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">deploy</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l">ubuntu-22.04</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">steps</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/checkout@v3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">submodules</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">  </span><span class="c"># Fetch Hugo themes (true OR recursive)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">fetch-depth</span><span class="p">:</span><span class="w"> </span><span class="m">0</span><span class="w">    </span><span class="c"># Fetch all history for .GitInfo and .Lastmod</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Setup Hugo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">peaceiris/actions-hugo@v2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">hugo-version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;latest&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="c"># extended: true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Build</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l">hugo --minify</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Deploy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">peaceiris/actions-gh-pages@v3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l">github.ref == &#39;refs/heads/main&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">github_token</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.GITHUB_TOKEN }}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">publish_dir</span><span class="p">:</span><span class="w"> </span><span class="l">./public</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>把<code>config.toml</code>中的<code>baseURL</code>修改为<code>https://&lt;USERNAME&gt;.github.io</code>。</p>
+<p>Ref：</p>
+<ol>
+<li><a href="https://github.com/gohugoio/hugo"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/gohugoio/hugo<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+<li><a href="https://www.xianmin.org/post/2022/07-familiar-one-keybinding-style/"target="_blank" rel="external nofollow noopener noreferrer">https://www.xianmin.org/post/2022/07-familiar-one-keybinding-style/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
+</ol>
+]]></description></item><item><title>Redis底层数据结构介绍</title><link>https://xzygis.github.io/posts/introduction-to-the-underlying-data-structure-of-redis/</link><pubDate>Wed, 30 Nov 2022 22:03:21 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-to-the-underlying-data-structure-of-redis/</guid><description><![CDATA[<h2 id="简单动态字符串">简单动态字符串</h2>
 <p>每个sds.h/sdshdr结构表示一个SDS值：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -4250,248 +4493,6 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 <h2 id="服务上线">服务上线</h2>
 <p>在服务上线阶段，需要避免的是观察不细致，想当然的认为没问题，结果到最后导致了一个大问题。在上线阶段，我们应该加强检查，从多角度对服务进行观察，包括：上游角度、服务本身角度、下游角度，观察的指标，既包括错误率、时延、错误日志等通用指标，也包括业务自定义指标（应该在方案设计阶段考虑清楚后续有什么手段可以观测服务是否正常）。
 值得一提的是，服务上线完成并不是结束，而是一个新的开始。我们需要采取各种手段保障服务的稳定运行，并不断发现其中的可优化点，推动服务SLI稳步提升。</p>
-]]></description></item><item><title>Tair:分布式键/值存储系统</title><link>https://xzygis.github.io/posts/tair-a-distributed-key-value-storage-system-developed-by-alibaba-group/</link><pubDate>Sun, 27 Nov 2022 23:11:28 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/tair-a-distributed-key-value-storage-system-developed-by-alibaba-group/</guid><description><![CDATA[<h2 id="产品概览">产品概览</h2>
-<p>Tair 是快速访问内存 (MDB)/持久性 (LDB) 存储服务。</p>
-<p>Tair采用高性能、高可用的分布式集群架构，可以满足企业对读写性能和可扩展容量的高要求。</p>
-<h2 id="系统架构">系统架构</h2>
-<p>Tair 集群具有三个必要的模块：ConfigServer、DataServer 和客户端。</p>
-<!-- more -->
-<p></p>
-<p>通常，一个 Tair 集群包括两个 ConfigServer 和多个 DataServer。 两个 ConfigServer 充当主服务器和备用服务器。 DataServer 和 ConfigServer 之间的心跳检查用于检查集群中活跃的和可用的 DataServer，以建立集群中数据的分布（比较表）。 DataServers 按照 ConfigServer 的指示存储、复制和迁移数据。当客户端启动时，它从 ConfigServer 获取数据分布信息。客户端根据这些数据分布信息，与对应的DataServer进行交互，执行用户的请求。</p>
-<p>在架构上，ConfigServer 的作用类似于传统应用系统中的中心节点。整个集群服务依赖于ConfigServer。 事实上，Tair 的 ConfigServers 是非常轻量级的。当一个工作的 ConfigServer 遇到停机时间时，另一个 ConfigServer 会在几秒钟内自动接管。 即使两个 ConfigServer 同时停机，只要 DataServer 没有变化，Tair 也可以正常运行。 用户只需要将应用程序连接到 ConfigServers，不需要知道内部节点的详细信息。</p>
-<h3 id="configserver">ConfigServer</h3>
-<p>两个 ConfigServers 作为主服务器和备用服务器。</p>
-<p>集群的实时和可用 DataServer 节点信息是使用 ConfigServer 和 DataServer 之间的心跳检查确定的。</p>
-<p>ConfigServer根据DataServer节点信息构建数据分布表，展示数据在集群中的分布情况。</p>
-<p>ConfigServer 提供数据分发表查询服务。</p>
-<p>ConfigServer 调度数据服务器之间的数据迁移和复制。</p>
-<h3 id="dataservers-数据服务器">DataServers 数据服务器</h3>
-<p>DataServers 提供存储引擎。</p>
-<p>DataServers 接收客户端发起的操作，例如 put/get/remove。</p>
-<p>DataServers 迁移和复制数据。</p>
-<p>DataServers 提供访问统计信息。</p>
-<h3 id="clients-客户端">Clients 客户端</h3>
-<p>客户端提供用于访问 Tair 集群的 API。</p>
-<p>客户端更新和缓存数据分发表。</p>
-<p>客户端提供LocalCache，防止过热的数据访问影响Tair集群服务。</p>
-<p>客户端控制流量。</p>
-<h2 id="产品特点">产品特点</h2>
-<h3 id="分布式架构">分布式架构</h3>
-<p>分布式集群架构用于提供自动灾难恢复和故障转移。</p>
-<p>支持负载均衡，数据分布均匀。</p>
-<p>系统存储空间和吞吐量性能可以弹性伸缩，解决数据量和QPS性能限制。</p>
-<p>功能齐全且用户友好的访问</p>
-<p>数据结构丰富。 支持单级键值结构和二级索引结构。</p>
-<p>支持各种用途。 还支持计数器模式。</p>
-<p>支持数据过期和版本控制。</p>
-<h3 id="version-支持">Version 支持</h3>
-<p>Tair 中的每个数据都包含版本号，版本号在每次更新后都会递增。这个特性有助于防止由于数据的并发更新导致的问题。</p>
-<p>比如，系统有一个 value 为 “a,b,c”，A 和 B 同时 get 到这个 value。A 执行操作，在后面添加一个 d，value 为 “a,b,c,d”。B 执行操作添加一个 e，value 为”a,b,c,e”。如果不加控制，无论 A 和 B 谁先更新成功，它的更新都会被后到的更新覆盖。</p>
-<p>Tair 无法解决这个问题，但是引入了 version 机制避免这样的问题。还是拿刚才的例子，A 和 B 取到数据，假设版本号为 10，A 先更新，更新成功后，value 为”a,b,c,d”，与此同时，版本号会变为 11。当 B 更新时，由于其基于的版本号是 10，服务器会拒绝更新，从而避免 A 的更新被覆盖。B 可以选择 get 新版本的 value，然后在其基础上修改，也可以选择强行更新。</p>
-<h3 id="item-支持">Item 支持</h3>
-<p>Tair 还支持将 value 视为一个 item 数组，对 value 中的部分 item 进行操作。比如有个 key 的 value 为 [1,2,3,4,5]，我们可以只获取前两个 item，返回 [1,2]，也可以删除第一个 item，还支持将数据删除，并返回被删除的数据，通过这个接口可以实现一个原子的分布式 FIFO 的队列。</p>
-<h2 id="用途">用途</h2>
-<h3 id="数据库缓存">数据库缓存</h3>
-<p>随着业务量的增加，对数据库系统的并发请求越来越多，数据库系统的负载越来越重。当数据库系统过载时，响应速度会变慢，在极端情况下甚至会导致服务中断。</p>
-<p>为了解决这个问题，Tair MDB 可以与数据库产品一起部署，以提供高吞吐量和低延迟的存储。</p>
-<p>MDB 响应速度快，一般毫秒级完成请求。而且，MDB 支持更高的 QPS 速率，可以处理比数据库更多的并发请求。</p>
-<p>通过观察业务，用户可以将热点数据存储在MDB中，显着减轻数据库的负载。这不仅降低了数据库成本，还提高了系统可用性。</p>
-<h3 id="临时数据存储">临时数据存储</h3>
-<p>社交网站、电商网站、游戏、广告等应用需要维护大量的临时数据。</p>
-<p>在 MDB 中存储临时数据可以减少内存管理开销和应用程序负载。在分布式环境中，MDB可以作为统一的全局存储，可以防止单点故障造成的数据丢失，解决多个应用之间同步的问题。</p>
-<p>一个常见的例子是使用 MDB 作为会话管理器。如果网站采用分布式部署，并且流量很大，同一用户的不同请求可能会发送到不同的Web服务器。</p>
-<p>在这种情况下，MDB 可以作为全局存储解决方案来保存会话数据、用户令牌、权限信息等数据。</p>
-<h3 id="数据存储">数据存储</h3>
-<p>推荐和广告业务通常需要离线计算大量数据。 LDB 支持持久存储并提供卓越的性能。</p>
-<p>支持在线服务，允许用户定期将离线数据导入LDB进行在线服务。</p>
-<p>经过计算，列表业务可以将最终列表存储在LDB中，直接展示给前端应用程序。</p>
-<p>这样，LDB 就满足了存储和高速访问的需求。</p>
-<h3 id="黑名单白名单">黑名单/白名单</h3>
-<p>安全应用程序有许多黑名单/白名单方案。这些黑名单/白名单场景的特点是命中率低、访问量大、数据丢失导致业务损失。</p>
-<p>LDB 支持数据持久化和高访问量，因此在这些场景中被广泛使用。</p>
-<h3 id="分布式锁">分布式锁</h3>
-<p>分布式锁通常用于防止多线程并发导致的数据不一致和逻辑混乱。分布式锁可以使用 Tair 的版本特性或计算功能来实现。</p>
-<p>得益于LBS的持久化，即使服务宕机，锁也不会丢失，可以正常释放。</p>
-]]></description></item><item><title>Hugo Quick Start</title><link>https://xzygis.github.io/posts/hugo-quick-start/</link><pubDate>Sat, 03 Dec 2022 19:21:25 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/hugo-quick-start/</guid><description><![CDATA[<h2 id="intall">Intall</h2>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">go install github.com/gohugoio/hugo@latest
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="quick-start">Quick Start</h2>
-<blockquote>
-<p><a href="https://gohugo.io/getting-started/quick-start/"target="_blank" rel="external nofollow noopener noreferrer">https://gohugo.io/getting-started/quick-start/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
-</blockquote>
-<p>运行以下命令创建一个使用<code>Ananke</code>主题的网站：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">hugo new site quickstart
-</span></span><span class="line"><span class="cl"><span class="nb">cd</span> quickstart
-</span></span><span class="line"><span class="cl">git init
-</span></span><span class="line"><span class="cl">git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke themes/ananke
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;theme = &#39;ananke&#39;&#34;</span> &gt;&gt; config.toml
-</span></span><span class="line"><span class="cl">hugo server
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="add-content">Add Content</h2>
-<p>给网站增加新的网页：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">hugo new posts/my-first-post.md
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>Hugo在<code>content/posts</code>目录创建了<code>my-first-post.md</code>文件，文件内容如下：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">---
-</span></span><span class="line"><span class="cl">title: <span class="s2">&#34;My First Post&#34;</span>
-</span></span><span class="line"><span class="cl">date: 2022-11-20T09:03:20-08:00
-</span></span><span class="line"><span class="cl">draft: <span class="nb">true</span>
-</span></span><span class="line"><span class="cl">---
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>修改并保存文件后启动Hugo服务器可以预览网站，可以使用以下的任一命令以包含draft内容：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">hugo server --buildDrafts
-</span></span><span class="line"><span class="cl">hugo server -D
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="configure-the-site">Configure the site</h2>
-<p>可以通过根目录的<code>config.toml</code>文件配置网站相关信息：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nv">baseURL</span> <span class="o">=</span> <span class="s1">&#39;http://example.org/&#39;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">languageCode</span> <span class="o">=</span> <span class="s1">&#39;en-us&#39;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">title</span> <span class="o">=</span> <span class="s1">&#39;My New Hugo Site&#39;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">theme</span> <span class="o">=</span> <span class="s1">&#39;ananke&#39;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="publish-the-site">Publish the site</h2>
-<p>生成站点的静态文件，文件将生成到根目录下的<code>public</code>目录</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">hugo
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="host-on-github">Host on GitHub</h2>
-<blockquote>
-<p><a href="https://gohugo.io/hosting-and-deployment/hosting-on-github/"target="_blank" rel="external nofollow noopener noreferrer">https://gohugo.io/hosting-and-deployment/hosting-on-github/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
-</blockquote>
-<ol>
-<li>创建名为<code>&lt;USERNAME&gt;.github.io</code> 或 <code>&lt;ORGANIZATION&gt;.github.io</code>的GitHub仓库</li>
-<li>在仓库中新增文件<code>.github/workflows/gh-pages.yml</code>并填写以下内容：</li>
-</ol>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">github pages</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">on</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">push</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">main </span><span class="w"> </span><span class="c"># Set a branch that will trigger a deployment</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">pull_request</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">jobs</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">deploy</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l">ubuntu-22.04</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">steps</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/checkout@v3</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">submodules</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">  </span><span class="c"># Fetch Hugo themes (true OR recursive)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">fetch-depth</span><span class="p">:</span><span class="w"> </span><span class="m">0</span><span class="w">    </span><span class="c"># Fetch all history for .GitInfo and .Lastmod</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Setup Hugo</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">peaceiris/actions-hugo@v2</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">hugo-version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;latest&#39;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="c"># extended: true</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Build</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l">hugo --minify</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Deploy</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">peaceiris/actions-gh-pages@v3</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l">github.ref == &#39;refs/heads/main&#39;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">github_token</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.GITHUB_TOKEN }}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">publish_dir</span><span class="p">:</span><span class="w"> </span><span class="l">./public</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>把<code>config.toml</code>中的<code>baseURL</code>修改为<code>https://&lt;USERNAME&gt;.github.io</code>。</p>
-<p>Ref：</p>
-<ol>
-<li><a href="https://github.com/gohugoio/hugo"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/gohugoio/hugo<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-<li><a href="https://www.xianmin.org/post/2022/07-familiar-one-keybinding-style/"target="_blank" rel="external nofollow noopener noreferrer">https://www.xianmin.org/post/2022/07-familiar-one-keybinding-style/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-</ol>
 ]]></description></item><item><title>Redis对象介绍</title><link>https://xzygis.github.io/posts/introduction-to-redis-object/</link><pubDate>Wed, 07 Dec 2022 20:10:37 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-to-redis-object/</guid><description><![CDATA[<p>在 <a href="https://chuxing.club/posts/introduction-to-the-underlying-data-structure-of-redis/"target="_blank" rel="external nofollow noopener noreferrer">Redis底层数据结构介绍<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> 中我们介绍了Redis用到的所有主要数据结构，比如简单动态字符串（SDS）、双端链表、字典、压缩列表、整数集合等等。Redis并没有直接使用这些数据结构来实现键值对数据库，而是基于这些数据结构创建了一个对象系统，这个系统包含字符串对象、列表对象、哈希对象、集合对象和有序集合对象这五种类型的对象，每种对象都用到了至少一种我们前面所介绍的数据结构。</p>
 <p>通过这五种不同类型的对象，Redis可以在执行命令之前，根据对象的类型来判断一个对象是否可以执行给定的命令。使用对象的另一个好处是，我们可以针对不同的使用场景，为对象设置多种不同的数据结构实现，从而优化对象在不同场景下的使用效率。</p>
 <p>除此之外，Redis的对象系统还实现了基于引用计数技术的内存回收机制，当程序不再使用某个对象的时候，这个对象所占用的内存就会被自动释放；另外，Redis还通过引用计数技术实现了对象共享机制，这一机制可以在适当的条件下，通过让多个数据库键共享同一个对象来节约内存。</p>
@@ -4704,7 +4705,8 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 </li>
 </ol>
 </div>
-]]></description></item><item><title>Hugo Quick Start</title><link>https://xzygis.github.io/posts/hugo-quick-start/</link><pubDate>Sat, 03 Dec 2022 19:21:25 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/hugo-quick-start/</guid><description><![CDATA[<h2 id="intall">Intall</h2>
+]]></description></item><item><title>Hugo Quick Start</title><link>https://xzygis.github.io/posts/hugo-quick-start/</link><pubDate>Sat, 03 Dec 2022 19:21:25 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/hugo-quick-start/</guid><description><![CDATA[<p>Hugo是由Go语言实现的静态网站生成器。简单、易用、高效、易扩展、快速部署。</p>
+<h2 id="intall">Intall</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1

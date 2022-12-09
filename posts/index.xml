@@ -1,4 +1,256 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>所有文章 - Chu Xing</title><link>https://xzygis.github.io/posts/</link><description>所有文章 | Chu Xing</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>xzygis@163.com (chuxing)</managingEditor><webMaster>xzygis@163.com (chuxing)</webMaster><lastBuildDate>Thu, 08 Dec 2022 23:39:55 +0800</lastBuildDate><atom:link href="https://xzygis.github.io/posts/" rel="self" type="application/rss+xml"/><item><title>Redis对象介绍</title><link>https://xzygis.github.io/posts/introduction-to-redis-object/</link><pubDate>Wed, 07 Dec 2022 20:10:37 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-to-redis-object/</guid><description><![CDATA[<p>在 <a href="https://chuxing.club/posts/introduction-to-the-underlying-data-structure-of-redis/"target="_blank" rel="external nofollow noopener noreferrer">Redis底层数据结构介绍<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> 中我们介绍了Redis用到的所有主要数据结构，比如简单动态字符串（SDS）、双端链表、字典、压缩列表、整数集合等等。Redis并没有直接使用这些数据结构来实现键值对数据库，而是基于这些数据结构创建了一个对象系统，这个系统包含字符串对象、列表对象、哈希对象、集合对象和有序集合对象这五种类型的对象，每种对象都用到了至少一种我们前面所介绍的数据结构。</p>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>所有文章 - Chu Xing</title><link>https://xzygis.github.io/posts/</link><description>所有文章 | Chu Xing</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>xzygis@163.com (chuxing)</managingEditor><webMaster>xzygis@163.com (chuxing)</webMaster><lastBuildDate>Fri, 09 Dec 2022 23:22:14 +0800</lastBuildDate><atom:link href="https://xzygis.github.io/posts/" rel="self" type="application/rss+xml"/><item><title>Redis RDB持久化</title><link>https://xzygis.github.io/posts/introduction-to-redis-rdb-persistence/</link><pubDate>Fri, 09 Dec 2022 23:22:14 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-to-redis-rdb-persistence/</guid><description><![CDATA[<p>Redis是一个键值对数据库服务器，服务器中通常包含着任意个非空数据库，而每个非空数据库中又可以包含任意个键值对，为了方便起见，我们将服务器中的非空数据库以及它们的键值对统称为数据库状态。</p>
+<p>因为Redis是内存数据库，它将自己的数据库状态储存在内存里面，所以如果不想办法将储存在内存中的数据库状态保存到磁盘里面，那么一旦服务器进程退出，服务器中的数据库状态也会消失不见。为了解决这个问题，Redis提供了RDB持久化功能，这个功能可以将Redis在内存中的数据库状态保存到磁盘里面，避免数据意外丢失。</p>
+<p>RDB持久化既可以手动执行，也可以根据服务器配置选项定期执行，该功能可以将某个时间点上的数据库状态保存到一个RDB文件中。</p>
+<p>RDB持久化功能所生成的RDB文件是一个经过压缩的二进制文件，通过该文件可以还原生成RDB文件时的数据库状态。 因为RDB文件是保存在硬盘里面的，所以即使Redis服务器进程退出，甚至运行Redis服务器的计算机停机，但只要RDB文件仍然存在，Redis服务器就可以用它来还原数据库状态。</p>
+<h2 id="rdb文件的创建与载入">RDB文件的创建与载入</h2>
+<p>有两个Redis命令可以用于生成RDB文件，一个是<code>SAVE</code>，另一个是<code>BGSAVE</code>。SAVE命令会阻塞Redis服务器进程，直到RDB文件创建完毕为止，在服务器进程阻塞期间，服务器不能处理任何命令请求；BGSAVE命令会派生出一个子进程，然后由子进程负责创建RDB文件，服务器进程（父进程）继续处理命令请求。</p>
+<p>创建RDB文件的实际工作由<code>rdb.c/rdbSave</code>函数完成，SAVE命令和BGSAVE命令会以不同的方式调用这个函数，通过以下伪代码可以明显地看出这两个命令之间的区别：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">SAVE</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#创建RDB文件</span>
+</span></span><span class="line"><span class="cl">    <span class="n">rdbSave</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">BGSAVE</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#创建子进程</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#子进程负责创建RDB文件</span>
+</span></span><span class="line"><span class="cl">        <span class="n">rdbSave</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#完成之后向父进程发送信号</span>
+</span></span><span class="line"><span class="cl">        <span class="n">signal_parent</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">pid</span> <span class="err">＞</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#父进程继续处理命令请求，并通过轮询等待子进程的信号</span>
+</span></span><span class="line"><span class="cl">        <span class="n">handle_request_and_wait_signal</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#处理出错情况</span>
+</span></span><span class="line"><span class="cl">        <span class="n">handle_fork_error</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>RDB文件的载入工作是在服务器启动时自动执行的，所以Redis并没有专门用于载入RDB文件的命令，只要Redis服务器在启动时检测到RDB文件存在，它就会自动载入RDB文件。</p>
+<p>另外值得一提的是，因为AOF文件的更新频率通常比RDB文件的更新频率高，所以：</p>
+<ul>
+<li>如果服务器开启了AOF持久化功能，那么服务器会优先使用AOF文件来还原数据库状态。</li>
+<li>只有在AOF持久化功能处于关闭状态时，服务器才会使用RDB文件来还原数据库状态。</li>
+</ul>
+<p></p>
+<h3 id="save命令执行时的服务器状态">SAVE命令执行时的服务器状态</h3>
+<p>当SAVE命令执行时，Redis服务器会被阻塞，所以当SAVE命令正在执行时，客户端发送的所有命令请求都会被拒绝。只有在服务器执行完SAVE命令、重新开始接受命令请求之后，客户端发送的命令才会被处理。</p>
+<h3 id="bgsave命令执行时的服务器状态">BGSAVE命令执行时的服务器状态</h3>
+<p>因为BGSAVE命令的保存工作是由子进程执行的，所以在子进程创建RDB文件的过程中，Redis服务器仍然可以继续处理客户端的命令请求，但是，在BGSAVE命令执行期间，服务器处理SAVE、BGSAVE、BGREWRITEAOF三个命令的方式会和平时有所不同。</p>
+<ul>
+<li>首先，在BGSAVE命令执行期间，客户端发送的SAVE命令会被服务器拒绝，服务器禁止SAVE命令和BGSAVE命令同时执行是为了避免父进程（服务器进程）和子进程同时执行两个rdbSave调用，防止产生竞争条件。</li>
+<li>其次，在BGSAVE命令执行期间，客户端发送的BGSAVE命令会被服务器拒绝，因为同时执行两个BGSAVE命令也会产生竞争条件。</li>
+<li>最后，BGREWRITEAOF和BGSAVE两个命令不能同时执行：
+<ul>
+<li>如果BGSAVE命令正在执行，那么客户端发送的BGREWRITEAOF命令会被延迟到BGSAVE命令执行完毕之后执行。</li>
+<li>如果BGREWRITEAOF命令正在执行，那么客户端发送的BGSAVE命令会被服务器拒绝。</li>
+</ul>
+</li>
+</ul>
+<p>因为BGREWRITEAOF和BGSAVE两个命令的实际工作都由子进程执行，所以这两个命令在操作方面并没有什么冲突的地方，不能同时执行它们只是一个性能方面的考虑——并发出两个子进程，并且这两个子进程都同时执行大量的磁盘写入操作，这怎么想都不会是一个好主意。</p>
+<h3 id="rdb文件载入时的服务器状态">RDB文件载入时的服务器状态</h3>
+<p>服务器在载入RDB文件期间，会一直处于阻塞状态，直到载入工作完成为止。</p>
+<h2 id="自动间隔性保存">自动间隔性保存</h2>
+<p>因为BGSAVE命令可以在不阻塞服务器进程的情况下执行，所以Redis允许用户通过设置服务器配置的save选项，让服务器每隔一段时间自动执行一次BGSAVE命令。用户可以通过save选项设置多个保存条件，但只要其中任意一个条件被满足，服务器就会执行BGSAVE命令。</p>
+<p>举个例子，如果我们向服务器提供以下配置：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">save 900 1
+</span></span><span class="line"><span class="cl">save 300 10
+</span></span><span class="line"><span class="cl">save 60 10000
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>那么只要满足以下三个条件中的任意一个，BGSAVE命令就会被执行：</p>
+<ul>
+<li>服务器在900秒之内，对数据库进行了至少1次修改。</li>
+<li>服务器在300秒之内，对数据库进行了至少10次修改。</li>
+<li>服务器在60秒之内，对数据库进行了至少10000次修改。</li>
+</ul>
+<h3 id="设置保存条件">设置保存条件</h3>
+<p>当Redis服务器启动时，用户可以通过指定配置文件或者传入启动参数的方式设置save选项，如果用户没有主动设置save选项，那么服务器会为save选项设置默认条件。服务器程序会根据save选项所设置的保存条件，设置服务器状态redisServer结构的saveparams属性：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">redisServer</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">//记录了保存条件的数组
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">struct</span> <span class="n">saveparam</span> <span class="o">*</span><span class="n">saveparams</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="dirty计数器和lastsave属性">dirty计数器和lastsave属性</h3>
+<p>除了saveparams数组之外，服务器状态还维持着一个dirty计数器，以及一个lastsave属性：</p>
+<ul>
+<li>dirty计数器记录距离上一次成功执行SAVE命令或者BGSAVE命令之后，服务器对数据库状态（服务器中的所有数据库）进行了多少次修改（包括写入、删除、更新等操作）。</li>
+<li>lastsave属性是一个UNIX时间戳，记录了服务器上一次成功执行SAVE命令或者BGSAVE命令的时间。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">redisServer</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//修改计数器
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">long</span> <span class="kt">long</span> <span class="n">dirty</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//上一次执行保存的时间
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">time_t</span> <span class="n">lastsave</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="检查保存条件是否满足">检查保存条件是否满足</h3>
+<p>Redis的服务器周期性操作函数serverCron默认每隔100毫秒就会执行一次，该函数用于对正在运行的服务器进行维护，它的其中一项工作就是检查save选项所设置的保存条件是否已经满足，如果满足的话，就执行BGSAVE命令。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">serverCron</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># ...</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#遍历所有保存条件</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">saveparam</span> <span class="ow">in</span> <span class="n">server</span><span class="o">.</span><span class="n">saveparams</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#计算距离上次执行保存操作有多少秒</span>
+</span></span><span class="line"><span class="cl">        <span class="n">save_interval</span> <span class="o">=</span> <span class="n">unixtime_now</span><span class="p">()</span><span class="o">-</span><span class="n">server</span><span class="o">.</span><span class="n">lastsave</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#如果数据库状态的修改次数超过条件所设置的次数</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#并且距离上次保存的时间超过条件所设置的时间</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#那么执行保存操作</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">server</span><span class="o">.</span><span class="n">dirty</span> <span class="err">＞</span><span class="o">=</span> <span class="n">saveparam</span><span class="o">.</span><span class="n">changes</span> <span class="ow">and</span> \
+</span></span><span class="line"><span class="cl">           <span class="n">save_interval</span> <span class="err">＞</span> <span class="n">saveparam</span><span class="o">.</span><span class="n">seconds</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">BGSAVE</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># ...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>程序会遍历并检查saveparams数组中的所有保存条件，只要有任意一个条件被满足，那么服务器就会执行BGSAVE命令。</p>
+<h2 id="rdb文件结构">RDB文件结构</h2>
+<p>一个完整的RDB文件包含以下几个部分：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="p">|</span> REDIS <span class="p">|</span> db_version <span class="p">|</span> databases <span class="p">|</span> EOF <span class="p">|</span> check_sum <span class="p">|</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中：</p>
+<ul>
+<li>RDB文件的最开头是REDIS部分，这个部分的长度为5字节，保存着“REDIS”五个字符。通过这五个字符，程序可以在载入文件时，快速检查所载入的文件是否RDB文件。</li>
+<li>db_version长度为4字节，它的值是一个字符串表示的整数，这个整数记录了RDB文件的版本号，比如&quot;0006&quot;就代表RDB文件的版本为第六版</li>
+<li>databases部分包含着零个或任意多个数据库，以及各个数据库中的键值对数据。</li>
+<li>EOF常量的长度为1字节，这个常量标志着RDB文件正文内容的结束，当读入程序遇到这个值的时候，它知道所有数据库的所有键值对都已经载入完毕了。</li>
+<li>check_sum是一个8字节长的无符号整数，保存着一个校验和，这个校验和是程序通过对REDIS、db_version、databases、EOF四个部分的内容进行计算得出的。</li>
+</ul>
+<h3 id="databases部分">databases部分</h3>
+<p>一个RDB文件的databases部分可以保存任意多个非空数据库。每个非空数据库在RDB文件中都可以保存为SELECTDB、db_number、key_value_pairs三个部分：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="p">|</span> SELECTDB <span class="p">|</span> db_number <span class="p">|</span> key_value_pairs <span class="p">|</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="key_value_pairs部分">key_value_pairs部分</h3>
+<p>RDB文件中的每个key_value_pairs部分都保存了一个或以上数量的键值对，如果键值对带有过期时间的话，那么键值对的过期时间也会被保存在内。不带过期时间的键值对在RDB文件中由TYPE、key、value三部分组成：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="p">|</span> TYPE <span class="p">|</span> key <span class="p">|</span> value <span class="p">|</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>TYPE记录了value的类型，长度为1字节，每个TYPE常量都代表了一种对象类型或者底层编码，当服务器读入RDB文件中的键值对数据时，程序会根据TYPE的值来决定如何读入和解释value的数据。Type的值可以是以下常量的其中一个：</p>
+<ul>
+<li>REDIS_RDB_TYPE_STRING</li>
+<li>REDIS_RDB_TYPE_LIST</li>
+<li>REDIS_RDB_TYPE_SET</li>
+<li>REDIS_RDB_TYPE_ZSET</li>
+<li>REDIS_RDB_TYPE_HASH</li>
+<li>REDIS_RDB_TYPE_LIST_ZIPLIST</li>
+<li>REDIS_RDB_TYPE_SET_INTSET</li>
+<li>REDIS_RDB_TYPE_ZSET_ZIPLIST</li>
+<li>REDIS_RDB_TYPE_HASH_ZIPLIST</li>
+</ul>
+<p>带有过期时间的键值对在RDB文件中的结构：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="p">|</span> EXPIRETIME_MS <span class="p">|</span> ms <span class="p">|</span> TYPE <span class="p">|</span> key <span class="p">|</span> value <span class="p">|</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中，</p>
+<ul>
+<li>EXPIRETIME_MS常量的长度为1字节，它告知读入程序，接下来要读入的将是一个以毫秒为单位的过期时间。</li>
+<li>ms是一个8字节长的带符号整数，记录着一个以毫秒为单位的UNIX时间戳，这个时间戳就是键值对的过期时间。</li>
+</ul>
+<h3 id="value的编码">value的编码</h3>
+<p>RDB文件中的每个value部分都保存了一个值对象，每个值对象的类型都由与之对应的TYPE记录，根据类型的不同，value部分的结构、长度也会有所不同。</p>
+<h2 id="分析rdb文件">分析RDB文件</h2>
+<p>我们可以使用od命令来分析Redis服务器产生的RDB文件，该命令可以用给定的格式转存（dump）并打印输入文件。</p>
+<h2 id="重点回顾">重点回顾</h2>
+<ul>
+<li>RDB文件用于保存和还原Redis服务器所有数据库中的所有键值对数据。</li>
+<li>SAVE命令由服务器进程直接执行保存操作，所以该命令会阻塞服务器。</li>
+<li>BGSAVE令由子进程执行保存操作，所以该命令不会阻塞服务器。</li>
+<li>服务器状态中会保存所有用save选项设置的保存条件，当任意一个保存条件被满足时，服务器会自动执行BGSAVE命令。</li>
+<li>RDB文件是一个经过压缩的二进制文件，由多个部分组成。</li>
+<li>对于不同类型的键值对，RDB文件会使用不同的方式来保存它们。</li>
+</ul>
+]]></description></item><item><title>Redis对象介绍</title><link>https://xzygis.github.io/posts/introduction-to-redis-object/</link><pubDate>Wed, 07 Dec 2022 20:10:37 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-to-redis-object/</guid><description><![CDATA[<p>在 <a href="https://chuxing.club/posts/introduction-to-the-underlying-data-structure-of-redis/"target="_blank" rel="external nofollow noopener noreferrer">Redis底层数据结构介绍<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> 中我们介绍了Redis用到的所有主要数据结构，比如简单动态字符串（SDS）、双端链表、字典、压缩列表、整数集合等等。Redis并没有直接使用这些数据结构来实现键值对数据库，而是基于这些数据结构创建了一个对象系统，这个系统包含字符串对象、列表对象、哈希对象、集合对象和有序集合对象这五种类型的对象，每种对象都用到了至少一种我们前面所介绍的数据结构。</p>
 <p>通过这五种不同类型的对象，Redis可以在执行命令之前，根据对象的类型来判断一个对象是否可以执行给定的命令。使用对象的另一个好处是，我们可以针对不同的使用场景，为对象设置多种不同的数据结构实现，从而优化对象在不同场景下的使用效率。</p>
 <p>除此之外，Redis的对象系统还实现了基于引用计数技术的内存回收机制，当程序不再使用某个对象的时候，这个对象所占用的内存就会被自动释放；另外，Redis还通过引用计数技术实现了对象共享机制，这一机制可以在适当的条件下，通过让多个数据库键共享同一个对象来节约内存。</p>
 <p>最后，Redis的对象带有访问时间记录信息，该信息可以用于计算数据库键的空转时长，在服务器启用了maxmemory功能的情况下，空转时长较大的那些键可能会优先被服务器删除。</p>
@@ -4786,6 +5038,258 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 <h2 id="服务上线">服务上线</h2>
 <p>在服务上线阶段，需要避免的是观察不细致，想当然的认为没问题，结果到最后导致了一个大问题。在上线阶段，我们应该加强检查，从多角度对服务进行观察，包括：上游角度、服务本身角度、下游角度，观察的指标，既包括错误率、时延、错误日志等通用指标，也包括业务自定义指标（应该在方案设计阶段考虑清楚后续有什么手段可以观测服务是否正常）。
 值得一提的是，服务上线完成并不是结束，而是一个新的开始。我们需要采取各种手段保障服务的稳定运行，并不断发现其中的可优化点，推动服务SLI稳步提升。</p>
+]]></description></item><item><title>Redis RDB持久化</title><link>https://xzygis.github.io/posts/introduction-to-redis-rdb-persistence/</link><pubDate>Fri, 09 Dec 2022 23:22:14 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-to-redis-rdb-persistence/</guid><description><![CDATA[<p>Redis是一个键值对数据库服务器，服务器中通常包含着任意个非空数据库，而每个非空数据库中又可以包含任意个键值对，为了方便起见，我们将服务器中的非空数据库以及它们的键值对统称为数据库状态。</p>
+<p>因为Redis是内存数据库，它将自己的数据库状态储存在内存里面，所以如果不想办法将储存在内存中的数据库状态保存到磁盘里面，那么一旦服务器进程退出，服务器中的数据库状态也会消失不见。为了解决这个问题，Redis提供了RDB持久化功能，这个功能可以将Redis在内存中的数据库状态保存到磁盘里面，避免数据意外丢失。</p>
+<p>RDB持久化既可以手动执行，也可以根据服务器配置选项定期执行，该功能可以将某个时间点上的数据库状态保存到一个RDB文件中。</p>
+<p>RDB持久化功能所生成的RDB文件是一个经过压缩的二进制文件，通过该文件可以还原生成RDB文件时的数据库状态。 因为RDB文件是保存在硬盘里面的，所以即使Redis服务器进程退出，甚至运行Redis服务器的计算机停机，但只要RDB文件仍然存在，Redis服务器就可以用它来还原数据库状态。</p>
+<h2 id="rdb文件的创建与载入">RDB文件的创建与载入</h2>
+<p>有两个Redis命令可以用于生成RDB文件，一个是<code>SAVE</code>，另一个是<code>BGSAVE</code>。SAVE命令会阻塞Redis服务器进程，直到RDB文件创建完毕为止，在服务器进程阻塞期间，服务器不能处理任何命令请求；BGSAVE命令会派生出一个子进程，然后由子进程负责创建RDB文件，服务器进程（父进程）继续处理命令请求。</p>
+<p>创建RDB文件的实际工作由<code>rdb.c/rdbSave</code>函数完成，SAVE命令和BGSAVE命令会以不同的方式调用这个函数，通过以下伪代码可以明显地看出这两个命令之间的区别：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">SAVE</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#创建RDB文件</span>
+</span></span><span class="line"><span class="cl">    <span class="n">rdbSave</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">BGSAVE</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#创建子进程</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#子进程负责创建RDB文件</span>
+</span></span><span class="line"><span class="cl">        <span class="n">rdbSave</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#完成之后向父进程发送信号</span>
+</span></span><span class="line"><span class="cl">        <span class="n">signal_parent</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">pid</span> <span class="err">＞</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#父进程继续处理命令请求，并通过轮询等待子进程的信号</span>
+</span></span><span class="line"><span class="cl">        <span class="n">handle_request_and_wait_signal</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#处理出错情况</span>
+</span></span><span class="line"><span class="cl">        <span class="n">handle_fork_error</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>RDB文件的载入工作是在服务器启动时自动执行的，所以Redis并没有专门用于载入RDB文件的命令，只要Redis服务器在启动时检测到RDB文件存在，它就会自动载入RDB文件。</p>
+<p>另外值得一提的是，因为AOF文件的更新频率通常比RDB文件的更新频率高，所以：</p>
+<ul>
+<li>如果服务器开启了AOF持久化功能，那么服务器会优先使用AOF文件来还原数据库状态。</li>
+<li>只有在AOF持久化功能处于关闭状态时，服务器才会使用RDB文件来还原数据库状态。</li>
+</ul>
+<p></p>
+<h3 id="save命令执行时的服务器状态">SAVE命令执行时的服务器状态</h3>
+<p>当SAVE命令执行时，Redis服务器会被阻塞，所以当SAVE命令正在执行时，客户端发送的所有命令请求都会被拒绝。只有在服务器执行完SAVE命令、重新开始接受命令请求之后，客户端发送的命令才会被处理。</p>
+<h3 id="bgsave命令执行时的服务器状态">BGSAVE命令执行时的服务器状态</h3>
+<p>因为BGSAVE命令的保存工作是由子进程执行的，所以在子进程创建RDB文件的过程中，Redis服务器仍然可以继续处理客户端的命令请求，但是，在BGSAVE命令执行期间，服务器处理SAVE、BGSAVE、BGREWRITEAOF三个命令的方式会和平时有所不同。</p>
+<ul>
+<li>首先，在BGSAVE命令执行期间，客户端发送的SAVE命令会被服务器拒绝，服务器禁止SAVE命令和BGSAVE命令同时执行是为了避免父进程（服务器进程）和子进程同时执行两个rdbSave调用，防止产生竞争条件。</li>
+<li>其次，在BGSAVE命令执行期间，客户端发送的BGSAVE命令会被服务器拒绝，因为同时执行两个BGSAVE命令也会产生竞争条件。</li>
+<li>最后，BGREWRITEAOF和BGSAVE两个命令不能同时执行：
+<ul>
+<li>如果BGSAVE命令正在执行，那么客户端发送的BGREWRITEAOF命令会被延迟到BGSAVE命令执行完毕之后执行。</li>
+<li>如果BGREWRITEAOF命令正在执行，那么客户端发送的BGSAVE命令会被服务器拒绝。</li>
+</ul>
+</li>
+</ul>
+<p>因为BGREWRITEAOF和BGSAVE两个命令的实际工作都由子进程执行，所以这两个命令在操作方面并没有什么冲突的地方，不能同时执行它们只是一个性能方面的考虑——并发出两个子进程，并且这两个子进程都同时执行大量的磁盘写入操作，这怎么想都不会是一个好主意。</p>
+<h3 id="rdb文件载入时的服务器状态">RDB文件载入时的服务器状态</h3>
+<p>服务器在载入RDB文件期间，会一直处于阻塞状态，直到载入工作完成为止。</p>
+<h2 id="自动间隔性保存">自动间隔性保存</h2>
+<p>因为BGSAVE命令可以在不阻塞服务器进程的情况下执行，所以Redis允许用户通过设置服务器配置的save选项，让服务器每隔一段时间自动执行一次BGSAVE命令。用户可以通过save选项设置多个保存条件，但只要其中任意一个条件被满足，服务器就会执行BGSAVE命令。</p>
+<p>举个例子，如果我们向服务器提供以下配置：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">save 900 1
+</span></span><span class="line"><span class="cl">save 300 10
+</span></span><span class="line"><span class="cl">save 60 10000
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>那么只要满足以下三个条件中的任意一个，BGSAVE命令就会被执行：</p>
+<ul>
+<li>服务器在900秒之内，对数据库进行了至少1次修改。</li>
+<li>服务器在300秒之内，对数据库进行了至少10次修改。</li>
+<li>服务器在60秒之内，对数据库进行了至少10000次修改。</li>
+</ul>
+<h3 id="设置保存条件">设置保存条件</h3>
+<p>当Redis服务器启动时，用户可以通过指定配置文件或者传入启动参数的方式设置save选项，如果用户没有主动设置save选项，那么服务器会为save选项设置默认条件。服务器程序会根据save选项所设置的保存条件，设置服务器状态redisServer结构的saveparams属性：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">redisServer</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">//记录了保存条件的数组
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">struct</span> <span class="n">saveparam</span> <span class="o">*</span><span class="n">saveparams</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="dirty计数器和lastsave属性">dirty计数器和lastsave属性</h3>
+<p>除了saveparams数组之外，服务器状态还维持着一个dirty计数器，以及一个lastsave属性：</p>
+<ul>
+<li>dirty计数器记录距离上一次成功执行SAVE命令或者BGSAVE命令之后，服务器对数据库状态（服务器中的所有数据库）进行了多少次修改（包括写入、删除、更新等操作）。</li>
+<li>lastsave属性是一个UNIX时间戳，记录了服务器上一次成功执行SAVE命令或者BGSAVE命令的时间。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">redisServer</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//修改计数器
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">long</span> <span class="kt">long</span> <span class="n">dirty</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//上一次执行保存的时间
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">time_t</span> <span class="n">lastsave</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="检查保存条件是否满足">检查保存条件是否满足</h3>
+<p>Redis的服务器周期性操作函数serverCron默认每隔100毫秒就会执行一次，该函数用于对正在运行的服务器进行维护，它的其中一项工作就是检查save选项所设置的保存条件是否已经满足，如果满足的话，就执行BGSAVE命令。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">serverCron</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># ...</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#遍历所有保存条件</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">saveparam</span> <span class="ow">in</span> <span class="n">server</span><span class="o">.</span><span class="n">saveparams</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#计算距离上次执行保存操作有多少秒</span>
+</span></span><span class="line"><span class="cl">        <span class="n">save_interval</span> <span class="o">=</span> <span class="n">unixtime_now</span><span class="p">()</span><span class="o">-</span><span class="n">server</span><span class="o">.</span><span class="n">lastsave</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#如果数据库状态的修改次数超过条件所设置的次数</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#并且距离上次保存的时间超过条件所设置的时间</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#那么执行保存操作</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">server</span><span class="o">.</span><span class="n">dirty</span> <span class="err">＞</span><span class="o">=</span> <span class="n">saveparam</span><span class="o">.</span><span class="n">changes</span> <span class="ow">and</span> \
+</span></span><span class="line"><span class="cl">           <span class="n">save_interval</span> <span class="err">＞</span> <span class="n">saveparam</span><span class="o">.</span><span class="n">seconds</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">BGSAVE</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># ...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>程序会遍历并检查saveparams数组中的所有保存条件，只要有任意一个条件被满足，那么服务器就会执行BGSAVE命令。</p>
+<h2 id="rdb文件结构">RDB文件结构</h2>
+<p>一个完整的RDB文件包含以下几个部分：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="p">|</span> REDIS <span class="p">|</span> db_version <span class="p">|</span> databases <span class="p">|</span> EOF <span class="p">|</span> check_sum <span class="p">|</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中：</p>
+<ul>
+<li>RDB文件的最开头是REDIS部分，这个部分的长度为5字节，保存着“REDIS”五个字符。通过这五个字符，程序可以在载入文件时，快速检查所载入的文件是否RDB文件。</li>
+<li>db_version长度为4字节，它的值是一个字符串表示的整数，这个整数记录了RDB文件的版本号，比如&quot;0006&quot;就代表RDB文件的版本为第六版</li>
+<li>databases部分包含着零个或任意多个数据库，以及各个数据库中的键值对数据。</li>
+<li>EOF常量的长度为1字节，这个常量标志着RDB文件正文内容的结束，当读入程序遇到这个值的时候，它知道所有数据库的所有键值对都已经载入完毕了。</li>
+<li>check_sum是一个8字节长的无符号整数，保存着一个校验和，这个校验和是程序通过对REDIS、db_version、databases、EOF四个部分的内容进行计算得出的。</li>
+</ul>
+<h3 id="databases部分">databases部分</h3>
+<p>一个RDB文件的databases部分可以保存任意多个非空数据库。每个非空数据库在RDB文件中都可以保存为SELECTDB、db_number、key_value_pairs三个部分：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="p">|</span> SELECTDB <span class="p">|</span> db_number <span class="p">|</span> key_value_pairs <span class="p">|</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="key_value_pairs部分">key_value_pairs部分</h3>
+<p>RDB文件中的每个key_value_pairs部分都保存了一个或以上数量的键值对，如果键值对带有过期时间的话，那么键值对的过期时间也会被保存在内。不带过期时间的键值对在RDB文件中由TYPE、key、value三部分组成：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="p">|</span> TYPE <span class="p">|</span> key <span class="p">|</span> value <span class="p">|</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>TYPE记录了value的类型，长度为1字节，每个TYPE常量都代表了一种对象类型或者底层编码，当服务器读入RDB文件中的键值对数据时，程序会根据TYPE的值来决定如何读入和解释value的数据。Type的值可以是以下常量的其中一个：</p>
+<ul>
+<li>REDIS_RDB_TYPE_STRING</li>
+<li>REDIS_RDB_TYPE_LIST</li>
+<li>REDIS_RDB_TYPE_SET</li>
+<li>REDIS_RDB_TYPE_ZSET</li>
+<li>REDIS_RDB_TYPE_HASH</li>
+<li>REDIS_RDB_TYPE_LIST_ZIPLIST</li>
+<li>REDIS_RDB_TYPE_SET_INTSET</li>
+<li>REDIS_RDB_TYPE_ZSET_ZIPLIST</li>
+<li>REDIS_RDB_TYPE_HASH_ZIPLIST</li>
+</ul>
+<p>带有过期时间的键值对在RDB文件中的结构：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="p">|</span> EXPIRETIME_MS <span class="p">|</span> ms <span class="p">|</span> TYPE <span class="p">|</span> key <span class="p">|</span> value <span class="p">|</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中，</p>
+<ul>
+<li>EXPIRETIME_MS常量的长度为1字节，它告知读入程序，接下来要读入的将是一个以毫秒为单位的过期时间。</li>
+<li>ms是一个8字节长的带符号整数，记录着一个以毫秒为单位的UNIX时间戳，这个时间戳就是键值对的过期时间。</li>
+</ul>
+<h3 id="value的编码">value的编码</h3>
+<p>RDB文件中的每个value部分都保存了一个值对象，每个值对象的类型都由与之对应的TYPE记录，根据类型的不同，value部分的结构、长度也会有所不同。</p>
+<h2 id="分析rdb文件">分析RDB文件</h2>
+<p>我们可以使用od命令来分析Redis服务器产生的RDB文件，该命令可以用给定的格式转存（dump）并打印输入文件。</p>
+<h2 id="重点回顾">重点回顾</h2>
+<ul>
+<li>RDB文件用于保存和还原Redis服务器所有数据库中的所有键值对数据。</li>
+<li>SAVE命令由服务器进程直接执行保存操作，所以该命令会阻塞服务器。</li>
+<li>BGSAVE令由子进程执行保存操作，所以该命令不会阻塞服务器。</li>
+<li>服务器状态中会保存所有用save选项设置的保存条件，当任意一个保存条件被满足时，服务器会自动执行BGSAVE命令。</li>
+<li>RDB文件是一个经过压缩的二进制文件，由多个部分组成。</li>
+<li>对于不同类型的键值对，RDB文件会使用不同的方式来保存它们。</li>
+</ul>
 ]]></description></item><item><title>Redis服务器数据库实现介绍</title><link>https://xzygis.github.io/posts/redis-server-database-implementation-introduction/</link><pubDate>Thu, 08 Dec 2022 23:39:55 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/redis-server-database-implementation-introduction/</guid><description><![CDATA[<h2 id="服务器中的数据库">服务器中的数据库</h2>
 <p>Redis服务器将所有数据库都保存在服务器状态redis.h/redisServer结构的db数组中，db数组的每个项都是一个redis.h/redisDb结构，每个redisDb结构代表一个数据库：</p>
 <div class="highlight"><div class="chroma">
@@ -9424,71 +9928,4 @@ Label 定义好后其他对象可以使用 Label Selector 来选择一组相同 
 </ul>
 <hr>
 <p>本文是针对ServiceMesher社区系列文章而整理的学习笔记，文章地址：https://www.servicemesher.com/istio-handbook/intro/service-mesh-the-microservices-in-post-kubernetes-era.html</p>
-]]></description></item><item><title>API网关概述</title><link>https://xzygis.github.io/posts/introduction-of-api-gateway/</link><pubDate>Mon, 27 Jan 2020 22:51:43 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-of-api-gateway/</guid><description><![CDATA[<h2 id="1-背景">1 背景</h2>
-<ul>
-<li>由于后端的微服务拆分，客户端通常需要请求多个服务获取所需数据。</li>
-<li>不同客户端所需要的数据不一样。例如，PC需要的数据通常比移动端更加详细。</li>
-<li>不同客户端网络环境差异大。例如，WAN vs LAN，移动网络 vs 非移动网络。</li>
-<li>服务端实例的地址信息（IP + port）会动态更新。</li>
-<li>微服务的拆分逻辑会变化，这种变化应该应该对客户端透明。</li>
-<li>不同的服务可能采用不同的协议，有些协议是非web的。</li>
-</ul>
-<h2 id="2-什么是api网关">2 什么是API网关？</h2>
-<p>API网关接收客户端的所有请求，并将请求路由到相应的后端服务，并提供接口聚合和协议转换。通常来说，API网关通过调用多个后端服务，并聚合结果的方式处理请求。它可将web协议转化为非web的内部后台协议。</p>
-<!-- more -->
-<p>核心功能：</p>
-<ul>
-<li>服务发现：</li>
-<li>负载均衡：以某种算法分摊系统压力。</li>
-<li>服务熔断：直接返回失败或者执行降价逻辑，防止雪崩。</li>
-<li>流量控制：防止短时间内大量请求转发到后台压垮服务器。</li>
-<li>认证鉴权：验证客户端的请求是否被授权。</li>
-<li>灰度发布：</li>
-</ul>
-<p>其他功能：</p>
-<ul>
-<li>协议转换：web协议转非Web协议。</li>
-<li>参数校验：对入参设置校验规则，由网关根据规则对无效请求进行过滤。</li>
-<li>API管理：包括 API 的创建、测试、发布、下线、版本切换等。</li>
-<li>监控告警：监控API请求次数、API调用延迟和API错误信息。</li>
-<li>SDK生成：</li>
-</ul>
-<h2 id="3-实现方式">3 实现方式</h2>
-<p>将API网关作为客户端的唯一接入点。API网关主要有两种类型：</p>
-<ul>
-<li>one-size-fits-all网关</li>
-<li>Backends for frontends网关</li>
-</ul>
-<h3 id="31-one-size-fits-all网关">3.1 One-size-fits-all网关</h3>
-<p>简单地将请求路由到相应服务。将请求扇出到多个后端服务。
-</p>
-<h3 id="32-backends-for-fronts网关">3.2 Backends for fronts网关</h3>
-<p>为每种客户端暴露不同的API。为每种客户端设计一个API网关，每个API网关为其客户端提供一种API。
-</p>
-<h2 id="4-优点">4 优点</h2>
-<ul>
-<li>使后端的微服务拆分对客户端透明。</li>
-<li>客户端无需关心后端服务的实例地址（IP + port）。</li>
-<li>可为每个客户端提供最优API。</li>
-<li>减少请求次数。</li>
-<li>简化客户端的逻辑（由调用多个后台服务变为只调用API网关）。</li>
-<li>可将标准的Web API协议转化为任意的后端协议。</li>
-</ul>
-<h2 id="5-缺点">5 缺点</h2>
-<ul>
-<li>增加复杂性。增加了API网关模块，带来了额外的开发、部署、管理成本。</li>
-<li>增加响应时间。调用链路多了一跳（API网关）。</li>
-</ul>
-<blockquote>
-<p><strong>Issues:</strong></p>
-<p>How implement the API gateway?</p>
-<p>event-driven/reactive approach is the best if it must scale to handle high loads.</p>
-</blockquote>
-<p>参考来源：</p>
-<ul>
-<li><a href="https://microservices.io/patterns/apigateway.html"target="_blank" rel="external nofollow noopener noreferrer">https://microservices.io/patterns/apigateway.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-<li><a href="https://www.nginx.com/learn/api-gateway/"target="_blank" rel="external nofollow noopener noreferrer">https://www.nginx.com/learn/api-gateway/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-<li><a href="https://aws.amazon.com/cn/api-gateway/features/"target="_blank" rel="external nofollow noopener noreferrer">https://aws.amazon.com/cn/api-gateway/features/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-<li><a href="https://cloud.tencent.com/document/product/628/11755"target="_blank" rel="external nofollow noopener noreferrer">https://cloud.tencent.com/document/product/628/11755<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-</ul>
 ]]></description></item></channel></rss>

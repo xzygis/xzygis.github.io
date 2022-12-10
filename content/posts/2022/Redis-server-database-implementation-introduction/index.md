@@ -1,11 +1,11 @@
 ---
-title: "Redis服务器数据库实现介绍"
+title: "Redis 服务器数据库实现"
 date: 2022-12-08T23:39:55+08:00
 tags: ["Redis"]
 categories: ["Cache"]
 ---
 
-## 服务器中的数据库
+## 服务器中的数据库[^1]
 Redis服务器将所有数据库都保存在服务器状态redis.h/redisServer结构的db数组中，db数组的每个项都是一个redis.h/redisDb结构，每个redisDb结构代表一个数据库：
 ```c
 struct redisServer {
@@ -216,4 +216,4 @@ activeExpireCycle函数的工作模式可以总结如下：
 - 从服务器即使发现过期键也不会自作主张地删除它，而是等待主节点发来DEL命令，这种统一、中心化的过期键删除策略可以保证主从服务器数据的一致性。
 - 当Redis命令对数据库进行修改之后，服务器会根据配置向客户端发送数据库通知。
 
-
+[^1]:《Redis设计与实现》

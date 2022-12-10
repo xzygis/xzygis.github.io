@@ -1,4 +1,5 @@
 https://xzygis.github.io/about/
+https://xzygis.github.io/posts/introduction-to-redis-aof-persistence/
 https://xzygis.github.io/posts/introduction-to-redis-rdb-persistence/
 https://xzygis.github.io/posts/redis-server-database-implementation-introduction/
 https://xzygis.github.io/posts/introduction-to-redis-object/

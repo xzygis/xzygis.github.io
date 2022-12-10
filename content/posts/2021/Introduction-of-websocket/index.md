@@ -2,7 +2,7 @@
 title: Websocket介绍
 date: 2021-06-12 15:25:21
 tags: ["websocket"]
-categories: ["后台开发"]
+categories: ["HTTP"]
 ---
 
 ## 什么是WebSocket？

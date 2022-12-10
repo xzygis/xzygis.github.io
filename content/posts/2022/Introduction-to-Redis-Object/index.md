@@ -3,7 +3,7 @@ title: "Redis对象介绍"
 subtitle: ""
 date: 2022-12-07T20:10:37+08:00
 tags: ["Redis"]
-categories: ["后台开发"]
+categories: ["Cache"]
 draft: false
 ---
 

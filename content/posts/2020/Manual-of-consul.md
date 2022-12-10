@@ -1,7 +1,7 @@
 ---
 title: Consul入门手册
 date: 2020-01-30 13:35:59
-tags: ["console"]
+tags: ["Consul"]
 category: ["后台开发"]
 ---
 

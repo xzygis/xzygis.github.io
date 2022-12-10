@@ -2,7 +2,7 @@
 title: Service Mesh概述
 date: 2020-01-28 14:48:01
 tags: ["Service Mesh", "Istio"]
-categories: ["Service Mesh"]
+categories: ["云原生"]
 ---
 
 

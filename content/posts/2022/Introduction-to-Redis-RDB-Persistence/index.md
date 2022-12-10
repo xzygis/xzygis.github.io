@@ -3,7 +3,7 @@ title: "Redis RDB持久化"
 subtitle: ""
 date: 2022-12-09T23:22:14+08:00
 tags: ["Redis"]
-categories: ["后台开发"]
+categories: ["Cache"]
 draft: false
 ---
 

@@ -2,7 +2,7 @@
 title: 'Tair:分布式键/值存储系统'
 date: 2022-11-27 23:11:28
 tags: ["cache"]
-categories: ["后台开发"]
+categories: ["Cache"]
 ---
 
 ## 产品概览

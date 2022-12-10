@@ -2,7 +2,7 @@
 title: "Redis服务器数据库实现介绍"
 date: 2022-12-08T23:39:55+08:00
 tags: ["Redis"]
-categories: ["后台开发"]
+categories: ["Cache"]
 ---
 
 ## 服务器中的数据库

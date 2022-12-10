@@ -2,7 +2,7 @@
 title: API网关概述
 date: 2020-01-27 22:51:43
 tags: ["API网关"]
-categories: ["后台开发"]
+categories: ["HTTP"]
 ---
 
 ## 1 背景

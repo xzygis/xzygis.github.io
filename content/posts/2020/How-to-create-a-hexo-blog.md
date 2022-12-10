@@ -2,7 +2,7 @@
 title: 如何通过GitHub+Hexo搭建博客
 date: 2020-01-27 21:52:50
 tags: ["hexo"]
-categories: ["其他"]
+categories: ["博客"]
 ---
 
 

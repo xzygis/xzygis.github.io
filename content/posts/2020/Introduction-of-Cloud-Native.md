@@ -2,7 +2,7 @@
 title: 云原生概述
 date: 2020-01-28 15:05:10
 tags: ["Cloud Native"]
-categories: ["Cloud Native"]
+categories: ["云原生"]
 ---
 
 ## 云原生的定义

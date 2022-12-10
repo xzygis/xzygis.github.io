@@ -2,7 +2,7 @@
 title: Redis底层数据结构介绍
 date: 2022-11-30 22:03:21
 tags: ["Redis"]
-categories: ["后台开发"]
+categories: ["Cache"]
 ---
 
 ## 简单动态字符串

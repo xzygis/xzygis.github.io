@@ -2,7 +2,7 @@
 title: JSON Web Token入门手册
 date: 2020-01-30 13:10:39
 tags: ["jwt"]
-categories: ["后台开发"]
+categories: ["HTTP"]
 ---
 
 

@@ -1,8 +1,8 @@
 ---
-title: "Hugo Quick Start"
+title: "Hugo 快速入门"
 date: 2022-12-03T19:21:25+08:00
 tags: ["hugo"]
-categories: ["hugo"]
+categories: ["博客"]
 draft: false
 ---
 

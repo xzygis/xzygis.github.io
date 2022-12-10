@@ -2,7 +2,7 @@
 title: Kubernetes概述
 date: 2020-01-29 23:53:11
 tags: ["Kubernetes"]
-categories: ["Kubernetes"]   
+categories: ["云原生"]   
 ---
 
 ## Kubernetes 简介

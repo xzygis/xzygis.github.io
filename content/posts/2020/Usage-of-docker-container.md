@@ -16,7 +16,6 @@ $ docker run -it ubuntu /bin/bash
 # 要退出终端，直接输入 exit
 ```
 
-<!-- more -->
 
 ## 启动已停止运行的容器
 ```

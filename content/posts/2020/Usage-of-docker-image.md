@@ -23,7 +23,6 @@ $ docker run -it --rm ubuntu:18.04 bash
 - `ubuntu:18.04`：这是指用 ubuntu:18.04 镜像为基础来启动容器。
 - `bash`：放在镜像名后的是命令，这里我们希望有个交互式 Shell，因此用的是 bash。
 
-<!-- more -->
 
 ## 查看镜像列表
 使用`docker image ls`或者`docker images`:

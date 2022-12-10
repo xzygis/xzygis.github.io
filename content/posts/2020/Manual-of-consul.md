@@ -18,7 +18,6 @@ Consul主要提供了以下特性：
 
 Consul支持Linux, Mac OS X, FreeBSD, Solaris, Windows等操作系统。
 
-<!-- more -->
 
 ### 基本架构
 每个提供服务给Consul的节点都运行了一个Consul Agent。运行一个Agent并不需要对其他服务做发现或读写KV存储。Agent负责对该节点上的服务做健康检查。

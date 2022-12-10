@@ -27,8 +27,6 @@ $ hexo g
 $ hexo s
 ```
 
-<!-- more -->
-
 ## 关联Github
 
 1. 修改`_config.yml`，修改deploy为：

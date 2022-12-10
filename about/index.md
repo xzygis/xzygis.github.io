@@ -14,9 +14,9 @@
 - 学而不思则罔，思而不学则殆
 - 知行合一
 
-![zsxq](images/zsxq.png)
+<image style="width: 300px; height: 400px" src="https://github.com/xzygis/xzygis.github.io/blob/gh-pages/images/zsxq.png?raw=true"></image>
+
 如果你也喜欢读书，欢迎加入知识星球与我一起读书提升认知！
-> 如果您有任何的问题，欢迎与我联系~
 
 
 ---

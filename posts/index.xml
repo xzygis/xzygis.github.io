@@ -1175,7 +1175,7 @@
 </li>
 </ol>
 </div>
-]]></description></item><item><title>Redis AOF持久化</title><link>https://xzygis.github.io/posts/introduction-to-redis-aof-persistence/</link><pubDate>Sat, 10 Dec 2022 14:21:33 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-to-redis-aof-persistence/</guid><description><![CDATA[<p>除了RDB持久化功能<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>之外，Redis还提供了AOF（Append Only File）持久化功能。与RDB持久化通过保存数据库中的键值对来记录数据库状态不同，AOF持久化是通过保存Redis服务器所执行的写命令来记录数据库状态的。</p>
+]]></description></item><item><title>Redis AOF持久化</title><link>https://xzygis.github.io/posts/introduction-to-redis-aof-persistence/</link><pubDate>Sat, 10 Dec 2022 14:21:33 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-to-redis-aof-persistence/</guid><description><![CDATA[<p>除了<a href="https://chuxing.club/posts/introduction-to-redis-rdb-persistence/"target="_blank" rel="external nofollow noopener noreferrer">RDB持久化功能<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>之外，Redis还提供了AOF（Append Only File）持久化功能。与RDB持久化通过保存数据库中的键值对来记录数据库状态不同，AOF持久化是通过保存Redis服务器所执行的写命令来记录数据库状态的。</p>
 <p></p>
 <p>服务器在启动时，可以通过载入和执行AOF文件中保存的命令来还原服务器关闭之前的数据库状态。</p>
 <h2 id="aof持久化的实现2">AOF持久化的实现<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></h2>
@@ -5302,7 +5302,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>即可把目标机器dev.test.com的文件~/data.txt拷贝到当前目录。</p>
-]]></description></item><item><title>Redis AOF持久化</title><link>https://xzygis.github.io/posts/introduction-to-redis-aof-persistence/</link><pubDate>Sat, 10 Dec 2022 14:21:33 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-to-redis-aof-persistence/</guid><description><![CDATA[<p>除了RDB持久化功能<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>之外，Redis还提供了AOF（Append Only File）持久化功能。与RDB持久化通过保存数据库中的键值对来记录数据库状态不同，AOF持久化是通过保存Redis服务器所执行的写命令来记录数据库状态的。</p>
+]]></description></item><item><title>Redis AOF持久化</title><link>https://xzygis.github.io/posts/introduction-to-redis-aof-persistence/</link><pubDate>Sat, 10 Dec 2022 14:21:33 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-to-redis-aof-persistence/</guid><description><![CDATA[<p>除了<a href="https://chuxing.club/posts/introduction-to-redis-rdb-persistence/"target="_blank" rel="external nofollow noopener noreferrer">RDB持久化功能<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>之外，Redis还提供了AOF（Append Only File）持久化功能。与RDB持久化通过保存数据库中的键值对来记录数据库状态不同，AOF持久化是通过保存Redis服务器所执行的写命令来记录数据库状态的。</p>
 <p></p>
 <p>服务器在启动时，可以通过载入和执行AOF文件中保存的命令来还原服务器关闭之前的数据库状态。</p>
 <h2 id="aof持久化的实现2">AOF持久化的实现<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></h2>

@@ -1,7 +1,7 @@
 # Redis AOF持久化
 
 
-除了RDB持久化功能[^1]之外，Redis还提供了AOF（Append Only File）持久化功能。与RDB持久化通过保存数据库中的键值对来记录数据库状态不同，AOF持久化是通过保存Redis服务器所执行的写命令来记录数据库状态的。
+除了[RDB持久化功能](https://chuxing.club/posts/introduction-to-redis-rdb-persistence/)[^1]之外，Redis还提供了AOF（Append Only File）持久化功能。与RDB持久化通过保存数据库中的键值对来记录数据库状态不同，AOF持久化是通过保存Redis服务器所执行的写命令来记录数据库状态的。
 
 ![aof-persistence](images/aof-persistence.png)
 

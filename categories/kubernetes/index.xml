@@ -9,7 +9,6 @@
 <li>广泛的 Volume 支持</li>
 <li>插件机制保证扩展性</li>
 </ul>
-<!-- more -->
 <h3 id="kubernetes-是一个平台">Kubernetes 是一个平台</h3>
 <p>Kubernetes 提供了很多的功能，它可以简化应用程序的工作流，加快开发速度。</p>
 <ul>

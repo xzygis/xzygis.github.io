@@ -36,8 +36,7 @@
 </span></span><span class="line"><span class="cl">$ hexo s
 </span></span></code></pre></td></tr></table>
 </div>
-</div><!-- more -->
-<h2 id="关联github">关联Github</h2>
+</div><h2 id="关联github">关联Github</h2>
 <ol>
 <li>修改<code>_config.yml</code>，修改deploy为：</li>
 </ol>

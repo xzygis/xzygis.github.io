@@ -9,7 +9,6 @@
 <li>服务鉴权（Service Segmentation）：Consul连接基于自动TLS加密和基于签名的鉴权实现安全的服务间通信。</li>
 </ol>
 <p>Consul支持Linux, Mac OS X, FreeBSD, Solaris, Windows等操作系统。</p>
-<!-- more -->
 <h3 id="基本架构">基本架构</h3>
 <p>每个提供服务给Consul的节点都运行了一个Consul Agent。运行一个Agent并不需要对其他服务做发现或读写KV存储。Agent负责对该节点上的服务做健康检查。</p>
 <p>Agent会与一个或多个Consul Server通信。Consul Server通常有多个实例，负责数据存储和备份、选举主节点等。虽然Consul支持在只有一个Server实例的情况下工具，但通常推荐使用3至5个实例，从而避免由于某些异常场景而导致数据丢失。同时，推荐在每个数据中心部署一个Consul集群。</p>

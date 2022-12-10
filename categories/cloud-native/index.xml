@@ -1,7 +1,6 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Cloud Native - 分类 - Chu Xing</title><link>https://xzygis.github.io/categories/cloud-native/</link><description>Cloud Native - 分类 - Chu Xing</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>xzygis@163.com (chuxing)</managingEditor><webMaster>xzygis@163.com (chuxing)</webMaster><lastBuildDate>Tue, 28 Jan 2020 15:05:10 +0000</lastBuildDate><atom:link href="https://xzygis.github.io/categories/cloud-native/" rel="self" type="application/rss+xml"/><item><title>云原生概述</title><link>https://xzygis.github.io/posts/introduction-of-cloud-native/</link><pubDate>Tue, 28 Jan 2020 15:05:10 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-of-cloud-native/</guid><description><![CDATA[<h2 id="云原生的定义">云原生的定义</h2>
 <p>云原生技术有利于各组织在公有云、私有云和混合云等新型动态环境中，构建和运行可弹性扩展的应用。云原生的代表技术包括容器、服务网格、微服务、不可变基础设施和声明式API。</p>
 <p>这些技术能够构建容错性好、易于管理和便于观察的松耦合系统。结合可靠的自动化手段，云原生技术使工程师能够轻松地对系统作出频繁和可预测的重大变更。</p>
-<!-- more -->
 <h2 id="云原生的设计哲学">云原生的设计哲学</h2>
 <p>云原生本身甚至不能称为是一种架构，它首先是一种基础设施，运行在其上的应用称作云原生应用，只有符合云原生设计哲学的应用架构才叫云原生应用架构。</p>
 <h3 id="云原生的设计理念">云原生的设计理念</h3>

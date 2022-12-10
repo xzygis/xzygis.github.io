@@ -9,8 +9,6 @@ Tair采用高性能、高可用的分布式集群架构，可以满足企业对�
 ## 系统架构
 Tair 集群具有三个必要的模块：ConfigServer、DataServer 和客户端。
 
-<!-- more -->
-
 ![Architecture](tair_structure.jpg)
 
 通常，一个 Tair 集群包括两个 ConfigServer 和多个 DataServer。 两个 ConfigServer 充当主服务器和备用服务器。 DataServer 和 ConfigServer 之间的心跳检查用于检查集群中活跃的和可用的 DataServer，以建立集群中数据的分布（比较表）。 DataServers 按照 ConfigServer 的指示存储、复制和迁移数据。当客户端启动时，它从 ConfigServer 获取数据分布信息。客户端根据这些数据分布信息，与对应的DataServer进行交互，执行用户的请求。

@@ -18,8 +18,7 @@
 </span></span><span class="line"><span class="cl"># 要退出终端，直接输入 exit
 </span></span></code></pre></td></tr></table>
 </div>
-</div><!-- more -->
-<h2 id="启动已停止运行的容器">启动已停止运行的容器</h2>
+</div><h2 id="启动已停止运行的容器">启动已停止运行的容器</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -145,7 +144,6 @@
 <li><code>ubuntu:18.04</code>：这是指用 ubuntu:18.04 镜像为基础来启动容器。</li>
 <li><code>bash</code>：放在镜像名后的是命令，这里我们希望有个交互式 Shell，因此用的是 bash。</li>
 </ul>
-<!-- more -->
 <h2 id="查看镜像列表">查看镜像列表</h2>
 <p>使用<code>docker image ls</code>或者<code>docker images</code>:</p>
 <div class="highlight"><div class="chroma">
@@ -503,8 +501,7 @@
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo yum -y install docker-ce
 </span></span></code></pre></td></tr></table>
 </div>
-</div><!-- more -->
-<h3 id="6-启动-docker-后台服务">6. 启动 Docker 后台服务</h3>
+</div><h3 id="6-启动-docker-后台服务">6. 启动 Docker 后台服务</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1

@@ -11,7 +11,6 @@ Kubernetes 是谷歌开源的容器集群管理系统，是 Google 多年大规�
 - 广泛的 Volume 支持
 - 插件机制保证扩展性
 
-<!-- more -->
 
 ### Kubernetes 是一个平台
 Kubernetes 提供了很多的功能，它可以简化应用程序的工作流，加快开发速度。

@@ -36,7 +36,6 @@ sudo yum makecache fast
 sudo yum -y install docker-ce
 ```
 
-<!-- more -->
 
 ### 6. 启动 Docker 后台服务
 ```shell

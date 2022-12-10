@@ -1,8 +1,265 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Redis - 标签 - Chu Xing</title><link>https://xzygis.github.io/tags/redis/</link><description>Redis - 标签 - Chu Xing</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>xzygis@163.com (chuxing)</managingEditor><webMaster>xzygis@163.com (chuxing)</webMaster><lastBuildDate>Sat, 10 Dec 2022 14:21:33 +0800</lastBuildDate><atom:link href="https://xzygis.github.io/tags/redis/" rel="self" type="application/rss+xml"/><item><title>Redis AOF持久化</title><link>https://xzygis.github.io/posts/introduction-to-redis-aof-persistence/</link><pubDate>Sat, 10 Dec 2022 14:21:33 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-to-redis-aof-persistence/</guid><description></description></item><item><title>Redis RDB持久化</title><link>https://xzygis.github.io/posts/introduction-to-redis-rdb-persistence/</link><pubDate>Fri, 09 Dec 2022 23:22:14 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-to-redis-rdb-persistence/</guid><description><![CDATA[<p>Redis是一个键值对数据库服务器，服务器中通常包含着任意个非空数据库，而每个非空数据库中又可以包含任意个键值对，为了方便起见，我们将服务器中的非空数据库以及它们的键值对统称为数据库状态。</p>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Redis - 标签 - Chu Xing</title><link>https://xzygis.github.io/tags/redis/</link><description>Redis - 标签 - Chu Xing</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>xzygis@163.com (chuxing)</managingEditor><webMaster>xzygis@163.com (chuxing)</webMaster><lastBuildDate>Sat, 10 Dec 2022 14:21:33 +0800</lastBuildDate><atom:link href="https://xzygis.github.io/tags/redis/" rel="self" type="application/rss+xml"/><item><title>Redis AOF持久化</title><link>https://xzygis.github.io/posts/introduction-to-redis-aof-persistence/</link><pubDate>Sat, 10 Dec 2022 14:21:33 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-to-redis-aof-persistence/</guid><description><![CDATA[<p>除了RDB持久化功能<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>之外，Redis还提供了AOF（Append Only File）持久化功能。与RDB持久化通过保存数据库中的键值对来记录数据库状态不同，AOF持久化是通过保存Redis服务器所执行的写命令来记录数据库状态的。</p>
+<p></p>
+<p>服务器在启动时，可以通过载入和执行AOF文件中保存的命令来还原服务器关闭之前的数据库状态。</p>
+<h2 id="aof持久化的实现2">AOF持久化的实现<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></h2>
+<p>AOF持久化功能的实现可以分为命令追加（append）、文件写入、文件同步（sync）三个步骤。</p>
+<h3 id="命令追加">命令追加</h3>
+<p>当AOF持久化功能处于打开状态时，服务器在执行完一个写命令之后，会以协议格式将被执行的写命令追加到服务器状态的aof_buf缓冲区的末尾：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">redisServer</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// AOF缓冲区
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">sds</span> <span class="n">aof_buf</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="aof文件的写入与同步">AOF文件的写入与同步</h3>
+<p>Redis的服务器进程就是一个事件循环（loop），这个循环中的文件事件负责接收客户端的命令请求，以及向客户端发送命令回复，而时间事件则负责执行像serverCron函数这样需要定时运行的函数。</p>
+<p>因为服务器在处理文件事件时可能会执行写命令，使得一些内容被追加到aof_buf缓冲区里面，所以在服务器每次结束一个事件循环之前，它都会调用flushAppendOnlyFile函数，考虑是否需要将aof_buf缓冲区中的内容写入和保存到AOF文件里面，这个过程可以用以下伪代码表示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">eventLoop</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#处理文件事件，接收命令请求以及发送命令回复</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#处理命令请求时可能会有新内容被追加到 aof_buf缓冲区中</span>
+</span></span><span class="line"><span class="cl">        <span class="n">processFileEvents</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#处理时间事件</span>
+</span></span><span class="line"><span class="cl">        <span class="n">processTimeEvents</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#考虑是否要将 aof_buf中的内容写入和保存到 AOF文件里面</span>
+</span></span><span class="line"><span class="cl">        <span class="n">flushAppendOnlyFile</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>flushAppendOnlyFile</code>函数的行为由服务器配置的<code>appendfsync</code>选项的值来决定，各个不同值产生的行为如下图所示：</p>
+<p></p>
+<p>如果用户没有主动为appendfsync选项设置值，那么appendfsync选项的默认值为everysec。</p>
+<blockquote>
+<p><strong>文件的写入和同步</strong></p>
+<p>为了提高文件的写入效率，在现代操作系统中，当用户调用write函数，将一些数据写入到文件的时候，操作系统通常会将写入数据暂时保存在一个内存缓冲区里面，等到缓冲区的空间被填满、或者超过了指定的时限之后，才真正地将缓冲区中的数据写入到磁盘里面。</p>
+<p>这种做法虽然提高了效率，但也为写入数据带来了安全问题，因为如果计算机发生停机，那么保存在内存缓冲区里面的写入数据将会丢失。</p>
+<p>为此，系统提供了fsync和fdatasync两个同步函数，它们可以强制让操作系统立即将缓冲区中的数据写入到硬盘里面，从而确保写入数据的安全性。</p>
+</blockquote>
+<p>服务器配置appendfsync选项的值直接决定AOF持久化功能的效率和安全性。</p>
+<ul>
+<li>当appendfsync的值为always时，服务器在每个事件循环都要将aof_buf缓冲区中的所有内容写入到AOF文件，并且同步AOF文件，所以always的效率是appendfsync选项三个值当中<strong>最慢</strong>的一个，但从安全性来说，always也是最安全的，因为即使出现故障停机，AOF持久化也只会丢失一个事件循环中所产生的命令数据。</li>
+<li>当appendfsync的值为everysec时，服务器在每个事件循环都要将aof_buf缓冲区中的所有内容写入到AOF文件，并且每隔一秒就要在子线程中对AOF文件进行一次同步。<strong>从效率上来讲，everysec模式足够快，并且就算出现故障停机，数据库也只丢失一秒钟的命令数据</strong>。</li>
+<li>当appendfsync的值为no时，服务器在每个事件循环都要将aof_buf缓冲区中的所有内容写入到AOF文件，至于何时对AOF文件进行同步，则由操作系统控制。因为处于no模式下的flushAppendOnlyFile调用无须执行同步操作，所以该模式下的AOF文件写入速度总是<strong>最快</strong>的，不过因为这种模式会在系统缓存中积累一段时间的写入数据，所以该模式的单次同步时长通常是三种模式中时间最长的。从平摊操作的角度来看，no模式和everysec模式的效率类似，当出现故障停机时，使用no模式的服务器将丢失上次同步AOF文件之后的所有写命令数据。</li>
+</ul>
+<h2 id="aof文件的载入与数据还原">AOF文件的载入与数据还原</h2>
+<p>Redis读取AOF文件并还原数据库状态的详细步骤如下：</p>
+<ol>
+<li>创建一个不带网络连接的伪客户端（fake client）：因为Redis的命令只能在客户端上下文中执行，而载入AOF文件时所使用的命令直接来源于AOF文件而不是网络连接，所以服务器使用了一个没有网络连接的伪客户端来执行AOF文件保存的写命令，伪客户端执行命令的效果和带网络连接的客户端执行命令的效果完全一样。</li>
+<li>从AOF文件中分析并读取出一条写命令。</li>
+<li>使用伪客户端执行被读出的写命令。</li>
+<li>一直执行步骤2和步骤3，直到AOF文件中的所有写命令都被处理完毕为止。</li>
+</ol>
+<p></p>
+<h2 id="aof重写">AOF重写</h2>
+<p>因为AOF持久化是通过保存被执行的写命令来记录数据库状态的，所以随着服务器运行时间的流逝，AOF文件中的内容会越来越多，文件的体积也会越来越大，如果不加以控制的话，体积过大的AOF文件很可能对Redis服务器、甚至整个宿主计算机造成影响，并且AOF文件的体积越大，使用AOF文件来进行数据还原所需的时间就越多。</p>
+<p>为了解决AOF文件体积膨胀的问题，Redis提供了AOF文件重写（rewrite）功能。通过该功能，Redis服务器可以创建一个新的AOF文件来替代现有的AOF文件，新旧两个AOF文件所保存的数据库状态相同，但新AOF文件不会包含任何浪费空间的冗余命令，所以新AOF文件的体积通常会比旧AOF文件的体积要小得多。</p>
+<h3 id="aof文件重写的实现">AOF文件重写的实现</h3>
+<p>虽然Redis将生成新AOF文件替换旧AOF文件的功能命名为“AOF文件重写”，但实际上，AOF文件重写并不需要对现有的AOF文件进行任何读取、分析或者写入操作，这个功能是通过读取服务器当前的数据库状态来实现的。</p>
+<p>整个重写过程可以用以下伪代码表示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">aof_rewrite</span><span class="p">(</span><span class="n">new_aof_file_name</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#创建新 AOF文件</span>
+</span></span><span class="line"><span class="cl">    <span class="n">f</span> <span class="o">=</span> <span class="n">create_file</span><span class="p">(</span><span class="n">new_aof_file_name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#遍历数据库</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">db</span> <span class="ow">in</span> <span class="n">redisServer</span><span class="o">.</span><span class="n">db</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#忽略空数据库</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">db</span><span class="o">.</span><span class="n">is_empty</span><span class="p">():</span> <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#写入SELECT命令，指定数据库号码</span>
+</span></span><span class="line"><span class="cl">        <span class="n">f</span><span class="o">.</span><span class="n">write_command</span><span class="p">(</span><span class="s2">&#34;SELECT&#34;</span> <span class="o">+</span> <span class="n">db</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#遍历数据库中的所有键</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">db</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">#忽略已过期的键</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">is_expired</span><span class="p">():</span> <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">#根据键的类型对键进行重写</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">String</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">rewrite_string</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">elif</span> <span class="n">key</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">List</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">rewrite_list</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">elif</span> <span class="n">key</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">Hash</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">rewrite_hash</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">elif</span> <span class="n">key</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">Set</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">rewrite_set</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">elif</span> <span class="n">key</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">SortedSet</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">rewrite_sorted_set</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">#如果键带有过期时间，那么过期时间也要被重写</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">have_expire_time</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">                <span class="n">rewrite_expire_time</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#写入完毕，关闭文件</span>
+</span></span><span class="line"><span class="cl">        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">rewrite_string</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#使用GET命令获取字符串键的值</span>
+</span></span><span class="line"><span class="cl">        <span class="n">value</span> <span class="o">=</span> <span class="n">GET</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#使用SET命令重写字符串键</span>
+</span></span><span class="line"><span class="cl">        <span class="n">f</span><span class="o">.</span><span class="n">write_command</span><span class="p">(</span><span class="n">SET</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">rewrite_list</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#使用LRANGE命令获取列表键包含的所有元素</span>
+</span></span><span class="line"><span class="cl">        <span class="n">item1</span><span class="p">,</span> <span class="n">item2</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">itemN</span> <span class="o">=</span> <span class="n">LRANGE</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#使用RPUSH命令重写列表键</span>
+</span></span><span class="line"><span class="cl">        <span class="n">f</span><span class="o">.</span><span class="n">write_command</span><span class="p">(</span><span class="n">RPUSH</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">item1</span><span class="p">,</span> <span class="n">item2</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">itemN</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">rewrite_hash</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#使用HGETALL命令获取哈希键包含的所有键值对</span>
+</span></span><span class="line"><span class="cl">        <span class="n">field1</span><span class="p">,</span> <span class="n">value1</span><span class="p">,</span> <span class="n">field2</span><span class="p">,</span> <span class="n">value2</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">fieldN</span><span class="p">,</span> <span class="n">valueN</span> <span class="o">=</span> <span class="n">HGETALL</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#使用HMSET命令重写哈希键</span>
+</span></span><span class="line"><span class="cl">        <span class="n">f</span><span class="o">.</span><span class="n">write_command</span><span class="p">(</span><span class="n">HMSET</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">field1</span><span class="p">,</span> <span class="n">value1</span><span class="p">,</span> <span class="n">field2</span><span class="p">,</span> <span class="n">value2</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">fieldN</span><span class="p">,</span> <span class="n">valueN</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">rewrite_set</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#使用SMEMBERS命令获取集合键包含的所有元素</span>
+</span></span><span class="line"><span class="cl">        <span class="n">elem1</span><span class="p">,</span> <span class="n">elem2</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">elemN</span> <span class="o">=</span> <span class="n">SMEMBERS</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#使用SADD命令重写集合键</span>
+</span></span><span class="line"><span class="cl">        <span class="n">f</span><span class="o">.</span><span class="n">write_command</span><span class="p">(</span><span class="n">SADD</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">elem1</span><span class="p">,</span> <span class="n">elem2</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">elemN</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">rewrite_sorted_set</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#使用ZRANGE命令获取有序集合键包含的所有元素</span>
+</span></span><span class="line"><span class="cl">        <span class="n">member1</span><span class="p">,</span> <span class="n">score1</span><span class="p">,</span> <span class="n">member2</span><span class="p">,</span> <span class="n">score2</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">memberN</span><span class="p">,</span> <span class="n">scoreN</span> <span class="o">=</span> <span class="n">ZRANGE</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&#34;WITHSCORES&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#使用ZADD命令重写有序集合键</span>
+</span></span><span class="line"><span class="cl">        <span class="n">f</span><span class="o">.</span><span class="n">write_command</span><span class="p">(</span><span class="n">ZADD</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">score1</span><span class="p">,</span> <span class="n">member1</span><span class="p">,</span> <span class="n">score2</span><span class="p">,</span> <span class="n">member2</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">scoreN</span><span class="p">,</span> <span class="n">memberN</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">rewrite_expire_time</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#获取毫秒精度的键过期时间戳</span>
+</span></span><span class="line"><span class="cl">        <span class="n">timestamp</span> <span class="o">=</span> <span class="n">get_expire_time_in_unixstamp</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#使用PEXPIREAT命令重写键的过期时间</span>
+</span></span><span class="line"><span class="cl">        <span class="n">f</span><span class="o">.</span><span class="n">write_command</span><span class="p">(</span><span class="n">PEXPIREAT</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在实际中，为了避免在执行命令时造成客户端输入缓冲区溢出，重写程序在处理列表、哈希表、集合、有序集合这四种可能会带有多个元素的键时，会先检查键所包含的元素数量，如果元素的数量超过了redis.h/REDIS_AOF_REWRITE_ITEMS_PER_CMD常量的值，那么重写程序将使用多条命令来记录键的值，而不单单使用一条命令。</p>
+<h3 id="aof后台重写">AOF后台重写</h3>
+<p>AOF重写程序aof_rewrite函数可以很好地完成创建一个新AOF文件的任务，但是，因为这个函数会进行大量的写入操作，所以调用这个函数的线程将被长时间阻塞，因为Redis服务器使用单个线程来处理命令请求，所以如果由服务器直接调用aof_rewrite函数的话，那么在重写AOF文件期间，服务期将无法处理客户端发来的命令请求。</p>
+<p>作为一种辅佐性的维护手段，Redis不希望AOF重写造成服务器无法处理请求，所以Redis决定将AOF重写程序放到子进程里执行，这样做可以同时达到两个目的：</p>
+<ul>
+<li>子进程进行AOF重写期间，服务器进程（父进程）可以继续处理命令请求。</li>
+<li>子进程带有服务器进程的数据副本，使用子进程而不是线程，可以在避免使用锁的情况下，保证数据的安全性。</li>
+</ul>
+<p>不过，使用子进程也有一个问题需要解决，因为子进程在进行AOF重写期间，服务器进程还需要继续处理命令请求，而新的命令可能会对现有的数据库状态进行修改，从而使得服务器当前的数据库状态和重写后的AOF文件所保存的数据库状态不一致。</p>
+<p>为了解决这种数据不一致问题，Redis服务器设置了一个AOF重写缓冲区，这个缓冲区在服务器创建子进程之后开始使用，当Redis服务器执行完一个写命令之后，它会同时将这个写命令发送给AOF缓冲区和AOF重写缓冲区。</p>
+<p></p>
+<p>在子进程执行AOF重写期间，服务器进程需要执行以下三个工作：</p>
+<ol>
+<li>执行客户端发来的命令。</li>
+<li>将执行后的写命令追加到AOF缓冲区。</li>
+<li>将执行后的写命令追加到AOF重写缓冲区。</li>
+</ol>
+<p>这样一来可以保证：</p>
+<ul>
+<li>AOF缓冲区的内容会定期被写入和同步到AOF文件，对现有AOF文件的处理工作会如常进行。</li>
+<li>从创建子进程开始，服务器执行的所有写命令都会被记录到AOF重写缓冲区里面。</li>
+</ul>
+<p>当子进程完成AOF重写工作之后，它会向父进程发送一个信号，父进程在接到该信号之后，会调用一个信号处理函数，并执行以下工作：</p>
+<ol>
+<li>将AOF重写缓冲区中的所有内容写入到新AOF文件中，这时新AOF文件所保存的数据库状态将和服务器当前的数据库状态一致。</li>
+<li>对新的AOF文件进行改名，原子地（atomic）覆盖现有的AOF文件，完成新旧两个AOF文件的替换。</li>
+</ol>
+<p>这个信号处理函数执行完毕之后，父进程就可以继续像往常一样接受命令请求了。</p>
+<p>在整个AOF后台重写过程中，只有信号处理函数执行时会对服务器进程（父进程）造成阻塞，在其他时候，AOF后台重写都不会阻塞父进程，这将AOF重写对服务器性能造成的影响降到了最低。</p>
+<h2 id="重点回顾">重点回顾</h2>
+<ul>
+<li>AOF文件通过保存所有修改数据库的写命令请求来记录服务器的数据库状态。</li>
+<li>AOF文件中的所有命令都以Redis命令请求协议的格式保存。</li>
+<li>命令请求会先保存到AOF缓冲区里面，之后再定期写入并同步到AOF文件。</li>
+<li>appendfsync选项的不同值对AOF持久化功能的安全性以及Redis服务器的性能有很大的影响。</li>
+<li>服务器只要载入并重新执行保存在AOF文件中的命令，就可以还原数据库本来的状态。</li>
+<li>AOF重写可以产生一个新的AOF文件，这个新的AOF文件和原有的AOF文件所保存的数据库状态一样，但体积更小。</li>
+<li>AOF重写是一个有歧义的名字，该功能是通过读取数据库中的键值对来实现的，程序无须对现有AOF文件进行任何读入、分析或者写入操作。</li>
+<li>在执行BGREWRITEAOF命令时，Redis服务器会维护一个AOF重写缓冲区，该缓冲区会在子进程创建新AOF文件期间，记录服务器执行的所有写命令。当子进程完成创建新AOF文件的工作之后，服务器会将重写缓冲区中的所有内容追加到新AOF文件的末尾，使得新旧两个AOF文件所保存的数据库状态一致。最后，服务器用新的AOF文件替换旧的AOF文件，以此来完成AOF文件重写操作。</li>
+</ul>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://chuxing.club/posts/introduction-to-redis-rdb-persistence/"target="_blank" rel="external nofollow noopener noreferrer">Redis RDB持久化<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>《Redis设计与实现》&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+]]></description></item><item><title>Redis RDB持久化</title><link>https://xzygis.github.io/posts/introduction-to-redis-rdb-persistence/</link><pubDate>Fri, 09 Dec 2022 23:22:14 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-to-redis-rdb-persistence/</guid><description><![CDATA[<p>Redis是一个键值对数据库服务器，服务器中通常包含着任意个非空数据库，而每个非空数据库中又可以包含任意个键值对，为了方便起见，我们将服务器中的非空数据库以及它们的键值对统称为数据库状态。</p>
 <p>因为Redis是内存数据库，它将自己的数据库状态储存在内存里面，所以如果不想办法将储存在内存中的数据库状态保存到磁盘里面，那么一旦服务器进程退出，服务器中的数据库状态也会消失不见。为了解决这个问题，Redis提供了RDB持久化功能，这个功能可以将Redis在内存中的数据库状态保存到磁盘里面，避免数据意外丢失。</p>
 <p>RDB持久化既可以手动执行，也可以根据服务器配置选项定期执行，该功能可以将某个时间点上的数据库状态保存到一个RDB文件中。</p>
 <p>RDB持久化功能所生成的RDB文件是一个经过压缩的二进制文件，通过该文件可以还原生成RDB文件时的数据库状态。 因为RDB文件是保存在硬盘里面的，所以即使Redis服务器进程退出，甚至运行Redis服务器的计算机停机，但只要RDB文件仍然存在，Redis服务器就可以用它来还原数据库状态。</p>
-<h2 id="rdb文件的创建与载入">RDB文件的创建与载入</h2>
+<h2 id="rdb文件的创建与载入1">RDB文件的创建与载入<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></h2>
 <p>有两个Redis命令可以用于生成RDB文件，一个是<code>SAVE</code>，另一个是<code>BGSAVE</code>。SAVE命令会阻塞Redis服务器进程，直到RDB文件创建完毕为止，在服务器进程阻塞期间，服务器不能处理任何命令请求；BGSAVE命令会派生出一个子进程，然后由子进程负责创建RDB文件，服务器进程（父进程）继续处理命令请求。</p>
 <p>创建RDB文件的实际工作由<code>rdb.c/rdbSave</code>函数完成，SAVE命令和BGSAVE命令会以不同的方式调用这个函数，通过以下伪代码可以明显地看出这两个命令之间的区别：</p>
 <div class="highlight"><div class="chroma">
@@ -250,7 +507,15 @@
 <li>RDB文件是一个经过压缩的二进制文件，由多个部分组成。</li>
 <li>对于不同类型的键值对，RDB文件会使用不同的方式来保存它们。</li>
 </ul>
-]]></description></item><item><title>Redis服务器数据库实现介绍</title><link>https://xzygis.github.io/posts/redis-server-database-implementation-introduction/</link><pubDate>Thu, 08 Dec 2022 23:39:55 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/redis-server-database-implementation-introduction/</guid><description><![CDATA[<h2 id="服务器中的数据库">服务器中的数据库</h2>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>《Redis设计与实现》&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+]]></description></item><item><title>Redis 服务器数据库实现</title><link>https://xzygis.github.io/posts/redis-server-database-implementation-introduction/</link><pubDate>Thu, 08 Dec 2022 23:39:55 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/redis-server-database-implementation-introduction/</guid><description><![CDATA[<h2 id="服务器中的数据库1">服务器中的数据库<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></h2>
 <p>Redis服务器将所有数据库都保存在服务器状态redis.h/redisServer结构的db数组中，db数组的每个项都是一个redis.h/redisDb结构，每个redisDb结构代表一个数据库：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -534,7 +799,15 @@
 <li>从服务器即使发现过期键也不会自作主张地删除它，而是等待主节点发来DEL命令，这种统一、中心化的过期键删除策略可以保证主从服务器数据的一致性。</li>
 <li>当Redis命令对数据库进行修改之后，服务器会根据配置向客户端发送数据库通知。</li>
 </ul>
-]]></description></item><item><title>Redis对象介绍</title><link>https://xzygis.github.io/posts/introduction-to-redis-object/</link><pubDate>Wed, 07 Dec 2022 20:10:37 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-to-redis-object/</guid><description><![CDATA[<p>在 <a href="https://chuxing.club/posts/introduction-to-the-underlying-data-structure-of-redis/"target="_blank" rel="external nofollow noopener noreferrer">Redis底层数据结构介绍<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> 中我们介绍了Redis用到的所有主要数据结构，比如简单动态字符串（SDS）、双端链表、字典、压缩列表、整数集合等等。Redis并没有直接使用这些数据结构来实现键值对数据库，而是基于这些数据结构创建了一个对象系统，这个系统包含字符串对象、列表对象、哈希对象、集合对象和有序集合对象这五种类型的对象，每种对象都用到了至少一种我们前面所介绍的数据结构。</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>《Redis设计与实现》&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+]]></description></item><item><title>Redis 对象</title><link>https://xzygis.github.io/posts/introduction-to-redis-object/</link><pubDate>Wed, 07 Dec 2022 20:10:37 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-to-redis-object/</guid><description><![CDATA[<p>在 <a href="https://chuxing.club/posts/introduction-to-the-underlying-data-structure-of-redis/"target="_blank" rel="external nofollow noopener noreferrer">Redis底层数据结构介绍<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> 中我们介绍了Redis用到的所有主要数据结构，比如简单动态字符串（SDS）、双端链表、字典、压缩列表、整数集合等等。Redis并没有直接使用这些数据结构来实现键值对数据库，而是基于这些数据结构创建了一个对象系统，这个系统包含字符串对象、列表对象、哈希对象、集合对象和有序集合对象这五种类型的对象，每种对象都用到了至少一种我们前面所介绍的数据结构。</p>
 <p>通过这五种不同类型的对象，Redis可以在执行命令之前，根据对象的类型来判断一个对象是否可以执行给定的命令。使用对象的另一个好处是，我们可以针对不同的使用场景，为对象设置多种不同的数据结构实现，从而优化对象在不同场景下的使用效率。</p>
 <p>除此之外，Redis的对象系统还实现了基于引用计数技术的内存回收机制，当程序不再使用某个对象的时候，这个对象所占用的内存就会被自动释放；另外，Redis还通过引用计数技术实现了对象共享机制，这一机制可以在适当的条件下，通过让多个数据库键共享同一个对象来节约内存。</p>
 <p>最后，Redis的对象带有访问时间记录信息，该信息可以用于计算数据库键的空转时长，在服务器启用了maxmemory功能的情况下，空转时长较大的那些键可能会优先被服务器删除。</p>
@@ -755,7 +1028,7 @@
 </li>
 </ol>
 </div>
-]]></description></item><item><title>Redis底层数据结构介绍</title><link>https://xzygis.github.io/posts/introduction-to-the-underlying-data-structure-of-redis/</link><pubDate>Wed, 30 Nov 2022 22:03:21 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-to-the-underlying-data-structure-of-redis/</guid><description><![CDATA[<h2 id="简单动态字符串">简单动态字符串</h2>
+]]></description></item><item><title>Redis 底层数据结构</title><link>https://xzygis.github.io/posts/introduction-to-the-underlying-data-structure-of-redis/</link><pubDate>Wed, 30 Nov 2022 22:03:21 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-to-the-underlying-data-structure-of-redis/</guid><description><![CDATA[<h2 id="简单动态字符串1">简单动态字符串<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></h2>
 <p>每个sds.h/sdshdr结构表示一个SDS值：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1151,4 +1424,12 @@
 <li>首先，压缩列表里要恰好有多个连续的、长度介于250字节至253字节之间的节点，连锁更新才有可能被引发，在实际中，这种情况并不多见；-</li>
 <li>其次，即使出现连锁更新，但只要被更新的节点数量不多，就不会对性能造成任何影响：比如说，对三五个节点进行连锁更新是绝对不会影响性能的；</li>
 </ul>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>《Redis设计与实现》&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
 ]]></description></item></channel></rss>

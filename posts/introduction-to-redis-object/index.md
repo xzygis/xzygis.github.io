@@ -1,4 +1,4 @@
-# Redis对象介绍
+# Redis 对象
 
 
 在 [Redis底层数据结构介绍](https://chuxing.club/posts/introduction-to-the-underlying-data-structure-of-redis/)[^1] 中我们介绍了Redis用到的所有主要数据结构，比如简单动态字符串（SDS）、双端链表、字典、压缩列表、整数集合等等。Redis并没有直接使用这些数据结构来实现键值对数据库，而是基于这些数据结构创建了一个对象系统，这个系统包含字符串对象、列表对象、哈希对象、集合对象和有序集合对象这五种类型的对象，每种对象都用到了至少一种我们前面所介绍的数据结构。

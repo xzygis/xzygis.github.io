@@ -1,4 +1,428 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Chu Xing</title><link>https://xzygis.github.io/</link><description>Chuxing's Tech Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>xzygis@163.com (chuxing)</managingEditor><webMaster>xzygis@163.com (chuxing)</webMaster><lastBuildDate>Mon, 12 Dec 2022 23:07:04 +0800</lastBuildDate><atom:link href="https://xzygis.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Redis 客户端</title><link>https://xzygis.github.io/posts/introduction-to-redis-client/</link><pubDate>Mon, 12 Dec 2022 23:07:04 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-to-redis-client/</guid><description><![CDATA[<p>Redis服务器是典型的一对多服务器程序：一个服务器可以与多个客户端建立网络连接，每个客户端可以向服务器发送命令请求，而服务器则接收并处理客户端发送的命令请求，并向客户端返回命令回复。</p>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Chu Xing</title><link>https://xzygis.github.io/</link><description>Chuxing's Tech Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>xzygis@163.com (chuxing)</managingEditor><webMaster>xzygis@163.com (chuxing)</webMaster><lastBuildDate>Wed, 21 Dec 2022 19:42:15 +0800</lastBuildDate><atom:link href="https://xzygis.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Redis 服务器</title><link>https://xzygis.github.io/posts/introduction-to-redis-server/</link><pubDate>Wed, 21 Dec 2022 19:42:15 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-to-redis-server/</guid><description><![CDATA[<p>Redis服务器负责与多个客户端建立网络连接，处理客户端发送的命令请求，在数据库中保存客户端执行命令所产生的数据，并通过资源管理来维持服务器自身的运转。</p>
+<h2 id="命令请求的执行过程">命令请求的执行过程</h2>
+<h3 id="发送命令请求">发送命令请求</h3>
+<p>Redis服务器的命令请求来自Redis客户端，当用户在客户端中键入一个命令请求时，客户端会将这个命令请求转换成协议格式，然后通过连接到服务器的套接字，将协议格式的命令请求发送给服务器。</p>
+<p></p>
+<p>举个例子，假设用户在客户端键入了命令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">SET KEY VALUE
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>那么客户端会将这个命令转换成协议：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">*3<span class="se">\r\n</span><span class="nv">$3</span><span class="se">\r\n</span>SET<span class="se">\r\n</span><span class="nv">$3</span><span class="se">\r\n</span>KEY<span class="se">\r\n</span><span class="nv">$5</span><span class="se">\r\n</span>VALUE<span class="se">\r\n</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后将这段协议内容发送给服务器。</p>
+<h3 id="读取命令请求">读取命令请求</h3>
+<p>当客户端与服务器之间的连接套接字因为客户端的写入而变得可读时，服务器将调用命令请求处理器来执行以下操作：</p>
+<ol>
+<li>读取套接字中协议格式的命令请求，并将其保存到客户端状态的输入缓冲区里面。</li>
+<li>对输入缓冲区中的命令请求进行分析，提取出命令请求中包含的命令参数，以及命令参数的个数，然后分别将参数和参数个数保存到客户端状态的argv属性和argc属性里面。</li>
+<li>调用命令执行器，执行客户端指定的命令。</li>
+</ol>
+<h3 id="命令执行器1查找命令实现">命令执行器（1）：查找命令实现</h3>
+<p>命令执行器要做的第一件事就是根据客户端状态的argv[0]参数，在命令表（command table）中查找参数所指定的命令，并将找到的命令保存到客户端状态的cmd属性里面。</p>
+<p>命令表是一个字典，字典的键是一个个命令名字，比如&quot;set&quot;、&ldquo;get&rdquo;、&ldquo;del&quot;等等；而字典的值则是一个个redisCommand结构，每个redisCommand结构记录了一个Redis命令的实现信息。</p>
+<p>因为命令表使用的是大小写无关的查找算法，无论输入的命令名字是大写、小写或者混合大小写，只要命令的名字是正确的，就能找到相应的redisCommand结构。</p>
+<h3 id="命令执行器2执行预备操作">命令执行器（2）：执行预备操作</h3>
+<p>到目前为止，服务器已经将执行命令所需的命令实现函数（保存在客户端状态的cmd属性）、参数（保存在客户端状态的argv属性）、参数个数（保存在客户端状态的argc属性）都收集齐了，但是在真正执行命令之前，程序还需要进行一些预备操作，从而确保命令可以正确、顺利地被执行，这些操作包括：</p>
+<ul>
+<li>检查客户端状态的cmd指针是否指向NULL，如果是的话，那么说明用户输入的命令名字找不到相应的命令实现，服务器不再执行后续步骤，并向客户端返回一个错误。</li>
+<li>根据客户端cmd属性指向的redisCommand结构的arity属性，检查命令请求所给定的参数个数是否正确，当参数个数不正确时，不再执行后续步骤，直接向客户端返回一个错误。比如说，如果redisCommand结构的arity属性的值为-3，那么用户输入的命令参数个数必须大于等于3个才行。</li>
+<li>检查客户端是否已经通过了身份验证，未通过身份验证的客户端只能执行AUTH命令，如果未通过身份验证的客户端试图执行除AUTH命令之外的其他命令，那么服务器将向客户端返回一个错误。</li>
+<li>如果服务器打开了maxmemory功能，那么在执行命令之前，先检查服务器的内存占用情况，并在有需要时进行内存回收，从而使得接下来的命令可以顺利执行。如果内存回收失败，那么不再执行后续步骤，向客户端返回一个错误。</li>
+<li>如果服务器上一次执行BGSAVE命令时出错，并且服务器打开了stop-writes-on-bgsave-error功能，而且服务器即将要执行的命令是一个写命令，那么服务器将拒绝执行这个命令，并向客户端返回一个错误。</li>
+<li>如果客户端当前正在用SUBSCRIBE命令订阅频道，或者正在用PSUBSCRIBE命令订阅模式，那么服务器只会执行客户端发来的SUBSCRIBE、PSUBSCRIBE、UNSUBSCRIBE、PUNSUBSCRIBE四个命令，其他命令都会被服务器拒绝。</li>
+<li>如果服务器正在进行数据载入，那么客户端发送的命令必须带有l标识（比如INFO、SHUTDOWN、PUBLISH等等）才会被服务器执行，其他命令都会被服务器拒绝。</li>
+<li>如果服务器因为执行Lua脚本而超时并进入阻塞状态，那么服务器只会执行客户端发来的SHUTDOWN nosave命令和SCRIPT KILL命令，其他命令都会被服务器拒绝。</li>
+<li>如果客户端正在执行事务，那么服务器只会执行客户端发来的EXEC、DISCARD、MULTI、WATCH四个命令，其他命令都会被放进事务队列中。</li>
+<li>如果服务器打开了监视器功能，那么服务器会将要执行的命令和参数等信息发送给监视器。当完成了以上预备操作之后，服务器就可以开始真正执行命令了。</li>
+</ul>
+<h3 id="命令执行器3调用命令的实现函数">命令执行器（3）：调用命令的实现函数</h3>
+<p>在前面的操作中，服务器已经将要执行命令的实现保存到了客户端状态的cmd属性里面，并将命令的参数和参数个数分别保存到了客户端状态的argv属性和argv属性里面，当服务器决定要执行命令时，它只要执行以下语句就可以了：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="c1">// client是指向客户端状态的指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">client</span><span class="o">-</span><span class="err">＞</span><span class="n">cmd</span><span class="o">-</span><span class="err">＞</span><span class="nf">proc</span><span class="p">(</span><span class="n">client</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>被调用的命令实现函数会执行指定的操作，并产生相应的命令回复，这些回复会被保存在客户端状态的输出缓冲区里面（buf属性和reply属性），之后实现函数还会为客户端的套接字关联命令回复处理器，这个处理器负责将命令回复返回给客户端。</p>
+<h3 id="命令执行器4执行后续工作">命令执行器（4）：执行后续工作</h3>
+<p>在执行完实现函数之后，服务器还需要执行一些后续工作：</p>
+<ul>
+<li>如果服务器开启了慢查询日志功能，那么慢查询日志模块会检查是否需要为刚刚执行完的命令请求添加一条新的慢查询日志。❑</li>
+<li>根据刚刚执行命令所耗费的时长，更新被执行命令的redisCommand结构的milliseconds属性，并将命令的redisCommand结构的calls计数器的值增一。</li>
+<li>如果服务器开启了AOF持久化功能，那么AOF持久化模块会将刚刚执行的命令请求写入到AOF缓冲区里面。</li>
+<li>如果有其他从服务器正在复制当前这个服务器，那么服务器会将刚刚执行的命令传播给所有从服务器。</li>
+</ul>
+<p>当以上操作都执行完了之后，服务器对于当前命令的执行到此就告一段落了，之后服务器就可以继续从文件事件处理器中取出并处理下一个命令请求了。</p>
+<h3 id="将命令回复发送给客户端">将命令回复发送给客户端</h3>
+<p>命令实现函数会将命令回复保存到客户端的输出缓冲区里面，并为客户端的套接字关联命令回复处理器，当客户端套接字变为可写状态时，服务器就会执行命令回复处理器，将保存在客户端输出缓冲区中的命令回复发送给客户端。</p>
+<p>当命令回复发送完毕之后，回复处理器会清空客户端状态的输出缓冲区，为处理下一个命令请求做好准备。</p>
+<h3 id="客户端接收并打印命令回复">客户端接收并打印命令回复</h3>
+<p>当客户端接收到协议格式的命令回复之后，它会将这些回复转换成人类可读的格式，并打印给用户观看。</p>
+<h2 id="servercron函数">serverCron函数</h2>
+<p>Redis服务器中的serverCron函数默认每隔100毫秒执行一次，这个函数负责管理服务器的资源，并保持服务器自身的良好运转。</p>
+<h3 id="更新服务器时间缓存">更新服务器时间缓存</h3>
+<p>Redis服务器中有不少功能需要获取系统的当前时间，而每次获取系统的当前时间都需要执行一次系统调用，为了减少系统调用的执行次数，服务器状态中的unixtime属性和mstime属性被用作当前时间的缓存:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">redisServer</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="c1">//保存了秒级精度的系统当前UNIX时间戳
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="kt">time_t</span> <span class="n">unixtime</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//保存了毫秒级精度的系统当前UNIX时间戳
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="kt">long</span> <span class="kt">long</span> <span class="n">mstime</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为serverCron函数默认会以每100毫秒一次的频率更新unixtime属性和mstime属性，所以这两个属性记录的时间的精确度并不高：</p>
+<ul>
+<li>服务器只会在打印日志、更新服务器的LRU时钟、决定是否执行持久化任务、计算服务器上线时间（uptime）这类对时间精确度要求不高的功能上。</li>
+<li>对于为键设置过期时间、添加慢查询日志这种需要高精确度时间的功能来说，服务器还是会再次执行系统调用，从而获得最准确的系统当前时间。</li>
+</ul>
+<h3 id="更新lru时钟">更新LRU时钟</h3>
+<p>服务器状态中的lruclock属性保存了服务器的LRU时钟，这个属性和上面介绍的unixtime属性、mstime属性一样，都是服务器时间缓存的一种：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">redisServer</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//默认每10秒更新一次的时钟缓存，
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//用于计算键的空转（idle）时长。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">unsigned</span> <span class="nl">lruclock</span><span class="p">:</span><span class="mi">22</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>每个Redis对象都会有一个lru属性，这个lru属性保存了对象最后一次被命令访问的时间：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">redisObject</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">unsigned</span> <span class="nl">lru</span><span class="p">:</span><span class="mi">22</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span> <span class="n">robj</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当服务器要计算一个数据库键的空转时间（也即是数据库键对应的值对象的空转时间），程序会用服务器的lruclock属性记录的时间减去对象的lru属性记录的时间，得出的计算结果就是这个对象的空转时间。</p>
+<p>serverCron函数默认会以每10秒一次的频率更新lruclock属性的值，因为这个时钟不是实时的，所以根据这个属性计算出来的LRU时间实际上只是一个模糊的估算值。</p>
+<h3 id="更新服务器每秒执行命令次数">更新服务器每秒执行命令次数</h3>
+<p>serverCron函数中的trackOperationsPerSecond函数会以每100毫秒一次的频率执行，这个函数的功能是以抽样计算的方式，估算并记录服务器在最近一秒钟处理的命令请求数量，这个值可以通过INFO status命令的instantaneous_ops_per_sec域查看。</p>
+<p>trackOperationsPerSecond函数和服务器状态中四个ops_sec_开头的属性有关：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">redisServer</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//上一次进行抽样的时间
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">long</span> <span class="kt">long</span> <span class="n">ops_sec_last_sample_time</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//上一次抽样时，服务器已执行命令的数量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">long</span> <span class="kt">long</span> <span class="n">ops_sec_last_sample_ops</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// REDIS_OPS_SEC_SAMPLES大小（默认值为16）的环形数组，
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//数组中的每个项都记录了一次抽样结果。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">long</span> <span class="kt">long</span> <span class="n">ops_sec_samples</span><span class="p">[</span><span class="n">REDIS_OPS_SEC_SAMPLES</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// ops_sec_samples数组的索引值，
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//每次抽样后将值自增一，
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//在值等于16时重置为0，
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//让ops_sec_samples数组构成一个环形数组。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">ops_sec_idx</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>trackOperationsPerSecond函数每次运行，都会根据ops_sec_last_sample_time记录的上一次抽样时间和服务器的当前时间，以及ops_sec_last_sample_ops记录的上一次抽样的已执行命令数量和服务器当前的已执行命令数量，计算出两次trackOperationsPerSecond调用之间，服务器平均每一毫秒处理了多少个命令请求，然后将这个平均值乘以1000，这就得到了服务器在一秒钟内能处理多少个命令请求的估计值，这个估计值会被作为一个新的数组项被放进ops_sec_samples环形数组里面。</p>
+<h3 id="更新服务器内存峰值记录">更新服务器内存峰值记录</h3>
+<p>服务器状态中的stat_peak_memory属性记录了服务器的内存峰值大小。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">redisServer</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//已使用内存峰值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">size_t</span> <span class="n">stat_peak_memory</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>每次serverCron函数执行时，程序都会查看服务器当前使用的内存数量，并与stat_peak_memory保存的数值进行比较，如果当前使用的内存数量比stat_peak_memory属性记录的值要大，那么程序就将当前使用的内存数量记录到stat_peak_memory属性里面。</p>
+<h3 id="处理sigterm信号">处理SIGTERM信号</h3>
+<p>在启动服务器时，Redis会为服务器进程的SIGTERM信号关联处理器sigtermHandler函数，这个信号处理器负责在服务器接到SIGTERM信号时，打开服务器状态的shutdown_asap标识：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="c1">// SIGTERM信号的处理器
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">static</span> <span class="kt">void</span> <span class="nf">sigtermHandler</span><span class="p">(</span><span class="kt">int</span> <span class="n">sig</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//打印日志
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">redisLogFromHandler</span><span class="p">(</span><span class="n">REDIS_WARNING</span><span class="p">,</span><span class="s">&#34;Received SIGTERM, scheduling shutdown...&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//打开关闭标识
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">server</span><span class="p">.</span><span class="n">shutdown_asap</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>每次serverCron函数运行时，程序都会对服务器状态的shutdown_asap属性进行检查，并根据属性的值决定是否关闭服务器：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">redisServer</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//关闭服务器的标识：
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//值为1时，关闭服务器，
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//值为0时，不做动作。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">shutdown_asap</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>以下代码展示了服务器在接到SIGTERM信号之后，关闭服务器并打印相关日志的过程：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span><span class="m">6794</span> <span class="p">|</span> signal handler<span class="o">]</span> <span class="o">(</span>1384435690<span class="o">)</span> Received SIGTERM, scheduling shutdown...
+</span></span><span class="line"><span class="cl"><span class="o">[</span>6794<span class="o">]</span> <span class="m">14</span> Nov 21:28:10.108 <span class="c1"># User requested shutdown...</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>6794<span class="o">]</span> <span class="m">14</span> Nov 21:28:10.108 * Saving the final RDB snapshot before exiting.
+</span></span><span class="line"><span class="cl"><span class="o">[</span>6794<span class="o">]</span> <span class="m">14</span> Nov 21:28:10.161 * DB saved on disk
+</span></span><span class="line"><span class="cl"><span class="o">[</span>6794<span class="o">]</span> <span class="m">14</span> Nov 21:28:10.161 <span class="c1"># Redisis now ready to exit, bye bye...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>从日志里面可以看到，服务器在关闭自身之前会进行RDB持久化操作，这也是服务器拦截SIGTERM信号的原因，如果服务器一接到SIGTERM信号就立即关闭，那么它就没办法执行持久化操作了。</p>
+<h3 id="管理客户端资源">管理客户端资源</h3>
+<p>serverCron函数每次执行都会调用clientsCron函数，clientsCron函数会对一定数量的客户端进行以下两个检查：</p>
+<ul>
+<li>如果客户端与服务器之间的连接已经超时（很长一段时间里客户端和服务器都没有互动），那么程序释放这个客户端。</li>
+<li>如果客户端在上一次执行命令请求之后，输入缓冲区的大小超过了一定的长度，那么程序会释放客户端当前的输入缓冲区，并重新创建一个默认大小的输入缓冲区，从而防止客户端的输入缓冲区耗费了过多的内存。</li>
+</ul>
+<h3 id="管理数据库资源">管理数据库资源</h3>
+<p>serverCron函数每次执行都会调用databasesCron函数，这个函数会对服务器中的一部分数据库进行检查，删除其中的过期键，并在有需要时，对字典进行收缩操作。</p>
+<h3 id="执行被延迟的bgrewriteaof">执行被延迟的BGREWRITEAOF</h3>
+<p>在服务器执行BGSAVE命令的期间，如果客户端向服务器发来BGREWRITEAOF命令，那么服务器会将BGREWRITEAOF命令的执行时间延迟到BGSAVE命令执行完毕之后。</p>
+<h3 id="检查持久化操作的运行状态">检查持久化操作的运行状态</h3>
+<p>服务器状态使用rdb_child_pid属性和aof_child_pid属性记录执行BGSAVE命令和BGREWRITEAOF命令的子进程的ID，这两个属性也可以用于检查BGSAVE命令或者BGREWRITEAOF命令是否正在执行。</p>
+<p>每次serverCron函数执行时，程序都会检查rdb_child_pid和aof_child_pid两个属性的值，只要其中一个属性的值不为-1，程序就会执行一次wait3函数，检查子进程是否有信号发来服务器进程：</p>
+<ul>
+<li>如果有信号到达，那么表示新的RDB文件已经生成完毕（对于BGSAVE命令来说），或者AOF文件已经重写完毕（对于BGREWRITEAOF命令来说），服务器需要进行相应命令的后续操作，比如用新的RDB文件替换现有的RDB文件，或者用重写后的AOF文件替换现有的AOF文件。</li>
+<li>如果没有信号到达，那么表示持久化操作未完成，程序不做动作。</li>
+</ul>
+<p>另一方面，如果rdb_child_pid和aof_child_pid两个属性的值都为-1，那么表示服务器没有在进行持久化操作，在这种情况下，程序执行以下三个检查：</p>
+<ol>
+<li>查看是否有BGREWRITEAOF被延迟了，如果有的话，那么开始一次新的BGREWRITEAOF操作（这就是上一个小节我们说到的检查）。</li>
+<li>检查服务器的自动保存条件是否已经被满足，如果条件满足，并且服务器没有在执行其他持久化操作，那么服务器开始一次新的BGSAVE操作（因为条件1可能会引发一次BGREWRITEAOF，所以在这个检查中，程序会再次确认服务器是否已经在执行持久化操作了）。</li>
+<li>检查服务器设置的AOF重写条件是否满足，如果条件满足，并且服务器没有在执行其他持久化操作，那么服务器将开始一次新的BGREWRITEAOF操作（因为条件1和条件2都可能会引起新的持久化操作，所以在这个检查中，我们要再次确认服务器是否已经在执行持久化操作了）。</li>
+</ol>
+<h3 id="将aof缓冲区中的内容写入aof文件">将AOF缓冲区中的内容写入AOF文件</h3>
+<p>如果服务器开启了AOF持久化功能，并且AOF缓冲区里面还有待写入的数据，那么serverCron函数会调用相应的程序，将AOF缓冲区中的内容写入到AOF文件里面。</p>
+<h3 id="关闭异步客户端">关闭异步客户端</h3>
+<p>服务器会关闭那些输出缓冲区大小超出限制的客户端</p>
+<h3 id="增加cronloops计数器的值">增加cronloops计数器的值</h3>
+<p>服务器状态的cronloops属性记录了serverCron函数执行的次数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">redisServer</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// serverCron函数的运行次数计数器
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// serverCron函数每执行一次，这个属性的值就增一。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">cronloops</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>cronloops属性目前在服务器中的唯一作用，就是在复制模块中实现“每执行serverCron函数N次就执行一次指定代码”的功能，方法如以下伪代码所示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">if</span> <span class="n">cronloops</span> <span class="o">%</span> <span class="n">N</span> <span class="o">==</span> <span class="mi">0</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl"><span class="cp">#执行指定代码...
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="初始化服务器">初始化服务器</h2>
+<p>一个Redis服务器从启动到能够接受客户端的命令请求，需要经过一系列的初始化和设置过程，比如初始化服务器状态，接受用户指定的服务器配置，创建相应的数据结构和网络连接等。</p>
+<h3 id="初始化服务器状态结构">初始化服务器状态结构</h3>
+<p>初始化服务器的第一步就是创建一个struct redisServer类型的实例变量server作为服务器的状态，并为结构中的各个属性设置默认值。</p>
+<p>初始化server变量的工作由redis.c/initServerConfig函数完成，以下是这个函数最开头的一部分代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">initServerConfig</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//设置服务器的运行id
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">getRandomHexChars</span><span class="p">(</span><span class="n">server</span><span class="p">.</span><span class="n">runid</span><span class="p">,</span><span class="n">REDIS_RUN_ID_SIZE</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//为运行id加上结尾字符
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">server</span><span class="p">.</span><span class="n">runid</span><span class="p">[</span><span class="n">REDIS_RUN_ID_SIZE</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//设置默认配置文件路径
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">server</span><span class="p">.</span><span class="n">configfile</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//设置默认服务器频率
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">server</span><span class="p">.</span><span class="n">hz</span> <span class="o">=</span> <span class="n">REDIS_DEFAULT_HZ</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//设置服务器的运行架构
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">server</span><span class="p">.</span><span class="n">arch_bits</span> <span class="o">=</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">long</span><span class="p">)</span> <span class="o">==</span> <span class="mi">8</span><span class="p">)</span> <span class="o">?</span> <span class="mi">64</span> <span class="o">:</span> <span class="mi">32</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//设置默认服务器端口号
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">server</span><span class="p">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">REDIS_SERVERPORT</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>以下是initServerConfig函数完成的主要工作：</p>
+<ul>
+<li>设置服务器的运行ID。</li>
+<li>设置服务器的默认运行频率。</li>
+<li>设置服务器的默认配置文件路径。</li>
+<li>设置服务器的运行架构。</li>
+<li>设置服务器的默认端口号。</li>
+<li>设置服务器的默认RDB持久化条件和AOF持久化条件。</li>
+<li>初始化服务器的LRU时钟。</li>
+<li>创建命令表。</li>
+</ul>
+<h3 id="载入配置选项">载入配置选项</h3>
+<p>在启动服务器时，用户可以通过给定配置参数或者指定配置文件来修改服务器的默认配置。</p>
+<p>服务器在用initServerConfig函数初始化完server变量之后，就会开始载入用户给定的配置参数和配置文件，并根据用户设定的配置，对server变量相关属性的值进行修改。</p>
+<h3 id="初始化服务器数据结构">初始化服务器数据结构</h3>
+<p>在之前执行initServerConfig函数初始化server状态时，程序只创建了命令表一个数据结构，不过除了命令表之外，服务器状态还包含其他数据结构，比如：</p>
+<ul>
+<li>server.clients链表，这个链表记录了所有与服务器相连的客户端的状态结构，链表的每个节点都包含了一个redisClient结构实例。</li>
+<li>server.db数组，数组中包含了服务器的所有数据库。</li>
+<li>用于保存频道订阅信息的server.pubsub_channels字典，以及用于保存模式订阅信息的server.pubsub_patterns链表。</li>
+<li>用于执行Lua脚本的Lua环境server.lua。❑用于保存慢查询日志的server.slowlog属性。</li>
+</ul>
+<p>当初始化服务器进行到这一步，服务器将调用initServer函数，为以上提到的数据结构分配内存，并在有需要时，为这些数据结构设置或者关联初始化值。</p>
+<p>服务器到现在才初始化数据结构的原因在于，服务器必须先载入用户指定的配置选项，然后才能正确地对数据结构进行初始化。</p>
+<h3 id="还原数据库状态">还原数据库状态</h3>
+<p>在完成了对服务器状态server变量的初始化之后，服务器需要载入RDB文件或者AOF文件，并根据文件记录的内容来还原服务器的数据库状态。</p>
+<p>根据服务器是否启用了AOF持久化功能，服务器载入数据时所使用的目标文件会有所不同：</p>
+<ul>
+<li>如果服务器启用了AOF持久化功能，那么服务器使用AOF文件来还原数据库状态。</li>
+<li>相反地，如果服务器没有启用AOF持久化功能，那么服务器使用RDB文件来还原数据库状态。</li>
+</ul>
+<h3 id="执行事件循环">执行事件循环</h3>
+<p>在初始化的最后一步，服务器将打印出以下日志：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="p">[</span><span class="mi">5244</span><span class="p">]</span> <span class="mi">21</span> <span class="n">Nov</span> <span class="mi">22</span><span class="o">:</span><span class="mi">43</span><span class="o">:</span><span class="mf">49.084</span> <span class="o">*</span> <span class="n">The</span> <span class="n">server</span> <span class="n">is</span> <span class="n">now</span> <span class="n">ready</span> <span class="n">to</span> <span class="n">accept</span> <span class="n">connections</span> <span class="n">on</span> <span class="n">port</span> <span class="mi">6379</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>并开始执行服务器的事件循环（loop）。</p>
+<p>至此，服务器的初始化工作圆满完成，服务器现在开始可以接受客户端的连接请求，并处理客户端发来的命令请求了。</p>
+<h2 id="重点回顾">重点回顾</h2>
+<ul>
+<li>一个命令请求从发送到完成主要包括以下步骤：1）客户端将命令请求发送给服务器；2）服务器读取命令请求，并分析出命令参数；3）命令执行器根据参数查找命令的实现函数，然后执行实现函数并得出命令回复；4）服务器将命令回复返回给客户端。</li>
+<li>serverCron函数默认每隔100毫秒执行一次，它的工作主要包括更新服务器状态信息，处理服务器接收的SIGTERM信号，管理客户端资源和数据库状态，检查并执行持久化操作等等。</li>
+<li>服务器从启动到能够处理客户端的命令请求需要执行以下步骤：1）初始化服务器状态；2）载入服务器配置；3）初始化服务器数据结构；4）还原数据库状态；5）执行事件循环。</li>
+</ul>
+]]></description></item><item><title>Redis 客户端</title><link>https://xzygis.github.io/posts/introduction-to-redis-client/</link><pubDate>Mon, 12 Dec 2022 23:07:04 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-to-redis-client/</guid><description><![CDATA[<p>Redis服务器是典型的一对多服务器程序：一个服务器可以与多个客户端建立网络连接，每个客户端可以向服务器发送命令请求，而服务器则接收并处理客户端发送的命令请求，并向客户端返回命令回复。</p>
 <p>通过使用由I/O多路复用技术实现的文件事件处理器，Redis服务器使用单线程单进程的方式来处理命令请求，并与多个客户端进行网络通信。</p>
 <p>对于每个与服务器进行连接的客户端，服务器都为这些客户端建立了相应的redis.h/redisClient结构（客户端状态），这个结构保存了客户端当前的状态信息，以及执行相关功能时需要用到的数据结构，其中包括：</p>
 <ul>
@@ -4708,153 +5132,4 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 <p>golang开源实现：https://github.com/kavu/go_reuseport</p>
 </blockquote>
 <p>注意：SO_REUSEPORT只支持TCP和UDP。对unix domain socket不生效。</p>
-]]></description></item><item><title>Kubernetes概述</title><link>https://xzygis.github.io/posts/introduction-of-k8s/</link><pubDate>Wed, 29 Jan 2020 23:53:11 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-of-k8s/</guid><description><![CDATA[<h2 id="kubernetes-简介">Kubernetes 简介</h2>
-<p>Kubernetes 是谷歌开源的容器集群管理系统，是 Google 多年大规模容器管理技术 Borg 的开源版本，主要功能包括：</p>
-<ul>
-<li>基于容器的应用部署、维护和滚动升级</li>
-<li>负载均衡和服务发现</li>
-<li>跨机器和跨地区的集群调度</li>
-<li>自动伸缩</li>
-<li>无状态服务和有状态服务</li>
-<li>广泛的 Volume 支持</li>
-<li>插件机制保证扩展性</li>
-</ul>
-<h3 id="kubernetes-是一个平台">Kubernetes 是一个平台</h3>
-<p>Kubernetes 提供了很多的功能，它可以简化应用程序的工作流，加快开发速度。</p>
-<ul>
-<li>用户可以使用 Label 以自己的方式组织管理资源，还可以使用 Annotation 来自定义资源的描述信息，比如为管理工具提供状态检查等。</li>
-<li>Kubernetes 控制器也是构建在跟开发人员和用户使用的相同的 API 之上。用户还可以编写自己的控制器和调度器，也可以通过各种插件机制扩展系统的功能。</li>
-</ul>
-<h3 id="kubernetes-不是什么">Kubernetes 不是什么</h3>
-<p>Kubernetes 不是一个传统意义上，包罗万象的 PaaS (平台即服务) 系统，它给用户保留了选择的自由和灵活性。</p>
-<ul>
-<li>不限制支持的应用程序类型。Kubernetes 旨在支持极其多样化的工作负载，包括无状态、有状态和数据处理工作负载。只要应用可以在容器中运行，那么它就可以很好的在 Kubernetes 上运行。</li>
-<li>不提供内置的中间件 (如消息中间件)、数据处理框架 (如 Spark)、数据库 (如 mysql) 或集群存储系统 (如 Ceph) 等。</li>
-<li>不直接部署代码，也不会构建您的应用程序。</li>
-<li>允许用户选择自己的日志、监控和告警系统。</li>
-<li>不提供应用程序配置语言或系统 (如 jsonnet)。</li>
-<li>不提供机器配置、维护、管理或自愈系统。</li>
-</ul>
-<h3 id="核心组件">核心组件</h3>
-<p>Kubernetes 主要由以下几个核心组件组成：</p>
-<ul>
-<li>etcd 保存了整个集群的状态；</li>
-<li>apiserver 提供了资源操作的唯一入口，并提供认证、授权、访问控制、API 注册和发现等机制；</li>
-<li>controller manager 负责维护集群的状态，比如故障检测、自动扩展、滚动更新等；</li>
-<li>scheduler 负责资源的调度，按照预定的调度策略将 Pod 调度到相应的机器上；</li>
-<li>kubelet 负责维护容器的生命周期，同时也负责 Volume（CVI）和网络（CNI）的管理；</li>
-<li>Container runtime 负责镜像管理以及 Pod 和容器的真正运行（CRI）；</li>
-<li>kube-proxy 负责为 Service 提供 cluster 内部的服务发现和负载均衡
-</li>
-</ul>
-<h2 id="kubernetes-基本概念">Kubernetes 基本概念</h2>
-<h3 id="container">Container</h3>
-<p>Container（容器）是一种便携式、轻量级的操作系统级虚拟化技术。它使用 namespace 隔离不同的软件运行环境，并通过镜像自包含软件的运行环境，从而使得容器可以很方便的在任何地方运行。</p>
-<p>使用容器，不需要与外部的基础架构环境绑定，因为每一个应用程序都不需要外部依赖，更不需要与外部的基础架构环境依赖。完美解决了从开发到生产环境的一致性问题。</p>
-<p>容器同样比虚拟机更加透明，这有助于监测和管理。尤其是容器进程的生命周期由基础设施管理，而不是被进程管理器隐藏在容器内部。最后，每个应用程序用容器封装，管理容器部署就等同于管理应用程序部署。</p>
-<p>容器的其他优点：</p>
-<ul>
-<li>敏捷的应用程序创建和部署：与虚拟机镜像相比，容器镜像更易用、更高效。</li>
-<li>持续开发、集成和部署：提供可靠与频繁的容器镜像构建、部署和快速简便的回滚（镜像是不可变的）。</li>
-<li>开发与运维的关注分离：在构建/发布时即创建容器镜像，从而将应用与基础架构分离。</li>
-<li>开发、测试与生产环境的一致性：在笔记本电脑上运行和云中一样。</li>
-<li>可观测：不仅显示操作系统的信息和度量，还显示应用自身的信息和度量。</li>
-<li>云和操作系统的分发可移植性：可运行在 Ubuntu, RHEL, CoreOS, 物理机, GKE 以及其他任何地方。</li>
-<li>以应用为中心的管理：从传统的硬件上部署操作系统提升到操作系统中部署应用程序。</li>
-<li>松耦合、分布式、弹性伸缩、微服务：应用程序被分成更小，更独立的模块，并可以动态管理和部署。</li>
-<li>资源隔离：可预测的应用程序性能。</li>
-<li>资源利用：高效率和高密度。</li>
-</ul>
-<h3 id="pod">Pod</h3>
-<p>Kubernetes 使用 Pod 来管理容器，每个 Pod 可以包含一个或多个紧密关联的容器。</p>
-<p>Pod 是一组紧密关联的容器集合，它们共享 PID、IPC、Network 和 UTS namespace，是 Kubernetes 调度的基本单位。Pod 内的多个容器共享网络和文件系统，可以通过进程间通信和文件共享这种简单高效的方式组合完成服务。</p>
-<p>在 Kubernetes 中，所有对象都使用 manifest（yaml 或 json）来定义，比如一个简单的 nginx 服务可以定义为 nginx.yaml，它包含一个镜像为 nginx 的容器：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Pod</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">containers</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="node">Node</h3>
-<p>Node 是 Pod 真正运行的主机，可以是物理机，也可以是虚拟机。为了管理 Pod，每个 Node 节点上至少要运行 container runtime（比如 docker 或者 rkt）、kubelet 和 kube-proxy 服务。</p>
-<h3 id="namespace">Namespace</h3>
-<p>Namespace 是对一组资源和对象的抽象集合，比如可以用来将系统内部的对象划分为不同的项目组或用户组。常见的 pods, services, replication controllers 和 deployments 等都是属于某一个 namespace 的（默认是 default），而 node, persistentVolumes 等则不属于任何 namespace。</p>
-<h3 id="service">Service</h3>
-<p>Service 是应用服务的抽象，通过 labels 为应用提供负载均衡和服务发现。匹配 labels 的 Pod IP 和端口列表组成 endpoints，由 kube-proxy 负责将服务 IP 负载均衡到这些 endpoints 上。
-每个 Service 都会自动分配一个 cluster IP（仅在集群内部可访问的虚拟地址）和 DNS 名，其他容器可以通过该地址或 DNS 来访问服务，而不需要了解后端容器的运行。
-</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Service</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">ports</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">8078</span><span class="w"> </span><span class="c"># the port that this service should serve on</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">http</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c"># the container on each pod to connect to, can be a name</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c"># (e.g. &#39;www&#39;) or a number (e.g. 80)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">targetPort</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l">TCP</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="label">Label</h3>
-<p>Label 是识别 Kubernetes 对象的标签，以 key/value 的方式附加到对象上（key 最长不能超过 63 字节，value 可以为空，也可以是不超过 253 字节的字符串）。</p>
-<p>Label 不提供唯一性，并且实际上经常是很多对象（如 Pods）都使用相同的 label 来标志具体的应用。
-Label 定义好后其他对象可以使用 Label Selector 来选择一组相同 label 的对象（比如 ReplicaSet 和 Service 用 label 来选择一组 Pod）。Label Selector 支持以下几种方式：</p>
-<ul>
-<li>等式，如 app=nginx 和 env!=production</li>
-<li>集合，如 env in (production, qa)</li>
-<li>多个 label（它们之间是 AND 关系），如 app=nginx,env=test</li>
-</ul>
-<h3 id="annotations">Annotations</h3>
-<p>Annotations 是 key/value 形式附加于对象的注解。不同于 Labels 用于标志和选择对象，Annotations 则是用来记录一些附加信息，用来辅助应用部署、安全策略以及调度策略等。比如 deployment 使用 annotations 来记录 rolling update 的状态。</p>
-<p>参考来源：</p>
-<ol>
-<li><a href="https://feisky.gitbooks.io/kubernetes/introduction/"target="_blank" rel="external nofollow noopener noreferrer">https://feisky.gitbooks.io/kubernetes/introduction/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-<li><a href="https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/"target="_blank" rel="external nofollow noopener noreferrer">https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
-</ol>
 ]]></description></item></channel></rss>

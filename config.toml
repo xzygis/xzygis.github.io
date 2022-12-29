@@ -179,10 +179,14 @@ theme = "FixIt"
     # Site creation year
     since = 2020
     # FixIt NEW | 0.2.14 Site creation time
-    siteTime = '2020-1-27T08:08:08+08:00'
+    # siteTime = '2020-1-27T08:08:08+08:00'
     # license info (HTML format is supported)
     license = '<a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a>'
-
+    [params.footer.siteTime]
+      animate = true
+      icon = "fa-solid fa-heartbeat"
+      pre = ""
+      value = "2020-1-27T08:08:08+08:00"
   # FixIt NEW | 0.2.0 Section (all posts) page config
   [params.section]
     # special amount of posts in each section page

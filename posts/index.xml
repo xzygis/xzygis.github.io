@@ -5997,49 +5997,6 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 <h2 id="服务上线">服务上线</h2>
 <p>在服务上线阶段，需要避免的是观察不细致，想当然的认为没问题，结果到最后导致了一个大问题。在上线阶段，我们应该加强检查，从多角度对服务进行观察，包括：上游角度、服务本身角度、下游角度，观察的指标，既包括错误率、时延、错误日志等通用指标，也包括业务自定义指标（应该在方案设计阶段考虑清楚后续有什么手段可以观测服务是否正常）。
 值得一提的是，服务上线完成并不是结束，而是一个新的开始。我们需要采取各种手段保障服务的稳定运行，并不断发现其中的可优化点，推动服务SLI稳步提升。</p>
-]]></description></item><item><title>Linux文件传输的三种方式</title><link>https://xzygis.github.io/posts/three-ways-to-transfer-files-in-linux/</link><pubDate>Sat, 12 Jun 2021 16:14:22 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/three-ways-to-transfer-files-in-linux/</guid><description><![CDATA[<h2 id="1-nc命令">1 nc命令</h2>
-<p>执行如下命令，在目标机器(假设ip为<code>10.11.12.13</code>)上监听端口<code>8415</code></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">nc -l 8415 &gt; data.txt
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>往目标机器发送数据</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">nc -v 10.11.12.13 8415 &lt; ~/Downloads/data.txt
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="2-simplehttpserver">2 SimpleHTTPServer</h2>
-<p>在服务器(假设ip为<code>10.11.12.13</code>)上执行如下命令:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">python -m SimpleHTTPServer 8411 
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>然后在本地机器打开浏览器，输入<code>http://10.11.12.13:8411/</code>可以访问。</p>
-<h2 id="3-scp命令">3 scp命令</h2>
-<p>Linux scp命令用于Linux之间复制文件和目录。</p>
-<p>scp是 secure copy的缩写, scp是linux系统下基于ssh登陆进行安全的远程文件拷贝命令。</p>
-<p>在目标机器执行如下命令：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">scp -l 700000 username@dev.test.com:~/data.txt ./ 
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>即可把目标机器dev.test.com的文件~/data.txt拷贝到当前目录。</p>
 ]]></description></item><item><title>Redis 服务器</title><link>https://xzygis.github.io/posts/introduction-to-redis-server/</link><pubDate>Wed, 21 Dec 2022 19:42:15 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-to-redis-server/</guid><description><![CDATA[<p>Redis服务器负责与多个客户端建立网络连接，处理客户端发送的命令请求，在数据库中保存客户端执行命令所产生的数据，并通过资源管理来维持服务器自身的运转。</p>
 <h2 id="命令请求的执行过程">命令请求的执行过程</h2>
 <h3 id="发送命令请求">发送命令请求</h3>

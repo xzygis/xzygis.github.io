@@ -1,4 +1,5 @@
 https://xzygis.github.io/about/
+https://xzygis.github.io/posts/introduction-to-redis-event/
 https://xzygis.github.io/posts/introduction-to-redis-server/
 https://xzygis.github.io/posts/introduction-to-redis-client/
 https://xzygis.github.io/posts/introduction-to-redis-aof-persistence/

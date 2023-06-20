@@ -46,16 +46,15 @@
 <p>声明式通信模型规范了通信模型，并且它将功能实现从应用程序转移到远程API或服务端点，从而实现某种状态到达期望状态。这有助于简化应用程序，并使它们彼此的行为更具可预测性。</p>
 <p>例子：SQL数据库
 其实你很早就接触过声明式编程语言， SQL语言就是很典型的例子：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ben</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ben</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>上面是一个很普通的SQL查询语句，我只只声明我想要找一个叫Ben的用户（What) , 就是不说SQL该怎么（How）去寻找怎么做。接下来我们看看如果用命令式语言写会是什么样的：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -76,8 +75,7 @@
 </span></span><span class="line"><span class="cl">         <span class="nx">print</span><span class="p">(</span><span class="s2">&#34;find&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">         <span class="k">break</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>通过上面的对比你可以看出声明式语言的优势-短小精悍，你并不会知道程序的控制流（control flow）我们不需要告诉程序如何去寻找（How），而是只告诉程序我们想要的结果（What），让程序自己来解决过程（How）。当然SQL具体的细节还是用命令式的编程风格来实现的。</p>
 <h2 id="play-with-kubernetes">Play with Kubernetes</h2>
@@ -86,16 +84,15 @@
 <ol>
 <li>初始化master节点：</li>
 </ol>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">kubeadm init --apiserver-advertise-address <span class="k">$(</span>hostname -i<span class="k">)</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">kubeadm init --apiserver-advertise-address <span class="k">$(</span>hostname -i<span class="k">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>输出如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -272,22 +269,20 @@
 </span></span><span class="line"><span class="cl"><span class="nc">Waiting</span> <span class="k">for</span> <span class="nv">api</span> <span class="nv">server</span> <span class="nv">to</span> <span class="nv">startup</span>
 </span></span><span class="line"><span class="cl"><span class="nc">Warning</span><span class="p">:</span> <span class="nv">kubectl</span> <span class="nv">apply</span> <span class="nv">should</span> <span class="nv">be</span> <span class="nv">used</span> <span class="nv">on</span> <span class="nv">resource</span> <span class="nv">created</span> <span class="nv">by</span> <span class="nv">either</span> <span class="nv">kubectl</span> <span class="nv">create</span> <span class="o">--</span><span class="nv">save</span><span class="o">-</span><span class="nv">config</span> <span class="k">or</span> <span class="nv">kubectl</span> <span class="nv">apply</span>
 </span></span><span class="line"><span class="cl"><span class="nv">daemonset</span><span class="p">.</span><span class="nv">extensions</span><span class="o">/</span><span class="nv">kube</span><span class="o">-</span><span class="nv">proxy</span> <span class="nv">configured</span>
-</span></span><span class="line"><span class="cl"><span class="nc">No</span> <span class="nv">resources</span> <span class="nv">found</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="nc">No</span> <span class="nv">resources</span> <span class="nv">found</span></span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="2">
 <li>初始化集群网络：</li>
 </ol>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-5"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">kubectl apply -n kube-system -f  <span class="s2">&#34;https://cloud.weave.works/k8s/net?k8s-version=</span><span class="k">$(</span>kubectl version <span class="p">|</span> base64 <span class="p">|</span> tr -d <span class="s1">&#39;\n&#39;</span><span class="k">)</span><span class="s2">&#34;</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">kubectl apply -n kube-system -f  <span class="s2">&#34;https://cloud.weave.works/k8s/net?k8s-version=</span><span class="k">$(</span>kubectl version <span class="p">|</span> base64 <span class="p">|</span> tr -d <span class="s1">&#39;\n&#39;</span><span class="k">)</span><span class="s2">&#34;</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>输出如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-6"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -302,13 +297,12 @@
 </span></span><span class="line"><span class="cl">clusterrolebinding.rbac.authorization.k8s.io/weave-net created
 </span></span><span class="line"><span class="cl">role.rbac.authorization.k8s.io/weave-net created
 </span></span><span class="line"><span class="cl">rolebinding.rbac.authorization.k8s.io/weave-net created
-</span></span><span class="line"><span class="cl">daemonset.apps/weave-net created
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">daemonset.apps/weave-net created</span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="3">
 <li>执行下列初始化命令：</li>
 </ol>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-7"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -317,22 +311,20 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">mkdir -p <span class="nv">$HOME</span>/.kube
 </span></span><span class="line"><span class="cl">cp -i /etc/kubernetes/admin.conf <span class="nv">$HOME</span>/.kube/config
-</span></span><span class="line"><span class="cl">chown <span class="k">$(</span>id -u<span class="k">)</span>:<span class="k">$(</span>id -g<span class="k">)</span> <span class="nv">$HOME</span>/.kube/config
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">chown <span class="k">$(</span>id -u<span class="k">)</span>:<span class="k">$(</span>id -g<span class="k">)</span> <span class="nv">$HOME</span>/.kube/config</span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="4">
 <li>根据master节点上的提示，在新的web终端上执行：</li>
 </ol>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-8"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">kubeadm join 192.168.0.18:6443 --token 5f1nyz.351cet8vt4g2ix78 --discovery-token-ca-cert-hash sha256:d105d049cf090f7814473e5554b79e09cd13e4acfd8a56b09754ba9181d08fd8
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">kubeadm join 192.168.0.18:6443 --token 5f1nyz.351cet8vt4g2ix78 --discovery-token-ca-cert-hash sha256:d105d049cf090f7814473e5554b79e09cd13e4acfd8a56b09754ba9181d08fd8</span></span></code></pre></td></tr></table>
 </div>
 </div><p>输出如下：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-9"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -417,12 +409,11 @@
 </span></span><span class="line"><span class="cl">  <span class="nv">was</span> <span class="nv">received</span><span class="p">.</span>
 </span></span><span class="line"><span class="cl"><span class="o">*</span> <span class="nc">The</span> <span class="nc">Kubelet</span> <span class="nv">was</span> <span class="nv">informed</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">new</span> <span class="nv">secure</span> <span class="nv">connection</span> <span class="nv">details</span><span class="p">.</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nc">Run</span> <span class="s1">&#39;kubectl get nodes&#39;</span> <span class="nv">on</span> <span class="nv">the</span> <span class="nv">master</span> <span class="nv">to</span> <span class="nv">see</span> <span class="nv">this</span> <span class="nv">node</span> <span class="nv">join</span> <span class="nv">the</span> <span class="nv">cluster</span><span class="p">.</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="nc">Run</span> <span class="s1">&#39;kubectl get nodes&#39;</span> <span class="nv">on</span> <span class="nv">the</span> <span class="nv">master</span> <span class="nv">to</span> <span class="nv">see</span> <span class="nv">this</span> <span class="nv">node</span> <span class="nv">join</span> <span class="nv">the</span> <span class="nv">cluster</span><span class="p">.</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>多开几个实例，重复执行第四步，即可向Kubernetes集群中增加节点。</p>
 <p>此时在master节点上执行<code>kubectl get nodes</code>查看节点所有节点状态：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-10"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -435,11 +426,10 @@
 </span></span><span class="line"><span class="cl">NAME      STATUS    ROLES     AGE       VERSION
 </span></span><span class="line"><span class="cl">node1     Ready     master    19m       v1.11.3
 </span></span><span class="line"><span class="cl">node2     Ready     &lt;none&gt;    2m        v1.11.3
-</span></span><span class="line"><span class="cl">node3     Ready     &lt;none&gt;    1m        v1.11.3
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">node3     Ready     &lt;none&gt;    1m        v1.11.3</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="创建nginx-deployment">创建nginx deployment</h3>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-11"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -458,11 +448,10 @@
 </span></span><span class="line"><span class="cl"><span class="o">[</span>node1 ~<span class="o">]</span>$
 </span></span><span class="line"><span class="cl"><span class="o">[</span>node1 ~<span class="o">]</span>$ kubectl apply -f nginx-app.yaml
 </span></span><span class="line"><span class="cl">service/my-nginx-svc created
-</span></span><span class="line"><span class="cl">deployment.apps/my-nginx created
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">deployment.apps/my-nginx created</span></span></code></pre></td></tr></table>
 </div>
 </div><p>此时查看nodes和pods：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-12"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -487,8 +476,7 @@
 </span></span><span class="line"><span class="cl">NAME                        READY     STATUS    RESTARTS   AGE
 </span></span><span class="line"><span class="cl">my-nginx-67594d6bf6-2cbbz   1/1       Running   <span class="m">0</span>          1m
 </span></span><span class="line"><span class="cl">my-nginx-67594d6bf6-r2p6w   1/1       Running   <span class="m">0</span>          1m
-</span></span><span class="line"><span class="cl">my-nginx-67594d6bf6-vjqn4   1/1       Running   <span class="m">0</span>          1m
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">my-nginx-67594d6bf6-vjqn4   1/1       Running   <span class="m">0</span>          1m</span></span></code></pre></td></tr></table>
 </div>
 </div><p>参考来源：</p>
 <ol>

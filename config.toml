@@ -313,7 +313,7 @@ theme = "FixIt"
       position = "right"
     # FixIt NEW | 0.2.13 Display a message at the beginning of an article to warn the reader that its content might be expired
     [params.page.expirationReminder]
-      enable = true
+      enable = false
       # Display the reminder if the last modified time is more than 90 days ago
       reminder = 90
       # Display warning if the last modified time is more than 180 days ago

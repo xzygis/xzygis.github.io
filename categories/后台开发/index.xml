@@ -29,7 +29,7 @@
 <code>gi(x) = h1(x) + ih2(x)</code>
 这里i的取值范围是1到k的整数。</p>
 <p>Google Guava类库使用这个技巧实现了一个布隆过滤器，哈希算法的主要逻辑如下：</p>
-<div class="highlight" id="id-1"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -54,10 +54,11 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">if</span> <span class="o">(</span><span class="n">combinedHash</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="n">combinedHash</span> <span class="o">=</span> <span class="o">~</span><span class="n">combinedHash</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl">  <span class="o">}</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Guava中的Bloom Filter使用示例：</p>
-<div class="highlight" id="id-2"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -66,7 +67,8 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">expectedInsertions</span> <span class="o">=</span> <span class="o">...;</span> <span class="c1">//待检测元素的个数
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">double</span> <span class="n">fpp</span> <span class="o">=</span> <span class="mf">0.03</span><span class="o">;</span> <span class="c1">//误判率(desired false positive probability)
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">BloomFilter</span><span class="o">&lt;</span><span class="n">CharSequence</span><span class="o">&gt;</span> <span class="n">bloomFilter</span> <span class="o">=</span> <span class="n">BloomFilter</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">Funnels</span><span class="o">.</span><span class="na">stringFunnel</span><span class="o">(</span><span class="n">Charset</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">&#34;UTF-8&#34;</span><span class="o">)),</span> <span class="n">expectedInsertions</span><span class="o">,</span><span class="n">fpp</span><span class="o">);</span></span></span></code></pre></td></tr></table>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">BloomFilter</span><span class="o">&lt;</span><span class="n">CharSequence</span><span class="o">&gt;</span> <span class="n">bloomFilter</span> <span class="o">=</span> <span class="n">BloomFilter</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">Funnels</span><span class="o">.</span><span class="na">stringFunnel</span><span class="o">(</span><span class="n">Charset</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">&#34;UTF-8&#34;</span><span class="o">)),</span> <span class="n">expectedInsertions</span><span class="o">,</span><span class="n">fpp</span><span class="o">);</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="优点">优点</h2>
 <p>它的优点是空间效率和查询时间都远远超过一般的算法，布隆过滤器存储空间和插入/查询时间都是常数O(k)。另外, 散列函数相互之间没有关系，方便由硬件并行实现。布隆过滤器不需要存储元素本身，在某些对保密要求非常严格的场合有优势。</p>
@@ -81,41 +83,45 @@
 </ul>
 ]]></description></item><item><title>Linux文件传输的三种方式</title><link>https://xzygis.github.io/posts/three-ways-to-transfer-files-in-linux/</link><pubDate>Sat, 12 Jun 2021 16:14:22 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/three-ways-to-transfer-files-in-linux/</guid><description><![CDATA[<h2 id="1-nc命令">1 nc命令</h2>
 <p>执行如下命令，在目标机器(假设ip为<code>10.11.12.13</code>)上监听端口<code>8415</code></p>
-<div class="highlight" id="id-1"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">nc -l 8415 &gt; data.txt</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">nc -l 8415 &gt; data.txt
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>往目标机器发送数据</p>
-<div class="highlight" id="id-2"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">nc -v 10.11.12.13 8415 &lt; ~/Downloads/data.txt</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">nc -v 10.11.12.13 8415 &lt; ~/Downloads/data.txt
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="2-simplehttpserver">2 SimpleHTTPServer</h2>
 <p>在服务器(假设ip为<code>10.11.12.13</code>)上执行如下命令:</p>
-<div class="highlight" id="id-3"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">python -m SimpleHTTPServer 8411 </span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">python -m SimpleHTTPServer 8411 
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>然后在本地机器打开浏览器，输入<code>http://10.11.12.13:8411/</code>可以访问。</p>
 <h2 id="3-scp命令">3 scp命令</h2>
 <p>Linux scp命令用于Linux之间复制文件和目录。</p>
 <p>scp是 secure copy的缩写, scp是linux系统下基于ssh登陆进行安全的远程文件拷贝命令。</p>
 <p>在目标机器执行如下命令：</p>
-<div class="highlight" id="id-4"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">scp -l 700000 username@dev.test.com:~/data.txt ./ </span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">scp -l 700000 username@dev.test.com:~/data.txt ./ 
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>即可把目标机器dev.test.com的文件~/data.txt拷贝到当前目录。</p>
 ]]></description></item></channel></rss>

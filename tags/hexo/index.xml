@@ -1,46 +1,42 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>hexo - 标签 - TechInsights - Chuxing's Blog</title><link>https://xzygis.github.io/tags/hexo/</link><description>hexo - 标签 - TechInsights - Chuxing's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>xzygis@163.com (chuxing)</managingEditor><webMaster>xzygis@163.com (chuxing)</webMaster><lastBuildDate>Mon, 27 Jan 2020 21:52:50 +0000</lastBuildDate><atom:link href="https://xzygis.github.io/tags/hexo/" rel="self" type="application/rss+xml"/><item><title>如何通过GitHub+Hexo搭建博客</title><link>https://xzygis.github.io/posts/how-to-create-a-hexo-blog/</link><pubDate>Mon, 27 Jan 2020 21:52:50 +0000</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/how-to-create-a-hexo-blog/</guid><description><![CDATA[<h2 id="安装node">安装Node</h2>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ brew install node
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ brew install node</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="安装hexo">安装Hexo</h2>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ npm install -g hexo
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ npm install -g hexo</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="初始化hexo">初始化Hexo</h2>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ hexo init
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ hexo init</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="生成网页文件和开启服务器">生成网页文件和开启服务器</h2>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ hexo g
-</span></span><span class="line"><span class="cl">$ hexo s
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">$ hexo s</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="关联github">关联Github</h2>
 <ol>
 <li>修改<code>_config.yml</code>，修改deploy为：</li>
 </ol>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-5"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -51,33 +47,30 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">deploy:
 </span></span><span class="line"><span class="cl">  type: &#39;git&#39;
 </span></span><span class="line"><span class="cl">  repository: https://github.com/xzygis/xzygis.github.io.git
-</span></span><span class="line"><span class="cl">  branch: master
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">  branch: master</span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="2">
 <li>生成静态文件并上传Github</li>
 </ol>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-6"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ hexo g
-</span></span><span class="line"><span class="cl">$ hexo d
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">$ hexo d</span></span></code></pre></td></tr></table>
 </div>
 </div><p>若执行<code>hexo d</code>出错则执行<code>npm install hexo-deployer-git --save</code>。</p>
 <p>执行<code>hexo d</code>会提示输入用户名密码。</p>
 <h2 id="配置next主题">配置next主题</h2>
 <p>在blog目录下执行</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-7"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git clone --branch v5.1.4 https://github.com/iissnan/hexo-theme-next themes/next
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git clone --branch v5.1.4 https://github.com/iissnan/hexo-theme-next themes/next</span></span></code></pre></td></tr></table>
 </div>
 </div><p>修改<code>_config.yml</code>，设置theme为next。</p>
 ]]></description></item></channel></rss>

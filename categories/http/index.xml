@@ -14,7 +14,7 @@
 <h3 id="握手例子">握手例子</h3>
 <p>一个典型的Websocket握手请求如下：</p>
 <p>客户端请求：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -33,11 +33,10 @@
 </span></span><span class="line"><span class="cl">Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==
 </span></span><span class="line"><span class="cl">Origin: http://example.com
 </span></span><span class="line"><span class="cl">Sec-WebSocket-Protocol: chat, superchat
-</span></span><span class="line"><span class="cl">Sec-WebSocket-Version: 13
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">Sec-WebSocket-Version: 13</span></span></code></pre></td></tr></table>
 </div>
 </div><p>服务器回应：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -50,8 +49,7 @@
 </span></span><span class="line"><span class="cl">Upgrade: websocket
 </span></span><span class="line"><span class="cl">Connection: Upgrade
 </span></span><span class="line"><span class="cl">Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
-</span></span><span class="line"><span class="cl">Sec-WebSocket-Protocol: chat
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">Sec-WebSocket-Protocol: chat</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="字段说明">字段说明</h3>
 <ul>
@@ -77,7 +75,7 @@
 <li>接收端：接收消息帧，并将关联的帧重新组装成完整的消息；</li>
 </ul>
 <h3 id="帧结构">帧结构</h3>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -112,8 +110,7 @@
 </span></span><span class="line"><span class="cl"> :                     Payload Data continued ...                :
 </span></span><span class="line"><span class="cl"> + - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - +
 </span></span><span class="line"><span class="cl"> |                     Payload Data continued ...                |
-</span></span><span class="line"><span class="cl"> +---------------------------------------------------------------+
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"> +---------------------------------------------------------------+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="字段说明-1">字段说明</h3>
 <p>FIN：1个比特。
@@ -165,7 +162,7 @@
 </ul>
 <p>流程为： original-octet-i 与 masking-key-octet-j 异或后，得到 transformed-octet-i。</p>
 <p>伪代码大概是：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -176,8 +173,7 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">var DECODED = &#34;&#34;;
 </span></span><span class="line"><span class="cl">for (var i = 0; i &lt; ENCODED.length; i++) {
 </span></span><span class="line"><span class="cl">    DECODED[i] = ENCODED[i] ^ MASK[i % 4];
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
 </div>
 </div><p>数据掩码的作用：
 WebSocket 协议中，数据掩码的作用是增强协议的安全性。但数据掩码并不是为了保护数据本身，因为算法本身是公开的，运算也不复杂。除了加密通道本身，似乎没有太多有效的保护通信安全的办法。
@@ -200,7 +196,7 @@ FIN=1表示当前数据帧为消息的最后一个数据帧，此时接收方已
 <li>FIN=0，opcode=0x0，表示消息还没发送完成，还有后续的数据帧，当前的数据帧需要接在上一条数据帧之后。</li>
 <li>FIN=1，opcode=0x0，表示消息已经发送完成，没有后续的数据帧，当前的数据帧需要接在上一条数据帧之后。服务端可以将关联的数据帧组装成完整的消息。</li>
 </ol>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-5"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -219,8 +215,7 @@ FIN=1表示当前数据帧为消息的最后一个数据帧，此时接收方已
 </span></span><span class="line"><span class="cl">Client: FIN=0, opcode=0x0, msg=&#34;happy new&#34;
 </span></span><span class="line"><span class="cl">Server: (listening, payload concatenated to previous message)
 </span></span><span class="line"><span class="cl">Client: FIN=1, opcode=0x0, msg=&#34;year!&#34;
-</span></span><span class="line"><span class="cl">Server: (process complete message) Happy new year to you too!
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">Server: (process complete message) Happy new year to you too!</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="心跳">心跳</h2>
 <p>WebSocket 为了保持客户端、服务端的实时双向通信，需要确保客户端、服务端之间的 TCP 通道保持连接没有断开。
@@ -238,7 +233,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 <p>Github：https://github.com/gorilla/websocket</p>
 </blockquote>
 <p>文件监控例子（当文件被修改后，把文件发给客户端）：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-6"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -365,13 +360,12 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 </span></span><span class="line"><span class="cl">         break
 </span></span><span class="line"><span class="cl">      }
 </span></span><span class="line"><span class="cl">   }
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
 </div>
 </div><p>其中最重要的几个方法是Upgrade、ReadMessage和WriteMessage，下面逐一介绍。</p>
 <h3 id="upgrade">Upgrade</h3>
 <p>协议升级</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-7"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -596,11 +590,10 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 </span></span><span class="line"><span class="cl">      h = func(string) error { return nil }
 </span></span><span class="line"><span class="cl">   }
 </span></span><span class="line"><span class="cl">   c.handlePong = h
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="readmessage">ReadMessage</h3>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-8"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
 </span><span class="lnt">  2
@@ -847,11 +840,10 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 </span></span><span class="line"><span class="cl">   }
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">   return frameType, nil
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="writemessage">WriteMessage</h3>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-9"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1008,8 +1000,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">   ...
 </span></span><span class="line"><span class="cl">   return nil
-</span></span><span class="line"><span class="cl">}
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Ref：</p>
 <ul>
@@ -1051,13 +1042,12 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 <li><code>Signature</code></li>
 </ul>
 <p>所以，一个JWT看起来通常是如下的形式：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">xxxxx.yyyyy.zzzzz
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">xxxxx.yyyyy.zzzzz</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="header">Header</h3>
 <p>头部由两部分组成：</p>
@@ -1066,7 +1056,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 <li>签名算法，例如HMAC SHA256或RSA。</li>
 </ul>
 <p>一个Header的例子：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -1077,8 +1067,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 <pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="nt">&#34;alg&#34;</span><span class="p">:</span> <span class="s2">&#34;HS256&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="nt">&#34;typ&#34;</span><span class="p">:</span> <span class="s2">&#34;JWT&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>随后，以上JSON对象会通过 <code>Base64Url</code> 编码为JWT的第一部分。</p>
 <h3 id="payload">Payload</h3>
@@ -1103,7 +1092,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 <p><strong>私有的声明 ：</strong>
 私有声明是提供者和消费者所共同定义的声明，一般不建议存放敏感信息，因为base64是对称解密的，意味着该部分信息可以归类为明文信息。</p>
 <p>一个Payload的例子：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -1116,14 +1105,13 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 </span></span><span class="line"><span class="cl">  <span class="nt">&#34;sub&#34;</span><span class="p">:</span> <span class="s2">&#34;1234567890&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;John Doe&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="nt">&#34;admin&#34;</span><span class="p">:</span> <span class="kc">true</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>随后，Payload会通过 <code>Base64Url</code> 编码为JWT的第二部分。</p>
 <h3 id="signature">Signature</h3>
 <p>创建签名需要用到编码后的 Header、编码后的 Payload、秘钥、Header中指定的算法。</p>
 <p>如果你想使用HMAC SHA256算法，签名将通过如下方式生成：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -1134,21 +1122,19 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 <pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nf">HMACSHA256</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">base64UrlEncode</span><span class="p">(</span><span class="nx">header</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#34;.&#34;</span> <span class="o">+</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">base64UrlEncode</span><span class="p">(</span><span class="nx">payload</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">secret</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">  <span class="nx">secret</span><span class="p">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>如果你想把以上概念付诸实践，可以通过 <a href="https://jwt.io/"target="_blank" rel="external nofollow noopener noreferrer">https://jwt.io/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> 提供的工具来玩一玩 JWT 。如下图所示：
 </p>
 <h2 id="jwt-的使用方式">JWT 的使用方式</h2>
 <p>客户端收到服务器返回的 JWT，可以储存在 Cookie 里面，也可以储存在 localStorage。
 此后，客户端每次与服务器通信，都要带上这个 JWT。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP 请求的头信息Authorization字段里面。</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-5"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">Authorization</span><span class="o">:</span> <span class="nx">Bearer</span> <span class="o">&lt;</span><span class="nx">token</span><span class="o">&gt;</span>
-</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">Authorization</span><span class="o">:</span> <span class="nx">Bearer</span> <span class="o">&lt;</span><span class="nx">token</span><span class="o">&gt;</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>另一种做法是，跨域的时候，JWT 就放在 POST 请求的数据体里面。</p>
 <h2 id="jwt-的几个特点">JWT 的几个特点</h2>
@@ -1162,7 +1148,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 </ul>
 <h2 id="示例代码">示例代码</h2>
 <p>Go语言版本：</p>
-<div class="highlight"><div class="chroma">
+<div class="highlight" id="id-6"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1293,8 +1279,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">ErrVerifyFailed</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>参考来源：</p>
 <ol>

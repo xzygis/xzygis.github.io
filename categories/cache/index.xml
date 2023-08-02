@@ -2264,10 +2264,10 @@
 </span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="n">dup</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">ptr</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">//
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="err">节点值释放函数</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">free</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">ptr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">void</span> <span class="p">(</span><span class="o">*</span><span class="n">free</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">ptr</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">//
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="err">节点值对比函数</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">match</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">ptr</span><span class="p">,</span><span class="kt">void</span> <span class="o">*</span><span class="n">key</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">int</span> <span class="p">(</span><span class="o">*</span><span class="n">match</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">ptr</span><span class="p">,</span><span class="kt">void</span> <span class="o">*</span><span class="n">key</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">list</span><span class="p">;</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>通过为链表设置不同的类型特定函数，Redis的链表可以用于保存各种不同类型的值。</p>

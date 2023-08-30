@@ -1,4 +1,4 @@
-title = "TechInsights - Chuxing's Blog"
+title = "楚兴 - Chuxing's Blog"
 baseURL = "https://xzygis.github.io"
 defaultContentLanguage = "zh-cn" # theme lang
 languageCode = "zh-CN"
@@ -153,7 +153,7 @@ theme = "FixIt"
       # URL of the LOGO
       logo = "/logo.png"
       # title name
-      name = "TechInsights"
+      name = "楚兴"
       # you can add extra information before the name (HTML format is supported), such as icons
       pre = ""
       # you can add extra information after the name (HTML format is supported), such as icons
@@ -163,7 +163,7 @@ theme = "FixIt"
     # FixIt NEW | 0.2.12 Header subtitle config
     [params.header.subtitle]
       # subtitle name
-      name = "Unity of Knowledge and Action"
+      name = "知行合一"
       # whether to use typeit animation for subtitle name
       typeit = false
 

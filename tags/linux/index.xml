@@ -13,7 +13,7 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">nc -v 10.11.12.13 8415 &lt; ~/Downloads/data.txt</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">nc</span> <span class="o">-</span><span class="n">v</span> <span class="mf">10.11</span><span class="o">.</span><span class="mf">12.13</span> <span class="mi">8415</span> <span class="o">&lt;</span> <span class="o">~/</span><span class="n">Downloads</span><span class="o">/</span><span class="n">data</span><span class="o">.</span><span class="n">txt</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="2-simplehttpserver">2 SimpleHTTPServer</h2>
 <p>在服务器(假设ip为<code>10.11.12.13</code>)上执行如下命令:</p>

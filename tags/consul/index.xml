@@ -62,41 +62,41 @@
 </span><span class="lnt">35
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ consul
-</span></span><span class="line"><span class="cl">Usage: consul [--version] [--help] &lt;command&gt; [&lt;args&gt;]
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">$</span> <span class="n">consul</span>
+</span></span><span class="line"><span class="cl"><span class="n">Usage</span><span class="p">:</span> <span class="n">consul</span> <span class="p">[</span><span class="o">--</span><span class="n">version</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">help</span><span class="p">]</span> <span class="o">&lt;</span><span class="n">command</span><span class="o">&gt;</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">args</span><span class="o">&gt;</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">Available commands are:
-</span></span><span class="line"><span class="cl">    acl            Interact with Consul&#39;s ACLs
-</span></span><span class="line"><span class="cl">    agent          Runs a Consul agent
-</span></span><span class="line"><span class="cl">    catalog        Interact with the catalog
-</span></span><span class="line"><span class="cl">    config         Interact with Consul&#39;s Centralized Configurations
-</span></span><span class="line"><span class="cl">    connect        Interact with Consul Connect
-</span></span><span class="line"><span class="cl">    debug          Records a debugging archive for operators
-</span></span><span class="line"><span class="cl">    event          Fire a new event
-</span></span><span class="line"><span class="cl">    exec           Executes a command on Consul nodes
-</span></span><span class="line"><span class="cl">    force-leave    Forces a member of the cluster to enter the &#34;left&#34; state
-</span></span><span class="line"><span class="cl">    info           Provides debugging information for operators.
-</span></span><span class="line"><span class="cl">    intention      Interact with Connect service intentions
-</span></span><span class="line"><span class="cl">    join           Tell Consul agent to join cluster
-</span></span><span class="line"><span class="cl">    keygen         Generates a new encryption key
-</span></span><span class="line"><span class="cl">    keyring        Manages gossip layer encryption keys
-</span></span><span class="line"><span class="cl">    kv             Interact with the key-value store
-</span></span><span class="line"><span class="cl">    leave          Gracefully leaves the Consul cluster and shuts down
-</span></span><span class="line"><span class="cl">    lock           Execute a command holding a lock
-</span></span><span class="line"><span class="cl">    login          Login to Consul using an auth method
-</span></span><span class="line"><span class="cl">    logout         Destroy a Consul token created with login
-</span></span><span class="line"><span class="cl">    maint          Controls node or service maintenance mode
-</span></span><span class="line"><span class="cl">    members        Lists the members of a Consul cluster
-</span></span><span class="line"><span class="cl">    monitor        Stream logs from a Consul agent
-</span></span><span class="line"><span class="cl">    operator       Provides cluster-level tools for Consul operators
-</span></span><span class="line"><span class="cl">    reload         Triggers the agent to reload configuration files
-</span></span><span class="line"><span class="cl">    rtt            Estimates network round trip time between nodes
-</span></span><span class="line"><span class="cl">    services       Interact with services
-</span></span><span class="line"><span class="cl">    snapshot       Saves, restores and inspects snapshots of Consul server state
-</span></span><span class="line"><span class="cl">    tls            Builtin helpers for creating CAs and certificates
-</span></span><span class="line"><span class="cl">    validate       Validate config files/directories
-</span></span><span class="line"><span class="cl">    version        Prints the Consul version
-</span></span><span class="line"><span class="cl">    watch          Watch for changes in Consul</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="n">Available</span> <span class="n">commands</span> <span class="n">are</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">acl</span>            <span class="n">Interact</span> <span class="n">with</span> <span class="n">Consul</span><span class="s1">&#39;s ACLs</span>
+</span></span><span class="line"><span class="cl">    <span class="n">agent</span>          <span class="n">Runs</span> <span class="n">a</span> <span class="n">Consul</span> <span class="n">agent</span>
+</span></span><span class="line"><span class="cl">    <span class="n">catalog</span>        <span class="n">Interact</span> <span class="n">with</span> <span class="n">the</span> <span class="n">catalog</span>
+</span></span><span class="line"><span class="cl">    <span class="n">config</span>         <span class="n">Interact</span> <span class="n">with</span> <span class="n">Consul</span><span class="s1">&#39;s Centralized Configurations</span>
+</span></span><span class="line"><span class="cl">    <span class="n">connect</span>        <span class="n">Interact</span> <span class="n">with</span> <span class="n">Consul</span> <span class="n">Connect</span>
+</span></span><span class="line"><span class="cl">    <span class="n">debug</span>          <span class="n">Records</span> <span class="n">a</span> <span class="n">debugging</span> <span class="n">archive</span> <span class="k">for</span> <span class="n">operators</span>
+</span></span><span class="line"><span class="cl">    <span class="n">event</span>          <span class="n">Fire</span> <span class="n">a</span> <span class="n">new</span> <span class="n">event</span>
+</span></span><span class="line"><span class="cl">    <span class="n">exec</span>           <span class="n">Executes</span> <span class="n">a</span> <span class="n">command</span> <span class="n">on</span> <span class="n">Consul</span> <span class="n">nodes</span>
+</span></span><span class="line"><span class="cl">    <span class="n">force</span><span class="o">-</span><span class="n">leave</span>    <span class="n">Forces</span> <span class="n">a</span> <span class="n">member</span> <span class="n">of</span> <span class="n">the</span> <span class="n">cluster</span> <span class="n">to</span> <span class="n">enter</span> <span class="n">the</span> <span class="s2">&#34;left&#34;</span> <span class="n">state</span>
+</span></span><span class="line"><span class="cl">    <span class="n">info</span>           <span class="n">Provides</span> <span class="n">debugging</span> <span class="n">information</span> <span class="k">for</span> <span class="n">operators</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">    <span class="n">intention</span>      <span class="n">Interact</span> <span class="n">with</span> <span class="n">Connect</span> <span class="n">service</span> <span class="n">intentions</span>
+</span></span><span class="line"><span class="cl">    <span class="n">join</span>           <span class="n">Tell</span> <span class="n">Consul</span> <span class="n">agent</span> <span class="n">to</span> <span class="n">join</span> <span class="n">cluster</span>
+</span></span><span class="line"><span class="cl">    <span class="n">keygen</span>         <span class="n">Generates</span> <span class="n">a</span> <span class="n">new</span> <span class="n">encryption</span> <span class="n">key</span>
+</span></span><span class="line"><span class="cl">    <span class="n">keyring</span>        <span class="n">Manages</span> <span class="n">gossip</span> <span class="n">layer</span> <span class="n">encryption</span> <span class="n">keys</span>
+</span></span><span class="line"><span class="cl">    <span class="n">kv</span>             <span class="n">Interact</span> <span class="n">with</span> <span class="n">the</span> <span class="n">key</span><span class="o">-</span><span class="n">value</span> <span class="n">store</span>
+</span></span><span class="line"><span class="cl">    <span class="n">leave</span>          <span class="n">Gracefully</span> <span class="n">leaves</span> <span class="n">the</span> <span class="n">Consul</span> <span class="n">cluster</span> <span class="ow">and</span> <span class="n">shuts</span> <span class="n">down</span>
+</span></span><span class="line"><span class="cl">    <span class="n">lock</span>           <span class="n">Execute</span> <span class="n">a</span> <span class="n">command</span> <span class="n">holding</span> <span class="n">a</span> <span class="n">lock</span>
+</span></span><span class="line"><span class="cl">    <span class="n">login</span>          <span class="n">Login</span> <span class="n">to</span> <span class="n">Consul</span> <span class="n">using</span> <span class="n">an</span> <span class="n">auth</span> <span class="n">method</span>
+</span></span><span class="line"><span class="cl">    <span class="n">logout</span>         <span class="n">Destroy</span> <span class="n">a</span> <span class="n">Consul</span> <span class="n">token</span> <span class="n">created</span> <span class="n">with</span> <span class="n">login</span>
+</span></span><span class="line"><span class="cl">    <span class="n">maint</span>          <span class="n">Controls</span> <span class="n">node</span> <span class="ow">or</span> <span class="n">service</span> <span class="n">maintenance</span> <span class="n">mode</span>
+</span></span><span class="line"><span class="cl">    <span class="n">members</span>        <span class="n">Lists</span> <span class="n">the</span> <span class="n">members</span> <span class="n">of</span> <span class="n">a</span> <span class="n">Consul</span> <span class="n">cluster</span>
+</span></span><span class="line"><span class="cl">    <span class="n">monitor</span>        <span class="n">Stream</span> <span class="n">logs</span> <span class="n">from</span> <span class="n">a</span> <span class="n">Consul</span> <span class="n">agent</span>
+</span></span><span class="line"><span class="cl">    <span class="n">operator</span>       <span class="n">Provides</span> <span class="n">cluster</span><span class="o">-</span><span class="n">level</span> <span class="n">tools</span> <span class="k">for</span> <span class="n">Consul</span> <span class="n">operators</span>
+</span></span><span class="line"><span class="cl">    <span class="n">reload</span>         <span class="n">Triggers</span> <span class="n">the</span> <span class="n">agent</span> <span class="n">to</span> <span class="n">reload</span> <span class="n">configuration</span> <span class="n">files</span>
+</span></span><span class="line"><span class="cl">    <span class="n">rtt</span>            <span class="n">Estimates</span> <span class="n">network</span> <span class="nb">round</span> <span class="n">trip</span> <span class="n">time</span> <span class="n">between</span> <span class="n">nodes</span>
+</span></span><span class="line"><span class="cl">    <span class="n">services</span>       <span class="n">Interact</span> <span class="n">with</span> <span class="n">services</span>
+</span></span><span class="line"><span class="cl">    <span class="n">snapshot</span>       <span class="n">Saves</span><span class="p">,</span> <span class="n">restores</span> <span class="ow">and</span> <span class="n">inspects</span> <span class="n">snapshots</span> <span class="n">of</span> <span class="n">Consul</span> <span class="n">server</span> <span class="n">state</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tls</span>            <span class="n">Builtin</span> <span class="n">helpers</span> <span class="k">for</span> <span class="n">creating</span> <span class="n">CAs</span> <span class="ow">and</span> <span class="n">certificates</span>
+</span></span><span class="line"><span class="cl">    <span class="n">validate</span>       <span class="n">Validate</span> <span class="n">config</span> <span class="n">files</span><span class="o">/</span><span class="n">directories</span>
+</span></span><span class="line"><span class="cl">    <span class="n">version</span>        <span class="n">Prints</span> <span class="n">the</span> <span class="n">Consul</span> <span class="n">version</span>
+</span></span><span class="line"><span class="cl">    <span class="n">watch</span>          <span class="n">Watch</span> <span class="k">for</span> <span class="n">changes</span> <span class="ow">in</span> <span class="n">Consul</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="运行agent">运行Agent</h2>
 <p>完成Consul的安装后，可运行Agent。Agent可以运行为Server或Client模式。每个数据中心至少必须拥有一台server，建议在一个集群中部署或者3至5个Server。部署单一的Server，在出现失败时会不可避免的造成数据丢失.</p>

@@ -95,22 +95,22 @@
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> +-+-+-+-+-------+-+-------------+-------------------------------+
-</span></span><span class="line"><span class="cl"> |F|R|R|R| opcode|M| Payload len |    Extended payload length    |
-</span></span><span class="line"><span class="cl"> |I|S|S|S|  (4)  |A|     (7)     |             (16/64)           |
-</span></span><span class="line"><span class="cl"> |N|V|V|V|       |S|             |   (if payload len==126/127)   |
-</span></span><span class="line"><span class="cl"> | |1|2|3|       |K|             |                               |
-</span></span><span class="line"><span class="cl"> +-+-+-+-+-------+-+-------------+ - - - - - - - - - - - - - - - +
-</span></span><span class="line"><span class="cl"> |     Extended payload length continued, if payload len == 127  |
-</span></span><span class="line"><span class="cl"> + - - - - - - - - - - - - - - - +-------------------------------+
-</span></span><span class="line"><span class="cl"> |                               |Masking-key, if MASK set to 1  |
-</span></span><span class="line"><span class="cl"> +-------------------------------+-------------------------------+
-</span></span><span class="line"><span class="cl"> | Masking-key (continued)       |          Payload Data         |
-</span></span><span class="line"><span class="cl"> +-------------------------------- - - - - - - - - - - - - - - - +
-</span></span><span class="line"><span class="cl"> :                     Payload Data continued ...                :
-</span></span><span class="line"><span class="cl"> + - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - +
-</span></span><span class="line"><span class="cl"> |                     Payload Data continued ...                |
-</span></span><span class="line"><span class="cl"> +---------------------------------------------------------------+</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"> <span class="o">+-+-+-+-+-------+-+-------------+-------------------------------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span><span class="n">F</span><span class="o">|</span><span class="n">R</span><span class="o">|</span><span class="n">R</span><span class="o">|</span><span class="n">R</span><span class="o">|</span> <span class="n">opcode</span><span class="o">|</span><span class="n">M</span><span class="o">|</span> <span class="n">Payload</span> <span class="n">len</span> <span class="o">|</span>    <span class="n">Extended</span> <span class="n">payload</span> <span class="n">length</span>    <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span><span class="n">I</span><span class="o">|</span><span class="n">S</span><span class="o">|</span><span class="n">S</span><span class="o">|</span><span class="n">S</span><span class="o">|</span>  <span class="p">(</span><span class="mi">4</span><span class="p">)</span>  <span class="o">|</span><span class="n">A</span><span class="o">|</span>     <span class="p">(</span><span class="mi">7</span><span class="p">)</span>     <span class="o">|</span>             <span class="p">(</span><span class="mi">16</span><span class="o">/</span><span class="mi">64</span><span class="p">)</span>           <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span><span class="n">N</span><span class="o">|</span><span class="n">V</span><span class="o">|</span><span class="n">V</span><span class="o">|</span><span class="n">V</span><span class="o">|</span>       <span class="o">|</span><span class="n">S</span><span class="o">|</span>             <span class="o">|</span>   <span class="p">(</span><span class="k">if</span> <span class="n">payload</span> <span class="n">len</span><span class="o">==</span><span class="mi">126</span><span class="o">/</span><span class="mi">127</span><span class="p">)</span>   <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span> <span class="o">|</span><span class="mi">1</span><span class="o">|</span><span class="mi">2</span><span class="o">|</span><span class="mi">3</span><span class="o">|</span>       <span class="o">|</span><span class="n">K</span><span class="o">|</span>             <span class="o">|</span>                               <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+-+-+-+-+-------+-+-------------+</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span>     <span class="n">Extended</span> <span class="n">payload</span> <span class="n">length</span> <span class="n">continued</span><span class="p">,</span> <span class="k">if</span> <span class="n">payload</span> <span class="n">len</span> <span class="o">==</span> <span class="mi">127</span>  <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">+-------------------------------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span>                               <span class="o">|</span><span class="n">Masking</span><span class="o">-</span><span class="n">key</span><span class="p">,</span> <span class="k">if</span> <span class="n">MASK</span> <span class="n">set</span> <span class="n">to</span> <span class="mi">1</span>  <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+-------------------------------+-------------------------------+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span> <span class="n">Masking</span><span class="o">-</span><span class="n">key</span> <span class="p">(</span><span class="n">continued</span><span class="p">)</span>       <span class="o">|</span>          <span class="n">Payload</span> <span class="n">Data</span>         <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+--------------------------------</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl"> <span class="p">:</span>                     <span class="n">Payload</span> <span class="n">Data</span> <span class="n">continued</span> <span class="o">...</span>                <span class="p">:</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl"> <span class="o">|</span>                     <span class="n">Payload</span> <span class="n">Data</span> <span class="n">continued</span> <span class="o">...</span>                <span class="o">|</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+---------------------------------------------------------------+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="字段说明-1">字段说明</h3>
 <p>FIN：1个比特。
@@ -170,10 +170,10 @@
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">var DECODED = &#34;&#34;;
-</span></span><span class="line"><span class="cl">for (var i = 0; i &lt; ENCODED.length; i++) {
-</span></span><span class="line"><span class="cl">    DECODED[i] = ENCODED[i] ^ MASK[i % 4];
-</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="k">var</span> <span class="n">DECODED</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="k">var</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">ENCODED</span><span class="o">.</span><span class="n">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">DECODED</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">ENCODED</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^</span> <span class="n">MASK</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="mi">4</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>数据掩码的作用：
 WebSocket 协议中，数据掩码的作用是增强协议的安全性。但数据掩码并不是为了保护数据本身，因为算法本身是公开的，运算也不复杂。除了加密通道本身，似乎没有太多有效的保护通信安全的办法。
@@ -208,14 +208,14 @@ FIN=1表示当前数据帧为消息的最后一个数据帧，此时接收方已
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Client: FIN=1, opcode=0x1, msg=&#34;hello&#34;
-</span></span><span class="line"><span class="cl">Server: (process complete message immediately) Hi.
-</span></span><span class="line"><span class="cl">Client: FIN=0, opcode=0x1, msg=&#34;and a&#34;
-</span></span><span class="line"><span class="cl">Server: (listening, new message containing text started)
-</span></span><span class="line"><span class="cl">Client: FIN=0, opcode=0x0, msg=&#34;happy new&#34;
-</span></span><span class="line"><span class="cl">Server: (listening, payload concatenated to previous message)
-</span></span><span class="line"><span class="cl">Client: FIN=1, opcode=0x0, msg=&#34;year!&#34;
-</span></span><span class="line"><span class="cl">Server: (process complete message) Happy new year to you too!</span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">Client</span><span class="p">:</span> <span class="n">FIN</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">opcode</span><span class="o">=</span><span class="mh">0x1</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="s2">&#34;hello&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">Server</span><span class="p">:</span> <span class="p">(</span><span class="n">process</span> <span class="n">complete</span> <span class="n">message</span> <span class="n">immediately</span><span class="p">)</span> <span class="n">Hi</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Client</span><span class="p">:</span> <span class="n">FIN</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">opcode</span><span class="o">=</span><span class="mh">0x1</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="s2">&#34;and a&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">Server</span><span class="p">:</span> <span class="p">(</span><span class="n">listening</span><span class="p">,</span> <span class="n">new</span> <span class="n">message</span> <span class="n">containing</span> <span class="n">text</span> <span class="n">started</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">Client</span><span class="p">:</span> <span class="n">FIN</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">opcode</span><span class="o">=</span><span class="mh">0x0</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="s2">&#34;happy new&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">Server</span><span class="p">:</span> <span class="p">(</span><span class="n">listening</span><span class="p">,</span> <span class="n">payload</span> <span class="n">concatenated</span> <span class="n">to</span> <span class="n">previous</span> <span class="n">message</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">Client</span><span class="p">:</span> <span class="n">FIN</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">opcode</span><span class="o">=</span><span class="mh">0x0</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="s2">&#34;year!&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">Server</span><span class="p">:</span> <span class="p">(</span><span class="n">process</span> <span class="n">complete</span> <span class="n">message</span><span class="p">)</span> <span class="n">Happy</span> <span class="n">new</span> <span class="n">year</span> <span class="n">to</span> <span class="n">you</span> <span class="n">too</span><span class="o">!</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="心跳">心跳</h2>
 <p>WebSocket 为了保持客户端、服务端的实时双向通信，需要确保客户端、服务端之间的 TCP 通道保持连接没有断开。
@@ -299,68 +299,68 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 </span><span class="lnt">62
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">func main() {
-</span></span><span class="line"><span class="cl">   http.HandleFunc(&#34;/ws&#34;, serveWs)
-</span></span><span class="line"><span class="cl">   if err := http.ListenAndServe(*addr, nil); err != nil {
-</span></span><span class="line"><span class="cl">      log.Fatal(err)
-</span></span><span class="line"><span class="cl">   }
-</span></span><span class="line"><span class="cl">}
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="n">http</span><span class="o">.</span><span class="n">HandleFunc</span><span class="p">(</span><span class="s2">&#34;/ws&#34;</span><span class="p">,</span> <span class="n">serveWs</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">ListenAndServe</span><span class="p">(</span><span class="o">*</span><span class="n">addr</span><span class="p">,</span> <span class="n">nil</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nb">log</span><span class="o">.</span><span class="n">Fatal</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">func serveWs(w http.ResponseWriter, r *http.Request) {
-</span></span><span class="line"><span class="cl">   //升级为Websocket协议
-</span></span><span class="line"><span class="cl">   ws, err := upgrader.Upgrade(w, r, nil)
-</span></span><span class="line"><span class="cl">   if err != nil {
-</span></span><span class="line"><span class="cl">      if _, ok := err.(websocket.HandshakeError); !ok {
-</span></span><span class="line"><span class="cl">         log.Println(err)
-</span></span><span class="line"><span class="cl">      }
-</span></span><span class="line"><span class="cl">      return
-</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl"><span class="k">func</span> <span class="n">serveWs</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="o">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">http</span><span class="o">.</span><span class="n">Request</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="o">//</span><span class="err">升级为</span><span class="n">Websocket协议</span>
+</span></span><span class="line"><span class="cl">   <span class="n">ws</span><span class="p">,</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">upgrader</span><span class="o">.</span><span class="n">Upgrade</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">nil</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="n">_</span><span class="p">,</span> <span class="n">ok</span> <span class="p">:</span><span class="o">=</span> <span class="n">err</span><span class="o">.</span><span class="p">(</span><span class="n">websocket</span><span class="o">.</span><span class="n">HandshakeError</span><span class="p">);</span> <span class="o">!</span><span class="n">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="nb">log</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   var lastMod time.Time
-</span></span><span class="line"><span class="cl">   if n, err := strconv.ParseInt(r.FormValue(&#34;lastMod&#34;), 16, 64); err == nil {
-</span></span><span class="line"><span class="cl">      lastMod = time.Unix(0, n)
-</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">   <span class="k">var</span> <span class="n">lastMod</span> <span class="n">time</span><span class="o">.</span><span class="n">Time</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="n">n</span><span class="p">,</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">strconv</span><span class="o">.</span><span class="n">ParseInt</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">FormValue</span><span class="p">(</span><span class="s2">&#34;lastMod&#34;</span><span class="p">),</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">64</span><span class="p">);</span> <span class="n">err</span> <span class="o">==</span> <span class="n">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">lastMod</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">Unix</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   go writer(ws, lastMod) //发送数据、Pong
-</span></span><span class="line"><span class="cl">   reader(ws) //读数据、处理Ping
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">   <span class="n">go</span> <span class="n">writer</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">lastMod</span><span class="p">)</span> <span class="o">//</span><span class="err">发送数据、</span><span class="n">Pong</span>
+</span></span><span class="line"><span class="cl">   <span class="n">reader</span><span class="p">(</span><span class="n">ws</span><span class="p">)</span> <span class="o">//</span><span class="err">读数据、处理</span><span class="n">Ping</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">func writer(ws *websocket.Conn, lastMod time.Time) {
-</span></span><span class="line"><span class="cl">   pingTicker := time.NewTicker(pingPeriod)
-</span></span><span class="line"><span class="cl">   fileTicker := time.NewTicker(filePeriod)
-</span></span><span class="line"><span class="cl">   ...
-</span></span><span class="line"><span class="cl">   for {
-</span></span><span class="line"><span class="cl">      select {
-</span></span><span class="line"><span class="cl">      case &lt;-fileTicker.C:
-</span></span><span class="line"><span class="cl">         p, fileModified, err := readFileIfModified(lastMod)
-</span></span><span class="line"><span class="cl">         ...
-</span></span><span class="line"><span class="cl">         if fileModified {
-</span></span><span class="line"><span class="cl">            ws.SetWriteDeadline(time.Now().Add(writeWait))
-</span></span><span class="line"><span class="cl">            if err := ws.WriteMessage(websocket.TextMessage, p); err != nil {
-</span></span><span class="line"><span class="cl">               return
-</span></span><span class="line"><span class="cl">            }
-</span></span><span class="line"><span class="cl">         }
-</span></span><span class="line"><span class="cl">      case &lt;-pingTicker.C:
-</span></span><span class="line"><span class="cl">         ws.SetWriteDeadline(time.Now().Add(writeWait))
-</span></span><span class="line"><span class="cl">         if err := ws.WriteMessage(websocket.PingMessage, []byte{}); err != nil {
-</span></span><span class="line"><span class="cl">            return
-</span></span><span class="line"><span class="cl">         }
-</span></span><span class="line"><span class="cl">      }
-</span></span><span class="line"><span class="cl">   }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl"><span class="k">func</span> <span class="n">writer</span><span class="p">(</span><span class="n">ws</span> <span class="o">*</span><span class="n">websocket</span><span class="o">.</span><span class="n">Conn</span><span class="p">,</span> <span class="n">lastMod</span> <span class="n">time</span><span class="o">.</span><span class="n">Time</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="n">pingTicker</span> <span class="p">:</span><span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">NewTicker</span><span class="p">(</span><span class="n">pingPeriod</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="n">fileTicker</span> <span class="p">:</span><span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">NewTicker</span><span class="p">(</span><span class="n">filePeriod</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="o">...</span>
+</span></span><span class="line"><span class="cl">   <span class="k">for</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">select</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">case</span> <span class="o">&lt;-</span><span class="n">fileTicker</span><span class="o">.</span><span class="n">C</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">         <span class="n">p</span><span class="p">,</span> <span class="n">fileModified</span><span class="p">,</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">readFileIfModified</span><span class="p">(</span><span class="n">lastMod</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">         <span class="o">...</span>
+</span></span><span class="line"><span class="cl">         <span class="k">if</span> <span class="n">fileModified</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ws</span><span class="o">.</span><span class="n">SetWriteDeadline</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Now</span><span class="p">()</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">writeWait</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">ws</span><span class="o">.</span><span class="n">WriteMessage</span><span class="p">(</span><span class="n">websocket</span><span class="o">.</span><span class="n">TextMessage</span><span class="p">,</span> <span class="n">p</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">               <span class="k">return</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">         <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="k">case</span> <span class="o">&lt;-</span><span class="n">pingTicker</span><span class="o">.</span><span class="n">C</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">         <span class="n">ws</span><span class="o">.</span><span class="n">SetWriteDeadline</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Now</span><span class="p">()</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">writeWait</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="k">if</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">ws</span><span class="o">.</span><span class="n">WriteMessage</span><span class="p">(</span><span class="n">websocket</span><span class="o">.</span><span class="n">PingMessage</span><span class="p">,</span> <span class="p">[]</span><span class="n">byte</span><span class="p">{});</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span>
+</span></span><span class="line"><span class="cl">         <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">func reader(ws *websocket.Conn) {
-</span></span><span class="line"><span class="cl">   defer ws.Close()
-</span></span><span class="line"><span class="cl">   ws.SetReadLimit(512)
-</span></span><span class="line"><span class="cl">   ws.SetReadDeadline(time.Now().Add(pongWait))
-</span></span><span class="line"><span class="cl">   ws.SetPongHandler(func(string) error { ws.SetReadDeadline(time.Now().Add(pongWait)); return nil })
-</span></span><span class="line"><span class="cl">   for {
-</span></span><span class="line"><span class="cl">      _, _, err := ws.ReadMessage()
-</span></span><span class="line"><span class="cl">      if err != nil {
-</span></span><span class="line"><span class="cl">         break
-</span></span><span class="line"><span class="cl">      }
-</span></span><span class="line"><span class="cl">   }
-</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="k">func</span> <span class="n">reader</span><span class="p">(</span><span class="n">ws</span> <span class="o">*</span><span class="n">websocket</span><span class="o">.</span><span class="n">Conn</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="n">defer</span> <span class="n">ws</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="n">ws</span><span class="o">.</span><span class="n">SetReadLimit</span><span class="p">(</span><span class="mi">512</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="n">ws</span><span class="o">.</span><span class="n">SetReadDeadline</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Now</span><span class="p">()</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">pongWait</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">   <span class="n">ws</span><span class="o">.</span><span class="n">SetPongHandler</span><span class="p">(</span><span class="k">func</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="n">error</span> <span class="p">{</span> <span class="n">ws</span><span class="o">.</span><span class="n">SetReadDeadline</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Now</span><span class="p">()</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">pongWait</span><span class="p">));</span> <span class="k">return</span> <span class="n">nil</span> <span class="p">})</span>
+</span></span><span class="line"><span class="cl">   <span class="k">for</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">ws</span><span class="o">.</span><span class="n">ReadMessage</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="k">break</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>其中最重要的几个方法是Upgrade、ReadMessage和WriteMessage，下面逐一介绍。</p>
 <h3 id="upgrade">Upgrade</h3>
@@ -480,117 +480,117 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 </span><span class="lnt">111
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">// Upgrade upgrades the HTTP server connection to the WebSocket protocol.
-</span></span><span class="line"><span class="cl">func (u *Upgrader) Upgrade(w http.ResponseWriter, r *http.Request, responseHeader http.Header) (*Conn, error) {
-</span></span><span class="line"><span class="cl">   const badHandshake = &#34;websocket: the client is not using the websocket protocol: &#34;
-</span></span><span class="line"><span class="cl">   //检查必要的头部字段
-</span></span><span class="line"><span class="cl">   if !tokenListContainsValue(r.Header, &#34;Connection&#34;, &#34;upgrade&#34;) {
-</span></span><span class="line"><span class="cl">      return u.returnError(w, r, http.StatusBadRequest, badHandshake+&#34;&#39;upgrade&#39; token not found in &#39;Connection&#39; header&#34;)
-</span></span><span class="line"><span class="cl">   }
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">//</span> <span class="n">Upgrade</span> <span class="n">upgrades</span> <span class="n">the</span> <span class="n">HTTP</span> <span class="n">server</span> <span class="n">connection</span> <span class="n">to</span> <span class="n">the</span> <span class="n">WebSocket</span> <span class="n">protocol</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl"><span class="k">func</span> <span class="p">(</span><span class="n">u</span> <span class="o">*</span><span class="n">Upgrader</span><span class="p">)</span> <span class="n">Upgrade</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="o">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">http</span><span class="o">.</span><span class="n">Request</span><span class="p">,</span> <span class="n">responseHeader</span> <span class="n">http</span><span class="o">.</span><span class="n">Header</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="n">Conn</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="k">const</span> <span class="n">badHandshake</span> <span class="o">=</span> <span class="s2">&#34;websocket: the client is not using the websocket protocol: &#34;</span>
+</span></span><span class="line"><span class="cl">   <span class="o">//</span><span class="err">检查必要的头部字段</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="o">!</span><span class="n">tokenListContainsValue</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">Header</span><span class="p">,</span> <span class="s2">&#34;Connection&#34;</span><span class="p">,</span> <span class="s2">&#34;upgrade&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="n">u</span><span class="o">.</span><span class="n">returnError</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusBadRequest</span><span class="p">,</span> <span class="n">badHandshake</span><span class="o">+</span><span class="s2">&#34;&#39;upgrade&#39; token not found in &#39;Connection&#39; header&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   if !tokenListContainsValue(r.Header, &#34;Upgrade&#34;, &#34;websocket&#34;) {
-</span></span><span class="line"><span class="cl">      return u.returnError(w, r, http.StatusBadRequest, badHandshake+&#34;&#39;websocket&#39; token not found in &#39;Upgrade&#39; header&#34;)
-</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="o">!</span><span class="n">tokenListContainsValue</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">Header</span><span class="p">,</span> <span class="s2">&#34;Upgrade&#34;</span><span class="p">,</span> <span class="s2">&#34;websocket&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="n">u</span><span class="o">.</span><span class="n">returnError</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusBadRequest</span><span class="p">,</span> <span class="n">badHandshake</span><span class="o">+</span><span class="s2">&#34;&#39;websocket&#39; token not found in &#39;Upgrade&#39; header&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   if r.Method != &#34;GET&#34; {
-</span></span><span class="line"><span class="cl">      return u.returnError(w, r, http.StatusMethodNotAllowed, badHandshake+&#34;request method is not GET&#34;)
-</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">Method</span> <span class="o">!=</span> <span class="s2">&#34;GET&#34;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="n">u</span><span class="o">.</span><span class="n">returnError</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusMethodNotAllowed</span><span class="p">,</span> <span class="n">badHandshake</span><span class="o">+</span><span class="s2">&#34;request method is not GET&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   if !tokenListContainsValue(r.Header, &#34;Sec-Websocket-Version&#34;, &#34;13&#34;) {
-</span></span><span class="line"><span class="cl">      return u.returnError(w, r, http.StatusBadRequest, &#34;websocket: unsupported version: 13 not found in &#39;Sec-Websocket-Version&#39; header&#34;)
-</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="o">!</span><span class="n">tokenListContainsValue</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">Header</span><span class="p">,</span> <span class="s2">&#34;Sec-Websocket-Version&#34;</span><span class="p">,</span> <span class="s2">&#34;13&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="n">u</span><span class="o">.</span><span class="n">returnError</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusBadRequest</span><span class="p">,</span> <span class="s2">&#34;websocket: unsupported version: 13 not found in &#39;Sec-Websocket-Version&#39; header&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   if !checkOrigin(r) {
-</span></span><span class="line"><span class="cl">      return u.returnError(w, r, http.StatusForbidden, &#34;websocket: request origin not allowed by Upgrader.CheckOrigin&#34;)
-</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="o">!</span><span class="n">checkOrigin</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="n">u</span><span class="o">.</span><span class="n">returnError</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusForbidden</span><span class="p">,</span> <span class="s2">&#34;websocket: request origin not allowed by Upgrader.CheckOrigin&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   challengeKey := r.Header.Get(&#34;Sec-Websocket-Key&#34;)
-</span></span><span class="line"><span class="cl">   if challengeKey == &#34;&#34; {
-</span></span><span class="line"><span class="cl">      return u.returnError(w, r, http.StatusBadRequest, &#34;websocket: not a websocket handshake: &#39;Sec-WebSocket-Key&#39; header is missing or blank&#34;)
-</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">   <span class="n">challengeKey</span> <span class="p">:</span><span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">Header</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="s2">&#34;Sec-Websocket-Key&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="n">challengeKey</span> <span class="o">==</span> <span class="s2">&#34;&#34;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="n">u</span><span class="o">.</span><span class="n">returnError</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusBadRequest</span><span class="p">,</span> <span class="s2">&#34;websocket: not a websocket handshake: &#39;Sec-WebSocket-Key&#39; header is missing or blank&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   h, ok := w.(http.Hijacker)
-</span></span><span class="line"><span class="cl">   if !ok {
-</span></span><span class="line"><span class="cl">      return u.returnError(w, r, http.StatusInternalServerError, &#34;websocket: response does not implement http.Hijacker&#34;)
-</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">   <span class="n">h</span><span class="p">,</span> <span class="n">ok</span> <span class="p">:</span><span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="p">(</span><span class="n">http</span><span class="o">.</span><span class="n">Hijacker</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="o">!</span><span class="n">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="n">u</span><span class="o">.</span><span class="n">returnError</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusInternalServerError</span><span class="p">,</span> <span class="s2">&#34;websocket: response does not implement http.Hijacker&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
 </span></span><span class="line"><span class="cl">   
-</span></span><span class="line"><span class="cl">   //创建websocket.Conn
-</span></span><span class="line"><span class="cl">   c := newConn(netConn, true, u.ReadBufferSize, u.WriteBufferSize, u.WriteBufferPool, br, writeBuf)
+</span></span><span class="line"><span class="cl">   <span class="o">//</span><span class="err">创建</span><span class="n">websocket</span><span class="o">.</span><span class="n">Conn</span>
+</span></span><span class="line"><span class="cl">   <span class="n">c</span> <span class="p">:</span><span class="o">=</span> <span class="n">newConn</span><span class="p">(</span><span class="n">netConn</span><span class="p">,</span> <span class="bp">true</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">ReadBufferSize</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">WriteBufferSize</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">WriteBufferPool</span><span class="p">,</span> <span class="n">br</span><span class="p">,</span> <span class="n">writeBuf</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"> 
-</span></span><span class="line"><span class="cl">   var p []byte
-</span></span><span class="line"><span class="cl">   p = append(p, &#34;HTTP/1.1 101 Switching Protocols\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Accept: &#34;...)
-</span></span><span class="line"><span class="cl">   p = append(p, computeAcceptKey(challengeKey)...) //计算accept
-</span></span><span class="line"><span class="cl">   p = append(p, &#34;\r\n&#34;...)
-</span></span><span class="line"><span class="cl">   if c.subprotocol != &#34;&#34; {
-</span></span><span class="line"><span class="cl">      p = append(p, &#34;Sec-WebSocket-Protocol: &#34;...)
-</span></span><span class="line"><span class="cl">      p = append(p, c.subprotocol...)
-</span></span><span class="line"><span class="cl">      p = append(p, &#34;\r\n&#34;...)
-</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">   <span class="k">var</span> <span class="n">p</span> <span class="p">[]</span><span class="n">byte</span>
+</span></span><span class="line"><span class="cl">   <span class="n">p</span> <span class="o">=</span> <span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s2">&#34;HTTP/1.1 101 Switching Protocols</span><span class="se">\r\n</span><span class="s2">Upgrade: websocket</span><span class="se">\r\n</span><span class="s2">Connection: Upgrade</span><span class="se">\r\n</span><span class="s2">Sec-WebSocket-Accept: &#34;</span><span class="o">...</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="n">p</span> <span class="o">=</span> <span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">computeAcceptKey</span><span class="p">(</span><span class="n">challengeKey</span><span class="p">)</span><span class="o">...</span><span class="p">)</span> <span class="o">//</span><span class="err">计算</span><span class="n">accept</span>
+</span></span><span class="line"><span class="cl">   <span class="n">p</span> <span class="o">=</span> <span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s2">&#34;</span><span class="se">\r\n</span><span class="s2">&#34;</span><span class="o">...</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">subprotocol</span> <span class="o">!=</span> <span class="s2">&#34;&#34;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">p</span> <span class="o">=</span> <span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s2">&#34;Sec-WebSocket-Protocol: &#34;</span><span class="o">...</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="n">p</span> <span class="o">=</span> <span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">subprotocol</span><span class="o">...</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="n">p</span> <span class="o">=</span> <span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s2">&#34;</span><span class="se">\r\n</span><span class="s2">&#34;</span><span class="o">...</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   if _, err = netConn.Write(p); err != nil {
-</span></span><span class="line"><span class="cl">      netConn.Close()
-</span></span><span class="line"><span class="cl">      return nil, err
-</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="n">_</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">netConn</span><span class="o">.</span><span class="n">Write</span><span class="p">(</span><span class="n">p</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">netConn</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="n">nil</span><span class="p">,</span> <span class="n">err</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   return c, nil
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">   <span class="k">return</span> <span class="n">c</span><span class="p">,</span> <span class="n">nil</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">var keyGUID = []byte(&#34;258EAFA5-E914-47DA-95CA-C5AB0DC85B11&#34;)
-</span></span><span class="line"><span class="cl">func computeAcceptKey(challengeKey string) string {
-</span></span><span class="line"><span class="cl">   h := sha1.New()
-</span></span><span class="line"><span class="cl">   h.Write([]byte(challengeKey))
-</span></span><span class="line"><span class="cl">   h.Write(keyGUID)
-</span></span><span class="line"><span class="cl">   return base64.StdEncoding.EncodeToString(h.Sum(nil))
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl"><span class="k">var</span> <span class="n">keyGUID</span> <span class="o">=</span> <span class="p">[]</span><span class="n">byte</span><span class="p">(</span><span class="s2">&#34;258EAFA5-E914-47DA-95CA-C5AB0DC85B11&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">func</span> <span class="n">computeAcceptKey</span><span class="p">(</span><span class="n">challengeKey</span> <span class="n">string</span><span class="p">)</span> <span class="n">string</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="n">h</span> <span class="p">:</span><span class="o">=</span> <span class="n">sha1</span><span class="o">.</span><span class="n">New</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="n">h</span><span class="o">.</span><span class="n">Write</span><span class="p">([]</span><span class="n">byte</span><span class="p">(</span><span class="n">challengeKey</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">   <span class="n">h</span><span class="o">.</span><span class="n">Write</span><span class="p">(</span><span class="n">keyGUID</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="k">return</span> <span class="n">base64</span><span class="o">.</span><span class="n">StdEncoding</span><span class="o">.</span><span class="n">EncodeToString</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">Sum</span><span class="p">(</span><span class="n">nil</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">func newConn(conn net.Conn, isServer bool, readBufferSize, writeBufferSize int, writeBufferPool BufferPool, br *bufio.Reader, writeBuf []byte) *Conn {
-</span></span><span class="line"><span class="cl">   c := &amp;Conn{
-</span></span><span class="line"><span class="cl">      isServer:               isServer,
-</span></span><span class="line"><span class="cl">      br:                     br,
-</span></span><span class="line"><span class="cl">      conn:                   conn,
-</span></span><span class="line"><span class="cl">      mu:                     mu,
-</span></span><span class="line"><span class="cl">      readFinal:              true,
-</span></span><span class="line"><span class="cl">      writeBuf:               writeBuf,
-</span></span><span class="line"><span class="cl">      writePool:              writeBufferPool,
-</span></span><span class="line"><span class="cl">      writeBufSize:           writeBufferSize,
-</span></span><span class="line"><span class="cl">      enableWriteCompression: true,
-</span></span><span class="line"><span class="cl">      compressionLevel:       defaultCompressionLevel,
-</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl"><span class="k">func</span> <span class="n">newConn</span><span class="p">(</span><span class="n">conn</span> <span class="n">net</span><span class="o">.</span><span class="n">Conn</span><span class="p">,</span> <span class="n">isServer</span> <span class="ne">bool</span><span class="p">,</span> <span class="n">readBufferSize</span><span class="p">,</span> <span class="n">writeBufferSize</span> <span class="ne">int</span><span class="p">,</span> <span class="n">writeBufferPool</span> <span class="n">BufferPool</span><span class="p">,</span> <span class="n">br</span> <span class="o">*</span><span class="n">bufio</span><span class="o">.</span><span class="n">Reader</span><span class="p">,</span> <span class="n">writeBuf</span> <span class="p">[]</span><span class="n">byte</span><span class="p">)</span> <span class="o">*</span><span class="n">Conn</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="n">c</span> <span class="p">:</span><span class="o">=</span> <span class="o">&amp;</span><span class="n">Conn</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">isServer</span><span class="p">:</span>               <span class="n">isServer</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="n">br</span><span class="p">:</span>                     <span class="n">br</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="n">conn</span><span class="p">:</span>                   <span class="n">conn</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="n">mu</span><span class="p">:</span>                     <span class="n">mu</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="n">readFinal</span><span class="p">:</span>              <span class="bp">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="n">writeBuf</span><span class="p">:</span>               <span class="n">writeBuf</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="n">writePool</span><span class="p">:</span>              <span class="n">writeBufferPool</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="n">writeBufSize</span><span class="p">:</span>           <span class="n">writeBufferSize</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="n">enableWriteCompression</span><span class="p">:</span> <span class="bp">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="n">compressionLevel</span><span class="p">:</span>       <span class="n">defaultCompressionLevel</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
 </span></span><span class="line"><span class="cl">   
-</span></span><span class="line"><span class="cl">   //设置对应的消息处理Handler
-</span></span><span class="line"><span class="cl">   c.SetCloseHandler(nil)
-</span></span><span class="line"><span class="cl">   c.SetPingHandler(nil)
-</span></span><span class="line"><span class="cl">   c.SetPongHandler(nil)
-</span></span><span class="line"><span class="cl">   return c
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">   <span class="o">//</span><span class="err">设置对应的消息处理</span><span class="n">Handler</span>
+</span></span><span class="line"><span class="cl">   <span class="n">c</span><span class="o">.</span><span class="n">SetCloseHandler</span><span class="p">(</span><span class="n">nil</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="n">c</span><span class="o">.</span><span class="n">SetPingHandler</span><span class="p">(</span><span class="n">nil</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="n">c</span><span class="o">.</span><span class="n">SetPongHandler</span><span class="p">(</span><span class="n">nil</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="k">return</span> <span class="n">c</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">func (c *Conn) SetCloseHandler(h func(code int, text string) error) {
-</span></span><span class="line"><span class="cl">   if h == nil {
-</span></span><span class="line"><span class="cl">      h = func(code int, text string) error {
-</span></span><span class="line"><span class="cl">         message := FormatCloseMessage(code, &#34;&#34;)
-</span></span><span class="line"><span class="cl">         c.WriteControl(CloseMessage, message, time.Now().Add(writeWait))
-</span></span><span class="line"><span class="cl">         return nil
-</span></span><span class="line"><span class="cl">      }
-</span></span><span class="line"><span class="cl">   }
-</span></span><span class="line"><span class="cl">   c.handleClose = h
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl"><span class="k">func</span> <span class="p">(</span><span class="n">c</span> <span class="o">*</span><span class="n">Conn</span><span class="p">)</span> <span class="n">SetCloseHandler</span><span class="p">(</span><span class="n">h</span> <span class="k">func</span><span class="p">(</span><span class="n">code</span> <span class="ne">int</span><span class="p">,</span> <span class="n">text</span> <span class="n">string</span><span class="p">)</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="n">h</span> <span class="o">==</span> <span class="n">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">h</span> <span class="o">=</span> <span class="k">func</span><span class="p">(</span><span class="n">code</span> <span class="ne">int</span><span class="p">,</span> <span class="n">text</span> <span class="n">string</span><span class="p">)</span> <span class="n">error</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="n">message</span> <span class="p">:</span><span class="o">=</span> <span class="n">FormatCloseMessage</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="s2">&#34;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">         <span class="n">c</span><span class="o">.</span><span class="n">WriteControl</span><span class="p">(</span><span class="n">CloseMessage</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">Now</span><span class="p">()</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">writeWait</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="k">return</span> <span class="n">nil</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="n">c</span><span class="o">.</span><span class="n">handleClose</span> <span class="o">=</span> <span class="n">h</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">func (c *Conn) SetPingHandler(h func(appData string) error) {
-</span></span><span class="line"><span class="cl">   if h == nil {
-</span></span><span class="line"><span class="cl">      h = func(message string) error {
-</span></span><span class="line"><span class="cl">         err := c.WriteControl(PongMessage, []byte(message), time.Now().Add(writeWait))
-</span></span><span class="line"><span class="cl">         return err
-</span></span><span class="line"><span class="cl">      }
-</span></span><span class="line"><span class="cl">   }
-</span></span><span class="line"><span class="cl">   c.handlePing = h
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl"><span class="k">func</span> <span class="p">(</span><span class="n">c</span> <span class="o">*</span><span class="n">Conn</span><span class="p">)</span> <span class="n">SetPingHandler</span><span class="p">(</span><span class="n">h</span> <span class="k">func</span><span class="p">(</span><span class="n">appData</span> <span class="n">string</span><span class="p">)</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="n">h</span> <span class="o">==</span> <span class="n">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">h</span> <span class="o">=</span> <span class="k">func</span><span class="p">(</span><span class="n">message</span> <span class="n">string</span><span class="p">)</span> <span class="n">error</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">WriteControl</span><span class="p">(</span><span class="n">PongMessage</span><span class="p">,</span> <span class="p">[]</span><span class="n">byte</span><span class="p">(</span><span class="n">message</span><span class="p">),</span> <span class="n">time</span><span class="o">.</span><span class="n">Now</span><span class="p">()</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">writeWait</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="k">return</span> <span class="n">err</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="n">c</span><span class="o">.</span><span class="n">handlePing</span> <span class="o">=</span> <span class="n">h</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">func (c *Conn) SetPongHandler(h func(appData string) error) {
-</span></span><span class="line"><span class="cl">   if h == nil {
-</span></span><span class="line"><span class="cl">      h = func(string) error { return nil }
-</span></span><span class="line"><span class="cl">   }
-</span></span><span class="line"><span class="cl">   c.handlePong = h
-</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="k">func</span> <span class="p">(</span><span class="n">c</span> <span class="o">*</span><span class="n">Conn</span><span class="p">)</span> <span class="n">SetPongHandler</span><span class="p">(</span><span class="n">h</span> <span class="k">func</span><span class="p">(</span><span class="n">appData</span> <span class="n">string</span><span class="p">)</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="n">h</span> <span class="o">==</span> <span class="n">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">h</span> <span class="o">=</span> <span class="k">func</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="n">error</span> <span class="p">{</span> <span class="k">return</span> <span class="n">nil</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="n">c</span><span class="o">.</span><span class="n">handlePong</span> <span class="o">=</span> <span class="n">h</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="readmessage">ReadMessage</h3>
 <div class="highlight" id="id-8"><div class="chroma">
@@ -719,128 +719,128 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 </span><span class="lnt">122
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">func (c *Conn) ReadMessage() (messageType int, p []byte, err error) {
-</span></span><span class="line"><span class="cl">   var r io.Reader
-</span></span><span class="line"><span class="cl">   messageType, r, err = c.NextReader()
-</span></span><span class="line"><span class="cl">   if err != nil {
-</span></span><span class="line"><span class="cl">      return messageType, nil, err
-</span></span><span class="line"><span class="cl">   }
-</span></span><span class="line"><span class="cl">   p, err = ioutil.ReadAll(r)
-</span></span><span class="line"><span class="cl">   return messageType, p, err
-</span></span><span class="line"><span class="cl">}
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="k">func</span> <span class="p">(</span><span class="n">c</span> <span class="o">*</span><span class="n">Conn</span><span class="p">)</span> <span class="n">ReadMessage</span><span class="p">()</span> <span class="p">(</span><span class="n">messageType</span> <span class="ne">int</span><span class="p">,</span> <span class="n">p</span> <span class="p">[]</span><span class="n">byte</span><span class="p">,</span> <span class="n">err</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="k">var</span> <span class="n">r</span> <span class="n">io</span><span class="o">.</span><span class="n">Reader</span>
+</span></span><span class="line"><span class="cl">   <span class="n">messageType</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">NextReader</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="n">messageType</span><span class="p">,</span> <span class="n">nil</span><span class="p">,</span> <span class="n">err</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="n">p</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">ioutil</span><span class="o">.</span><span class="n">ReadAll</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="k">return</span> <span class="n">messageType</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">err</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">func (c *Conn) NextReader() (messageType int, r io.Reader, err error) {
-</span></span><span class="line"><span class="cl">   for c.readErr == nil {
-</span></span><span class="line"><span class="cl">       frameType, err := c.advanceFrame()
-</span></span><span class="line"><span class="cl">       if err != nil {
-</span></span><span class="line"><span class="cl">          c.readErr = hideTempErr(err)
-</span></span><span class="line"><span class="cl">          break
-</span></span><span class="line"><span class="cl">       }
+</span></span><span class="line"><span class="cl"><span class="k">func</span> <span class="p">(</span><span class="n">c</span> <span class="o">*</span><span class="n">Conn</span><span class="p">)</span> <span class="n">NextReader</span><span class="p">()</span> <span class="p">(</span><span class="n">messageType</span> <span class="ne">int</span><span class="p">,</span> <span class="n">r</span> <span class="n">io</span><span class="o">.</span><span class="n">Reader</span><span class="p">,</span> <span class="n">err</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="k">for</span> <span class="n">c</span><span class="o">.</span><span class="n">readErr</span> <span class="o">==</span> <span class="n">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">       <span class="n">frameType</span><span class="p">,</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">advanceFrame</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">       <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="n">c</span><span class="o">.</span><span class="n">readErr</span> <span class="o">=</span> <span class="n">hideTempErr</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">          <span class="k">break</span>
+</span></span><span class="line"><span class="cl">       <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">       if frameType == TextMessage || frameType == BinaryMessage {
-</span></span><span class="line"><span class="cl">          c.messageReader = &amp;messageReader{c}
-</span></span><span class="line"><span class="cl">          c.reader = c.messageReader
-</span></span><span class="line"><span class="cl">          if c.readDecompress {
-</span></span><span class="line"><span class="cl">             c.reader = c.newDecompressionReader(c.reader)
-</span></span><span class="line"><span class="cl">          }
-</span></span><span class="line"><span class="cl">          return frameType, c.reader, nil
-</span></span><span class="line"><span class="cl">       }
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">       <span class="k">if</span> <span class="n">frameType</span> <span class="o">==</span> <span class="n">TextMessage</span> <span class="o">||</span> <span class="n">frameType</span> <span class="o">==</span> <span class="n">BinaryMessage</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="n">c</span><span class="o">.</span><span class="n">messageReader</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">messageReader</span><span class="p">{</span><span class="n">c</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">          <span class="n">c</span><span class="o">.</span><span class="n">reader</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">messageReader</span>
+</span></span><span class="line"><span class="cl">          <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">readDecompress</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">             <span class="n">c</span><span class="o">.</span><span class="n">reader</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">newDecompressionReader</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">reader</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">          <span class="p">}</span>
+</span></span><span class="line"><span class="cl">          <span class="k">return</span> <span class="n">frameType</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">reader</span><span class="p">,</span> <span class="n">nil</span>
+</span></span><span class="line"><span class="cl">       <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">//解析数据帧
-</span></span><span class="line"><span class="cl">func (c *Conn) advanceFrame() (int, error) {
-</span></span><span class="line"><span class="cl">   p, err := c.read(2)
-</span></span><span class="line"><span class="cl">   final := p[0]&amp;finalBit != 0
-</span></span><span class="line"><span class="cl">   frameType := int(p[0] &amp; 0xf)
-</span></span><span class="line"><span class="cl">   mask := p[1]&amp;maskBit != 0
-</span></span><span class="line"><span class="cl">   c.setReadRemaining(int64(p[1] &amp; 0x7f))
+</span></span><span class="line"><span class="cl"><span class="o">//</span><span class="err">解析数据帧</span>
+</span></span><span class="line"><span class="cl"><span class="k">func</span> <span class="p">(</span><span class="n">c</span> <span class="o">*</span><span class="n">Conn</span><span class="p">)</span> <span class="n">advanceFrame</span><span class="p">()</span> <span class="p">(</span><span class="ne">int</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="n">p</span><span class="p">,</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="n">final</span> <span class="p">:</span><span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&amp;</span><span class="n">finalBit</span> <span class="o">!=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">   <span class="n">frameType</span> <span class="p">:</span><span class="o">=</span> <span class="ne">int</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0xf</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="n">mask</span> <span class="p">:</span><span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">&amp;</span><span class="n">maskBit</span> <span class="o">!=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">   <span class="n">c</span><span class="o">.</span><span class="n">setReadRemaining</span><span class="p">(</span><span class="n">int64</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0x7f</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   switch frameType {
-</span></span><span class="line"><span class="cl">   case CloseMessage, PingMessage, PongMessage:
-</span></span><span class="line"><span class="cl">      if c.readRemaining &gt; maxControlFramePayloadSize {
-</span></span><span class="line"><span class="cl">         return noFrame, c.handleProtocolError(&#34;control frame length &gt; 125&#34;)
-</span></span><span class="line"><span class="cl">      }
-</span></span><span class="line"><span class="cl">      if !final {
-</span></span><span class="line"><span class="cl">         return noFrame, c.handleProtocolError(&#34;control frame not final&#34;)
-</span></span><span class="line"><span class="cl">      }
-</span></span><span class="line"><span class="cl">   case TextMessage, BinaryMessage:
-</span></span><span class="line"><span class="cl">      if !c.readFinal {
-</span></span><span class="line"><span class="cl">         return noFrame, c.handleProtocolError(&#34;message start before final message frame&#34;)
-</span></span><span class="line"><span class="cl">      }
-</span></span><span class="line"><span class="cl">      c.readFinal = final
-</span></span><span class="line"><span class="cl">   case continuationFrame:
-</span></span><span class="line"><span class="cl">      if c.readFinal {
-</span></span><span class="line"><span class="cl">         return noFrame, c.handleProtocolError(&#34;continuation after final message frame&#34;)
-</span></span><span class="line"><span class="cl">      }
-</span></span><span class="line"><span class="cl">      c.readFinal = final
-</span></span><span class="line"><span class="cl">   default:
-</span></span><span class="line"><span class="cl">      return noFrame, c.handleProtocolError(&#34;unknown opcode &#34; + strconv.Itoa(frameType))
-</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">   <span class="k">switch</span> <span class="n">frameType</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="k">case</span> <span class="n">CloseMessage</span><span class="p">,</span> <span class="n">PingMessage</span><span class="p">,</span> <span class="n">PongMessage</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">readRemaining</span> <span class="o">&gt;</span> <span class="n">maxControlFramePayloadSize</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="k">return</span> <span class="n">noFrame</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">handleProtocolError</span><span class="p">(</span><span class="s2">&#34;control frame length &gt; 125&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="o">!</span><span class="n">final</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="k">return</span> <span class="n">noFrame</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">handleProtocolError</span><span class="p">(</span><span class="s2">&#34;control frame not final&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="k">case</span> <span class="n">TextMessage</span><span class="p">,</span> <span class="n">BinaryMessage</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="o">!</span><span class="n">c</span><span class="o">.</span><span class="n">readFinal</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="k">return</span> <span class="n">noFrame</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">handleProtocolError</span><span class="p">(</span><span class="s2">&#34;message start before final message frame&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="n">c</span><span class="o">.</span><span class="n">readFinal</span> <span class="o">=</span> <span class="n">final</span>
+</span></span><span class="line"><span class="cl">   <span class="k">case</span> <span class="n">continuationFrame</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">readFinal</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="k">return</span> <span class="n">noFrame</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">handleProtocolError</span><span class="p">(</span><span class="s2">&#34;continuation after final message frame&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="n">c</span><span class="o">.</span><span class="n">readFinal</span> <span class="o">=</span> <span class="n">final</span>
+</span></span><span class="line"><span class="cl">   <span class="n">default</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="n">noFrame</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">handleProtocolError</span><span class="p">(</span><span class="s2">&#34;unknown opcode &#34;</span> <span class="o">+</span> <span class="n">strconv</span><span class="o">.</span><span class="n">Itoa</span><span class="p">(</span><span class="n">frameType</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">   
-</span></span><span class="line"><span class="cl">   switch c.readRemaining {
-</span></span><span class="line"><span class="cl">   case 126:
-</span></span><span class="line"><span class="cl">      p, err := c.read(2)
-</span></span><span class="line"><span class="cl">      if err := c.setReadRemaining(int64(binary.BigEndian.Uint16(p))); err != nil {
-</span></span><span class="line"><span class="cl">         return noFrame, err
-</span></span><span class="line"><span class="cl">      }
-</span></span><span class="line"><span class="cl">   case 127:
-</span></span><span class="line"><span class="cl">      p, err := c.read(8)
-</span></span><span class="line"><span class="cl">      if err != nil {
-</span></span><span class="line"><span class="cl">         return noFrame, err
-</span></span><span class="line"><span class="cl">      }
+</span></span><span class="line"><span class="cl">   <span class="k">switch</span> <span class="n">c</span><span class="o">.</span><span class="n">readRemaining</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="k">case</span> <span class="mi">126</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">p</span><span class="p">,</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">setReadRemaining</span><span class="p">(</span><span class="n">int64</span><span class="p">(</span><span class="n">binary</span><span class="o">.</span><span class="n">BigEndian</span><span class="o">.</span><span class="n">Uint16</span><span class="p">(</span><span class="n">p</span><span class="p">)));</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="k">return</span> <span class="n">noFrame</span><span class="p">,</span> <span class="n">err</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="k">case</span> <span class="mi">127</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">p</span><span class="p">,</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="k">return</span> <span class="n">noFrame</span><span class="p">,</span> <span class="n">err</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">      if err := c.setReadRemaining(int64(binary.BigEndian.Uint64(p))); err != nil {
-</span></span><span class="line"><span class="cl">         return noFrame, err
-</span></span><span class="line"><span class="cl">      }
-</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">setReadRemaining</span><span class="p">(</span><span class="n">int64</span><span class="p">(</span><span class="n">binary</span><span class="o">.</span><span class="n">BigEndian</span><span class="o">.</span><span class="n">Uint64</span><span class="p">(</span><span class="n">p</span><span class="p">)));</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="k">return</span> <span class="n">noFrame</span><span class="p">,</span> <span class="n">err</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   if mask != c.isServer {
-</span></span><span class="line"><span class="cl">      return noFrame, c.handleProtocolError(&#34;incorrect mask flag&#34;)
-</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="n">mask</span> <span class="o">!=</span> <span class="n">c</span><span class="o">.</span><span class="n">isServer</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="n">noFrame</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">handleProtocolError</span><span class="p">(</span><span class="s2">&#34;incorrect mask flag&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   if mask {
-</span></span><span class="line"><span class="cl">      c.readMaskPos = 0
-</span></span><span class="line"><span class="cl">      p, err := c.read(len(c.readMaskKey))
-</span></span><span class="line"><span class="cl">      if err != nil {
-</span></span><span class="line"><span class="cl">         return noFrame, err
-</span></span><span class="line"><span class="cl">      }
-</span></span><span class="line"><span class="cl">      copy(c.readMaskKey[:], p)
-</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="n">mask</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">c</span><span class="o">.</span><span class="n">readMaskPos</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">      <span class="n">p</span><span class="p">,</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">len</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">readMaskKey</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="k">return</span> <span class="n">noFrame</span><span class="p">,</span> <span class="n">err</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="n">copy</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">readMaskKey</span><span class="p">[:],</span> <span class="n">p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   //处理控制帧
-</span></span><span class="line"><span class="cl">   switch frameType {
-</span></span><span class="line"><span class="cl">   case PongMessage:
-</span></span><span class="line"><span class="cl">      if err := c.handlePong(string(payload)); err != nil {
-</span></span><span class="line"><span class="cl">         return noFrame, err
-</span></span><span class="line"><span class="cl">      }
-</span></span><span class="line"><span class="cl">   case PingMessage:
-</span></span><span class="line"><span class="cl">      if err := c.handlePing(string(payload)); err != nil {
-</span></span><span class="line"><span class="cl">         return noFrame, err
-</span></span><span class="line"><span class="cl">      }
-</span></span><span class="line"><span class="cl">   case CloseMessage:
-</span></span><span class="line"><span class="cl">      closeCode := CloseNoStatusReceived
-</span></span><span class="line"><span class="cl">      closeText := &#34;&#34;
-</span></span><span class="line"><span class="cl">      if len(payload) &gt;= 2 {
-</span></span><span class="line"><span class="cl">         closeCode = int(binary.BigEndian.Uint16(payload))
-</span></span><span class="line"><span class="cl">         if !isValidReceivedCloseCode(closeCode) {
-</span></span><span class="line"><span class="cl">            return noFrame, c.handleProtocolError(&#34;invalid close code&#34;)
-</span></span><span class="line"><span class="cl">         }
-</span></span><span class="line"><span class="cl">         closeText = string(payload[2:])
-</span></span><span class="line"><span class="cl">         if !utf8.ValidString(closeText) {
-</span></span><span class="line"><span class="cl">            return noFrame, c.handleProtocolError(&#34;invalid utf8 payload in close frame&#34;)
-</span></span><span class="line"><span class="cl">         }
-</span></span><span class="line"><span class="cl">      }
-</span></span><span class="line"><span class="cl">      if err := c.handleClose(closeCode, closeText); err != nil {
-</span></span><span class="line"><span class="cl">         return noFrame, err
-</span></span><span class="line"><span class="cl">      }
-</span></span><span class="line"><span class="cl">      return noFrame, &amp;CloseError{Code: closeCode, Text: closeText}
-</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">   <span class="o">//</span><span class="err">处理控制帧</span>
+</span></span><span class="line"><span class="cl">   <span class="k">switch</span> <span class="n">frameType</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="k">case</span> <span class="n">PongMessage</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">handlePong</span><span class="p">(</span><span class="n">string</span><span class="p">(</span><span class="n">payload</span><span class="p">));</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="k">return</span> <span class="n">noFrame</span><span class="p">,</span> <span class="n">err</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="k">case</span> <span class="n">PingMessage</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">handlePing</span><span class="p">(</span><span class="n">string</span><span class="p">(</span><span class="n">payload</span><span class="p">));</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="k">return</span> <span class="n">noFrame</span><span class="p">,</span> <span class="n">err</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="k">case</span> <span class="n">CloseMessage</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">closeCode</span> <span class="p">:</span><span class="o">=</span> <span class="n">CloseNoStatusReceived</span>
+</span></span><span class="line"><span class="cl">      <span class="n">closeText</span> <span class="p">:</span><span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="n">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="n">closeCode</span> <span class="o">=</span> <span class="ne">int</span><span class="p">(</span><span class="n">binary</span><span class="o">.</span><span class="n">BigEndian</span><span class="o">.</span><span class="n">Uint16</span><span class="p">(</span><span class="n">payload</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">         <span class="k">if</span> <span class="o">!</span><span class="n">isValidReceivedCloseCode</span><span class="p">(</span><span class="n">closeCode</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">noFrame</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">handleProtocolError</span><span class="p">(</span><span class="s2">&#34;invalid close code&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">         <span class="p">}</span>
+</span></span><span class="line"><span class="cl">         <span class="n">closeText</span> <span class="o">=</span> <span class="n">string</span><span class="p">(</span><span class="n">payload</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
+</span></span><span class="line"><span class="cl">         <span class="k">if</span> <span class="o">!</span><span class="n">utf8</span><span class="o">.</span><span class="n">ValidString</span><span class="p">(</span><span class="n">closeText</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">noFrame</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">handleProtocolError</span><span class="p">(</span><span class="s2">&#34;invalid utf8 payload in close frame&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">         <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">handleClose</span><span class="p">(</span><span class="n">closeCode</span><span class="p">,</span> <span class="n">closeText</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="k">return</span> <span class="n">noFrame</span><span class="p">,</span> <span class="n">err</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="n">noFrame</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">CloseError</span><span class="p">{</span><span class="n">Code</span><span class="p">:</span> <span class="n">closeCode</span><span class="p">,</span> <span class="n">Text</span><span class="p">:</span> <span class="n">closeText</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   return frameType, nil
-</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">   <span class="k">return</span> <span class="n">frameType</span><span class="p">,</span> <span class="n">nil</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="writemessage">WriteMessage</h3>
 <div class="highlight" id="id-9"><div class="chroma">
@@ -924,83 +924,83 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 </span><span class="lnt">77
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">func (c *Conn) WriteMessage(messageType int, data []byte) error {
-</span></span><span class="line"><span class="cl">   var mw messageWriter
-</span></span><span class="line"><span class="cl">   // beginMessage prepares a connection and message writer for a new message.
-</span></span><span class="line"><span class="cl">    if err := c.beginMessage(&amp;mw, messageType); err != nil {
-</span></span><span class="line"><span class="cl">       return err
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">    n := copy(c.writeBuf[mw.pos:], data)
-</span></span><span class="line"><span class="cl">    mw.pos += n
-</span></span><span class="line"><span class="cl">    data = data[n:]
-</span></span><span class="line"><span class="cl">    return mw.flushFrame(true, data)
-</span></span><span class="line"><span class="cl">}
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="k">func</span> <span class="p">(</span><span class="n">c</span> <span class="o">*</span><span class="n">Conn</span><span class="p">)</span> <span class="n">WriteMessage</span><span class="p">(</span><span class="n">messageType</span> <span class="ne">int</span><span class="p">,</span> <span class="n">data</span> <span class="p">[]</span><span class="n">byte</span><span class="p">)</span> <span class="n">error</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="k">var</span> <span class="n">mw</span> <span class="n">messageWriter</span>
+</span></span><span class="line"><span class="cl">   <span class="o">//</span> <span class="n">beginMessage</span> <span class="n">prepares</span> <span class="n">a</span> <span class="n">connection</span> <span class="ow">and</span> <span class="n">message</span> <span class="n">writer</span> <span class="k">for</span> <span class="n">a</span> <span class="n">new</span> <span class="n">message</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">beginMessage</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mw</span><span class="p">,</span> <span class="n">messageType</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">       <span class="k">return</span> <span class="n">err</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">n</span> <span class="p">:</span><span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">writeBuf</span><span class="p">[</span><span class="n">mw</span><span class="o">.</span><span class="n">pos</span><span class="p">:],</span> <span class="n">data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">mw</span><span class="o">.</span><span class="n">pos</span> <span class="o">+=</span> <span class="n">n</span>
+</span></span><span class="line"><span class="cl">    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">n</span><span class="p">:]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">mw</span><span class="o">.</span><span class="n">flushFrame</span><span class="p">(</span><span class="bp">true</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">//组装数据帧
-</span></span><span class="line"><span class="cl">func (w *messageWriter) flushFrame(final bool, extra []byte) error {
-</span></span><span class="line"><span class="cl">   c := w.c
-</span></span><span class="line"><span class="cl">   length := w.pos - maxFrameHeaderSize + len(extra)
+</span></span><span class="line"><span class="cl"><span class="o">//</span><span class="err">组装数据帧</span>
+</span></span><span class="line"><span class="cl"><span class="k">func</span> <span class="p">(</span><span class="n">w</span> <span class="o">*</span><span class="n">messageWriter</span><span class="p">)</span> <span class="n">flushFrame</span><span class="p">(</span><span class="n">final</span> <span class="ne">bool</span><span class="p">,</span> <span class="n">extra</span> <span class="p">[]</span><span class="n">byte</span><span class="p">)</span> <span class="n">error</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="n">c</span> <span class="p">:</span><span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">c</span>
+</span></span><span class="line"><span class="cl">   <span class="n">length</span> <span class="p">:</span><span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">pos</span> <span class="o">-</span> <span class="n">maxFrameHeaderSize</span> <span class="o">+</span> <span class="n">len</span><span class="p">(</span><span class="n">extra</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   b0 := byte(w.frameType)
-</span></span><span class="line"><span class="cl">   if final {
-</span></span><span class="line"><span class="cl">      b0 |= finalBit
-</span></span><span class="line"><span class="cl">   }
-</span></span><span class="line"><span class="cl">   if w.compress {
-</span></span><span class="line"><span class="cl">      b0 |= rsv1Bit
-</span></span><span class="line"><span class="cl">   }
-</span></span><span class="line"><span class="cl">   w.compress = false
+</span></span><span class="line"><span class="cl">   <span class="n">b0</span> <span class="p">:</span><span class="o">=</span> <span class="n">byte</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">frameType</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="n">final</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">b0</span> <span class="o">|=</span> <span class="n">finalBit</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="n">w</span><span class="o">.</span><span class="n">compress</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">b0</span> <span class="o">|=</span> <span class="n">rsv1Bit</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="n">w</span><span class="o">.</span><span class="n">compress</span> <span class="o">=</span> <span class="bp">false</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   b1 := byte(0)
-</span></span><span class="line"><span class="cl">   if !c.isServer {
-</span></span><span class="line"><span class="cl">      b1 |= maskBit
-</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">   <span class="n">b1</span> <span class="p">:</span><span class="o">=</span> <span class="n">byte</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="o">!</span><span class="n">c</span><span class="o">.</span><span class="n">isServer</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">b1</span> <span class="o">|=</span> <span class="n">maskBit</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   // Assume that the frame starts at beginning of c.writeBuf.
-</span></span><span class="line"><span class="cl">   framePos := 0
-</span></span><span class="line"><span class="cl">   if c.isServer {
-</span></span><span class="line"><span class="cl">      // Adjust up if mask not included in the header.
-</span></span><span class="line"><span class="cl">      framePos = 4
-</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">   <span class="o">//</span> <span class="n">Assume</span> <span class="n">that</span> <span class="n">the</span> <span class="n">frame</span> <span class="n">starts</span> <span class="n">at</span> <span class="n">beginning</span> <span class="n">of</span> <span class="n">c</span><span class="o">.</span><span class="n">writeBuf</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">   <span class="n">framePos</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isServer</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="o">//</span> <span class="n">Adjust</span> <span class="n">up</span> <span class="k">if</span> <span class="n">mask</span> <span class="ow">not</span> <span class="n">included</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">header</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">      <span class="n">framePos</span> <span class="o">=</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   switch {
-</span></span><span class="line"><span class="cl">   case length &gt;= 65536:
-</span></span><span class="line"><span class="cl">      c.writeBuf[framePos] = b0
-</span></span><span class="line"><span class="cl">      c.writeBuf[framePos+1] = b1 | 127
-</span></span><span class="line"><span class="cl">      binary.BigEndian.PutUint64(c.writeBuf[framePos+2:], uint64(length))
-</span></span><span class="line"><span class="cl">   case length &gt; 125:
-</span></span><span class="line"><span class="cl">      framePos += 6
-</span></span><span class="line"><span class="cl">      c.writeBuf[framePos] = b0
-</span></span><span class="line"><span class="cl">      c.writeBuf[framePos+1] = b1 | 126
-</span></span><span class="line"><span class="cl">      binary.BigEndian.PutUint16(c.writeBuf[framePos+2:], uint16(length))
-</span></span><span class="line"><span class="cl">   default:
-</span></span><span class="line"><span class="cl">      framePos += 8
-</span></span><span class="line"><span class="cl">      c.writeBuf[framePos] = b0
-</span></span><span class="line"><span class="cl">      c.writeBuf[framePos+1] = b1 | byte(length)
-</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">   <span class="k">switch</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="k">case</span> <span class="n">length</span> <span class="o">&gt;=</span> <span class="mi">65536</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">c</span><span class="o">.</span><span class="n">writeBuf</span><span class="p">[</span><span class="n">framePos</span><span class="p">]</span> <span class="o">=</span> <span class="n">b0</span>
+</span></span><span class="line"><span class="cl">      <span class="n">c</span><span class="o">.</span><span class="n">writeBuf</span><span class="p">[</span><span class="n">framePos</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">b1</span> <span class="o">|</span> <span class="mi">127</span>
+</span></span><span class="line"><span class="cl">      <span class="n">binary</span><span class="o">.</span><span class="n">BigEndian</span><span class="o">.</span><span class="n">PutUint64</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">writeBuf</span><span class="p">[</span><span class="n">framePos</span><span class="o">+</span><span class="mi">2</span><span class="p">:],</span> <span class="n">uint64</span><span class="p">(</span><span class="n">length</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">   <span class="k">case</span> <span class="n">length</span> <span class="o">&gt;</span> <span class="mi">125</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">framePos</span> <span class="o">+=</span> <span class="mi">6</span>
+</span></span><span class="line"><span class="cl">      <span class="n">c</span><span class="o">.</span><span class="n">writeBuf</span><span class="p">[</span><span class="n">framePos</span><span class="p">]</span> <span class="o">=</span> <span class="n">b0</span>
+</span></span><span class="line"><span class="cl">      <span class="n">c</span><span class="o">.</span><span class="n">writeBuf</span><span class="p">[</span><span class="n">framePos</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">b1</span> <span class="o">|</span> <span class="mi">126</span>
+</span></span><span class="line"><span class="cl">      <span class="n">binary</span><span class="o">.</span><span class="n">BigEndian</span><span class="o">.</span><span class="n">PutUint16</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">writeBuf</span><span class="p">[</span><span class="n">framePos</span><span class="o">+</span><span class="mi">2</span><span class="p">:],</span> <span class="n">uint16</span><span class="p">(</span><span class="n">length</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">   <span class="n">default</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">framePos</span> <span class="o">+=</span> <span class="mi">8</span>
+</span></span><span class="line"><span class="cl">      <span class="n">c</span><span class="o">.</span><span class="n">writeBuf</span><span class="p">[</span><span class="n">framePos</span><span class="p">]</span> <span class="o">=</span> <span class="n">b0</span>
+</span></span><span class="line"><span class="cl">      <span class="n">c</span><span class="o">.</span><span class="n">writeBuf</span><span class="p">[</span><span class="n">framePos</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">b1</span> <span class="o">|</span> <span class="n">byte</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   if !c.isServer {
-</span></span><span class="line"><span class="cl">      key := newMaskKey()
-</span></span><span class="line"><span class="cl">      copy(c.writeBuf[maxFrameHeaderSize-4:], key[:])
-</span></span><span class="line"><span class="cl">      maskBytes(key, 0, c.writeBuf[maxFrameHeaderSize:w.pos])
-</span></span><span class="line"><span class="cl">      if len(extra) &gt; 0 {
-</span></span><span class="line"><span class="cl">         return w.endMessage(c.writeFatal(errors.New(&#34;websocket: internal error, extra used in client mode&#34;)))
-</span></span><span class="line"><span class="cl">      }
-</span></span><span class="line"><span class="cl">   }
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="o">!</span><span class="n">c</span><span class="o">.</span><span class="n">isServer</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">key</span> <span class="p">:</span><span class="o">=</span> <span class="n">newMaskKey</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">      <span class="n">copy</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">writeBuf</span><span class="p">[</span><span class="n">maxFrameHeaderSize</span><span class="o">-</span><span class="mi">4</span><span class="p">:],</span> <span class="n">key</span><span class="p">[:])</span>
+</span></span><span class="line"><span class="cl">      <span class="n">maskBytes</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">writeBuf</span><span class="p">[</span><span class="n">maxFrameHeaderSize</span><span class="p">:</span><span class="n">w</span><span class="o">.</span><span class="n">pos</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="n">len</span><span class="p">(</span><span class="n">extra</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="k">return</span> <span class="n">w</span><span class="o">.</span><span class="n">endMessage</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">writeFatal</span><span class="p">(</span><span class="n">errors</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s2">&#34;websocket: internal error, extra used in client mode&#34;</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   // Write the buffers to the connection with best-effort detection of
-</span></span><span class="line"><span class="cl">   // concurrent writes. See the concurrency section in the package
-</span></span><span class="line"><span class="cl">   // documentation for more info.
+</span></span><span class="line"><span class="cl">   <span class="o">//</span> <span class="n">Write</span> <span class="n">the</span> <span class="n">buffers</span> <span class="n">to</span> <span class="n">the</span> <span class="n">connection</span> <span class="n">with</span> <span class="n">best</span><span class="o">-</span><span class="n">effort</span> <span class="n">detection</span> <span class="n">of</span>
+</span></span><span class="line"><span class="cl">   <span class="o">//</span> <span class="n">concurrent</span> <span class="n">writes</span><span class="o">.</span> <span class="n">See</span> <span class="n">the</span> <span class="n">concurrency</span> <span class="n">section</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">package</span>
+</span></span><span class="line"><span class="cl">   <span class="o">//</span> <span class="n">documentation</span> <span class="k">for</span> <span class="n">more</span> <span class="n">info</span><span class="o">.</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   if c.isWriting {
-</span></span><span class="line"><span class="cl">      panic(&#34;concurrent write to websocket connection&#34;)
-</span></span><span class="line"><span class="cl">   }
-</span></span><span class="line"><span class="cl">   c.isWriting = true
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isWriting</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">panic</span><span class="p">(</span><span class="s2">&#34;concurrent write to websocket connection&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="n">c</span><span class="o">.</span><span class="n">isWriting</span> <span class="o">=</span> <span class="bp">true</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   err := c.write(w.frameType, c.writeDeadline, c.writeBuf[framePos:w.pos], extra)
+</span></span><span class="line"><span class="cl">   <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">frameType</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">writeDeadline</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">writeBuf</span><span class="p">[</span><span class="n">framePos</span><span class="p">:</span><span class="n">w</span><span class="o">.</span><span class="n">pos</span><span class="p">],</span> <span class="n">extra</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   ...
-</span></span><span class="line"><span class="cl">   return nil
-</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">   <span class="o">...</span>
+</span></span><span class="line"><span class="cl">   <span class="k">return</span> <span class="n">nil</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>Ref：</p>
 <ul>

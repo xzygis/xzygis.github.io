@@ -15,7 +15,7 @@
 <li>当主服务器的BGSAVE命令执行完毕时，主服务器会将BGSAVE命令生成的RDB文件发送给从服务器，从服务器接收并载入这个RDB文件，将自己的数据库状态更新至主服务器执行BGSAVE命令时的数据库状态。</li>
 <li>主服务器将记录在缓冲区里面的所有写命令发送给从服务器，从服务器执行这些写命令，将自己的数据库状态更新至主服务器数据库当前所处的状态。</li>
 </ul>
-<p></p>
+<p><img loading="lazy" src="/posts/introduction-to-redis-replication/images/process-sync-command.png" srcset="/posts/introduction-to-redis-replication/images/process-sync-command.png?size=small, /posts/introduction-to-redis-replication/images/process-sync-command.png?size=medium 1.5x, /posts/introduction-to-redis-replication/images/process-sync-command.png?size=large 2x" sizes="auto" data-title="process-sync-command" data-alt="process-sync-command" style="--width: 511px;--aspect-ratio: 511 / 268;background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/></p>
 <h3 id="命令传播">命令传播</h3>
 <p>在同步操作执行完毕之后，主从服务器两者的数据库将达到一致状态，但这种一致并不是一成不变的，每当主服务器执行客户端发送的写命令时，主服务器的数据库就有可能会被修改，并导致主从服务器状态不再一致。</p>
 <p>为了让主从服务器再次回到一致状态，主服务器需要对从服务器执行命令传播操作：主服务器会将自己执行的写命令，也即是造成主从服务器不一致的那条写命令，发送给从服务器执行，当从服务器执行了相同的写命令之后，主从服务器将再次回到一致状态。</p>
@@ -55,7 +55,7 @@
 <h3 id="复制积压缓冲区">复制积压缓冲区</h3>
 <p>复制积压缓冲区是由主服务器维护的一个固定长度（fixed-size）先进先出（FIFO）队列，默认大小为1MB。</p>
 <p>当主服务器进行命令传播时，它不仅会将写命令发送给所有从服务器，还会将写命令入队到复制积压缓冲区里面：
-</p>
+<img loading="lazy" src="/posts/introduction-to-redis-replication/images/copy_buffer.png" srcset="/posts/introduction-to-redis-replication/images/copy_buffer.png?size=small, /posts/introduction-to-redis-replication/images/copy_buffer.png?size=medium 1.5x, /posts/introduction-to-redis-replication/images/copy_buffer.png?size=large 2x" sizes="auto" data-title="copy-buffer" data-alt="copy-buffer" style="--width: 498px;--aspect-ratio: 498 / 246;background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>因此，主服务器的复制积压缓冲区里面会保存着一部分最近传播的写命令，并且复制积压缓冲区会为队列中的每个字节记录相应的复制偏移量。</p>
 <p>当从服务器重新连上主服务器时，从服务器会通过PSYNC命令将自己的复制偏移量offset发送给主服务器，主服务器会根据这个复制偏移量来决定对从服务器执行何种同步操作：</p>
 <ul>
@@ -87,7 +87,7 @@
 <li>如果主服务器返回+CONTINUE回复，那么表示主服务器将与从服务器执行部分重同步操作，从服务器只要等着主服务器将自己缺少的那部分数据发送过来就可以了。</li>
 <li>如果主服务器返回-ERR回复，那么表示主服务器的版本低于Redis 2.8，它识别不了PSYNC命令，从服务器将向主服务器发送SYNC命令，并与主服务器执行完整同步操作。</li>
 </ul>
-<p></p>
+<p><img loading="lazy" src="/posts/introduction-to-redis-replication/images/psync-flowchart.png" srcset="/posts/introduction-to-redis-replication/images/psync-flowchart.png?size=small, /posts/introduction-to-redis-replication/images/psync-flowchart.png?size=medium 1.5x, /posts/introduction-to-redis-replication/images/psync-flowchart.png?size=large 2x" sizes="auto" data-title="psync-flowchart" data-alt="psync-flowchart" style="--width: 538px;--aspect-ratio: 538 / 395;background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/></p>
 <h2 id="复制的实现">复制的实现</h2>
 <h3 id="步骤1设置主服务器的地址和端口">步骤1：设置主服务器的地址和端口</h3>
 <p>当客户端向从服务器发送以下命令时：</p>
@@ -211,7 +211,7 @@
 <p>虽然文件事件处理器以单线程方式运行，但通过使用I/O多路复用程序来监听多个套接字，文件事件处理器既实现了高性能的网络通信模型，又可以很好地与Redis服务器中其他同样以单线程方式运行的模块进行对接，这保持了Redis内部单线程设计的简单性。</p>
 <h3 id="文件事件处理器的构成">文件事件处理器的构成</h3>
 <p>下图展示了文件事件处理器的四个组成部分，它们分别是套接字、I/O多路复用程序、文件事件分派器（dispatcher），以及事件处理器。
-</p>
+<img loading="lazy" src="/posts/introduction-to-redis-event/images/file-event-processor.png" srcset="/posts/introduction-to-redis-event/images/file-event-processor.png?size=small, /posts/introduction-to-redis-event/images/file-event-processor.png?size=medium 1.5x, /posts/introduction-to-redis-event/images/file-event-processor.png?size=large 2x" sizes="auto" data-title="file-event-processor" data-alt="file-event-processor" style="--width: 487px;--aspect-ratio: 487 / 372;background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>文件事件是对套接字操作的抽象，每当一个套接字准备好执行连接应答（accept）、写入、读取、关闭等操作时，就会产生一个文件事件。因为一个服务器通常会连接多个套接字，所以多个文件事件有可能会并发地出现。</p>
 <p>I/O多路复用程序负责监听多个套接字，并向文件事件分派器传送那些产生了事件的套接字。</p>
 <p>文件事件分派器接收I/O多路复用程序传来的套接字，并根据套接字产生的事件的类型，调用相应的事件处理器。</p>
@@ -447,7 +447,7 @@
 <h2 id="命令请求的执行过程">命令请求的执行过程</h2>
 <h3 id="发送命令请求">发送命令请求</h3>
 <p>Redis服务器的命令请求来自Redis客户端，当用户在客户端中键入一个命令请求时，客户端会将这个命令请求转换成协议格式，然后通过连接到服务器的套接字，将协议格式的命令请求发送给服务器。</p>
-<p></p>
+<p><img loading="lazy" src="/posts/introduction-to-redis-server/images/send_request.png" srcset="/posts/introduction-to-redis-server/images/send_request.png?size=small, /posts/introduction-to-redis-server/images/send_request.png?size=medium 1.5x, /posts/introduction-to-redis-server/images/send_request.png?size=large 2x" sizes="auto" data-title="send-request" data-alt="send-request" style="--width: 505px;--aspect-ratio: 505 / 81;background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>举个例子，假设用户在客户端键入了命令：</p>
 <div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1156,7 +1156,7 @@
 <li>载入AOF文件时使用的伪客户端在载入工作开始时动态创建，载入工作完毕之后关闭。</li>
 </ul>
 ]]></description></item><item><title>Redis AOF持久化</title><link>https://xzygis.github.io/posts/introduction-to-redis-aof-persistence/</link><pubDate>Sat, 10 Dec 2022 14:21:33 +0800</pubDate><author>chuxing</author><guid>https://xzygis.github.io/posts/introduction-to-redis-aof-persistence/</guid><description><![CDATA[<p>除了<a href="https://chuxing.club/posts/introduction-to-redis-rdb-persistence/"target="_blank" rel="external nofollow noopener noreferrer">RDB持久化功能<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>之外，Redis还提供了AOF（Append Only File）持久化功能。与RDB持久化通过保存数据库中的键值对来记录数据库状态不同，AOF持久化是通过保存Redis服务器所执行的写命令来记录数据库状态的。</p>
-<p></p>
+<p><img loading="lazy" src="/posts/introduction-to-redis-aof-persistence/images/aof-persistence.png" srcset="/posts/introduction-to-redis-aof-persistence/images/aof-persistence.png?size=small, /posts/introduction-to-redis-aof-persistence/images/aof-persistence.png?size=medium 1.5x, /posts/introduction-to-redis-aof-persistence/images/aof-persistence.png?size=large 2x" sizes="auto" data-title="aof-persistence" data-alt="aof-persistence" style="--width: 502px;--aspect-ratio: 502 / 146;background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>服务器在启动时，可以通过载入和执行AOF文件中保存的命令来还原服务器关闭之前的数据库状态。</p>
 <h2 id="aof持久化的实现2">AOF持久化的实现<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></h2>
 <p>AOF持久化功能的实现可以分为命令追加（append）、文件写入、文件同步（sync）三个步骤。</p>
@@ -1206,7 +1206,7 @@
 </span></span><span class="line"><span class="cl">        <span class="n">flushAppendOnlyFile</span><span class="p">()</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>flushAppendOnlyFile</code>函数的行为由服务器配置的<code>appendfsync</code>选项的值来决定，各个不同值产生的行为如下图所示：</p>
-<p></p>
+<p><img loading="lazy" src="/posts/introduction-to-redis-aof-persistence/images/appendfsync-option.png" srcset="/posts/introduction-to-redis-aof-persistence/images/appendfsync-option.png?size=small, /posts/introduction-to-redis-aof-persistence/images/appendfsync-option.png?size=medium 1.5x, /posts/introduction-to-redis-aof-persistence/images/appendfsync-option.png?size=large 2x" sizes="auto" data-title="appendfsync" data-alt="appendfsync" style="--width: 1152px;--aspect-ratio: 1152 / 324;background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>如果用户没有主动为appendfsync选项设置值，那么appendfsync选项的默认值为everysec。</p>
 <blockquote>
 <p><strong>文件的写入和同步</strong></p>
@@ -1228,7 +1228,7 @@
 <li>使用伪客户端执行被读出的写命令。</li>
 <li>一直执行步骤2和步骤3，直到AOF文件中的所有写命令都被处理完毕为止。</li>
 </ol>
-<p></p>
+<p><img loading="lazy" src="/posts/introduction-to-redis-aof-persistence/images/aof-load-procedure.png" srcset="/posts/introduction-to-redis-aof-persistence/images/aof-load-procedure.png?size=small, /posts/introduction-to-redis-aof-persistence/images/aof-load-procedure.png?size=medium 1.5x, /posts/introduction-to-redis-aof-persistence/images/aof-load-procedure.png?size=large 2x" sizes="auto" data-title="aof-load-procedure" data-alt="aof-load-procedure" style="--width: 547px;--aspect-ratio: 547 / 435;background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/></p>
 <h2 id="aof重写">AOF重写</h2>
 <p>因为AOF持久化是通过保存被执行的写命令来记录数据库状态的，所以随着服务器运行时间的流逝，AOF文件中的内容会越来越多，文件的体积也会越来越大，如果不加以控制的话，体积过大的AOF文件很可能对Redis服务器、甚至整个宿主计算机造成影响，并且AOF文件的体积越大，使用AOF文件来进行数据还原所需的时间就越多。</p>
 <p>为了解决AOF文件体积膨胀的问题，Redis提供了AOF文件重写（rewrite）功能。通过该功能，Redis服务器可以创建一个新的AOF文件来替代现有的AOF文件，新旧两个AOF文件所保存的数据库状态相同，但新AOF文件不会包含任何浪费空间的冗余命令，所以新AOF文件的体积通常会比旧AOF文件的体积要小得多。</p>
@@ -1368,7 +1368,7 @@
 </ul>
 <p>不过，使用子进程也有一个问题需要解决，因为子进程在进行AOF重写期间，服务器进程还需要继续处理命令请求，而新的命令可能会对现有的数据库状态进行修改，从而使得服务器当前的数据库状态和重写后的AOF文件所保存的数据库状态不一致。</p>
 <p>为了解决这种数据不一致问题，Redis服务器设置了一个AOF重写缓冲区，这个缓冲区在服务器创建子进程之后开始使用，当Redis服务器执行完一个写命令之后，它会同时将这个写命令发送给AOF缓冲区和AOF重写缓冲区。</p>
-<p></p>
+<p><img loading="lazy" src="/posts/introduction-to-redis-aof-persistence/images/aof-rewrite-buf.png" srcset="/posts/introduction-to-redis-aof-persistence/images/aof-rewrite-buf.png?size=small, /posts/introduction-to-redis-aof-persistence/images/aof-rewrite-buf.png?size=medium 1.5x, /posts/introduction-to-redis-aof-persistence/images/aof-rewrite-buf.png?size=large 2x" sizes="auto" data-title="aof-rewrite-buf" data-alt="aof-rewrite-buf" style="--width: 515px;--aspect-ratio: 515 / 211;background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>在子进程执行AOF重写期间，服务器进程需要执行以下三个工作：</p>
 <ol>
 <li>执行客户端发来的命令。</li>
@@ -1461,7 +1461,7 @@
 <li>如果服务器开启了AOF持久化功能，那么服务器会优先使用AOF文件来还原数据库状态。</li>
 <li>只有在AOF持久化功能处于关闭状态时，服务器才会使用RDB文件来还原数据库状态。</li>
 </ul>
-<p></p>
+<p><img loading="lazy" src="/posts/introduction-to-redis-rdb-persistence/images/load_persistent_file.png" srcset="/posts/introduction-to-redis-rdb-persistence/images/load_persistent_file.png?size=small, /posts/introduction-to-redis-rdb-persistence/images/load_persistent_file.png?size=medium 1.5x, /posts/introduction-to-redis-rdb-persistence/images/load_persistent_file.png?size=large 2x" sizes="auto" data-title="load_persistent_file" data-alt="load_persistent_file" style="--width: 518px;--aspect-ratio: 518 / 389;background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/></p>
 <h3 id="save命令执行时的服务器状态">SAVE命令执行时的服务器状态</h3>
 <p>当SAVE命令执行时，Redis服务器会被阻塞，所以当SAVE命令正在执行时，客户端发送的所有命令请求都会被拒绝。只有在服务器执行完SAVE命令、重新开始接受命令请求之后，客户端发送的命令才会被处理。</p>
 <h3 id="bgsave命令执行时的服务器状态">BGSAVE命令执行时的服务器状态</h3>
@@ -1698,7 +1698,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>dbnum属性的值由服务器配置的database选项决定，默认情况下，该选项的值为16，所以Redis服务器默认会创建16个数据库。</p>
-<p></p>
+<p><img loading="lazy" src="/posts/redis-server-database-implementation-introduction/images/redis-database-example.png" srcset="/posts/redis-server-database-implementation-introduction/images/redis-database-example.png?size=small, /posts/redis-server-database-implementation-introduction/images/redis-database-example.png?size=medium 1.5x, /posts/redis-server-database-implementation-introduction/images/redis-database-example.png?size=large 2x" sizes="auto" data-title="redis-dataabse" data-alt="redis-dataabse" style="--width: 488px;--aspect-ratio: 488 / 205;background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/></p>
 <h2 id="切换数据库">切换数据库</h2>
 <p>默认情况下，Redis客户端的目标数据库为0号数据库，但客户端可以通过执行SELECT命令来切换目标数据库。</p>
 <p>在服务器内部，客户端状态redisClient结构的db属性记录了客户端当前的目标数据库，这个属性是一个指向redisDb结构的指针：</p>
@@ -1979,7 +1979,7 @@
 </div>
 </div><h3 id="类型">类型</h3>
 <p>对象的type属性记录了对象的类型，这个属性的下表列出的常量的其中一个。</p>
-<p></p>
+<p><img loading="lazy" src="/posts/introduction-to-redis-object/redis_object_type.png" srcset="/posts/introduction-to-redis-object/redis_object_type.png?size=small, /posts/introduction-to-redis-object/redis_object_type.png?size=medium 1.5x, /posts/introduction-to-redis-object/redis_object_type.png?size=large 2x" sizes="auto" data-title="redis_object_type" data-alt="redis_object_type" style="--width: 499px;--aspect-ratio: 499 / 322;background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>对于Redis数据库保存的键值对来说，键总是一个字符串对象，而值则可以是字符串对象、列表对象、哈希对象、集合对象或者有序集合对象的其中一种，因此：</p>
 <ul>
 <li>当我们称呼一个数据库键为“字符串键”时，我们指的是“这个数据库键所对应的值为字符串对象”；</li>
@@ -1987,7 +1987,7 @@
 </ul>
 <h3 id="编码和底层实现">编码和底层实现</h3>
 <p>对象的ptr指针指向对象的底层实现数据结构，而这些数据结构由对象的encoding属性决定。encoding属性记录了对象所使用的编码，也即是说这个对象使用了什么数据结构作为对象的底层实现。</p>
-<p></p>
+<p><img loading="lazy" src="/posts/introduction-to-redis-object/redis_object_encoding.png" srcset="/posts/introduction-to-redis-object/redis_object_encoding.png?size=small, /posts/introduction-to-redis-object/redis_object_encoding.png?size=medium 1.5x, /posts/introduction-to-redis-object/redis_object_encoding.png?size=large 2x" sizes="auto" data-title="redis_object_encoding" data-alt="redis_object_encoding" style="--width: 1094px;--aspect-ratio: 1094 / 339;background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>通过encoding属性来设定对象所使用的编码，而不是为特定类型的对象关联一种固定的编码，极大地提升了Redis的灵活性和效率，因为Redis可以根据不同的使用场景来为一个对象设置不同的编码，从而优化对象在某一场景下的效率。</p>
 <h2 id="字符串对象">字符串对象</h2>
 <p>字符串对象的编码可以是int、raw或者embstr。</p>
@@ -1997,7 +1997,7 @@
 <li>如果字符串对象保存的是一个字符串值，并且这个字符串值的长度小于等于32字节，那么字符串对象将使用embstr编码的方式来保存这个字符串值。</li>
 </ul>
 <p>embstr编码是专门用于保存短字符串的一种优化编码方式，这种编码和raw编码一样，都使用redisObject结构和sdshdr结构来表示字符串对象，但raw编码会调用两次内存分配函数来分别创建redisObject结构和sdshdr结构，而embstr编码则通过调用一次内存分配函数来分配一块连续的空间，空间中依次包含redisObject和sdshdr两个结构。</p>
-<p></p>
+<p><img loading="lazy" src="/posts/introduction-to-redis-object/embstr.png" srcset="/posts/introduction-to-redis-object/embstr.png?size=small, /posts/introduction-to-redis-object/embstr.png?size=medium 1.5x, /posts/introduction-to-redis-object/embstr.png?size=large 2x" sizes="auto" data-title="embstr" data-alt="embstr" style="--width: 492px;--aspect-ratio: 492 / 64;background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>embstr编码的字符串对象在执行命令时，产生的效果和raw编码的字符串对象执行命令时产生的效果是相同的，但使用embstr编码的字符串对象来保存短字符串值有以下好处：</p>
 <ul>
 <li>embstr编码将创建字符串对象所需的内存分配次数从raw编码的两次降低为一次。</li>
@@ -2560,7 +2560,7 @@
 <p>Tair采用高性能、高可用的分布式集群架构，可以满足企业对读写性能和可扩展容量的高要求。</p>
 <h2 id="系统架构">系统架构</h2>
 <p>Tair 集群具有三个必要的模块：ConfigServer、DataServer 和客户端。</p>
-<p></p>
+<p><img loading="lazy" src="/posts/tair-a-distributed-key-value-storage-system-developed-by-alibaba-group/tair_structure.jpg" srcset="/posts/tair-a-distributed-key-value-storage-system-developed-by-alibaba-group/tair_structure.jpg?size=small, /posts/tair-a-distributed-key-value-storage-system-developed-by-alibaba-group/tair_structure.jpg?size=medium 1.5x, /posts/tair-a-distributed-key-value-storage-system-developed-by-alibaba-group/tair_structure.jpg?size=large 2x" sizes="auto" data-title="Architecture" data-alt="Architecture" style="--width: 554px;--aspect-ratio: 554 / 284;background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>通常，一个 Tair 集群包括两个 ConfigServer 和多个 DataServer。 两个 ConfigServer 充当主服务器和备用服务器。 DataServer 和 ConfigServer 之间的心跳检查用于检查集群中活跃的和可用的 DataServer，以建立集群中数据的分布（比较表）。 DataServers 按照 ConfigServer 的指示存储、复制和迁移数据。当客户端启动时，它从 ConfigServer 获取数据分布信息。客户端根据这些数据分布信息，与对应的DataServer进行交互，执行用户的请求。</p>
 <p>在架构上，ConfigServer 的作用类似于传统应用系统中的中心节点。整个集群服务依赖于ConfigServer。 事实上，Tair 的 ConfigServers 是非常轻量级的。当一个工作的 ConfigServer 遇到停机时间时，另一个 ConfigServer 会在几秒钟内自动接管。 即使两个 ConfigServer 同时停机，只要 DataServer 没有变化，Tair 也可以正常运行。 用户只需要将应用程序连接到 ConfigServers，不需要知道内部节点的详细信息。</p>
 <h3 id="configserver">ConfigServer</h3>

@@ -63,11 +63,11 @@
 <blockquote>
 <p><a href="https://www.websocket.org/echo.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.websocket.org/echo.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
 </blockquote>
-<p></p>
+<p><img loading="lazy" src="/posts/introduction-of-websocket/websocket.org-1.png" srcset="/posts/introduction-of-websocket/websocket.org-1.png?size=small, /posts/introduction-of-websocket/websocket.org-1.png?size=medium 1.5x, /posts/introduction-of-websocket/websocket.org-1.png?size=large 2x" sizes="auto" data-title="Connect" data-alt="Connect" style="--width: 1280px;--aspect-ratio: 1280 / 594;background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>握手报文：</p>
-<p></p>
+<p><img loading="lazy" src="/posts/introduction-of-websocket/websocket.org-2.png" srcset="/posts/introduction-of-websocket/websocket.org-2.png?size=small, /posts/introduction-of-websocket/websocket.org-2.png?size=medium 1.5x, /posts/introduction-of-websocket/websocket.org-2.png?size=large 2x" sizes="auto" data-title="握手报文" data-alt="握手报文" style="--width: 1280px;--aspect-ratio: 1280 / 1104;background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>数据传输：</p>
-<p></p>
+<p><img loading="lazy" src="/posts/introduction-of-websocket/websocket.org-3.png" srcset="/posts/introduction-of-websocket/websocket.org-3.png?size=small, /posts/introduction-of-websocket/websocket.org-3.png?size=medium 1.5x, /posts/introduction-of-websocket/websocket.org-3.png?size=large 2x" sizes="auto" data-title="握手报文" data-alt="握手报文" style="--width: 1280px;--aspect-ratio: 1280 / 911;background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const i of ['style', 'data-title','data-alt','onerror','onload']){this.removeAttribute(i);}"/></p>
 <h2 id="数据帧">数据帧</h2>
 <p>WebSocket客户端、服务端通信的最小单位是帧（frame），由1个或多个帧组成一条完整的消息（message）。</p>
 <ul>

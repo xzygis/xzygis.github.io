@@ -295,6 +295,6 @@ my-nginx-67594d6bf6-vjqn4   1/1       Running   0          1m
 
 ---
 
-> 作者: [chuxing](https://github.com/xzygis)  
+> 作者:   
 > URL: https://xzygis.github.io/posts/introduction-of-cloud-native/  
 

@@ -91,6 +91,6 @@ For more examples and ideas, visit:
 
 ---
 
-> 作者: [chuxing](https://github.com/xzygis)  
+> 作者:   
 > URL: https://xzygis.github.io/posts/centos-install-docker/  
 

@@ -186,6 +186,6 @@ typedef struct redisObject {
 
 ---
 
-> 作者: [chuxing](https://github.com/xzygis)  
+> 作者:   
 > URL: https://xzygis.github.io/posts/introduction-to-redis-object/  
 

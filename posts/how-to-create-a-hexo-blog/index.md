@@ -55,6 +55,6 @@ git clone --branch v5.1.4 https://github.com/iissnan/hexo-theme-next themes/next
 
 ---
 
-> 作者: [chuxing](https://github.com/xzygis)  
+> 作者:   
 > URL: https://xzygis.github.io/posts/how-to-create-a-hexo-blog/  
 

@@ -124,6 +124,6 @@ Annotations 是 key/value 形式附加于对象的注解。不同于 Labels 用�
 
 ---
 
-> 作者: [chuxing](https://github.com/xzygis)  
+> 作者:   
 > URL: https://xzygis.github.io/posts/introduction-of-k8s/  
 

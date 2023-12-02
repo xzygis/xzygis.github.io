@@ -111,6 +111,6 @@ Service Mesh 将底层那些难以控制的网络通讯统一管理，诸如：�
 
 ---
 
-> 作者: [chuxing](https://github.com/xzygis)  
+> 作者:   
 > URL: https://xzygis.github.io/posts/introduction-of-service-mesh/  
 

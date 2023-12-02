@@ -192,6 +192,6 @@ func VerifyToken(tokenString string, publicKey []byte) (jwt.MapClaims, error) {
 
 ---
 
-> 作者: [chuxing](https://github.com/xzygis)  
+> 作者:   
 > URL: https://xzygis.github.io/posts/usage-of-json-web-token/  
 

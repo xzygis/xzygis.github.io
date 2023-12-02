@@ -78,6 +78,6 @@ $ docker import http://example.com/exampleimage.tgz example/imagerepo
 
 ---
 
-> 作者: [chuxing](https://github.com/xzygis)  
+> 作者:   
 > URL: https://xzygis.github.io/posts/usage-of-docker-container/  
 

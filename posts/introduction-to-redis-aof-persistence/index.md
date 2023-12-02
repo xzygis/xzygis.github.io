@@ -183,6 +183,6 @@ AOF重写程序aof_rewrite函数可以很好地完成创建一个新AOF文件的
 
 ---
 
-> 作者: [chuxing](https://github.com/xzygis)  
+> 作者:   
 > URL: https://xzygis.github.io/posts/introduction-to-redis-aof-persistence/  
 

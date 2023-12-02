@@ -255,6 +255,6 @@ ziplist的组成部分：
 
 ---
 
-> 作者: [chuxing](https://github.com/xzygis)  
+> 作者:   
 > URL: https://xzygis.github.io/posts/introduction-to-the-underlying-data-structure-of-redis/  
 

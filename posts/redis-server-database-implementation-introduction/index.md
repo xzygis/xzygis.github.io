@@ -217,6 +217,6 @@ activeExpireCycle函数的工作模式可以总结如下：
 
 ---
 
-> 作者: [chuxing](https://github.com/xzygis)  
+> 作者:   
 > URL: https://xzygis.github.io/posts/redis-server-database-implementation-introduction/  
 

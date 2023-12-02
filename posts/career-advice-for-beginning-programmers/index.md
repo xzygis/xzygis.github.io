@@ -24,6 +24,6 @@
 
 ---
 
-> 作者: [chuxing](https://github.com/xzygis)  
+> 作者:   
 > URL: https://xzygis.github.io/posts/career-advice-for-beginning-programmers/  
 

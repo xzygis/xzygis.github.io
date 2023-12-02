@@ -114,6 +114,6 @@ LDB 支持数据持久化和高访问量，因此在这些场景中被广泛使�
 
 ---
 
-> 作者: [chuxing](https://github.com/xzygis)  
+> 作者:   
 > URL: https://xzygis.github.io/posts/tair-a-distributed-key-value-storage-system-developed-by-alibaba-group/  
 

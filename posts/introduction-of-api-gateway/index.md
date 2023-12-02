@@ -68,6 +68,6 @@ API网关接收客户端的所有请求，并将请求路由到相应的后端�
 
 ---
 
-> 作者: [chuxing](https://github.com/xzygis)  
+> 作者:   
 > URL: https://xzygis.github.io/posts/introduction-of-api-gateway/  
 

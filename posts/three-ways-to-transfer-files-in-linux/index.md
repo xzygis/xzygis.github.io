@@ -35,6 +35,6 @@ scp -l 700000 username@dev.test.com:~/data.txt ./
 
 ---
 
-> 作者: [chuxing](https://github.com/xzygis)  
+> 作者:   
 > URL: https://xzygis.github.io/posts/three-ways-to-transfer-files-in-linux/  
 

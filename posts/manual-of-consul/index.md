@@ -358,6 +358,6 @@ $ curl http://localhost:8500/v1/catalog/service/web?passing
 
 ---
 
-> 作者: [chuxing](https://github.com/xzygis)  
+> 作者:   
 > URL: https://xzygis.github.io/posts/manual-of-consul/  
 

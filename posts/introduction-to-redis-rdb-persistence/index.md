@@ -187,6 +187,6 @@ RDB文件中的每个value部分都保存了一个值对象，每个值对象的
 
 ---
 
-> 作者: [chuxing](https://github.com/xzygis)  
+> 作者:   
 > URL: https://xzygis.github.io/posts/introduction-to-redis-rdb-persistence/  
 

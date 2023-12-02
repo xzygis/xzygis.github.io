@@ -29,6 +29,6 @@ linux kernel 3.9引入了最新的SO_REUSEPORT选项，使得多进程或者多�
 
 ---
 
-> 作者: [chuxing](https://github.com/xzygis)  
+> 作者:   
 > URL: https://xzygis.github.io/posts/so-reuseaddr-so-reuseport/  
 

@@ -24,6 +24,6 @@ PM是我们的需求的最主要来源，在需求分析阶段，需要避免的
 
 ---
 
-> 作者: [chuxing](https://github.com/xzygis)  
+> 作者:   
 > URL: https://xzygis.github.io/posts/some-problems-that-programmers-tend-to-ignore-when-making-requirements/  
 

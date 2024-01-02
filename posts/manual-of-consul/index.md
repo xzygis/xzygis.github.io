@@ -30,18 +30,18 @@ $ brew install consul
 安装成功后执行consul命令输出如下结果：
 ```
 $ consul
-Usage: consul [--version] [--help] <command> [<args>]
+Usage: consul [--version] [--help] &lt;command&gt; [&lt;args&gt;]
 
 Available commands are:
-    acl            Interact with Consul's ACLs
+    acl            Interact with Consul&#39;s ACLs
     agent          Runs a Consul agent
     catalog        Interact with the catalog
-    config         Interact with Consul's Centralized Configurations
+    config         Interact with Consul&#39;s Centralized Configurations
     connect        Interact with Consul Connect
     debug          Records a debugging archive for operators
     event          Fire a new event
     exec           Executes a command on Consul nodes
-    force-leave    Forces a member of the cluster to enter the "left" state
+    force-leave    Forces a member of the cluster to enter the &#34;left&#34; state
     info           Provides debugging information for operators.
     intention      Interact with Connect service intentions
     join           Tell Consul agent to join cluster
@@ -75,34 +75,34 @@ Available commands are:
 命令`consul agent -dev`可以启动一个开发模式的Agent，这种模式不能用于生产环境，因为它不持久化任何状态。
 ```
 $ consul agent -dev
-==> Starting Consul agent...
-           Version: 'v1.6.1'
-           Node ID: '2e524113-7caf-643a-80bb-a2fa00c2673b'
-         Node name: 'C02Z35N9LVCF'
-        Datacenter: 'dc1' (Segment: '<all>')
+==&gt; Starting Consul agent...
+           Version: &#39;v1.6.1&#39;
+           Node ID: &#39;2e524113-7caf-643a-80bb-a2fa00c2673b&#39;
+         Node name: &#39;C02Z35N9LVCF&#39;
+        Datacenter: &#39;dc1&#39; (Segment: &#39;&lt;all&gt;&#39;)
             Server: true (Bootstrap: false)
        Client Addr: [127.0.0.1] (HTTP: 8500, HTTPS: -1, gRPC: 8502, DNS: 8600)
       Cluster Addr: 127.0.0.1 (LAN: 8301, WAN: 8302)
            Encrypt: Gossip: false, TLS-Outgoing: false, TLS-Incoming: false, Auto-Encrypt-TLS: false
 
-==> Log data will now stream in as it occurs:
+==&gt; Log data will now stream in as it occurs:
 
-    2019/11/20 21:56:09 [DEBUG] agent: Using random ID "2e524113-7caf-643a-80bb-a2fa00c2673b" as node ID
+    2019/11/20 21:56:09 [DEBUG] agent: Using random ID &#34;2e524113-7caf-643a-80bb-a2fa00c2673b&#34; as node ID
     2019/11/20 21:56:09 [DEBUG] tlsutil: Update with version 1
     2019/11/20 21:56:09 [DEBUG] tlsutil: OutgoingRPCWrapper with version 1
     2019/11/20 21:56:09 [INFO]  raft: Initial configuration (index=1): [{Suffrage:Voter ID:2e524113-7caf-643a-80bb-a2fa00c2673b Address:127.0.0.1:8300}]
-    2019/11/20 21:56:09 [INFO]  raft: Node at 127.0.0.1:8300 [Follower] entering Follower state (Leader: "")
+    2019/11/20 21:56:09 [INFO]  raft: Node at 127.0.0.1:8300 [Follower] entering Follower state (Leader: &#34;&#34;)
     2019/11/20 21:56:09 [INFO] serf: EventMemberJoin: C02Z35N9LVCF.dc1 127.0.0.1
     2019/11/20 21:56:09 [INFO] serf: EventMemberJoin: C02Z35N9LVCF 127.0.0.1
     2019/11/20 21:56:09 [INFO] consul: Adding LAN server C02Z35N9LVCF (Addr: tcp/127.0.0.1:8300) (DC: dc1)
-    2019/11/20 21:56:09 [INFO] consul: Handled member-join event for server "C02Z35N9LVCF.dc1" in area "wan"
+    2019/11/20 21:56:09 [INFO] consul: Handled member-join event for server &#34;C02Z35N9LVCF.dc1&#34; in area &#34;wan&#34;
     2019/11/20 21:56:09 [INFO] agent: Started DNS server 127.0.0.1:8600 (tcp)
     2019/11/20 21:56:09 [INFO] agent: Started DNS server 127.0.0.1:8600 (udp)
     2019/11/20 21:56:09 [INFO] agent: Started HTTP server on 127.0.0.1:8500 (tcp)
     2019/11/20 21:56:09 [INFO] agent: Started gRPC server on 127.0.0.1:8502 (tcp)
     2019/11/20 21:56:09 [INFO] agent: started state syncer
-==> Consul agent running!
-    2019/11/20 21:56:09 [WARN]  raft: Heartbeat timeout from "" reached, starting election
+==&gt; Consul agent running!
+    2019/11/20 21:56:09 [WARN]  raft: Heartbeat timeout from &#34;&#34; reached, starting election
     2019/11/20 21:56:09 [INFO]  raft: Node at 127.0.0.1:8300 [Candidate] entering Candidate state in term 2
     2019/11/20 21:56:09 [DEBUG] raft: Votes needed: 1
     2019/11/20 21:56:09 [DEBUG] raft: Vote granted from 2e524113-7caf-643a-80bb-a2fa00c2673b in term 2. Tally: 1
@@ -110,13 +110,13 @@ $ consul agent -dev
     2019/11/20 21:56:09 [INFO]  raft: Node at 127.0.0.1:8300 [Leader] entering Leader state
     2019/11/20 21:56:09 [INFO] consul: cluster leadership acquired
     2019/11/20 21:56:09 [INFO] consul: New leader elected: C02Z35N9LVCF
-    2019/11/20 21:56:09 [INFO] connect: initialized primary datacenter CA with provider "consul"
-    2019/11/20 21:56:09 [DEBUG] consul: Skipping self join check for "C02Z35N9LVCF" since the cluster is too small
-    2019/11/20 21:56:09 [INFO] consul: member 'C02Z35N9LVCF' joined, marking health alive
-    2019/11/20 21:56:09 [DEBUG] agent: Skipping remote check "serfHealth" since it is managed automatically
+    2019/11/20 21:56:09 [INFO] connect: initialized primary datacenter CA with provider &#34;consul&#34;
+    2019/11/20 21:56:09 [DEBUG] consul: Skipping self join check for &#34;C02Z35N9LVCF&#34; since the cluster is too small
+    2019/11/20 21:56:09 [INFO] consul: member &#39;C02Z35N9LVCF&#39; joined, marking health alive
+    2019/11/20 21:56:09 [DEBUG] agent: Skipping remote check &#34;serfHealth&#34; since it is managed automatically
     2019/11/20 21:56:09 [INFO] agent: Synced node info
     2019/11/20 21:56:09 [DEBUG] agent: Node info in sync
-    2019/11/20 21:56:09 [DEBUG] agent: Skipping remote check "serfHealth" since it is managed automatically
+    2019/11/20 21:56:09 [DEBUG] agent: Skipping remote check &#34;serfHealth&#34; since it is managed automatically
     2019/11/20 21:56:09 [DEBUG] agent: Node info in sync
     2019/11/20 21:56:11 [DEBUG] tlsutil: OutgoingRPCWrapper with version 1
 ```
@@ -126,32 +126,32 @@ $ consul agent -dev
 ```
 $ consul members
 Node          Address         Status  Type    Build  Protocol  DC   Segment
-C02Z35N9LVCF  127.0.0.1:8301  alive   server  1.6.1  2         dc1  <all>
+C02Z35N9LVCF  127.0.0.1:8301  alive   server  1.6.1  2         dc1  &lt;all&gt;
 ```
 以上输出显示了我们自己的节点运行的节点、地址、健康状态、自己在集群中的角色、版本信息等。添加`-detailed`选项可以查看到额外的信息，如下：
 ```
 $ consul members --detailed
 Node          Address         Status  Tags
-C02Z35N9LVCF  127.0.0.1:8301  alive   acls=0,build=1.6.1:9be6dfc+,dc=dc1,id=2e524113-7caf-643a-80bb-a2fa00c2673b,port=8300,raft_vsn=3,role=consul,segment=<all>,vsn=2,vsn_max=3,vsn_min=2,wan_join_port=8302
+C02Z35N9LVCF  127.0.0.1:8301  alive   acls=0,build=1.6.1:9be6dfc&#43;,dc=dc1,id=2e524113-7caf-643a-80bb-a2fa00c2673b,port=8300,raft_vsn=3,role=consul,segment=&lt;all&gt;,vsn=2,vsn_max=3,vsn_min=2,wan_join_port=8302
 ```
 `members`命令的输出是基于gossip协议，它是最终一致的。这意味着，在任何时候，通过你本地Agent看到的结果可能不能准确匹配server的状态。为了查看到一致的信息，可使用HTTP API(将自动转发)到Consul Server上去进行查询：
 ```
 $ curl localhost:8500/v1/catalog/nodes
 [
     {
-        "ID": "2e524113-7caf-643a-80bb-a2fa00c2673b",
-        "Node": "C02Z35N9LVCF",
-        "Address": "127.0.0.1",
-        "Datacenter": "dc1",
-        "TaggedAddresses": {
-            "lan": "127.0.0.1",
-            "wan": "127.0.0.1"
+        &#34;ID&#34;: &#34;2e524113-7caf-643a-80bb-a2fa00c2673b&#34;,
+        &#34;Node&#34;: &#34;C02Z35N9LVCF&#34;,
+        &#34;Address&#34;: &#34;127.0.0.1&#34;,
+        &#34;Datacenter&#34;: &#34;dc1&#34;,
+        &#34;TaggedAddresses&#34;: {
+            &#34;lan&#34;: &#34;127.0.0.1&#34;,
+            &#34;wan&#34;: &#34;127.0.0.1&#34;
         },
-        "Meta": {
-            "consul-network-segment": ""
+        &#34;Meta&#34;: {
+            &#34;consul-network-segment&#34;: &#34;&#34;
         },
-        "CreateIndex": 9,
-        "ModifyIndex": 10
+        &#34;CreateIndex&#34;: 9,
+        &#34;ModifyIndex&#34;: 10
     }
 ]
 ```
@@ -172,39 +172,39 @@ $ sudo mkdir /etc/consul.d
 ```
 然后，编写服务定义配置文件。假设我们有一个名叫web的服务运行在 80端口。另外，我们将给他设置一个标签，这样我们可以使用它作为额外的查询方式：
 ```
-echo '{"service": {"name": "web", "tags": ["rails"], "port": 80}}' > /etc/consul.d/web.json
+echo &#39;{&#34;service&#34;: {&#34;name&#34;: &#34;web&#34;, &#34;tags&#34;: [&#34;rails&#34;], &#34;port&#34;: 80}}&#39; &gt; /etc/consul.d/web.json
 ```
 重新启动Agent，设置配置目录：
 ```
 $ sudo consul agent -dev -config-dir /etc/consul.d/web.json
-==> Starting Consul agent...
-           Version: 'v1.6.1'
-           Node ID: 'feba8d74-4a3a-9b42-305f-eea7da207c9c'
-         Node name: 'C02Z35N9LVCF'
-        Datacenter: 'dc1' (Segment: '<all>')
+==&gt; Starting Consul agent...
+           Version: &#39;v1.6.1&#39;
+           Node ID: &#39;feba8d74-4a3a-9b42-305f-eea7da207c9c&#39;
+         Node name: &#39;C02Z35N9LVCF&#39;
+        Datacenter: &#39;dc1&#39; (Segment: &#39;&lt;all&gt;&#39;)
             Server: true (Bootstrap: false)
        Client Addr: [127.0.0.1] (HTTP: 8500, HTTPS: -1, gRPC: 8502, DNS: 8600)
       Cluster Addr: 127.0.0.1 (LAN: 8301, WAN: 8302)
            Encrypt: Gossip: false, TLS-Outgoing: false, TLS-Incoming: false, Auto-Encrypt-TLS: false
 
-==> Log data will now stream in as it occurs:
+==&gt; Log data will now stream in as it occurs:
 
-    2019/11/20 22:17:29 [DEBUG] agent: Using random ID "feba8d74-4a3a-9b42-305f-eea7da207c9c" as node ID
+    2019/11/20 22:17:29 [DEBUG] agent: Using random ID &#34;feba8d74-4a3a-9b42-305f-eea7da207c9c&#34; as node ID
     2019/11/20 22:17:29 [DEBUG] tlsutil: Update with version 1
     2019/11/20 22:17:29 [DEBUG] tlsutil: OutgoingRPCWrapper with version 1
     2019/11/20 22:17:29 [INFO]  raft: Initial configuration (index=1): [{Suffrage:Voter ID:feba8d74-4a3a-9b42-305f-eea7da207c9c Address:127.0.0.1:8300}]
-    2019/11/20 22:17:29 [INFO]  raft: Node at 127.0.0.1:8300 [Follower] entering Follower state (Leader: "")
+    2019/11/20 22:17:29 [INFO]  raft: Node at 127.0.0.1:8300 [Follower] entering Follower state (Leader: &#34;&#34;)
     2019/11/20 22:17:29 [INFO] serf: EventMemberJoin: C02Z35N9LVCF.dc1 127.0.0.1
     2019/11/20 22:17:29 [INFO] serf: EventMemberJoin: C02Z35N9LVCF 127.0.0.1
     2019/11/20 22:17:29 [INFO] consul: Adding LAN server C02Z35N9LVCF (Addr: tcp/127.0.0.1:8300) (DC: dc1)
-    2019/11/20 22:17:29 [INFO] consul: Handled member-join event for server "C02Z35N9LVCF.dc1" in area "wan"
+    2019/11/20 22:17:29 [INFO] consul: Handled member-join event for server &#34;C02Z35N9LVCF.dc1&#34; in area &#34;wan&#34;
     2019/11/20 22:17:29 [INFO] agent: Started DNS server 127.0.0.1:8600 (tcp)
     2019/11/20 22:17:29 [INFO] agent: Started DNS server 127.0.0.1:8600 (udp)
     2019/11/20 22:17:29 [INFO] agent: Started HTTP server on 127.0.0.1:8500 (tcp)
     2019/11/20 22:17:29 [INFO] agent: Started gRPC server on 127.0.0.1:8502 (tcp)
     2019/11/20 22:17:29 [INFO] agent: started state syncer
-==> Consul agent running!
-    2019/11/20 22:17:30 [WARN]  raft: Heartbeat timeout from "" reached, starting election
+==&gt; Consul agent running!
+    2019/11/20 22:17:30 [WARN]  raft: Heartbeat timeout from &#34;&#34; reached, starting election
     2019/11/20 22:17:30 [INFO]  raft: Node at 127.0.0.1:8300 [Candidate] entering Candidate state in term 2
     2019/11/20 22:17:30 [DEBUG] raft: Votes needed: 1
     2019/11/20 22:17:30 [DEBUG] raft: Vote granted from feba8d74-4a3a-9b42-305f-eea7da207c9c in term 2. Tally: 1
@@ -212,20 +212,20 @@ $ sudo consul agent -dev -config-dir /etc/consul.d/web.json
     2019/11/20 22:17:30 [INFO]  raft: Node at 127.0.0.1:8300 [Leader] entering Leader state
     2019/11/20 22:17:30 [INFO] consul: cluster leadership acquired
     2019/11/20 22:17:30 [INFO] consul: New leader elected: C02Z35N9LVCF
-    2019/11/20 22:17:30 [INFO] connect: initialized primary datacenter CA with provider "consul"
-    2019/11/20 22:17:30 [DEBUG] consul: Skipping self join check for "C02Z35N9LVCF" since the cluster is too small
-    2019/11/20 22:17:30 [INFO] consul: member 'C02Z35N9LVCF' joined, marking health alive
-    2019/11/20 22:17:30 [DEBUG] agent: Skipping remote check "serfHealth" since it is managed automatically
-    2019/11/20 22:17:30 [INFO] agent: Synced service "web"
+    2019/11/20 22:17:30 [INFO] connect: initialized primary datacenter CA with provider &#34;consul&#34;
+    2019/11/20 22:17:30 [DEBUG] consul: Skipping self join check for &#34;C02Z35N9LVCF&#34; since the cluster is too small
+    2019/11/20 22:17:30 [INFO] consul: member &#39;C02Z35N9LVCF&#39; joined, marking health alive
+    2019/11/20 22:17:30 [DEBUG] agent: Skipping remote check &#34;serfHealth&#34; since it is managed automatically
+    2019/11/20 22:17:30 [INFO] agent: Synced service &#34;web&#34;
     2019/11/20 22:17:30 [DEBUG] agent: Node info in sync
     2019/11/20 22:17:32 [DEBUG] tlsutil: OutgoingRPCWrapper with version 1
-    2019/11/20 22:17:32 [DEBUG] agent: Skipping remote check "serfHealth" since it is managed automatically
-    2019/11/20 22:17:32 [DEBUG] agent: Service "web" in sync
+    2019/11/20 22:17:32 [DEBUG] agent: Skipping remote check &#34;serfHealth&#34; since it is managed automatically
+    2019/11/20 22:17:32 [DEBUG] agent: Service &#34;web&#34; in sync
     2019/11/20 22:17:32 [DEBUG] agent: Node info in sync
-    2019/11/20 22:17:32 [DEBUG] agent: Service "web" in sync
+    2019/11/20 22:17:32 [DEBUG] agent: Service &#34;web&#34; in sync
     2019/11/20 22:17:32 [DEBUG] agent: Node info in sync
 ```
-日志中的`Synced service 'web'`表示Agent从配置文件中载入了服务定义，并且成功注册到服务目录。
+日志中的`Synced service &#39;web&#39;`表示Agent从配置文件中载入了服务定义，并且成功注册到服务目录。
 
 如果想注册多个服务，就可以在Consul配置目录创建多个服务定义文件。
 
@@ -240,11 +240,11 @@ $ sudo consul agent -dev -config-dir /etc/consul.d/web.json
 ```
 $ dig @127.0.0.1 -p 8600 web.service.consul
 
-; <<>> DiG 9.10.6 <<>> @127.0.0.1 -p 8600 web.service.consul
+; &lt;&lt;&gt;&gt; DiG 9.10.6 &lt;&lt;&gt;&gt; @127.0.0.1 -p 8600 web.service.consul
 ; (1 server found)
-;; global options: +cmd
+;; global options: &#43;cmd
 ;; Got answer:
-;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 27222
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 27222
 ;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 2
 ;; WARNING: recursion requested but not available
 
@@ -257,7 +257,7 @@ $ dig @127.0.0.1 -p 8600 web.service.consul
 web.service.consul.        0        IN        A        127.0.0.1
 
 ;; ADDITIONAL SECTION:
-web.service.consul.        0        IN        TXT        "consul-network-segment="
+web.service.consul.        0        IN        TXT        &#34;consul-network-segment=&#34;
 
 ;; Query time: 8 msec
 ;; SERVER: 127.0.0.1#8600(127.0.0.1)
@@ -268,11 +268,11 @@ web.service.consul.        0        IN        TXT        "consul-network-segment
 ```
 $ dig @127.0.0.1 -p 8600 web.service.consul SRV
 
-; <<>> DiG 9.10.6 <<>> @127.0.0.1 -p 8600 web.service.consul SRV
+; &lt;&lt;&gt;&gt; DiG 9.10.6 &lt;&lt;&gt;&gt; @127.0.0.1 -p 8600 web.service.consul SRV
 ; (1 server found)
-;; global options: +cmd
+;; global options: &#43;cmd
 ;; Got answer:
-;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 49043
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 49043
 ;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 3
 ;; WARNING: recursion requested but not available
 
@@ -286,7 +286,7 @@ web.service.consul.        0        IN        SRV        1 1 80 C02Z35N9LVCF.nod
 
 ;; ADDITIONAL SECTION:
 C02Z35N9LVCF.node.dc1.consul. 0        IN        A        127.0.0.1
-C02Z35N9LVCF.node.dc1.consul. 0        IN        TXT        "consul-network-segment="
+C02Z35N9LVCF.node.dc1.consul. 0        IN        TXT        &#34;consul-network-segment=&#34;
 
 ;; Query time: 1 msec
 ;; SERVER: 127.0.0.1#8600(127.0.0.1)
@@ -307,37 +307,37 @@ $ dig @127.0.0.1 -p 8600 rails.web.service.consul SRV
 $ curl http://localhost:8500/v1/catalog/service/web
 [
     {
-        "ID": "feba8d74-4a3a-9b42-305f-eea7da207c9c",
-        "Node": "C02Z35N9LVCF",
-        "Address": "127.0.0.1",
-        "Datacenter": "dc1",
-        "TaggedAddresses": {
-            "lan": "127.0.0.1",
-            "wan": "127.0.0.1"
+        &#34;ID&#34;: &#34;feba8d74-4a3a-9b42-305f-eea7da207c9c&#34;,
+        &#34;Node&#34;: &#34;C02Z35N9LVCF&#34;,
+        &#34;Address&#34;: &#34;127.0.0.1&#34;,
+        &#34;Datacenter&#34;: &#34;dc1&#34;,
+        &#34;TaggedAddresses&#34;: {
+            &#34;lan&#34;: &#34;127.0.0.1&#34;,
+            &#34;wan&#34;: &#34;127.0.0.1&#34;
         },
-        "NodeMeta": {
-            "consul-network-segment": ""
+        &#34;NodeMeta&#34;: {
+            &#34;consul-network-segment&#34;: &#34;&#34;
         },
-        "ServiceKind": "",
-        "ServiceID": "web",
-        "ServiceName": "web",
-        "ServiceTags": [
-            "rails"
+        &#34;ServiceKind&#34;: &#34;&#34;,
+        &#34;ServiceID&#34;: &#34;web&#34;,
+        &#34;ServiceName&#34;: &#34;web&#34;,
+        &#34;ServiceTags&#34;: [
+            &#34;rails&#34;
         ],
-        "ServiceAddress": "",
-        "ServiceWeights": {
-            "Passing": 1,
-            "Warning": 1
+        &#34;ServiceAddress&#34;: &#34;&#34;,
+        &#34;ServiceWeights&#34;: {
+            &#34;Passing&#34;: 1,
+            &#34;Warning&#34;: 1
         },
-        "ServiceMeta": {},
-        "ServicePort": 80,
-        "ServiceEnableTagOverride": false,
-        "ServiceProxy": {
-            "MeshGateway": {}
+        &#34;ServiceMeta&#34;: {},
+        &#34;ServicePort&#34;: 80,
+        &#34;ServiceEnableTagOverride&#34;: false,
+        &#34;ServiceProxy&#34;: {
+            &#34;MeshGateway&#34;: {}
         },
-        "ServiceConnect": {},
-        "CreateIndex": 10,
-        "ModifyIndex": 10
+        &#34;ServiceConnect&#34;: {},
+        &#34;CreateIndex&#34;: 10,
+        &#34;ModifyIndex&#34;: 10
     }
 ]
 ```

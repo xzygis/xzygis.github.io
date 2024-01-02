@@ -9,7 +9,7 @@ go install github.com/gohugoio/hugo@latest
 ```
 
 ## Quick Start
-> https://gohugo.io/getting-started/quick-start/
+&gt; https://gohugo.io/getting-started/quick-start/
 
 运行以下命令创建一个使用`Ananke`主题的网站：
 ```shell
@@ -17,7 +17,7 @@ hugo new site quickstart
 cd quickstart
 git init
 git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke themes/ananke
-echo "theme = 'ananke'" >> config.toml
+echo &#34;theme = &#39;ananke&#39;&#34; &gt;&gt; config.toml
 hugo server
 ```
 
@@ -29,7 +29,7 @@ hugo new posts/my-first-post.md
 Hugo在`content/posts`目录创建了`my-first-post.md`文件，文件内容如下：
 ```shell
 ---
-title: "My First Post"
+title: &#34;My First Post&#34;
 date: 2022-11-20T09:03:20-08:00
 draft: true
 ---
@@ -44,10 +44,10 @@ hugo server -D
 ## Configure the site
 可以通过根目录的`config.toml`文件配置网站相关信息：
 ```shell
-baseURL = 'http://example.org/'
-languageCode = 'en-us'
-title = 'My New Hugo Site'
-theme = 'ananke'
+baseURL = &#39;http://example.org/&#39;
+languageCode = &#39;en-us&#39;
+title = &#39;My New Hugo Site&#39;
+theme = &#39;ananke&#39;
 ```
 
 ## Publish the site
@@ -57,9 +57,9 @@ hugo
 ```
 
 ## Host on GitHub
-> https://gohugo.io/hosting-and-deployment/hosting-on-github/
+&gt; https://gohugo.io/hosting-and-deployment/hosting-on-github/
 
-1. 创建名为`<USERNAME>.github.io` 或 `<ORGANIZATION>.github.io`的GitHub仓库
+1. 创建名为`&lt;USERNAME&gt;.github.io` 或 `&lt;ORGANIZATION&gt;.github.io`的GitHub仓库
 2. 在仓库中新增文件`.github/workflows/gh-pages.yml`并填写以下内容：
 ```yaml
 name: github pages
@@ -82,7 +82,7 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: 'latest'
+          hugo-version: &#39;latest&#39;
           # extended: true
 
       - name: Build
@@ -90,13 +90,13 @@ jobs:
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == &#39;refs/heads/main&#39;
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
 ```
 
-把`config.toml`中的`baseURL`修改为`https://<USERNAME>.github.io`。
+把`config.toml`中的`baseURL`修改为`https://&lt;USERNAME&gt;.github.io`。
 
 Ref：
 1. https://github.com/gohugoio/hugo

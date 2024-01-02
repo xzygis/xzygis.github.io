@@ -68,12 +68,12 @@ SELECT * from user WHERE user_name = Ben
 ```
 上面是一个很普通的SQL查询语句，我只只声明我想要找一个叫Ben的用户（What) , 就是不说SQL该怎么（How）去寻找怎么做。接下来我们看看如果用命令式语言写会是什么样的：
 ```js
-//user=[{user_name:'ou',user_id=1},.....]
+//user=[{user_name:&#39;ou&#39;,user_id=1},.....]
 var user
-for(var i = 0; i < user.length; i++){
-    if(user.user_name == "Ben")
+for(var i = 0; i &lt; user.length; i&#43;&#43;){
+    if(user.user_name == &#34;Ben&#34;)
     {
-         print("find");
+         print(&#34;find&#34;);
          break;
     }
 }
@@ -94,7 +94,7 @@ kubeadm init --apiserver-advertise-address $(hostname -i)
 Initializing machine ID from random generator.
 [init] using Kubernetes version: v1.11.10
 [preflight] running pre-flight checks
-        [WARNING Service-Docker]: docker service is not active, please run 'systemctl start docker.service'
+        [WARNING Service-Docker]: docker service is not active, please run &#39;systemctl start docker.service&#39;
         [WARNING FileContent--proc-sys-net-bridge-bridge-nf-call-iptables]: /proc/sys/net/bridge/bridge-nf-call-iptables does not exist
 I1117 13:53:18.409493     885 kernel_validator.go:81] Validating kernel version
 I1117 13:53:18.409685     885 kernel_validator.go:96] Validating kernel config
@@ -109,13 +109,13 @@ CGROUPS_DEVICES: enabled
 CGROUPS_FREEZER: enabled
 CGROUPS_MEMORY: enabled
         [WARNING SystemVerification]: docker version is greater than the most recently validated version. Docker version: 18.06.1-ce. Max validated version: 17.03
-        [WARNING SystemVerification]: failed to parse kernel config: unable to load kernel module "configs": output - "", err - exit status 1
+        [WARNING SystemVerification]: failed to parse kernel config: unable to load kernel module &#34;configs&#34;: output - &#34;&#34;, err - exit status 1
 
 [preflight/images] Pulling images required for setting up a Kubernetes cluster
 [preflight/images] This might take a minute or two, depending on the speed of your internet connection
-[preflight/images] You can also perform this action in beforehand using 'kubeadm config images pull'
-[kubelet] Writing kubelet environment file with flags to file "/var/lib/kubelet/kubeadm-flags.env"
-[kubelet] Writing kubelet configuration to file "/var/lib/kubelet/config.yaml"
+[preflight/images] You can also perform this action in beforehand using &#39;kubeadm config images pull&#39;
+[kubelet] Writing kubelet environment file with flags to file &#34;/var/lib/kubelet/kubeadm-flags.env&#34;
+[kubelet] Writing kubelet configuration to file &#34;/var/lib/kubelet/config.yaml&#34;
 [preflight] Activating the kubelet service
 [certificates] Generated ca certificate and key.
 [certificates] Generated apiserver certificate and key.
@@ -131,28 +131,28 @@ CGROUPS_MEMORY: enabled
 [certificates] etcd/peer serving cert is signed for DNS names [node1 localhost] and IPs [192.168.0.18 127.0.0.1 ::1]
 [certificates] Generated etcd/healthcheck-client certificate and key.
 [certificates] Generated apiserver-etcd-client certificate and key.
-[certificates] valid certificates and keys now exist in "/etc/kubernetes/pki"
-[kubeconfig] Wrote KubeConfig file to disk: "/etc/kubernetes/admin.conf"
-[kubeconfig] Wrote KubeConfig file to disk: "/etc/kubernetes/kubelet.conf"
-[kubeconfig] Wrote KubeConfig file to disk: "/etc/kubernetes/controller-manager.conf"
-[kubeconfig] Wrote KubeConfig file to disk: "/etc/kubernetes/scheduler.conf"
-[controlplane] wrote Static Pod manifest for component kube-apiserver to "/etc/kubernetes/manifests/kube-apiserver.yaml"
-[controlplane] wrote Static Pod manifest for component kube-controller-manager to "/etc/kubernetes/manifests/kube-controller-manager.yaml"
-[controlplane] wrote Static Pod manifest for component kube-scheduler to "/etc/kubernetes/manifests/kube-scheduler.yaml"
-[etcd] Wrote Static Pod manifest for a local etcd instance to "/etc/kubernetes/manifests/etcd.yaml"
-[init] waiting for the kubelet to boot up the control plane as Static Pods from directory "/etc/kubernetes/manifests"
+[certificates] valid certificates and keys now exist in &#34;/etc/kubernetes/pki&#34;
+[kubeconfig] Wrote KubeConfig file to disk: &#34;/etc/kubernetes/admin.conf&#34;
+[kubeconfig] Wrote KubeConfig file to disk: &#34;/etc/kubernetes/kubelet.conf&#34;
+[kubeconfig] Wrote KubeConfig file to disk: &#34;/etc/kubernetes/controller-manager.conf&#34;
+[kubeconfig] Wrote KubeConfig file to disk: &#34;/etc/kubernetes/scheduler.conf&#34;
+[controlplane] wrote Static Pod manifest for component kube-apiserver to &#34;/etc/kubernetes/manifests/kube-apiserver.yaml&#34;
+[controlplane] wrote Static Pod manifest for component kube-controller-manager to &#34;/etc/kubernetes/manifests/kube-controller-manager.yaml&#34;
+[controlplane] wrote Static Pod manifest for component kube-scheduler to &#34;/etc/kubernetes/manifests/kube-scheduler.yaml&#34;
+[etcd] Wrote Static Pod manifest for a local etcd instance to &#34;/etc/kubernetes/manifests/etcd.yaml&#34;
+[init] waiting for the kubelet to boot up the control plane as Static Pods from directory &#34;/etc/kubernetes/manifests&#34;
 [init] this might take a minute or longer if the control plane images have to be pulled
 [apiclient] All control plane components are healthy after 51.503514 seconds
-[uploadconfig] storing the configuration used in ConfigMap "kubeadm-config" in the "kube-system" Namespace
-[kubelet] Creating a ConfigMap "kubelet-config-1.11" in namespace kube-system with the configuration for the kubelets in the cluster
-[markmaster] Marking the node node1 as master by adding the label "node-role.kubernetes.io/master=''"
+[uploadconfig] storing the configuration used in ConfigMap &#34;kubeadm-config&#34; in the &#34;kube-system&#34; Namespace
+[kubelet] Creating a ConfigMap &#34;kubelet-config-1.11&#34; in namespace kube-system with the configuration for the kubelets in the cluster
+[markmaster] Marking the node node1 as master by adding the label &#34;node-role.kubernetes.io/master=&#39;&#39;&#34;
 [markmaster] Marking the node node1 as master by adding the taints [node-role.kubernetes.io/master:NoSchedule]
-[patchnode] Uploading the CRI Socket information "/var/run/dockershim.sock" to the Node API object "node1" as an annotation
+[patchnode] Uploading the CRI Socket information &#34;/var/run/dockershim.sock&#34; to the Node API object &#34;node1&#34; as an annotation
 [bootstraptoken] using token: 5f1nyz.351cet8vt4g2ix78
 [bootstraptoken] configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order for nodes to get long term certificate credentials
 [bootstraptoken] configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token
 [bootstraptoken] configured RBAC rules to allow certificate rotation for all node client certificates in the cluster
-[bootstraptoken] creating the "cluster-info" ConfigMap in the "kube-public" namespace
+[bootstraptoken] creating the &#34;cluster-info&#34; ConfigMap in the &#34;kube-public&#34; namespace
 [addons] Applied essential addon: CoreDNS
 [addons] Applied essential addon: kube-proxy
 
@@ -165,7 +165,7 @@ To start using your cluster, you need to run the following as a regular user:
   sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 You should now deploy a pod network to the cluster.
-Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+Run &#34;kubectl apply -f [podnetwork].yaml&#34; with one of the options listed at:
   https://kubernetes.io/docs/concepts/cluster-administration/addons/
 
 You can now join any number of machines by running the following on each node
@@ -181,7 +181,7 @@ No resources found
 
 2. 初始化集群网络：
 ```shell
-kubectl apply -n kube-system -f  "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+kubectl apply -n kube-system -f  &#34;https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d &#39;\n&#39;)&#34;
 ```
 输出如下：
 ```
@@ -211,7 +211,7 @@ kubeadm join 192.168.0.18:6443 --token 5f1nyz.351cet8vt4g2ix78 --discovery-token
         [WARNING FileAvailable--etc-kubernetes-kubelet.conf]: /etc/kubernetes/kubelet.conf already exists
         [WARNING RequiredIPVSKernelModulesAvailable]: error getting required builtin kernel modules: exit status 1(cut: /lib/modules/4.4.0-166-generic/modules.builtin: No such file or directory
 )
-        [WARNING Service-Docker]: docker service is not active, please run 'systemctl start docker.service'
+        [WARNING Service-Docker]: docker service is not active, please run &#39;systemctl start docker.service&#39;
         [WARNING FileContent--proc-sys-net-bridge-bridge-nf-call-iptables]: /proc/sys/net/bridge/bridge-nf-call-iptables does not exist
 I1117 14:09:02.416363    7243 kernel_validator.go:81] Validating kernel version
 I1117 14:09:02.419283    7243 kernel_validator.go:96] Validating kernel config
@@ -226,26 +226,26 @@ CGROUPS_DEVICES: enabled
 CGROUPS_FREEZER: enabled
 CGROUPS_MEMORY: enabled
         [WARNING SystemVerification]: docker version is greater than the most recently validated version. Docker version: 18.06.1-ce. Max validated version: 17.03
-        [WARNING SystemVerification]: failed to parse kernel config: unable to load kernel module "configs": output - "", err - exit status 1
+        [WARNING SystemVerification]: failed to parse kernel config: unable to load kernel module &#34;configs&#34;: output - &#34;&#34;, err - exit status 1
         [WARNING Port-10250]: Port 10250 is in use
-[discovery] Trying to connect to API Server "192.168.0.28:6443"
-[discovery] Created cluster-info discovery client, requesting info from "https://192.168.0.28:6443"
-[discovery] Requesting info from "https://192.168.0.28:6443" again to validate TLS against the pinned public key
-[discovery] Cluster info signature and contents are valid and TLS certificate validates against pinned roots, will use API Server "192.168.0.28:6443"
-[discovery] Successfully established connection with API Server "192.168.0.28:6443"
-[kubelet] Downloading configuration for the kubelet from the "kubelet-config-1.11" ConfigMap in the kube-system namespace
-[kubelet] Writing kubelet configuration to file "/var/lib/kubelet/config.yaml"
-[kubelet] Writing kubelet environment file with flags to file "/var/lib/kubelet/kubeadm-flags.env"
+[discovery] Trying to connect to API Server &#34;192.168.0.28:6443&#34;
+[discovery] Created cluster-info discovery client, requesting info from &#34;https://192.168.0.28:6443&#34;
+[discovery] Requesting info from &#34;https://192.168.0.28:6443&#34; again to validate TLS against the pinned public key
+[discovery] Cluster info signature and contents are valid and TLS certificate validates against pinned roots, will use API Server &#34;192.168.0.28:6443&#34;
+[discovery] Successfully established connection with API Server &#34;192.168.0.28:6443&#34;
+[kubelet] Downloading configuration for the kubelet from the &#34;kubelet-config-1.11&#34; ConfigMap in the kube-system namespace
+[kubelet] Writing kubelet configuration to file &#34;/var/lib/kubelet/config.yaml&#34;
+[kubelet] Writing kubelet environment file with flags to file &#34;/var/lib/kubelet/kubeadm-flags.env&#34;
 [preflight] Activating the kubelet service
 [tlsbootstrap] Waiting for the kubelet to perform the TLS Bootstrap...
-[patchnode] Uploading the CRI Socket information "/var/run/dockershim.sock" to the Node API object "node1" as an annotation
+[patchnode] Uploading the CRI Socket information &#34;/var/run/dockershim.sock&#34; to the Node API object &#34;node1&#34; as an annotation
 
 This node has joined the cluster:
 * Certificate signing request was sent to master and a response
   was received.
 * The Kubelet was informed of the new secure connection details.
 
-Run 'kubectl get nodes' on the master to see this node join the cluster.
+Run &#39;kubectl get nodes&#39; on the master to see this node join the cluster.
 ```
 多开几个实例，重复执行第四步，即可向Kubernetes集群中增加节点。
 
@@ -254,13 +254,13 @@ Run 'kubectl get nodes' on the master to see this node join the cluster.
 [node1 ~]$ kubectl get nodes
 NAME      STATUS    ROLES     AGE       VERSION
 node1     Ready     master    19m       v1.11.3
-node2     Ready     <none>    2m        v1.11.3
-node3     Ready     <none>    1m        v1.11.3
+node2     Ready     &lt;none&gt;    2m        v1.11.3
+node3     Ready     &lt;none&gt;    1m        v1.11.3
 ```
 
 ### 创建nginx deployment
 ```shell
-[node1 ~]$ curl https://raw.githubusercontent.com/kubernetes/website/master/content/en/examples/application/nginx-app.yaml > nginx-app.yaml
+[node1 ~]$ curl https://raw.githubusercontent.com/kubernetes/website/master/content/en/examples/application/nginx-app.yaml &gt; nginx-app.yaml
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100   497  100   497    0     0   1252      0 --:--:-- --:--:-- --:--:--  1255
@@ -274,8 +274,8 @@ deployment.apps/my-nginx created
 [node1 ~]$ kubectl get nodes
 NAME      STATUS    ROLES     AGE       VERSION
 node1     Ready     master    29m       v1.11.3
-node2     Ready     <none>    11m       v1.11.3
-node3     Ready     <none>    11m       v1.11.3
+node2     Ready     &lt;none&gt;    11m       v1.11.3
+node3     Ready     &lt;none&gt;    11m       v1.11.3
 [node1 ~]$
 [node1 ~]$ kubectl get pods
 NAME                        READY     STATUS    RESTARTS   AGE

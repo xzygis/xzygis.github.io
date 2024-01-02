@@ -1,4 +1,4 @@
-# 如何通过GitHub+Hexo搭建博客
+# 如何通过GitHub&#43;Hexo搭建博客
 
 
 
@@ -28,7 +28,7 @@ $ hexo s
 1. 修改`_config.yml`，修改deploy为：
 ```
 deploy:
-  type: 'git'
+  type: &#39;git&#39;
   repository: https://github.com/xzygis/xzygis.github.io.git
   branch: master
 ```

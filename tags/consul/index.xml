@@ -1,5 +1,5 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Consul - 标签 - 楚兴 - Chuxing's Blog</title><link>https://xzygis.github.io/tags/consul/</link><description>Consul - 标签 - 楚兴 - Chuxing's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 30 Jan 2020 13:35:59 +0000</lastBuildDate><atom:link href="https://xzygis.github.io/tags/consul/" rel="self" type="application/rss+xml"/><item><title>Consul入门手册</title><link>https://xzygis.github.io/posts/manual-of-consul/</link><pubDate>Thu, 30 Jan 2020 13:35:59 +0000</pubDate><author>作者</author><guid>https://xzygis.github.io/posts/manual-of-consul/</guid><description><![CDATA[<h2 id="consul是什么">Consul是什么？</h2>
-<p>Consul是一个服务发现和配置工具，它是分布式和高可用的，而且极易扩展。</p>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Consul - 标签 - 楚兴 - Chuxing's Blog</title><link>https://xzygis.github.io/tags/consul/</link><description>Consul - 标签 | 楚兴 - Chuxing's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 30 Jan 2020 13:35:59 +0000</lastBuildDate><atom:link href="https://xzygis.github.io/tags/consul/" rel="self" type="application/rss+xml"/><item><title>Consul入门手册</title><link>https://xzygis.github.io/posts/manual-of-consul/</link><pubDate>Thu, 30 Jan 2020 13:35:59 +0000</pubDate><author>作者</author><guid>https://xzygis.github.io/posts/manual-of-consul/</guid><description><![CDATA[<h2 id="consul是什么" class="heading-element">
+  <a href="#consul%e6%98%af%e4%bb%80%e4%b9%88" class="heading-mark"></a>Consul是什么？</h2><p>Consul是一个服务发现和配置工具，它是分布式和高可用的，而且极易扩展。</p>
 <p>Consul主要提供了以下特性：</p>
 <ol>
 <li>服务发现：Consul使得服务注册和服务发现（通过DNS或HTTP接口）变得非常简单。</li>
@@ -9,12 +9,12 @@
 <li>服务鉴权（Service Segmentation）：Consul连接基于自动TLS加密和基于签名的鉴权实现安全的服务间通信。</li>
 </ol>
 <p>Consul支持Linux, Mac OS X, FreeBSD, Solaris, Windows等操作系统。</p>
-<h3 id="基本架构">基本架构</h3>
-<p>每个提供服务给Consul的节点都运行了一个Consul Agent。运行一个Agent并不需要对其他服务做发现或读写KV存储。Agent负责对该节点上的服务做健康检查。</p>
+<h3 id="基本架构" class="heading-element">
+  <a href="#%e5%9f%ba%e6%9c%ac%e6%9e%b6%e6%9e%84" class="heading-mark"></a>基本架构</h3><p>每个提供服务给Consul的节点都运行了一个Consul Agent。运行一个Agent并不需要对其他服务做发现或读写KV存储。Agent负责对该节点上的服务做健康检查。</p>
 <p>Agent会与一个或多个Consul Server通信。Consul Server通常有多个实例，负责数据存储和备份、选举主节点等。虽然Consul支持在只有一个Server实例的情况下工具，但通常推荐使用3至5个实例，从而避免由于某些异常场景而导致数据丢失。同时，推荐在每个数据中心部署一个Consul集群。</p>
 <p>每个数据中运行了一个Consul server集群。当一个跨数据中心的服务发现和配置请求创建时，本地Consul Server转发请求到远程的数据中心并返回结果.</p>
-<h2 id="安装consul">安装Consul</h2>
-<p>Consul集群的每个节点都必须先安装Consul，安装非常简单。在Mac上安装Consul命令如下：</p>
+<h2 id="安装consul" class="heading-element">
+  <a href="#%e5%ae%89%e8%a3%85consul" class="heading-mark"></a>安装Consul</h2><p>Consul集群的每个节点都必须先安装Consul，安装非常简单。在Mac上安装Consul命令如下：</p>
 <div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -98,11 +98,11 @@
 </span></span><span class="line"><span class="cl">    <span class="n">version</span>        <span class="n">Prints</span> <span class="n">the</span> <span class="n">Consul</span> <span class="n">version</span>
 </span></span><span class="line"><span class="cl">    <span class="n">watch</span>          <span class="n">Watch</span> <span class="k">for</span> <span class="n">changes</span> <span class="ow">in</span> <span class="n">Consul</span></span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="运行agent">运行Agent</h2>
-<p>完成Consul的安装后，可运行Agent。Agent可以运行为Server或Client模式。每个数据中心至少必须拥有一台server，建议在一个集群中部署或者3至5个Server。部署单一的Server，在出现失败时会不可避免的造成数据丢失.</p>
+</div><h2 id="运行agent" class="heading-element">
+  <a href="#%e8%bf%90%e8%a1%8cagent" class="heading-mark"></a>运行Agent</h2><p>完成Consul的安装后，可运行Agent。Agent可以运行为Server或Client模式。每个数据中心至少必须拥有一台server，建议在一个集群中部署或者3至5个Server。部署单一的Server，在出现失败时会不可避免的造成数据丢失.</p>
 <p>其他的Agent运行为Client模式，一个Client是一个非常轻量级的进程，用于注册服务，运行健康检查和转发对Server的查询，Agent必须在集群中的每个主机上运行。</p>
-<h3 id="启动agent">启动Agent</h3>
-<p>命令<code>consul agent -dev</code>可以启动一个开发模式的Agent，这种模式不能用于生产环境，因为它不持久化任何状态。</p>
+<h3 id="启动agent" class="heading-element">
+  <a href="#%e5%90%af%e5%8a%a8agent" class="heading-mark"></a>启动Agent</h3><p>命令<code>consul agent -dev</code>可以启动一个开发模式的Agent，这种模式不能用于生产环境，因为它不持久化任何状态。</p>
 <div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -198,8 +198,8 @@
 </span></span><span class="line"><span class="cl">    2019/11/20 21:56:09 [DEBUG] agent: Node info in sync
 </span></span><span class="line"><span class="cl">    2019/11/20 21:56:11 [DEBUG] tlsutil: OutgoingRPCWrapper with version 1</span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="集群成员">集群成员</h3>
-<p>新开一个终端窗口运行<code>consul members</code>, 就可以看到Consul集群的成员。</p>
+</div><h3 id="集群成员" class="heading-element">
+  <a href="#%e9%9b%86%e7%be%a4%e6%88%90%e5%91%98" class="heading-mark"></a>集群成员</h3><p>新开一个终端窗口运行<code>consul members</code>, 就可以看到Consul集群的成员。</p>
 <div class="highlight" id="id-4"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -265,13 +265,13 @@
 </span></span><span class="line"><span class="cl">    }
 </span></span><span class="line"><span class="cl">]</span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="停止agent">停止Agent</h3>
-<p>你可以使用 Ctrl-C 优雅的关闭Agent，中断Agent之后你可以看到它离开了集群并关闭.
+</div><h3 id="停止agent" class="heading-element">
+  <a href="#%e5%81%9c%e6%ad%a2agent" class="heading-mark"></a>停止Agent</h3><p>你可以使用 Ctrl-C 优雅的关闭Agent，中断Agent之后你可以看到它离开了集群并关闭.
 退出后，Consul提醒其他集群成员，这个节点离开了。如果你强行杀掉进程，集群的其他成员应该能检测到这个节点失效了。当一个成员离开，他的服务和检测也会从目录中移除。当一个成员失效了，他的健康状况被简单的标记为危险，但是不会从目录中移除。Consul会自动尝试对失效的节点进行重连，允许他从某些网络条件下恢复过来。</p>
-<h2 id="注册服务">注册服务</h2>
-<p>在之前的步骤我们运行了第一个agent，看到了集群的成员。现在我们将注册第一个服务并查询这些服务。</p>
-<h3 id="定义一个服务">定义一个服务</h3>
-<p>可以通过提供服务定义或者调用HTTP API来注册一个服务，服务定义文件是注册服务的最通用的方式。</p>
+<h2 id="注册服务" class="heading-element">
+  <a href="#%e6%b3%a8%e5%86%8c%e6%9c%8d%e5%8a%a1" class="heading-mark"></a>注册服务</h2><p>在之前的步骤我们运行了第一个agent，看到了集群的成员。现在我们将注册第一个服务并查询这些服务。</p>
+<h3 id="定义一个服务" class="heading-element">
+  <a href="#%e5%ae%9a%e4%b9%89%e4%b8%80%e4%b8%aa%e6%9c%8d%e5%8a%a1" class="heading-mark"></a>定义一个服务</h3><p>可以通过提供服务定义或者调用HTTP API来注册一个服务，服务定义文件是注册服务的最通用的方式。</p>
 <p>首先，为Consul配置创建一个目录：</p>
 <div class="highlight" id="id-7"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -392,10 +392,10 @@
 </div>
 </div><p>日志中的<code>Synced service 'web'</code>表示Agent从配置文件中载入了服务定义，并且成功注册到服务目录。</p>
 <p>如果想注册多个服务，就可以在Consul配置目录创建多个服务定义文件。</p>
-<h3 id="查询服务">查询服务</h3>
-<p>一旦Agent启动并且服务同步了，我们可就以通过DNS或者HTTP API来查询服务。</p>
-<h4 id="dns-api">DNS API</h4>
-<p>我们首先使用DNS API来查询。在DNS API中，服务的DNS名字是 <code>NAME.service.consul</code>。虽然是可配置的，但默认的所有DNS名字会都在consul命名空间下，这个子域告诉Consul，我们在查询服务，<code>NAME</code>则是服务的名称.</p>
+<h3 id="查询服务" class="heading-element">
+  <a href="#%e6%9f%a5%e8%af%a2%e6%9c%8d%e5%8a%a1" class="heading-mark"></a>查询服务</h3><p>一旦Agent启动并且服务同步了，我们可就以通过DNS或者HTTP API来查询服务。</p>
+<h4 id="dns-api" class="heading-element">
+  <a href="#dns-api" class="heading-mark"></a>DNS API</h4><p>我们首先使用DNS API来查询。在DNS API中，服务的DNS名字是 <code>NAME.service.consul</code>。虽然是可配置的，但默认的所有DNS名字会都在consul命名空间下，这个子域告诉Consul，我们在查询服务，<code>NAME</code>则是服务的名称.</p>
 <p>对于我们上面注册的Web服务.它的域名是 <code>web.service.consul</code>:</p>
 <div class="highlight" id="id-10"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -521,8 +521,8 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ dig @127.0.0.1 -p 8600 rails.web.service.consul SRV
 </span></span><span class="line"><span class="cl"># 输出信息略</span></span></code></pre></td></tr></table>
 </div>
-</div><h4 id="http-api">HTTP API</h4>
-<p>除了DNS API之外，也可以使用HTTP API查询所有服务实例：</p>
+</div><h4 id="http-api" class="heading-element">
+  <a href="#http-api" class="heading-mark"></a>HTTP API</h4><p>除了DNS API之外，也可以使用HTTP API查询所有服务实例：</p>
 <div class="highlight" id="id-13"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -610,8 +610,8 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ curl http://localhost:8500/v1/catalog/service/web?passing
 </span></span><span class="line"><span class="cl"># 输出信息略</span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="更新服务">更新服务</h3>
-<p>服务定义可以通过修改配置文件并发送<code>SIGHUP</code>给Agent来进行更新，这样可以在不关闭服务或者保持服务请求可用的情况下进行更新。</p>
+</div><h3 id="更新服务" class="heading-element">
+  <a href="#%e6%9b%b4%e6%96%b0%e6%9c%8d%e5%8a%a1" class="heading-mark"></a>更新服务</h3><p>服务定义可以通过修改配置文件并发送<code>SIGHUP</code>给Agent来进行更新，这样可以在不关闭服务或者保持服务请求可用的情况下进行更新。</p>
 <p>参考来源：</p>
 <ol>
 <li><a href="https://github.com/hashicorp/consul"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/hashicorp/consul<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>

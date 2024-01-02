@@ -42,13 +42,13 @@ def eventLoop():
 
 如果用户没有主动为appendfsync选项设置值，那么appendfsync选项的默认值为everysec。
 
-> **文件的写入和同步**
-> 
-> 为了提高文件的写入效率，在现代操作系统中，当用户调用write函数，将一些数据写入到文件的时候，操作系统通常会将写入数据暂时保存在一个内存缓冲区里面，等到缓冲区的空间被填满、或者超过了指定的时限之后，才真正地将缓冲区中的数据写入到磁盘里面。
-> 
-> 这种做法虽然提高了效率，但也为写入数据带来了安全问题，因为如果计算机发生停机，那么保存在内存缓冲区里面的写入数据将会丢失。
-> 
-> 为此，系统提供了fsync和fdatasync两个同步函数，它们可以强制让操作系统立即将缓冲区中的数据写入到硬盘里面，从而确保写入数据的安全性。
+&gt; **文件的写入和同步**
+&gt; 
+&gt; 为了提高文件的写入效率，在现代操作系统中，当用户调用write函数，将一些数据写入到文件的时候，操作系统通常会将写入数据暂时保存在一个内存缓冲区里面，等到缓冲区的空间被填满、或者超过了指定的时限之后，才真正地将缓冲区中的数据写入到磁盘里面。
+&gt; 
+&gt; 这种做法虽然提高了效率，但也为写入数据带来了安全问题，因为如果计算机发生停机，那么保存在内存缓冲区里面的写入数据将会丢失。
+&gt; 
+&gt; 为此，系统提供了fsync和fdatasync两个同步函数，它们可以强制让操作系统立即将缓冲区中的数据写入到硬盘里面，从而确保写入数据的安全性。
 
 服务器配置appendfsync选项的值直接决定AOF持久化功能的效率和安全性。
 - 当appendfsync的值为always时，服务器在每个事件循环都要将aof_buf缓冲区中的所有内容写入到AOF文件，并且同步AOF文件，所以always的效率是appendfsync选项三个值当中**最慢**的一个，但从安全性来说，always也是最安全的，因为即使出现故障停机，AOF持久化也只会丢失一个事件循环中所产生的命令数据。
@@ -82,7 +82,7 @@ def aof_rewrite(new_aof_file_name):
         #忽略空数据库
         if db.is_empty(): continue
         #写入SELECT命令，指定数据库号码
-        f.write_command("SELECT" + db.id)
+        f.write_command(&#34;SELECT&#34; &#43; db.id)
         #遍历数据库中的所有键
         for key in db:
             #忽略已过期的键
@@ -125,7 +125,7 @@ def aof_rewrite(new_aof_file_name):
         f.write_command(SADD, key, elem1, elem2, ..., elemN)
     def rewrite_sorted_set(key):
         #使用ZRANGE命令获取有序集合键包含的所有元素
-        member1, score1, member2, score2, ..., memberN, scoreN = ZRANGE(key, 0, -1, "WITHSCORES")
+        member1, score1, member2, score2, ..., memberN, scoreN = ZRANGE(key, 0, -1, &#34;WITHSCORES&#34;)
         #使用ZADD命令重写有序集合键
         f.write_command(ZADD, key, score1, member1, score2, member2, ..., scoreN, memberN)
     def rewrite_expire_time(key):

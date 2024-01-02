@@ -5,12 +5,12 @@
 
 执行如下命令，在目标机器(假设ip为`10.11.12.13`)上监听端口`8415`
 ```
-nc -l 8415 > data.txt
+nc -l 8415 &gt; data.txt
 ```
 
 往目标机器发送数据 
 ```
-nc -v 10.11.12.13 8415 < ~/Downloads/data.txt
+nc -v 10.11.12.13 8415 &lt; ~/Downloads/data.txt
 ```
 
 ## 2 SimpleHTTPServer

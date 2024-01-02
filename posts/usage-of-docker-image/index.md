@@ -54,7 +54,7 @@ Build Cache         0                   0                   0B                  
 ```
 
 ## 虚悬镜像
-由于新旧镜像同名，旧镜像名称被取消，从而出现仓库名、标签均为` <none> `的镜像。这类无标签镜像也被称为 虚悬镜像(dangling image) 。
+由于新旧镜像同名，旧镜像名称被取消，从而出现仓库名、标签均为` &lt;none&gt; `的镜像。这类无标签镜像也被称为 虚悬镜像(dangling image) 。
 
 ## 中间层镜像
 为了加速镜像构建、重复利用资源，Docker 会利用 中间层镜像。所以在使用一段时间后，可能会看到一些依赖的中间层镜像。默认的 docker image ls 列表中只会显示顶层镜像，如果希望显示包括中间层镜像在内的所有镜像的话，需要加 -a 参数。
@@ -65,12 +65,12 @@ $ docker image ls -a
 
 以特定格式显示：
 ```
-$ docker image ls --format "{{.ID}}: {{.Repository}}"
+$ docker image ls --format &#34;{{.ID}}: {{.Repository}}&#34;
 93fd78260bd1: ubuntu
 93fd78260bd1: ubuntu
 4ab4c602aa5e: hello-world
 
-$ docker image ls --format "table {{.ID}}\t{{.Repository}}\t{{.Tag}}"
+$ docker image ls --format &#34;table {{.ID}}\t{{.Repository}}\t{{.Tag}}&#34;
 IMAGE ID            REPOSITORY          TAG
 93fd78260bd1        ubuntu              18.04
 93fd78260bd1        ubuntu              latest
@@ -80,9 +80,9 @@ IMAGE ID            REPOSITORY          TAG
 ## 删除本地镜像
 如果要删除本地的镜像，可以使用 `docker image rm` 命令，其格式为：
 ```
-$ docker image rm [选项] <镜像1> [<镜像2> ...]
+$ docker image rm [选项] &lt;镜像1&gt; [&lt;镜像2&gt; ...]
 ```
-其中，`<镜像>` 可以是 `镜像短 ID`、`镜像长 ID`、`镜像名` 或者 `镜像摘要`。
+其中，`&lt;镜像&gt;` 可以是 `镜像短 ID`、`镜像长 ID`、`镜像名` 或者 `镜像摘要`。
 
 ## Untagged 和 Deleted
 如果观察上面这几个命令的运行输出信息的话，你会注意到删除行为分为两类，一类是`Untagged`，另一类是 `Deleted`。我们之前介绍过，镜像的唯一标识是其 ID 和摘要，而一个镜像可以有多个标签。
@@ -119,13 +119,13 @@ Thank you for using nginx.
 如果我们想要修改欢迎页面的内容，可以使用 `docker exec` 命令进入容器，修改其内容。
 ```
 $ docker exec -it webserver bash
-root@3729b97e8226:/# echo '<h1>Hello, Docker!</h1>' > /usr/share/nginx/html/index.html
+root@3729b97e8226:/# echo &#39;&lt;h1&gt;Hello, Docker!&lt;/h1&gt;&#39; &gt; /usr/share/nginx/html/index.html
 root@3729b97e8226:/# exit
 exit
 ```
 我们以交互式终端方式进入 `webserver` 容器，并执行了 `bash` 命令，也就是获得一个可操作的 Shell。
 
-然后，我们用 `<h1>Hello, Docker!</h1>` 覆盖了 /usr/share/nginx/html/index.html 的内容。现在我们再刷新浏览器的话，会发现内容被改变了。
+然后，我们用 `&lt;h1&gt;Hello, Docker!&lt;/h1&gt;` 覆盖了 /usr/share/nginx/html/index.html 的内容。现在我们再刷新浏览器的话，会发现内容被改变了。
 
 我们修改了容器的文件，也就是改动了容器的存储层。我们可以通过 `docker diff` 命令看到具体的改动。
 ```
@@ -152,12 +152,12 @@ A /run/nginx.pid
 
 docker commit 的语法格式为：
 ```
-docker commit [选项] <容器ID或容器名> [<仓库名>[:<标签>]]
+docker commit [选项] &lt;容器ID或容器名&gt; [&lt;仓库名&gt;[:&lt;标签&gt;]]
 ```
 
 我们可以用下面的命令将容器保存为镜像：
 ```
-$ docker commit --author "chuxing" --message "update page" webserver nginx:v2
+$ docker commit --author &#34;chuxing&#34; --message &#34;update page&#34; webserver nginx:v2
 sha256:8aaa0b63a1b842fb301d5d691cae92d9fdb52c73f37858eefada4325a36474f0
 ```
 
@@ -188,7 +188,7 @@ $ docker save -o nginx.tar nginx:latest
 ```
 或
 ```
-$ docker save > nginx.tar nginx:latest 
+$ docker save &gt; nginx.tar nginx:latest 
 ```
 
 
@@ -198,7 +198,7 @@ $ docker load -i nginx.tar
 ```
 或
 ```
-$ docker load < nginx.tar
+$ docker load &lt; nginx.tar
 ```
 
 

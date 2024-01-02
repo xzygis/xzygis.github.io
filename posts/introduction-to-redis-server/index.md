@@ -28,7 +28,7 @@ SET KEY VALUE
 ### 命令执行器（1）：查找命令实现
 命令执行器要做的第一件事就是根据客户端状态的argv[0]参数，在命令表（command table）中查找参数所指定的命令，并将找到的命令保存到客户端状态的cmd属性里面。
 
-命令表是一个字典，字典的键是一个个命令名字，比如"set"、"get"、"del"等等；而字典的值则是一个个redisCommand结构，每个redisCommand结构记录了一个Redis命令的实现信息。
+命令表是一个字典，字典的键是一个个命令名字，比如&#34;set&#34;、&#34;get&#34;、&#34;del&#34;等等；而字典的值则是一个个redisCommand结构，每个redisCommand结构记录了一个Redis命令的实现信息。
 
 因为命令表使用的是大小写无关的查找算法，无论输入的命令名字是大写、小写或者混合大小写，只要命令的名字是正确的，就能找到相应的redisCommand结构。
 
@@ -156,7 +156,7 @@ struct redisServer {
 // SIGTERM信号的处理器
 static void sigtermHandler(int sig) {
     //打印日志
-    redisLogFromHandler(REDIS_WARNING,"Received SIGTERM, scheduling shutdown...");
+    redisLogFromHandler(REDIS_WARNING,&#34;Received SIGTERM, scheduling shutdown...&#34;);
     //打开关闭标识
     server.shutdown_asap = 1;
 }
@@ -243,7 +243,7 @@ void initServerConfig(void){
     //设置服务器的运行id
     getRandomHexChars(server.runid,REDIS_RUN_ID_SIZE);
     //为运行id加上结尾字符
-    server.runid[REDIS_RUN_ID_SIZE] = '\0';
+    server.runid[REDIS_RUN_ID_SIZE] = &#39;\0&#39;;
     //设置默认配置文件路径
     server.configfile = NULL;
     //设置默认服务器频率

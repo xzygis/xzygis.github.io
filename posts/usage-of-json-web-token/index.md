@@ -47,8 +47,8 @@ xxxxx.yyyyy.zzzzz
 一个Header的例子：
 ```json
 {
-  "alg": "HS256",
-  "typ": "JWT"
+  &#34;alg&#34;: &#34;HS256&#34;,
+  &#34;typ&#34;: &#34;JWT&#34;
 }
 ```
 随后，以上JSON对象会通过 `Base64Url` 编码为JWT的第一部分。
@@ -77,9 +77,9 @@ xxxxx.yyyyy.zzzzz
 一个Payload的例子：
 ```json
 {
-  "sub": "1234567890",
-  "name": "John Doe",
-  "admin": true
+  &#34;sub&#34;: &#34;1234567890&#34;,
+  &#34;name&#34;: &#34;John Doe&#34;,
+  &#34;admin&#34;: true
 }
 ```
 随后，Payload会通过 `Base64Url` 编码为JWT的第二部分。
@@ -90,7 +90,7 @@ xxxxx.yyyyy.zzzzz
 如果你想使用HMAC SHA256算法，签名将通过如下方式生成：
 ```go
 HMACSHA256(
-  base64UrlEncode(header) + "." +
+  base64UrlEncode(header) &#43; &#34;.&#34; &#43;
   base64UrlEncode(payload),
   secret)
 ```
@@ -102,7 +102,7 @@ HMACSHA256(
 客户端收到服务器返回的 JWT，可以储存在 Cookie 里面，也可以储存在 localStorage。
 此后，客户端每次与服务器通信，都要带上这个 JWT。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP 请求的头信息Authorization字段里面。
 ```js
-Authorization: Bearer <token>
+Authorization: Bearer &lt;token&gt;
 ```
 另一种做法是，跨域的时候，JWT 就放在 POST 请求的数据体里面。
 
@@ -120,15 +120,15 @@ Go语言版本：
 package util
 
 import (
-	"crypto/rsa"
-	"crypto/x509"
-	"encoding/pem"
-	"errors"
-	"fmt"
-	"github.com/dgrijalva/jwt-go"
+	&#34;crypto/rsa&#34;
+	&#34;crypto/x509&#34;
+	&#34;encoding/pem&#34;
+	&#34;errors&#34;
+	&#34;fmt&#34;
+	&#34;github.com/dgrijalva/jwt-go&#34;
 )
 
-var ErrVerifyFailed = fmt.Errorf("verify failed")
+var ErrVerifyFailed = fmt.Errorf(&#34;verify failed&#34;)
 
 //https://godoc.org/github.com/dgrijalva/jwt-go#example-New--Hmac
 func CreateToken(claims jwt.MapClaims, privateKey []byte) (string, error) {
@@ -136,12 +136,12 @@ func CreateToken(claims jwt.MapClaims, privateKey []byte) (string, error) {
 
 	block, _ := pem.Decode(privateKey)
 	if block == nil {
-		return "", errors.New("private key error")
+		return &#34;&#34;, errors.New(&#34;private key error&#34;)
 	}
 
 	priv, err := x509.ParsePKCS8PrivateKey(block.Bytes)
 	if err != nil {
-		return "", err
+		return &#34;&#34;, err
 	}
 	return token.SignedString(priv)
 }
@@ -150,11 +150,11 @@ func CreateToken(claims jwt.MapClaims, privateKey []byte) (string, error) {
 func VerifyToken(tokenString string, publicKey []byte) (jwt.MapClaims, error) {
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodRSA); !ok {
-			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+			return nil, fmt.Errorf(&#34;unexpected signing method: %v&#34;, token.Header[&#34;alg&#34;])
 		}
 
-		if token.Header["alg"] != "RS512" {
-			return nil, fmt.Errorf("unexpected siging alg: %v", token.Header["alg"])
+		if token.Header[&#34;alg&#34;] != &#34;RS512&#34; {
+			return nil, fmt.Errorf(&#34;unexpected siging alg: %v&#34;, token.Header[&#34;alg&#34;])
 		}
 
 		block, _ := pem.Decode(publicKey)
@@ -175,7 +175,7 @@ func VerifyToken(tokenString string, publicKey []byte) (jwt.MapClaims, error) {
 		return nil, ErrVerifyFailed
 	}
 
-	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+	if claims, ok := token.Claims.(jwt.MapClaims); ok &amp;&amp; token.Valid {
 		return claims, nil
 	}
 

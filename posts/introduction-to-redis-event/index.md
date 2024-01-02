@@ -35,15 +35,15 @@ Redis在I/O多路复用程序的实现源码中用#include宏定义了相应的�
 /* Include the best multiplexing layer supported by this system.
 * The following should be ordered by performances, descending. */
 # ifdef HAVE_EVPORT
-# include "ae_evport.c"
+# include &#34;ae_evport.c&#34;
 # else
     # ifdef HAVE_EPOLL
-    # include "ae_epoll.c"
+    # include &#34;ae_epoll.c&#34;
     # else
         # ifdef HAVE_KQUEUE
-        # include "ae_kqueue.c"
+        # include &#34;ae_kqueue.c&#34;
         # else
-        # include "ae_select.c"
+        # include &#34;ae_select.c&#34;
         # endif
     # endif
 # endif

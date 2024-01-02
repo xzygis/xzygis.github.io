@@ -47,21 +47,21 @@ sudo systemctl start docker
 初次运行可能会报如下的错误信息：
 ```shell
 [root@VM_0_6_centos ~]# docker run hello-world
-Unable to find image 'hello-world:latest' locally
-docker: Error response from daemon: Get https://registry-1.docker.io/v2/library/hello-world/manifests/latest: Get https://auth.docker.io/token?scope=repository%3Alibrary%2Fhello-world%3Apull&service=registry.docker.io: net/http: TLS handshake timeout.
-See 'docker run --help'.
+Unable to find image &#39;hello-world:latest&#39; locally
+docker: Error response from daemon: Get https://registry-1.docker.io/v2/library/hello-world/manifests/latest: Get https://auth.docker.io/token?scope=repository%3Alibrary%2Fhello-world%3Apull&amp;service=registry.docker.io: net/http: TLS handshake timeout.
+See &#39;docker run --help&#39;.
 ```
 解决方式是使用国内的镜像地址，新建`/etc/docker/daemon.json`文件，填写如下配置信息：
 ```
 {
-  "registry-mirrors": ["http://hub-mirror.c.163.com"]
+  &#34;registry-mirrors&#34;: [&#34;http://hub-mirror.c.163.com&#34;]
 }
 ```
 
 之后运行正常，如下：
 ```
 [root@VM_0_6_centos docker]# docker run hello-world
-Unable to find image 'hello-world:latest' locally
+Unable to find image &#39;hello-world:latest&#39; locally
 latest: Pulling from library/hello-world
 d1725b59e92d: Pull complete
 Digest: sha256:0add3ace90ecb4adbf7777e9aacf18357296e799f81cabc9fde470971e499788
@@ -72,7 +72,7 @@ This message shows that your installation appears to be working correctly.
 
 To generate this message, Docker took the following steps:
  1. The Docker client contacted the Docker daemon.
- 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+ 2. The Docker daemon pulled the &#34;hello-world&#34; image from the Docker Hub.
     (amd64)
  3. The Docker daemon created a new container from that image which runs the
     executable that produces the output you are currently reading.

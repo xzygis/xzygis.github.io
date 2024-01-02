@@ -38,19 +38,19 @@ Bloom Filter是一种空间效率很高的随机数据结构，Bloom filter 可�
 
 ## 哈希算法
 哈希算法是影响布隆过滤器性能的地方。我们需要选择一个效率高但不耗时的哈希函数，在论文《更少的哈希函数，相同的性能指标：构造一个更好的布隆过滤器》中，讨论了如何选用2个哈希函数来模拟k个哈希函数。首先，我们需要计算两个哈希函数h1(x)与h2(x)。然后，我们可以用这两个哈希函数来模仿产生k个哈希函数的效果：
-`gi(x) = h1(x) + ih2(x)`
+`gi(x) = h1(x) &#43; ih2(x)`
 这里i的取值范围是1到k的整数。
 
 Google Guava类库使用这个技巧实现了一个布隆过滤器，哈希算法的主要逻辑如下：
 ```java
 long hash64 = ...;
 int hash1 = (int) hash64;
-int hash2 = (int) (hash64 >>> 32);
+int hash2 = (int) (hash64 &gt;&gt;&gt; 32);
 
-for (int i = 1; i <= numHashFunctions; i++) {
-  int combinedHash = hash1 + (i * hash2);
-  // Flip all the bits if it's negative (guaranteed positive number)
-  if (combinedHash < 0) {
+for (int i = 1; i &lt;= numHashFunctions; i&#43;&#43;) {
+  int combinedHash = hash1 &#43; (i * hash2);
+  // Flip all the bits if it&#39;s negative (guaranteed positive number)
+  if (combinedHash &lt; 0) {
     combinedHash = ~combinedHash;
   }
 }
@@ -60,7 +60,7 @@ Guava中的Bloom Filter使用示例：
 ```java
 int expectedInsertions = ...; //待检测元素的个数
 double fpp = 0.03; //误判率(desired false positive probability)
-BloomFilter<CharSequence> bloomFilter = BloomFilter.create(Funnels.stringFunnel(Charset.forName("UTF-8")), expectedInsertions,fpp);
+BloomFilter&lt;CharSequence&gt; bloomFilter = BloomFilter.create(Funnels.stringFunnel(Charset.forName(&#34;UTF-8&#34;)), expectedInsertions,fpp);
 ```
 
 ## 优点

@@ -8,18 +8,18 @@
 考虑包含内部对象的数组是如何被索引的。 假设我们有个 followers 数组：
 ```json
 {
-  "followers": [
-    { "age": 35, "name": "Mary White"},
-    { "age": 26, "name": "Alex Jones"},
-    { "age": 19, "name": "Lisa Smith"}
+  &#34;followers&#34;: [
+    { &#34;age&#34;: 35, &#34;name&#34;: &#34;Mary White&#34;},
+    { &#34;age&#34;: 26, &#34;name&#34;: &#34;Alex Jones&#34;},
+    { &#34;age&#34;: 19, &#34;name&#34;: &#34;Lisa Smith&#34;}
   ]
 }
 ```
 这个文档会像我们之前描述的那样被扁平化处理，结果如下所示：
 ```json
 {
-    "followers.age":    [19, 26, 35],
-    "followers.name":   [alex, jones, lisa, smith, mary, white]
+    &#34;followers.age&#34;:    [19, 26, 35],
+    &#34;followers.name&#34;:   [alex, jones, lisa, smith, mary, white]
 }
 ```
 `{age: 35}` 和 `{name: Mary White}` 之间的相关性已经丢失了，因为每个多值域只是一包无序的值，而不是有序数组。
@@ -29,23 +29,23 @@
 ```json
 PUT /my_index/blogpost/1
 {
-  "title": "Nest eggs",
-  "body":  "Making your money work...",
-  "tags":  [ "cash", "shares" ],
-  "comments": [ 
+  &#34;title&#34;: &#34;Nest eggs&#34;,
+  &#34;body&#34;:  &#34;Making your money work...&#34;,
+  &#34;tags&#34;:  [ &#34;cash&#34;, &#34;shares&#34; ],
+  &#34;comments&#34;: [ 
     {
-      "name":    "John Smith",
-      "comment": "Great article",
-      "age":     28,
-      "stars":   4,
-      "date":    "2014-09-01"
+      &#34;name&#34;:    &#34;John Smith&#34;,
+      &#34;comment&#34;: &#34;Great article&#34;,
+      &#34;age&#34;:     28,
+      &#34;stars&#34;:   4,
+      &#34;date&#34;:    &#34;2014-09-01&#34;
     },
     {
-      "name":    "Alice White",
-      "comment": "More like this please",
-      "age":     31,
-      "stars":   5,
-      "date":    "2014-10-22"
+      &#34;name&#34;:    &#34;Alice White&#34;,
+      &#34;comment&#34;: &#34;More like this please&#34;,
+      &#34;age&#34;:     31,
+      &#34;stars&#34;:   5,
+      &#34;date&#34;:    &#34;2014-10-22&#34;
     }
   ]
 }
@@ -55,37 +55,37 @@ PUT /my_index/blogpost/1
 由于所有的信息都在一个文档中,当我们查询时就没有必要去联合文章和评论文档,查询效率就很高。但是因为JSON 格式的文档被处理成如下的扁平式键值对的结构，会导致查询结果不准确。
 ```json
 {
-  "title":            [ eggs, nest ],
-  "body":             [ making, money, work, your ],
-  "tags":             [ cash, shares ],
-  "comments.name":    [ alice, john, smith, white ],
-  "comments.comment": [ article, great, like, more, please, this ],
-  "comments.age":     [ 28, 31 ],
-  "comments.stars":   [ 4, 5 ],
-  "comments.date":    [ 2014-09-01, 2014-10-22 ]
+  &#34;title&#34;:            [ eggs, nest ],
+  &#34;body&#34;:             [ making, money, work, your ],
+  &#34;tags&#34;:             [ cash, shares ],
+  &#34;comments.name&#34;:    [ alice, john, smith, white ],
+  &#34;comments.comment&#34;: [ article, great, like, more, please, this ],
+  &#34;comments.age&#34;:     [ 28, 31 ],
+  &#34;comments.stars&#34;:   [ 4, 5 ],
+  &#34;comments.date&#34;:    [ 2014-09-01, 2014-10-22 ]
 }
 ```
 
 嵌套对象 就是来解决这个问题的。将 comments 字段类型设置为 nested 而不是 object 后,每一个嵌套对象都会被索引为一个 隐藏的独立文档 ,举例如下:
 ```json
 { 
-  "comments.name":    [ john, smith ],
-  "comments.comment": [ article, great ],
-  "comments.age":     [ 28 ],
-  "comments.stars":   [ 4 ],
-  "comments.date":    [ 2014-09-01 ]
+  &#34;comments.name&#34;:    [ john, smith ],
+  &#34;comments.comment&#34;: [ article, great ],
+  &#34;comments.age&#34;:     [ 28 ],
+  &#34;comments.stars&#34;:   [ 4 ],
+  &#34;comments.date&#34;:    [ 2014-09-01 ]
 }
 { 
-  "comments.name":    [ alice, white ],
-  "comments.comment": [ like, more, please, this ],
-  "comments.age":     [ 31 ],
-  "comments.stars":   [ 5 ],
-  "comments.date":    [ 2014-10-22 ]
+  &#34;comments.name&#34;:    [ alice, white ],
+  &#34;comments.comment&#34;: [ like, more, please, this ],
+  &#34;comments.age&#34;:     [ 31 ],
+  &#34;comments.stars&#34;:   [ 5 ],
+  &#34;comments.date&#34;:    [ 2014-10-22 ]
 }
 { 
-  "title":            [ eggs, nest ],
-  "body":             [ making, money, work, your ],
-  "tags":             [ cash, shares ]
+  &#34;title&#34;:            [ eggs, nest ],
+  &#34;body&#34;:             [ making, money, work, your ],
+  &#34;tags&#34;:             [ cash, shares ]
 }
 ```
 第一个和第二个为嵌套文档，第三个为根文档。

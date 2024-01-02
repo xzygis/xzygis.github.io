@@ -150,7 +150,7 @@ Redis计算哈希值和索引值的方法如下：
 hash = dict-＞type-＞hashFunction(key);
 #使用哈希表的sizemask属性和哈希值，计算出索引值
 #根据情况不同，ht[x]可以是ht[0]或者ht[1]
-index = hash & dict-＞ht[x].sizemask;
+index = hash &amp; dict-＞ht[x].sizemask;
 ```
 Redis的哈希表使用链地址法（separate chaining）来解决键冲突，每个哈希表节点都有一个next指针，多个哈希表节点可以用next指针构成一个单向链表，被分配到同一个索引上的多个节点可以用这个单向链表连接起来，这就解决了键冲突的问题。
 

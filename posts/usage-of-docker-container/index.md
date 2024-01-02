@@ -30,12 +30,12 @@ $ docker run -itd --name ubuntu-test ubuntu /bin/bash
 
 ## 停止一个容器
 ```
-$ docker stop <容器 ID>
+$ docker stop &lt;容器 ID&gt;
 ```
 
 停止的容器可以通过 docker restart 重启：
 ```
-$ docker restart <容器 ID>
+$ docker restart &lt;容器 ID&gt;
 ```
 
 ## 进入容器
@@ -53,7 +53,7 @@ $ docker exec -it 243c32535da7 /bin/bash
 
 ### 导出容器
 ```
-$ docker export 1e560fca3906 > ubuntu.tar
+$ docker export 1e560fca3906 &gt; ubuntu.tar
 ```
 
 

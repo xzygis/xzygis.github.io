@@ -74,7 +74,7 @@ Service Mesh 架构示意图：
 ### 从边车模式到 Service Mesh
 
 #### 什么是边车模式
->Deploy components of an application into a separate process or container to provide isolation and encapsulation.
+&gt;Deploy components of an application into a separate process or container to provide isolation and encapsulation.
 --- Sidecar pattern
 
 ![SideCar](https://img-blog.csdnimg.cn/2019111623235962.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70)
@@ -97,7 +97,7 @@ Service Mesh 架构示意图：
 Service Mesh 将底层那些难以控制的网络通讯统一管理，诸如：流量管控，丢包重试，访问控制等。而上层的应用层协议只需关心业务逻辑即可。Service Mesh 是一个用于处理服务间通信的基础设施层，它负责为构建复杂的云原生应用传递可靠的网络请求。
 
 ## Kubernetes vs Service Mesh
-> Kubernetes 管理的对象是 Pod，Service Mesh 中管理的对象是 Service。
+&gt; Kubernetes 管理的对象是 Pod，Service Mesh 中管理的对象是 Service。
 - Kubernetes 的本质是应用的生命周期管理，具体来说就是部署和管理（扩缩容、自动恢复、发布）。
 - Kubernetes 为微服务提供了可扩展、高弹性的部署和管理平台。
 - Service Mesh 的基础是透明代理，通过 sidecar proxy 拦截到微服务间流量后再通过控制平面配置管理微服务的行为。

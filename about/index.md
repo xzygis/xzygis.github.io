@@ -15,7 +15,7 @@
 - 知行合一
 
 ### 我的星球
-<image style="width: 300px; height: 400px" src="https://github.com/xzygis/xzygis.github.io/blob/gh-pages/images/zsxq.png?raw=true"></image>
+&lt;image style=&#34;width: 300px; height: 400px&#34; src=&#34;https://github.com/xzygis/xzygis.github.io/blob/gh-pages/images/zsxq.png?raw=true&#34;&gt;&lt;/image&gt;
 
 如果你也喜欢读书，欢迎加入知识星球与我一起读书提升认知！
 

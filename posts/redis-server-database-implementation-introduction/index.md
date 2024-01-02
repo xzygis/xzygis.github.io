@@ -156,7 +156,7 @@ def activeExpireCycle():
         #获取当前要处理的数据库
         redisDb = server.db[current_db]
         #将数据库索引增1，指向下一个要处理的数据库
-        current_db += 1
+        current_db &#43;= 1
         #检查数据库键
         for j in range(DEFAULT_KEY_NUMBERS):
             #如果数据库中没有一个键带有过期时间，那么跳过这个数据库

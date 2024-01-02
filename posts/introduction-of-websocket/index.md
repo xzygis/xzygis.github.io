@@ -37,7 +37,7 @@ Sec-WebSocket-Version: 13
 HTTP/1.1 101 Switching Protocols
 Upgrade: websocket
 Connection: Upgrade
-Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
+Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK&#43;xOo=
 Sec-WebSocket-Protocol: chat
 ```
 
@@ -50,7 +50,7 @@ Sec-WebSocket-Protocol: chat
 - Origin字段是必须的。如果缺少origin字段，WebSocket服务器需要回复HTTP 403 状态码（禁止访问）。
 
 ### 体验一下
-> https://www.websocket.org/echo.html
+&gt; https://www.websocket.org/echo.html
 
 ![Connect](websocket.org-1.png)
 
@@ -70,22 +70,22 @@ WebSocket客户端、服务端通信的最小单位是帧（frame），由1个�
 
 ### 帧结构
 ```
- +-+-+-+-+-------+-+-------------+-------------------------------+
+ &#43;-&#43;-&#43;-&#43;-&#43;-------&#43;-&#43;-------------&#43;-------------------------------&#43;
  |F|R|R|R| opcode|M| Payload len |    Extended payload length    |
  |I|S|S|S|  (4)  |A|     (7)     |             (16/64)           |
  |N|V|V|V|       |S|             |   (if payload len==126/127)   |
  | |1|2|3|       |K|             |                               |
- +-+-+-+-+-------+-+-------------+ - - - - - - - - - - - - - - - +
+ &#43;-&#43;-&#43;-&#43;-&#43;-------&#43;-&#43;-------------&#43; - - - - - - - - - - - - - - - &#43;
  |     Extended payload length continued, if payload len == 127  |
- + - - - - - - - - - - - - - - - +-------------------------------+
+ &#43; - - - - - - - - - - - - - - - &#43;-------------------------------&#43;
  |                               |Masking-key, if MASK set to 1  |
- +-------------------------------+-------------------------------+
+ &#43;-------------------------------&#43;-------------------------------&#43;
  | Masking-key (continued)       |          Payload Data         |
- +-------------------------------- - - - - - - - - - - - - - - - +
+ &#43;-------------------------------- - - - - - - - - - - - - - - - &#43;
  :                     Payload Data continued ...                :
- + - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - +
+ &#43; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - &#43;
  |                     Payload Data continued ...                |
- +---------------------------------------------------------------+
+ &#43;---------------------------------------------------------------&#43;
 ```
 
 ### 字段说明
@@ -112,7 +112,7 @@ Mask: 1个比特。
 如果Mask是1，那么在Masking-key中会定义一个掩码键（masking key），并用这个掩码键来对数据载荷进行反掩码。所有客户端发送到服务端的数据帧，Mask都是1。
 掩码的算法、用途在下一小节讲解。
 
-Payload length：数据载荷的长度，单位是字节。为7位，或7+16位，或1+64位。
+Payload length：数据载荷的长度，单位是字节。为7位，或7&#43;16位，或1&#43;64位。
 假设数Payload length === x，如果
 - x为0~126：数据的长度为x字节。
 - x为126：后续2个字节代表一个16位的无符号整数，该无符号整数的值为数据的长度。
@@ -124,7 +124,7 @@ Masking-key：0或4字节（32位）
 所有从客户端传送到服务端的数据帧，数据载荷都进行了掩码操作，Mask为1，且携带了4字节的Masking-key。如果Mask为0，则没有Masking-key。
 备注：载荷数据的长度，不包括mask key的长度。
 
-Payload data：(x+y) 字节
+Payload data：(x&#43;y) 字节
 - 载荷数据：包括了扩展数据、应用数据。其中，扩展数据x字节，应用数据y字节。
 - 扩展数据：如果没有协商使用扩展的话，扩展数据数据为0字节。所有的扩展都必须声明扩展数据的长度，或者可以如何计算出扩展数据的长度。此外，扩展如何使用必须在握手阶段就协商好。如果扩展数据存在，那么载荷数据长度必须将扩展数据的长度包含在内。
 - 应用数据：任意的应用数据，在扩展数据之后（如果存在扩展数据），占据了数据帧剩余的位置。载荷数据长度 减去 扩展数据长度，就得到应用数据的长度。
@@ -142,8 +142,8 @@ Payload data：(x+y) 字节
 
 伪代码大概是：
 ```
-var DECODED = "";
-for (var i = 0; i < ENCODED.length; i++) {
+var DECODED = &#34;&#34;;
+for (var i = 0; i &lt; ENCODED.length; i&#43;&#43;) {
     DECODED[i] = ENCODED[i] ^ MASK[i % 4];
 }
 ```
@@ -174,21 +174,21 @@ FIN=1, 表示是当前消息的最后一个数据帧。服务端收到当前数�
 2. FIN=0，opcode=0x0，表示消息还没发送完成，还有后续的数据帧，当前的数据帧需要接在上一条数据帧之后。
 3. FIN=1，opcode=0x0，表示消息已经发送完成，没有后续的数据帧，当前的数据帧需要接在上一条数据帧之后。服务端可以将关联的数据帧组装成完整的消息。
 ```
-Client: FIN=1, opcode=0x1, msg="hello"
+Client: FIN=1, opcode=0x1, msg=&#34;hello&#34;
 Server: (process complete message immediately) Hi.
-Client: FIN=0, opcode=0x1, msg="and a"
+Client: FIN=0, opcode=0x1, msg=&#34;and a&#34;
 Server: (listening, new message containing text started)
-Client: FIN=0, opcode=0x0, msg="happy new"
+Client: FIN=0, opcode=0x0, msg=&#34;happy new&#34;
 Server: (listening, payload concatenated to previous message)
-Client: FIN=1, opcode=0x0, msg="year!"
+Client: FIN=1, opcode=0x0, msg=&#34;year!&#34;
 Server: (process complete message) Happy new year to you too!
 ```
 
 ## 心跳
 WebSocket 为了保持客户端、服务端的实时双向通信，需要确保客户端、服务端之间的 TCP 通道保持连接没有断开。
 对于长时间没有数据往来的连接，如果依旧长时间保持着，可能会浪费包括的连接资源。但不排除有些场景，客户端、服务端虽然长时间没有数据往来，但仍需要保持连接。这个时候，可以采用心跳来实现。
-- 发送方 -> 接收方：ping
-- 接收方 -> 发送方：pong
+- 发送方 -&gt; 接收方：ping
+- 接收方 -&gt; 发送方：pong
 
 ping、pong 的操作，对应的是 WebSocket 的两个控制帧，opcode分别是0x9、0xA。
 
@@ -197,12 +197,12 @@ WebSocket协议中规定在连接建立时检查Upgrade请求中的某些字段�
 websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL来对通信加密，默认ws的端口为80，wss端口为433，类似HTTP与HTTPS。
 
 ## Go实战：Gorilla WebSocket
-> Github：https://github.com/gorilla/websocket
+&gt; Github：https://github.com/gorilla/websocket
 
 文件监控例子（当文件被修改后，把文件发给客户端）：
 ```
 func main() {
-   http.HandleFunc("/ws", serveWs)
+   http.HandleFunc(&#34;/ws&#34;, serveWs)
    if err := http.ListenAndServe(*addr, nil); err != nil {
       log.Fatal(err)
    }
@@ -219,7 +219,7 @@ func serveWs(w http.ResponseWriter, r *http.Request) {
    }
 
    var lastMod time.Time
-   if n, err := strconv.ParseInt(r.FormValue("lastMod"), 16, 64); err == nil {
+   if n, err := strconv.ParseInt(r.FormValue(&#34;lastMod&#34;), 16, 64); err == nil {
       lastMod = time.Unix(0, n)
    }
 
@@ -233,7 +233,7 @@ func writer(ws *websocket.Conn, lastMod time.Time) {
    ...
    for {
       select {
-      case <-fileTicker.C:
+      case &lt;-fileTicker.C:
          p, fileModified, err := readFileIfModified(lastMod)
          ...
          if fileModified {
@@ -242,7 +242,7 @@ func writer(ws *websocket.Conn, lastMod time.Time) {
                return
             }
          }
-      case <-pingTicker.C:
+      case &lt;-pingTicker.C:
          ws.SetWriteDeadline(time.Now().Add(writeWait))
          if err := ws.WriteMessage(websocket.PingMessage, []byte{}); err != nil {
             return
@@ -272,49 +272,49 @@ func reader(ws *websocket.Conn) {
 ```
 // Upgrade upgrades the HTTP server connection to the WebSocket protocol.
 func (u *Upgrader) Upgrade(w http.ResponseWriter, r *http.Request, responseHeader http.Header) (*Conn, error) {
-   const badHandshake = "websocket: the client is not using the websocket protocol: "
+   const badHandshake = &#34;websocket: the client is not using the websocket protocol: &#34;
    //检查必要的头部字段
-   if !tokenListContainsValue(r.Header, "Connection", "upgrade") {
-      return u.returnError(w, r, http.StatusBadRequest, badHandshake+"'upgrade' token not found in 'Connection' header")
+   if !tokenListContainsValue(r.Header, &#34;Connection&#34;, &#34;upgrade&#34;) {
+      return u.returnError(w, r, http.StatusBadRequest, badHandshake&#43;&#34;&#39;upgrade&#39; token not found in &#39;Connection&#39; header&#34;)
    }
 
-   if !tokenListContainsValue(r.Header, "Upgrade", "websocket") {
-      return u.returnError(w, r, http.StatusBadRequest, badHandshake+"'websocket' token not found in 'Upgrade' header")
+   if !tokenListContainsValue(r.Header, &#34;Upgrade&#34;, &#34;websocket&#34;) {
+      return u.returnError(w, r, http.StatusBadRequest, badHandshake&#43;&#34;&#39;websocket&#39; token not found in &#39;Upgrade&#39; header&#34;)
    }
 
-   if r.Method != "GET" {
-      return u.returnError(w, r, http.StatusMethodNotAllowed, badHandshake+"request method is not GET")
+   if r.Method != &#34;GET&#34; {
+      return u.returnError(w, r, http.StatusMethodNotAllowed, badHandshake&#43;&#34;request method is not GET&#34;)
    }
 
-   if !tokenListContainsValue(r.Header, "Sec-Websocket-Version", "13") {
-      return u.returnError(w, r, http.StatusBadRequest, "websocket: unsupported version: 13 not found in 'Sec-Websocket-Version' header")
+   if !tokenListContainsValue(r.Header, &#34;Sec-Websocket-Version&#34;, &#34;13&#34;) {
+      return u.returnError(w, r, http.StatusBadRequest, &#34;websocket: unsupported version: 13 not found in &#39;Sec-Websocket-Version&#39; header&#34;)
    }
 
    if !checkOrigin(r) {
-      return u.returnError(w, r, http.StatusForbidden, "websocket: request origin not allowed by Upgrader.CheckOrigin")
+      return u.returnError(w, r, http.StatusForbidden, &#34;websocket: request origin not allowed by Upgrader.CheckOrigin&#34;)
    }
 
-   challengeKey := r.Header.Get("Sec-Websocket-Key")
-   if challengeKey == "" {
-      return u.returnError(w, r, http.StatusBadRequest, "websocket: not a websocket handshake: 'Sec-WebSocket-Key' header is missing or blank")
+   challengeKey := r.Header.Get(&#34;Sec-Websocket-Key&#34;)
+   if challengeKey == &#34;&#34; {
+      return u.returnError(w, r, http.StatusBadRequest, &#34;websocket: not a websocket handshake: &#39;Sec-WebSocket-Key&#39; header is missing or blank&#34;)
    }
 
    h, ok := w.(http.Hijacker)
    if !ok {
-      return u.returnError(w, r, http.StatusInternalServerError, "websocket: response does not implement http.Hijacker")
+      return u.returnError(w, r, http.StatusInternalServerError, &#34;websocket: response does not implement http.Hijacker&#34;)
    }
    
    //创建websocket.Conn
    c := newConn(netConn, true, u.ReadBufferSize, u.WriteBufferSize, u.WriteBufferPool, br, writeBuf)
  
    var p []byte
-   p = append(p, "HTTP/1.1 101 Switching Protocols\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Accept: "...)
+   p = append(p, &#34;HTTP/1.1 101 Switching Protocols\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Accept: &#34;...)
    p = append(p, computeAcceptKey(challengeKey)...) //计算accept
-   p = append(p, "\r\n"...)
-   if c.subprotocol != "" {
-      p = append(p, "Sec-WebSocket-Protocol: "...)
+   p = append(p, &#34;\r\n&#34;...)
+   if c.subprotocol != &#34;&#34; {
+      p = append(p, &#34;Sec-WebSocket-Protocol: &#34;...)
       p = append(p, c.subprotocol...)
-      p = append(p, "\r\n"...)
+      p = append(p, &#34;\r\n&#34;...)
    }
 
    if _, err = netConn.Write(p); err != nil {
@@ -325,7 +325,7 @@ func (u *Upgrader) Upgrade(w http.ResponseWriter, r *http.Request, responseHeade
    return c, nil
 }
 
-var keyGUID = []byte("258EAFA5-E914-47DA-95CA-C5AB0DC85B11")
+var keyGUID = []byte(&#34;258EAFA5-E914-47DA-95CA-C5AB0DC85B11&#34;)
 func computeAcceptKey(challengeKey string) string {
    h := sha1.New()
    h.Write([]byte(challengeKey))
@@ -334,7 +334,7 @@ func computeAcceptKey(challengeKey string) string {
 }
 
 func newConn(conn net.Conn, isServer bool, readBufferSize, writeBufferSize int, writeBufferPool BufferPool, br *bufio.Reader, writeBuf []byte) *Conn {
-   c := &Conn{
+   c := &amp;Conn{
       isServer:               isServer,
       br:                     br,
       conn:                   conn,
@@ -357,7 +357,7 @@ func newConn(conn net.Conn, isServer bool, readBufferSize, writeBufferSize int, 
 func (c *Conn) SetCloseHandler(h func(code int, text string) error) {
    if h == nil {
       h = func(code int, text string) error {
-         message := FormatCloseMessage(code, "")
+         message := FormatCloseMessage(code, &#34;&#34;)
          c.WriteControl(CloseMessage, message, time.Now().Add(writeWait))
          return nil
       }
@@ -404,7 +404,7 @@ func (c *Conn) NextReader() (messageType int, r io.Reader, err error) {
        }
     
        if frameType == TextMessage || frameType == BinaryMessage {
-          c.messageReader = &messageReader{c}
+          c.messageReader = &amp;messageReader{c}
           c.reader = c.messageReader
           if c.readDecompress {
              c.reader = c.newDecompressionReader(c.reader)
@@ -417,32 +417,32 @@ func (c *Conn) NextReader() (messageType int, r io.Reader, err error) {
 //解析数据帧
 func (c *Conn) advanceFrame() (int, error) {
    p, err := c.read(2)
-   final := p[0]&finalBit != 0
-   frameType := int(p[0] & 0xf)
-   mask := p[1]&maskBit != 0
-   c.setReadRemaining(int64(p[1] & 0x7f))
+   final := p[0]&amp;finalBit != 0
+   frameType := int(p[0] &amp; 0xf)
+   mask := p[1]&amp;maskBit != 0
+   c.setReadRemaining(int64(p[1] &amp; 0x7f))
 
 
    switch frameType {
    case CloseMessage, PingMessage, PongMessage:
-      if c.readRemaining > maxControlFramePayloadSize {
-         return noFrame, c.handleProtocolError("control frame length > 125")
+      if c.readRemaining &gt; maxControlFramePayloadSize {
+         return noFrame, c.handleProtocolError(&#34;control frame length &gt; 125&#34;)
       }
       if !final {
-         return noFrame, c.handleProtocolError("control frame not final")
+         return noFrame, c.handleProtocolError(&#34;control frame not final&#34;)
       }
    case TextMessage, BinaryMessage:
       if !c.readFinal {
-         return noFrame, c.handleProtocolError("message start before final message frame")
+         return noFrame, c.handleProtocolError(&#34;message start before final message frame&#34;)
       }
       c.readFinal = final
    case continuationFrame:
       if c.readFinal {
-         return noFrame, c.handleProtocolError("continuation after final message frame")
+         return noFrame, c.handleProtocolError(&#34;continuation after final message frame&#34;)
       }
       c.readFinal = final
    default:
-      return noFrame, c.handleProtocolError("unknown opcode " + strconv.Itoa(frameType))
+      return noFrame, c.handleProtocolError(&#34;unknown opcode &#34; &#43; strconv.Itoa(frameType))
    }
 
    
@@ -464,7 +464,7 @@ func (c *Conn) advanceFrame() (int, error) {
    }
 
    if mask != c.isServer {
-      return noFrame, c.handleProtocolError("incorrect mask flag")
+      return noFrame, c.handleProtocolError(&#34;incorrect mask flag&#34;)
    }
 
    if mask {
@@ -488,21 +488,21 @@ func (c *Conn) advanceFrame() (int, error) {
       }
    case CloseMessage:
       closeCode := CloseNoStatusReceived
-      closeText := ""
-      if len(payload) >= 2 {
+      closeText := &#34;&#34;
+      if len(payload) &gt;= 2 {
          closeCode = int(binary.BigEndian.Uint16(payload))
          if !isValidReceivedCloseCode(closeCode) {
-            return noFrame, c.handleProtocolError("invalid close code")
+            return noFrame, c.handleProtocolError(&#34;invalid close code&#34;)
          }
          closeText = string(payload[2:])
          if !utf8.ValidString(closeText) {
-            return noFrame, c.handleProtocolError("invalid utf8 payload in close frame")
+            return noFrame, c.handleProtocolError(&#34;invalid utf8 payload in close frame&#34;)
          }
       }
       if err := c.handleClose(closeCode, closeText); err != nil {
          return noFrame, err
       }
-      return noFrame, &CloseError{Code: closeCode, Text: closeText}
+      return noFrame, &amp;CloseError{Code: closeCode, Text: closeText}
    }
 
    return frameType, nil
@@ -514,11 +514,11 @@ func (c *Conn) advanceFrame() (int, error) {
 func (c *Conn) WriteMessage(messageType int, data []byte) error {
    var mw messageWriter
    // beginMessage prepares a connection and message writer for a new message.
-    if err := c.beginMessage(&mw, messageType); err != nil {
+    if err := c.beginMessage(&amp;mw, messageType); err != nil {
        return err
     }
     n := copy(c.writeBuf[mw.pos:], data)
-    mw.pos += n
+    mw.pos &#43;= n
     data = data[n:]
     return mw.flushFrame(true, data)
 }
@@ -526,7 +526,7 @@ func (c *Conn) WriteMessage(messageType int, data []byte) error {
 //组装数据帧
 func (w *messageWriter) flushFrame(final bool, extra []byte) error {
    c := w.c
-   length := w.pos - maxFrameHeaderSize + len(extra)
+   length := w.pos - maxFrameHeaderSize &#43; len(extra)
 
    b0 := byte(w.frameType)
    if final {
@@ -550,27 +550,27 @@ func (w *messageWriter) flushFrame(final bool, extra []byte) error {
    }
 
    switch {
-   case length >= 65536:
+   case length &gt;= 65536:
       c.writeBuf[framePos] = b0
-      c.writeBuf[framePos+1] = b1 | 127
-      binary.BigEndian.PutUint64(c.writeBuf[framePos+2:], uint64(length))
-   case length > 125:
-      framePos += 6
+      c.writeBuf[framePos&#43;1] = b1 | 127
+      binary.BigEndian.PutUint64(c.writeBuf[framePos&#43;2:], uint64(length))
+   case length &gt; 125:
+      framePos &#43;= 6
       c.writeBuf[framePos] = b0
-      c.writeBuf[framePos+1] = b1 | 126
-      binary.BigEndian.PutUint16(c.writeBuf[framePos+2:], uint16(length))
+      c.writeBuf[framePos&#43;1] = b1 | 126
+      binary.BigEndian.PutUint16(c.writeBuf[framePos&#43;2:], uint16(length))
    default:
-      framePos += 8
+      framePos &#43;= 8
       c.writeBuf[framePos] = b0
-      c.writeBuf[framePos+1] = b1 | byte(length)
+      c.writeBuf[framePos&#43;1] = b1 | byte(length)
    }
 
    if !c.isServer {
       key := newMaskKey()
       copy(c.writeBuf[maxFrameHeaderSize-4:], key[:])
       maskBytes(key, 0, c.writeBuf[maxFrameHeaderSize:w.pos])
-      if len(extra) > 0 {
-         return w.endMessage(c.writeFatal(errors.New("websocket: internal error, extra used in client mode")))
+      if len(extra) &gt; 0 {
+         return w.endMessage(c.writeFatal(errors.New(&#34;websocket: internal error, extra used in client mode&#34;)))
       }
    }
 
@@ -579,7 +579,7 @@ func (w *messageWriter) flushFrame(final bool, extra []byte) error {
    // documentation for more info.
 
    if c.isWriting {
-      panic("concurrent write to websocket connection")
+      panic(&#34;concurrent write to websocket connection&#34;)
    }
    c.isWriting = true
 

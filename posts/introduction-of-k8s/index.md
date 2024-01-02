@@ -97,7 +97,7 @@ spec:
   - port: 8078 # the port that this service should serve on
     name: http
     # the container on each pod to connect to, can be a name
-    # (e.g. 'www') or a number (e.g. 80)
+    # (e.g. &#39;www&#39;) or a number (e.g. 80)
     targetPort: 80
     protocol: TCP
   selector:

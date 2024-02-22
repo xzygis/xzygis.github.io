@@ -63,11 +63,11 @@
   <a href="#%e4%bd%93%e9%aa%8c%e4%b8%80%e4%b8%8b" class="heading-mark"></a>体验一下</h3><blockquote>
 <p><a href="https://www.websocket.org/echo.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.websocket.org/echo.html<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
 </blockquote>
-<p><img loading="lazy" src="websocket.org-1.png" alt="Connect" srcset="websocket.org-1.png?size=small, websocket.org-1.png?size=medium 1.5x, websocket.org-1.png?size=large 2x" sizes="auto" data-title="Connect" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="websocket.org-1.png" alt="Connect" srcset="websocket.org-1.png?size=small, websocket.org-1.png?size=medium 1.5x, websocket.org-1.png?size=large 2x" data-title="Connect" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>握手报文：</p>
-<p><img loading="lazy" src="websocket.org-2.png" alt="握手报文" srcset="websocket.org-2.png?size=small, websocket.org-2.png?size=medium 1.5x, websocket.org-2.png?size=large 2x" sizes="auto" data-title="握手报文" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="websocket.org-2.png" alt="握手报文" srcset="websocket.org-2.png?size=small, websocket.org-2.png?size=medium 1.5x, websocket.org-2.png?size=large 2x" data-title="握手报文" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>数据传输：</p>
-<p><img loading="lazy" src="websocket.org-3.png" alt="握手报文" srcset="websocket.org-3.png?size=small, websocket.org-3.png?size=medium 1.5x, websocket.org-3.png?size=large 2x" sizes="auto" data-title="握手报文" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="websocket.org-3.png" alt="握手报文" srcset="websocket.org-3.png?size=small, websocket.org-3.png?size=medium 1.5x, websocket.org-3.png?size=large 2x" data-title="握手报文" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <h2 id="数据帧" class="heading-element">
   <a href="#%e6%95%b0%e6%8d%ae%e5%b8%a7" class="heading-mark"></a>数据帧</h2><p>WebSocket客户端、服务端通信的最小单位是帧（frame），由1个或多个帧组成一条完整的消息（message）。</p>
 <ul>
@@ -843,7 +843,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 </span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="writemessage" class="heading-element">
-  <a href="#writemessage" class="heading-mark"></a>WriteMessage</h3><div class="highlight" id="id-1"><div class="chroma">
+  <a href="#writemessage" class="heading-mark"></a>WriteMessage</h3><div class="highlight" id="id-9"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2

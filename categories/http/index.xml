@@ -1111,7 +1111,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 <h3 id="signature" class="heading-element">
   <a href="#signature" class="heading-mark"></a>Signature</h3><p>创建签名需要用到编码后的 Header、编码后的 Payload、秘钥、Header中指定的算法。</p>
 <p>如果你想使用HMAC SHA256算法，签名将通过如下方式生成：</p>
-<div class="highlight" id="id-4"><div class="chroma">
+<div class="highlight" id="id-1"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -1129,7 +1129,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 <h2 id="jwt-的使用方式" class="heading-element">
   <a href="#jwt-%e7%9a%84%e4%bd%bf%e7%94%a8%e6%96%b9%e5%bc%8f" class="heading-mark"></a>JWT 的使用方式</h2><p>客户端收到服务器返回的 JWT，可以储存在 Cookie 里面，也可以储存在 localStorage。
 此后，客户端每次与服务器通信，都要带上这个 JWT。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP 请求的头信息Authorization字段里面。</p>
-<div class="highlight" id="id-5"><div class="chroma">
+<div class="highlight" id="id-2"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -1148,7 +1148,7 @@ websocket协议中也规定了数据加密传输的方式，允许使用TLS/SSL�
 </ul>
 <h2 id="示例代码" class="heading-element">
   <a href="#%e7%a4%ba%e4%be%8b%e4%bb%a3%e7%a0%81" class="heading-mark"></a>示例代码</h2><p>Go语言版本：</p>
-<div class="highlight" id="id-6"><div class="chroma">
+<div class="highlight" id="id-3"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2

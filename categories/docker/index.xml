@@ -328,7 +328,7 @@
 </div>
 </div><p>当我们运行一个容器的时候（如果不使用卷的话），我们做的任何文件修改都会被记录于容器存储层里。Docker 提供了一个 <code>docker commit</code> 命令，可以将容器的存储层保存下来成为镜像。换句话说，就是在原有镜像的基础上，再叠加上容器的存储层，并构成新的镜像。</p>
 <p>docker commit 的语法格式为：</p>
-<div class="highlight" id="id-1"><div class="chroma">
+<div class="highlight" id="id-12"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -336,7 +336,7 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker commit [选项] &lt;容器ID或容器名&gt; [&lt;仓库名&gt;[:&lt;标签&gt;]]</span></span></code></pre></td></tr></table>
 </div>
 </div><p>我们可以用下面的命令将容器保存为镜像：</p>
-<div class="highlight" id="id-2"><div class="chroma">
+<div class="highlight" id="id-13"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -346,7 +346,7 @@
 </span></span><span class="line"><span class="cl">sha256:8aaa0b63a1b842fb301d5d691cae92d9fdb52c73f37858eefada4325a36474f0</span></span></code></pre></td></tr></table>
 </div>
 </div><p>我们可以在 <code>docker image ls</code> 中看到这个新定制的镜像：</p>
-<div class="highlight" id="id-3"><div class="chroma">
+<div class="highlight" id="id-14"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -360,7 +360,7 @@
 </span></span><span class="line"><span class="cl">nginx               latest              568c4670fa80        4 weeks ago          109MB</span></span></code></pre></td></tr></table>
 </div>
 </div><p>新的镜像定制好后，我们可以运行这个镜像:</p>
-<div class="highlight" id="id-4"><div class="chroma">
+<div class="highlight" id="id-15"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -376,7 +376,7 @@
 </ol>
 <h2 id="镜像导入和导出" class="heading-element">
   <a href="#%e9%95%9c%e5%83%8f%e5%af%bc%e5%85%a5%e5%92%8c%e5%af%bc%e5%87%ba" class="heading-mark"></a>镜像导入和导出</h2><h3 id="导出镜像" class="heading-element">
-  <a href="#%e5%af%bc%e5%87%ba%e9%95%9c%e5%83%8f" class="heading-mark"></a>导出镜像</h3><div class="highlight" id="id-5"><div class="chroma">
+  <a href="#%e5%af%bc%e5%87%ba%e9%95%9c%e5%83%8f" class="heading-mark"></a>导出镜像</h3><div class="highlight" id="id-16"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -384,7 +384,7 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ docker save -o nginx.tar nginx:latest </span></span></code></pre></td></tr></table>
 </div>
 </div><p>或</p>
-<div class="highlight" id="id-6"><div class="chroma">
+<div class="highlight" id="id-17"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -392,7 +392,7 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ docker save &gt; nginx.tar nginx:latest </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="导入镜像" class="heading-element">
-  <a href="#%e5%af%bc%e5%85%a5%e9%95%9c%e5%83%8f" class="heading-mark"></a>导入镜像</h3><div class="highlight" id="id-7"><div class="chroma">
+  <a href="#%e5%af%bc%e5%85%a5%e9%95%9c%e5%83%8f" class="heading-mark"></a>导入镜像</h3><div class="highlight" id="id-18"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -400,7 +400,7 @@
 <pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">$</span> <span class="n">docker</span> <span class="nb">load</span> <span class="o">-</span><span class="n">i</span> <span class="n">nginx</span><span class="o">.</span><span class="n">tar</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>或</p>
-<div class="highlight" id="id-8"><div class="chroma">
+<div class="highlight" id="id-19"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>

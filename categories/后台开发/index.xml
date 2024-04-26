@@ -29,7 +29,7 @@
 <code>gi(x) = h1(x) + ih2(x)</code>
 这里i的取值范围是1到k的整数。</p>
 <p>Google Guava类库使用这个技巧实现了一个布隆过滤器，哈希算法的主要逻辑如下：</p>
-<div class="highlight" id="id-1"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -57,7 +57,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>Guava中的Bloom Filter使用示例：</p>
-<div class="highlight" id="id-2"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -81,7 +81,7 @@
 </ul>
 ]]></description></item><item><title>Linux文件传输的三种方式</title><link>https://xzygis.github.io/posts/three-ways-to-transfer-files-in-linux/</link><pubDate>Sat, 12 Jun 2021 16:14:22 +0000</pubDate><author>作者</author><guid>https://xzygis.github.io/posts/three-ways-to-transfer-files-in-linux/</guid><description><![CDATA[<h2 id="1-nc命令" class="heading-element">
   <a href="#1-nc%e5%91%bd%e4%bb%a4" class="heading-mark"></a>1 nc命令</h2><p>执行如下命令，在目标机器(假设ip为<code>10.11.12.13</code>)上监听端口<code>8415</code></p>
-<div class="highlight" id="id-1"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -89,7 +89,7 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">nc -l 8415 &gt; data.txt</span></span></code></pre></td></tr></table>
 </div>
 </div><p>往目标机器发送数据</p>
-<div class="highlight" id="id-2"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -98,7 +98,7 @@
 </div>
 </div><h2 id="2-simplehttpserver" class="heading-element">
   <a href="#2-simplehttpserver" class="heading-mark"></a>2 SimpleHTTPServer</h2><p>在服务器(假设ip为<code>10.11.12.13</code>)上执行如下命令:</p>
-<div class="highlight" id="id-3"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -110,7 +110,7 @@
   <a href="#3-scp%e5%91%bd%e4%bb%a4" class="heading-mark"></a>3 scp命令</h2><p>Linux scp命令用于Linux之间复制文件和目录。</p>
 <p>scp是 secure copy的缩写, scp是linux系统下基于ssh登陆进行安全的远程文件拷贝命令。</p>
 <p>在目标机器执行如下命令：</p>
-<div class="highlight" id="id-4"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>

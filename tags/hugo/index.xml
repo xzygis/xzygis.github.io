@@ -1,6 +1,6 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Hugo - 标签 - 楚兴 - Chuxing's Blog</title><link>https://xzygis.github.io/tags/hugo/</link><description>Hugo - 标签 | 楚兴 - Chuxing's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 03 Dec 2022 19:21:25 +0800</lastBuildDate><atom:link href="https://xzygis.github.io/tags/hugo/" rel="self" type="application/rss+xml"/><item><title>Hugo 快速入门</title><link>https://xzygis.github.io/posts/hugo-quick-start/</link><pubDate>Sat, 03 Dec 2022 19:21:25 +0800</pubDate><author>作者</author><guid>https://xzygis.github.io/posts/hugo-quick-start/</guid><description><![CDATA[<p>Hugo是由Go语言实现的静态网站生成器。简单、易用、高效、易扩展、快速部署。</p>
 <h2 id="intall" class="heading-element">
-  <a href="#intall" class="heading-mark"></a>Intall</h2><div class="highlight" id="id-1"><div class="chroma">
+  <a href="#intall" class="heading-mark"></a>Intall</h2><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -12,7 +12,7 @@
 <p><a href="https://gohugo.io/getting-started/quick-start/"target="_blank" rel="external nofollow noopener noreferrer">https://gohugo.io/getting-started/quick-start/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></p>
 </blockquote>
 <p>运行以下命令创建一个使用<code>Ananke</code>主题的网站：</p>
-<div class="highlight" id="id-2"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -31,7 +31,7 @@
 </div>
 </div><h2 id="add-content" class="heading-element">
   <a href="#add-content" class="heading-mark"></a>Add Content</h2><p>给网站增加新的网页：</p>
-<div class="highlight" id="id-3"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -39,7 +39,7 @@
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">hugo new posts/my-first-post.md</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Hugo在<code>content/posts</code>目录创建了<code>my-first-post.md</code>文件，文件内容如下：</p>
-<div class="highlight" id="id-4"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -55,7 +55,7 @@
 </span></span><span class="line"><span class="cl">---</span></span></code></pre></td></tr></table>
 </div>
 </div><p>修改并保存文件后启动Hugo服务器可以预览网站，可以使用以下的任一命令以包含draft内容：</p>
-<div class="highlight" id="id-5"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -66,7 +66,7 @@
 </div>
 </div><h2 id="configure-the-site" class="heading-element">
   <a href="#configure-the-site" class="heading-mark"></a>Configure the site</h2><p>可以通过根目录的<code>config.toml</code>文件配置网站相关信息：</p>
-<div class="highlight" id="id-6"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -81,7 +81,7 @@
 </div>
 </div><h2 id="publish-the-site" class="heading-element">
   <a href="#publish-the-site" class="heading-mark"></a>Publish the site</h2><p>生成站点的静态文件，文件将生成到根目录下的<code>public</code>目录</p>
-<div class="highlight" id="id-7"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -96,7 +96,7 @@
 <li>创建名为<code>&lt;USERNAME&gt;.github.io</code> 或 <code>&lt;ORGANIZATION&gt;.github.io</code>的GitHub仓库</li>
 <li>在仓库中新增文件<code>.github/workflows/gh-pages.yml</code>并填写以下内容：</li>
 </ol>
-<div class="highlight" id="id-8"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2

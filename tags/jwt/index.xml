@@ -31,7 +31,7 @@
 <li><code>Signature</code></li>
 </ul>
 <p>所以，一个JWT看起来通常是如下的形式：</p>
-<div class="highlight" id="id-1"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -45,7 +45,7 @@
 <li>签名算法，例如HMAC SHA256或RSA。</li>
 </ul>
 <p>一个Header的例子：</p>
-<div class="highlight" id="id-2"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -81,7 +81,7 @@
 <p><strong>私有的声明 ：</strong>
 私有声明是提供者和消费者所共同定义的声明，一般不建议存放敏感信息，因为base64是对称解密的，意味着该部分信息可以归类为明文信息。</p>
 <p>一个Payload的例子：</p>
-<div class="highlight" id="id-3"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -100,7 +100,7 @@
 <h3 id="signature" class="heading-element">
   <a href="#signature" class="heading-mark"></a>Signature</h3><p>创建签名需要用到编码后的 Header、编码后的 Payload、秘钥、Header中指定的算法。</p>
 <p>如果你想使用HMAC SHA256算法，签名将通过如下方式生成：</p>
-<div class="highlight" id="id-4"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -114,11 +114,11 @@
 </span></span><span class="line"><span class="cl">  <span class="nx">secret</span><span class="p">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>如果你想把以上概念付诸实践，可以通过 <a href="https://jwt.io/"target="_blank" rel="external nofollow noopener noreferrer">https://jwt.io/<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> 提供的工具来玩一玩 JWT 。如下图所示：
-<img loading="lazy" src="jwt-example.png" alt="jwt" srcset="jwt-example.png?size=small, jwt-example.png?size=medium 1.5x, jwt-example.png?size=large 2x" data-title="jwt" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<img loading="lazy" src="/posts/usage-of-json-web-token/jwt-example.png" alt="jwt" srcset="/posts/usage-of-json-web-token/jwt-example.png?size=small, /posts/usage-of-json-web-token/jwt-example.png?size=medium 1.5x, /posts/usage-of-json-web-token/jwt-example.png?size=large 2x" data-title="jwt" style="--width: 1199px;--aspect-ratio: 1199 / 714;background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <h2 id="jwt-的使用方式" class="heading-element">
   <a href="#jwt-%e7%9a%84%e4%bd%bf%e7%94%a8%e6%96%b9%e5%bc%8f" class="heading-mark"></a>JWT 的使用方式</h2><p>客户端收到服务器返回的 JWT，可以储存在 Cookie 里面，也可以储存在 localStorage。
 此后，客户端每次与服务器通信，都要带上这个 JWT。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP 请求的头信息Authorization字段里面。</p>
-<div class="highlight" id="id-5"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -137,7 +137,7 @@
 </ul>
 <h2 id="示例代码" class="heading-element">
   <a href="#%e7%a4%ba%e4%be%8b%e4%bb%a3%e7%a0%81" class="heading-mark"></a>示例代码</h2><p>Go语言版本：</p>
-<div class="highlight" id="id-6"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2

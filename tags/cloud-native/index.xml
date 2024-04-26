@@ -46,7 +46,7 @@
 <p>声明式通信模型规范了通信模型，并且它将功能实现从应用程序转移到远程API或服务端点，从而实现某种状态到达期望状态。这有助于简化应用程序，并使它们彼此的行为更具可预测性。</p>
 <p>例子：SQL数据库
 其实你很早就接触过声明式编程语言， SQL语言就是很典型的例子：</p>
-<div class="highlight" id="id-1"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -54,7 +54,7 @@
 <pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ben</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>上面是一个很普通的SQL查询语句，我只只声明我想要找一个叫Ben的用户（What) , 就是不说SQL该怎么（How）去寻找怎么做。接下来我们看看如果用命令式语言写会是什么样的：</p>
-<div class="highlight" id="id-2"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -84,7 +84,7 @@
 <ol>
 <li>初始化master节点：</li>
 </ol>
-<div class="highlight" id="id-3"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -92,7 +92,7 @@
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">kubeadm init --apiserver-advertise-address <span class="k">$(</span>hostname -i<span class="k">)</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>输出如下：</p>
-<div class="highlight" id="id-4"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -274,7 +274,7 @@
 </div><ol start="2">
 <li>初始化集群网络：</li>
 </ol>
-<div class="highlight" id="id-5"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -282,7 +282,7 @@
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">kubectl apply -n kube-system -f  <span class="s2">&#34;https://cloud.weave.works/k8s/net?k8s-version=</span><span class="k">$(</span>kubectl version <span class="p">|</span> base64 <span class="p">|</span> tr -d <span class="s1">&#39;\n&#39;</span><span class="k">)</span><span class="s2">&#34;</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>输出如下：</p>
-<div class="highlight" id="id-6"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -302,7 +302,7 @@
 </div><ol start="3">
 <li>执行下列初始化命令：</li>
 </ol>
-<div class="highlight" id="id-7"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -316,7 +316,7 @@
 </div><ol start="4">
 <li>根据master节点上的提示，在新的web终端上执行：</li>
 </ol>
-<div class="highlight" id="id-8"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -324,7 +324,7 @@
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">kubeadm join 192.168.0.18:6443 --token 5f1nyz.351cet8vt4g2ix78 --discovery-token-ca-cert-hash sha256:d105d049cf090f7814473e5554b79e09cd13e4acfd8a56b09754ba9181d08fd8</span></span></code></pre></td></tr></table>
 </div>
 </div><p>输出如下：</p>
-<div class="highlight" id="id-9"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -413,7 +413,7 @@
 </div>
 </div><p>多开几个实例，重复执行第四步，即可向Kubernetes集群中增加节点。</p>
 <p>此时在master节点上执行<code>kubectl get nodes</code>查看节点所有节点状态：</p>
-<div class="highlight" id="id-10"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -429,7 +429,7 @@
 </span></span><span class="line"><span class="cl">node3     Ready     &lt;none&gt;    1m        v1.11.3</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="创建nginx-deployment" class="heading-element">
-  <a href="#%e5%88%9b%e5%bb%banginx-deployment" class="heading-mark"></a>创建nginx deployment</h3><div class="highlight" id="id-11"><div class="chroma">
+  <a href="#%e5%88%9b%e5%bb%banginx-deployment" class="heading-mark"></a>创建nginx deployment</h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -451,7 +451,7 @@
 </span></span><span class="line"><span class="cl">deployment.apps/my-nginx created</span></span></code></pre></td></tr></table>
 </div>
 </div><p>此时查看nodes和pods：</p>
-<div class="highlight" id="id-12"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2

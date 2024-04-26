@@ -15,7 +15,7 @@
 <p>每个数据中运行了一个Consul server集群。当一个跨数据中心的服务发现和配置请求创建时，本地Consul Server转发请求到远程的数据中心并返回结果.</p>
 <h2 id="安装consul" class="heading-element">
   <a href="#%e5%ae%89%e8%a3%85consul" class="heading-mark"></a>安装Consul</h2><p>Consul集群的每个节点都必须先安装Consul，安装非常简单。在Mac上安装Consul命令如下：</p>
-<div class="highlight" id="id-1"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -23,7 +23,7 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ brew install consul</span></span></code></pre></td></tr></table>
 </div>
 </div><p>安装成功后执行consul命令输出如下结果：</p>
-<div class="highlight" id="id-2"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -103,7 +103,7 @@
 <p>其他的Agent运行为Client模式，一个Client是一个非常轻量级的进程，用于注册服务，运行健康检查和转发对Server的查询，Agent必须在集群中的每个主机上运行。</p>
 <h3 id="启动agent" class="heading-element">
   <a href="#%e5%90%af%e5%8a%a8agent" class="heading-mark"></a>启动Agent</h3><p>命令<code>consul agent -dev</code>可以启动一个开发模式的Agent，这种模式不能用于生产环境，因为它不持久化任何状态。</p>
-<div class="highlight" id="id-3"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -200,7 +200,7 @@
 </div>
 </div><h3 id="集群成员" class="heading-element">
   <a href="#%e9%9b%86%e7%be%a4%e6%88%90%e5%91%98" class="heading-mark"></a>集群成员</h3><p>新开一个终端窗口运行<code>consul members</code>, 就可以看到Consul集群的成员。</p>
-<div class="highlight" id="id-4"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -212,7 +212,7 @@
 </span></span><span class="line"><span class="cl">C02Z35N9LVCF  127.0.0.1:8301  alive   server  1.6.1  2         dc1  &lt;all&gt;</span></span></code></pre></td></tr></table>
 </div>
 </div><p>以上输出显示了我们自己的节点运行的节点、地址、健康状态、自己在集群中的角色、版本信息等。添加<code>-detailed</code>选项可以查看到额外的信息，如下：</p>
-<div class="highlight" id="id-5"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -224,7 +224,7 @@
 </span></span><span class="line"><span class="cl">C02Z35N9LVCF  127.0.0.1:8301  alive   acls=0,build=1.6.1:9be6dfc+,dc=dc1,id=2e524113-7caf-643a-80bb-a2fa00c2673b,port=8300,raft_vsn=3,role=consul,segment=&lt;all&gt;,vsn=2,vsn_max=3,vsn_min=2,wan_join_port=8302</span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>members</code>命令的输出是基于gossip协议，它是最终一致的。这意味着，在任何时候，通过你本地Agent看到的结果可能不能准确匹配server的状态。为了查看到一致的信息，可使用HTTP API(将自动转发)到Consul Server上去进行查询：</p>
-<div class="highlight" id="id-6"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -273,7 +273,7 @@
 <h3 id="定义一个服务" class="heading-element">
   <a href="#%e5%ae%9a%e4%b9%89%e4%b8%80%e4%b8%aa%e6%9c%8d%e5%8a%a1" class="heading-mark"></a>定义一个服务</h3><p>可以通过提供服务定义或者调用HTTP API来注册一个服务，服务定义文件是注册服务的最通用的方式。</p>
 <p>首先，为Consul配置创建一个目录：</p>
-<div class="highlight" id="id-7"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -281,7 +281,7 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ sudo mkdir /etc/consul.d</span></span></code></pre></td></tr></table>
 </div>
 </div><p>然后，编写服务定义配置文件。假设我们有一个名叫web的服务运行在 80端口。另外，我们将给他设置一个标签，这样我们可以使用它作为额外的查询方式：</p>
-<div class="highlight" id="id-8"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -289,7 +289,7 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">echo &#39;{&#34;service&#34;: {&#34;name&#34;: &#34;web&#34;, &#34;tags&#34;: [&#34;rails&#34;], &#34;port&#34;: 80}}&#39; &gt; /etc/consul.d/web.json</span></span></code></pre></td></tr></table>
 </div>
 </div><p>重新启动Agent，设置配置目录：</p>
-<div class="highlight" id="id-9"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -397,7 +397,7 @@
 <h4 id="dns-api" class="heading-element">
   <a href="#dns-api" class="heading-mark"></a>DNS API</h4><p>我们首先使用DNS API来查询。在DNS API中，服务的DNS名字是 <code>NAME.service.consul</code>。虽然是可配置的，但默认的所有DNS名字会都在consul命名空间下，这个子域告诉Consul，我们在查询服务，<code>NAME</code>则是服务的名称.</p>
 <p>对于我们上面注册的Web服务.它的域名是 <code>web.service.consul</code>:</p>
-<div class="highlight" id="id-10"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -453,7 +453,7 @@
 </span></span><span class="line"><span class="cl">;; MSG SIZE  rcvd: 99</span></span></code></pre></td></tr></table>
 </div>
 </div><p>如你所见,一个A记录返回了一个可用的服务所在的节点的IP地址。A记录只能设置为IP地址，有也可用使用 DNS API 来接收包含地址和端口的 <code>SRV</code> 记录：</p>
-<div class="highlight" id="id-11"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -512,7 +512,7 @@
 </div>
 </div><p><code>SRV</code>记录告诉我们 web 这个服务运行于节点<code>C02Z35N9LVCF.node.dc1.consul</code> 的80端口，DNS额外返回了节点的A记录。</p>
 <p>最后，我们也可以用 DNS API 通过标签来过滤服务，基于标签的服务查询格式为<code>TAG.NAME.service.consul</code>。在下面的例子中，我们请求Consul返回有 rails标签的 web服务：</p>
-<div class="highlight" id="id-12"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -523,7 +523,7 @@
 </div>
 </div><h4 id="http-api" class="heading-element">
   <a href="#http-api" class="heading-mark"></a>HTTP API</h4><p>除了DNS API之外，也可以使用HTTP API查询所有服务实例：</p>
-<div class="highlight" id="id-13"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -601,7 +601,7 @@
 </span></span><span class="line"><span class="cl">]</span></span></code></pre></td></tr></table>
 </div>
 </div><p>只查看健康服务实例的方法：</p>
-<div class="highlight" id="id-14"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2

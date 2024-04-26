@@ -59,7 +59,7 @@
   <a href="#pod" class="heading-mark"></a>Pod</h3><p>Kubernetes 使用 Pod 来管理容器，每个 Pod 可以包含一个或多个紧密关联的容器。</p>
 <p>Pod 是一组紧密关联的容器集合，它们共享 PID、IPC、Network 和 UTS namespace，是 Kubernetes 调度的基本单位。Pod 内的多个容器共享网络和文件系统，可以通过进程间通信和文件共享这种简单高效的方式组合完成服务。</p>
 <p>在 Kubernetes 中，所有对象都使用 manifest（yaml 或 json）来定义，比如一个简单的 nginx 服务可以定义为 nginx.yaml，它包含一个镜像为 nginx 的容器：</p>
-<div class="highlight" id="id-1"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -96,7 +96,7 @@
   <a href="#service" class="heading-mark"></a>Service</h3><p>Service 是应用服务的抽象，通过 labels 为应用提供负载均衡和服务发现。匹配 labels 的 Pod IP 和端口列表组成 endpoints，由 kube-proxy 负责将服务 IP 负载均衡到这些 endpoints 上。
 每个 Service 都会自动分配一个 cluster IP（仅在集群内部可访问的虚拟地址）和 DNS 名，其他容器可以通过该地址或 DNS 来访问服务，而不需要了解后端容器的运行。
 <img loading="lazy" src="https://img-blog.csdnimg.cn/20191118230137955.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70" alt="k8s-service" srcset="https://img-blog.csdnimg.cn/20191118230137955.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=%2csize_16%2ccolor_FFFFFF%2ct_70&amp;size=small, https://img-blog.csdnimg.cn/20191118230137955.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=%2csize_16%2ccolor_FFFFFF%2ct_70&amp;size=medium 1.5x, https://img-blog.csdnimg.cn/20191118230137955.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9jaHV4aW5nLmJsb2cuY3Nkbi5uZXQ=%2csize_16%2ccolor_FFFFFF%2ct_70&amp;size=large 2x" data-title="k8s-service" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<div class="highlight" id="id-2"><div class="chroma">
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2

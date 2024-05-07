@@ -1,13 +1,19 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>REUSEPORT - 标签 - 楚兴 - Chuxing's Blog</title><link>https://xzygis.github.io/tags/reuseport/</link><description>REUSEPORT - 标签 | 楚兴 - Chuxing's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 30 Jan 2020 12:50:51 +0000</lastBuildDate><atom:link href="https://xzygis.github.io/tags/reuseport/" rel="self" type="application/rss+xml"/><item><title>SO_REUSEADDR &amp; SO_REUSEPORT</title><link>https://xzygis.github.io/posts/so-reuseaddr-so-reuseport/</link><pubDate>Thu, 30 Jan 2020 12:50:51 +0000</pubDate><author>作者</author><guid>https://xzygis.github.io/posts/so-reuseaddr-so-reuseport/</guid><description><![CDATA[<h2 id="so_reuseaddr" class="heading-element">
-  <a href="#so_reuseaddr" class="heading-mark"></a>SO_REUSEADDR</h2><ol>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>REUSEPORT - 标签 - 楚兴 - Chuxing's Blog</title><link>https://xzygis.github.io/tags/reuseport/</link><description>REUSEPORT - 标签 | 楚兴 - Chuxing's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 30 Jan 2020 12:50:51 +0000</lastBuildDate><atom:link href="https://xzygis.github.io/tags/reuseport/" rel="self" type="application/rss+xml"/><item><title>SO_REUSEADDR &amp; SO_REUSEPORT</title><link>https://xzygis.github.io/posts/so-reuseaddr-so-reuseport/</link><pubDate>Thu, 30 Jan 2020 12:50:51 +0000</pubDate><author>作者</author><guid>https://xzygis.github.io/posts/so-reuseaddr-so-reuseport/</guid><description><![CDATA[<h2 id="so_reuseaddr" class="heading-element"><span>SO_REUSEADDR</span>
+  <a href="#so_reuseaddr" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><ol>
 <li>当有一个有相同本地地址和端口的socket1处于TIME_WAIT状态时，而你启动的程序的socket2要占用该地址和端口，你的程序就要用到该选项。</li>
 <li>SO_REUSEADDR允许同一port上启动同一服务器的多个实例(多个进程)。但每个实例绑定的IP地址是不能相同的。在有多块网卡或用IP Alias技术的机器可
 以测试这种情况。</li>
 <li>SO_REUSEADDR允许单个进程绑定相同的端口到多个socket上，但每个socket绑定的ip地址不同。这和2很相似，区别请看UNPv1。</li>
 <li>SO_REUSEADDR允许完全相同的地址和端口的重复绑定。但这只用于UDP的多播，不用于TCP。</li>
 </ol>
-<h2 id="so_reuseport" class="heading-element">
-  <a href="#so_reuseport" class="heading-mark"></a>SO_REUSEPORT</h2><blockquote>
+<h2 id="so_reuseport" class="heading-element"><span>SO_REUSEPORT</span>
+  <a href="#so_reuseport" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><blockquote>
 <p>The new socket option allows multiple sockets on the same host to bind to the same port, and is intended to improve the performance of multithreaded network server applications running on top of multicore systems.</p>
 </blockquote>
 <p>linux kernel 3.9引入了最新的SO_REUSEPORT选项，使得多进程或者多线程可以创建多个绑定同一个ip:port的监听socket，提高服务器的接收连接的并发能力,程序的扩展性更好；此时需要设置SO_REUSEPORT（注意所有进程都要设置才生效）。</p>

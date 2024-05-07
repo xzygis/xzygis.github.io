@@ -1,6 +1,9 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Storage - 分类 - 楚兴 - Chuxing's Blog</title><link>https://xzygis.github.io/categories/storage/</link><description>Storage - 分类 | 楚兴 - Chuxing's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 12 Apr 2023 21:08:02 +0800</lastBuildDate><atom:link href="https://xzygis.github.io/categories/storage/" rel="self" type="application/rss+xml"/><item><title>ES数据建模之关联关系处理</title><link>https://xzygis.github.io/posts/es-modeling-your-data/</link><pubDate>Wed, 12 Apr 2023 21:08:02 +0800</pubDate><author>作者</author><guid>https://xzygis.github.io/posts/es-modeling-your-data/</guid><description><![CDATA[<p>现实世界有很多重要的关联关系：博客帖子有一些评论，银行账户有多次交易记录，客户有多个银行账户，订单有多个订单明细，文件目录有多个文件和子目录。</p>
-<h2 id="内部对象数组" class="heading-element">
-  <a href="#%e5%86%85%e9%83%a8%e5%af%b9%e8%b1%a1%e6%95%b0%e7%bb%84" class="heading-mark"></a>内部对象数组</h2><p>考虑包含内部对象的数组是如何被索引的。 假设我们有个 followers 数组：</p>
+<h2 id="内部对象数组" class="heading-element"><span>内部对象数组</span>
+  <a href="#%e5%86%85%e9%83%a8%e5%af%b9%e8%b1%a1%e6%95%b0%e7%bb%84" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>考虑包含内部对象的数组是如何被索引的。 假设我们有个 followers 数组：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -35,8 +38,11 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>{age: 35}</code> 和 <code>{name: Mary White}</code> 之间的相关性已经丢失了，因为每个多值域只是一包无序的值，而不是有序数组。</p>
-<h2 id="嵌套对象" class="heading-element">
-  <a href="#%e5%b5%8c%e5%a5%97%e5%af%b9%e8%b1%a1" class="heading-mark"></a>嵌套对象</h2><p>由于在 Elasticsearch 中单个文档的增删改都是原子性操作,那么将相关实体数据都存储在同一文档中也就理所当然。 比如说,我们可以将订单及其明细数据存储在一个文档中。又比如,我们可以将一篇博客文章的评论以一个 comments 数组的形式和博客文章放在一起：</p>
+<h2 id="嵌套对象" class="heading-element"><span>嵌套对象</span>
+  <a href="#%e5%b5%8c%e5%a5%97%e5%af%b9%e8%b1%a1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>由于在 Elasticsearch 中单个文档的增删改都是原子性操作,那么将相关实体数据都存储在同一文档中也就理所当然。 比如说,我们可以将订单及其明细数据存储在一个文档中。又比如,我们可以将一篇博客文章的评论以一个 comments 数组的形式和博客文章放在一起：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -161,8 +167,11 @@
 <p>在独立索引每一个嵌套对象后,对象中每个字段的相关性得以保留。我们查询时,也仅仅返回那些真正符合条件的文档。</p>
 <p>不仅如此,由于嵌套文档直接存储在文档内部,查询时嵌套文档和根文档联合成本很低,速度和单独存储几乎一样。</p>
 <p>嵌套文档是隐藏存储的,我们不能直接获取。如果要增删改一个嵌套对象,我们必须把整个文档重新索引才可以。值得注意的是,查询的时候返回的是整个文档,而不是嵌套文档本身。</p>
-<h2 id="父-子关系文档" class="heading-element">
-  <a href="#%e7%88%b6-%e5%ad%90%e5%85%b3%e7%b3%bb%e6%96%87%e6%a1%a3" class="heading-mark"></a>父-子关系文档</h2><p>父-子关系文档 在实质上类似于 nested model（嵌套对象） ：允许将一个对象实体和另外一个对象实体关联起来。而这两种类型的主要区别是：在 nested objects 文档中，所有对象都是在同一个文档中，而在父-子关系文档中，父对象和子对象都是完全独立的文档。</p>
+<h2 id="父-子关系文档" class="heading-element"><span>父-子关系文档</span>
+  <a href="#%e7%88%b6-%e5%ad%90%e5%85%b3%e7%b3%bb%e6%96%87%e6%a1%a3" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>父-子关系文档 在实质上类似于 nested model（嵌套对象） ：允许将一个对象实体和另外一个对象实体关联起来。而这两种类型的主要区别是：在 nested objects 文档中，所有对象都是在同一个文档中，而在父-子关系文档中，父对象和子对象都是完全独立的文档。</p>
 <p>父-子关系的主要作用是允许把一个 type 的文档和另外一个 type 的文档关联起来，构成一对多的关系：一个父文档可以对应多个子文档 。与 nested objects 相比，父-子关系的主要优势有：</p>
 <ul>
 <li>

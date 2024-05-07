@@ -1,18 +1,30 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Bloom Filter - 标签 - 楚兴 - Chuxing's Blog</title><link>https://xzygis.github.io/tags/bloom-filter/</link><description>Bloom Filter - 标签 | 楚兴 - Chuxing's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 12 Jun 2021 16:22:56 +0000</lastBuildDate><atom:link href="https://xzygis.github.io/tags/bloom-filter/" rel="self" type="application/rss+xml"/><item><title>浅谈Bloom Filter基本原理及使用方式</title><link>https://xzygis.github.io/posts/introduction-to-the-basic-principles-of-bloom-filter/</link><pubDate>Sat, 12 Jun 2021 16:22:56 +0000</pubDate><author>作者</author><guid>https://xzygis.github.io/posts/introduction-to-the-basic-principles-of-bloom-filter/</guid><description><![CDATA[<p>一提到元素查找，我们会很自然的想到<code>HashMap</code>。通过将哈希函数作用于key上，我们得到了哈希值，基于哈希值我们可以去表里的相应位置获取对应的数据。除了存在哈希冲突问题之外，<code>HashMap</code>一个很大的问题就是空间效率低。引入<code>Bloom Filter</code>则可以很好的解决空间效率的问题。</p>
-<h2 id="原理" class="heading-element">
-  <a href="#%e5%8e%9f%e7%90%86" class="heading-mark"></a>原理</h2><p>Bloom Filter是一种空间效率很高的随机数据结构，Bloom filter 可以看做是对bit-map 的扩展，布隆过滤器被设计为一个具有N的元素的位数组A（bit array），初始时所有的位都置为0。</p>
+<h2 id="原理" class="heading-element"><span>原理</span>
+  <a href="#%e5%8e%9f%e7%90%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>Bloom Filter是一种空间效率很高的随机数据结构，Bloom filter 可以看做是对bit-map 的扩展，布隆过滤器被设计为一个具有N的元素的位数组A（bit array），初始时所有的位都置为0。</p>
 <p>当一个元素被加入集合时，通过K个Hash函数将这个元素映射成一个位阵列（Bit array）中的K个点，把它们置为1。检索时，我们只要看看这些点是不是都是1就（大约）知道集合中有没有它了。</p>
 <ul>
 <li>如果这些点有任何一个 0，则被检索元素一定不在；</li>
 <li>如果都是 1，则被检索元素很可能在。</li>
 </ul>
-<h2 id="添加元素" class="heading-element">
-  <a href="#%e6%b7%bb%e5%8a%a0%e5%85%83%e7%b4%a0" class="heading-mark"></a>添加元素</h2><p>要添加一个元素，我们需要提供k个哈希函数。每个函数都能返回一个值，这个值必须能够作为位数组的索引（可以通过对数组长度进行取模得到）。然后，我们把位数组在这个索引处的值设为1。例如，第一个哈希函数作用于元素I上，返回x。类似的，第二个第三个哈希函数返回y与z，那么：
+<h2 id="添加元素" class="heading-element"><span>添加元素</span>
+  <a href="#%e6%b7%bb%e5%8a%a0%e5%85%83%e7%b4%a0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>要添加一个元素，我们需要提供k个哈希函数。每个函数都能返回一个值，这个值必须能够作为位数组的索引（可以通过对数组长度进行取模得到）。然后，我们把位数组在这个索引处的值设为1。例如，第一个哈希函数作用于元素I上，返回x。类似的，第二个第三个哈希函数返回y与z，那么：
 <code>A[x]=A[y]=A[z] = 1</code></p>
-<h2 id="查找元素" class="heading-element">
-  <a href="#%e6%9f%a5%e6%89%be%e5%85%83%e7%b4%a0" class="heading-mark"></a>查找元素</h2><p>查找的过程与上面的过程类似，元素将会被会被不同的哈希函数处理三次，每个哈希函数都返回一个作为位数组索引值的整数，然后我们检测位数组在x、y与z处的值是否为1。如果有一处不为1，那么就说明这个元素没有被添加到这个布隆过滤器中。如果都为1，就说明这个元素在布隆过滤器里面。当然，会有一定误判的概率。</p>
-<h2 id="算法优化" class="heading-element">
-  <a href="#%e7%ae%97%e6%b3%95%e4%bc%98%e5%8c%96" class="heading-mark"></a>算法优化</h2><p>通过上面的解释我们可以知道，如果想设计出一个好的布隆过滤器，我们必须遵循以下准则：</p>
+<h2 id="查找元素" class="heading-element"><span>查找元素</span>
+  <a href="#%e6%9f%a5%e6%89%be%e5%85%83%e7%b4%a0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>查找的过程与上面的过程类似，元素将会被会被不同的哈希函数处理三次，每个哈希函数都返回一个作为位数组索引值的整数，然后我们检测位数组在x、y与z处的值是否为1。如果有一处不为1，那么就说明这个元素没有被添加到这个布隆过滤器中。如果都为1，就说明这个元素在布隆过滤器里面。当然，会有一定误判的概率。</p>
+<h2 id="算法优化" class="heading-element"><span>算法优化</span>
+  <a href="#%e7%ae%97%e6%b3%95%e4%bc%98%e5%8c%96" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>通过上面的解释我们可以知道，如果想设计出一个好的布隆过滤器，我们必须遵循以下准则：</p>
 <ul>
 <li>好的哈希函数能够尽可能的返回宽范围的哈希值。</li>
 <li>位数组的大小（用m表示）非常重要：如果太小，那么所有的位很快就都会被赋值为1，这样就增加了误判的几率。</li>
@@ -24,8 +36,11 @@
 <p>计算k的公式如下：
 <code>k = m/n log(2)</code>
 这里k=哈希函数个数，m=位数组个数，n=待检测元素的个数（后面会用到这几个字母）。</p>
-<h2 id="哈希算法" class="heading-element">
-  <a href="#%e5%93%88%e5%b8%8c%e7%ae%97%e6%b3%95" class="heading-mark"></a>哈希算法</h2><p>哈希算法是影响布隆过滤器性能的地方。我们需要选择一个效率高但不耗时的哈希函数，在论文《更少的哈希函数，相同的性能指标：构造一个更好的布隆过滤器》中，讨论了如何选用2个哈希函数来模拟k个哈希函数。首先，我们需要计算两个哈希函数h1(x)与h2(x)。然后，我们可以用这两个哈希函数来模仿产生k个哈希函数的效果：
+<h2 id="哈希算法" class="heading-element"><span>哈希算法</span>
+  <a href="#%e5%93%88%e5%b8%8c%e7%ae%97%e6%b3%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>哈希算法是影响布隆过滤器性能的地方。我们需要选择一个效率高但不耗时的哈希函数，在论文《更少的哈希函数，相同的性能指标：构造一个更好的布隆过滤器》中，讨论了如何选用2个哈希函数来模拟k个哈希函数。首先，我们需要计算两个哈希函数h1(x)与h2(x)。然后，我们可以用这两个哈希函数来模仿产生k个哈希函数的效果：
 <code>gi(x) = h1(x) + ih2(x)</code>
 这里i的取值范围是1到k的整数。</p>
 <p>Google Guava类库使用这个技巧实现了一个布隆过滤器，哈希算法的主要逻辑如下：</p>
@@ -68,10 +83,16 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kt">double</span><span class="w"> </span><span class="n">fpp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">.</span><span class="na">03</span><span class="p">;</span><span class="w"> </span><span class="c1">//误判率(desired false positive probability)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">BloomFilter</span><span class="o">&lt;</span><span class="n">CharSequence</span><span class="o">&gt;</span><span class="w"> </span><span class="n">bloomFilter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BloomFilter</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">Funnels</span><span class="p">.</span><span class="na">stringFunnel</span><span class="p">(</span><span class="n">Charset</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&#34;UTF-8&#34;</span><span class="p">)),</span><span class="w"> </span><span class="n">expectedInsertions</span><span class="p">,</span><span class="n">fpp</span><span class="p">);</span></span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="优点" class="heading-element">
-  <a href="#%e4%bc%98%e7%82%b9" class="heading-mark"></a>优点</h2><p>它的优点是空间效率和查询时间都远远超过一般的算法，布隆过滤器存储空间和插入/查询时间都是常数O(k)。另外, 散列函数相互之间没有关系，方便由硬件并行实现。布隆过滤器不需要存储元素本身，在某些对保密要求非常严格的场合有优势。</p>
-<h2 id="缺点" class="heading-element">
-  <a href="#%e7%bc%ba%e7%82%b9" class="heading-mark"></a>缺点</h2><p>布隆过滤器的缺点和优点一样明显，误算率是其中之一。</p>
+</div><h2 id="优点" class="heading-element"><span>优点</span>
+  <a href="#%e4%bc%98%e7%82%b9" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>它的优点是空间效率和查询时间都远远超过一般的算法，布隆过滤器存储空间和插入/查询时间都是常数O(k)。另外, 散列函数相互之间没有关系，方便由硬件并行实现。布隆过滤器不需要存储元素本身，在某些对保密要求非常严格的场合有优势。</p>
+<h2 id="缺点" class="heading-element"><span>缺点</span>
+  <a href="#%e7%bc%ba%e7%82%b9" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>布隆过滤器的缺点和优点一样明显，误算率是其中之一。</p>
 <p>另外，一般情况下不能从布隆过滤器中删除元素。我们很容易想到把位数组变成整数数组，每插入一个元素相应的计数器加 1，这样删除元素时将计数器减掉就可以了。然而要保证安全地删除元素并非如此简单。首先我们必须保证删除的元素的确在布隆过滤器里面，而这一点单凭这个过滤器是无法保证的。</p>
 <p>参考来源：</p>
 <ul>
